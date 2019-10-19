@@ -1,0 +1,26 @@
+# Triggers switching
+trigger-enabled: "&e[%plugin%] &f%player% enabled %trigger% in world %world%"
+trigger-disabled: "&e[%plugin%] &f%player% disabled %trigger% in world %world%"
+
+# Inventory
+inventory-title: "Physics of %world%"
+trigger-enabled-state: "&aEnabled"
+trigger-disabled-state: "&cDisabled"
+trigger-unsupported-state: "&cUnsupported server version"
+trigger-realtime: "&eWarning!\n&eChanging this option will affect\n&ethe whole world (all loaded chunks)!"
+trigger-on-update: "&aWill affect updated blocks only"
+
+# Switching trigger command
+only-players-menu: "&c[%plugin%] Only players can open the menu"
+bad-perms-inventory: "&c[%plugin%] You don't have permissions to open the menu"
+bad-perms-trigger: "&c[%plugin%] You don't have permissions to switch trigger %trigger%"
+world-or-key-not-specified: "&c[%plugin%] Specify the world name and the option name"
+world-not-found: "&c[%plugin%] Specified world not found"
+key-not-found: "&c[%plugin%] Specified key not found"
+
+# Reloading command
+bad-perms-reload: "&c[%plugin%] You don't have permissions to reload plugin configs"
+config-reloaded: "&e[%plugin%] Config reloaded"
+
+# Other
+debug-message: "&e[%plugin%] &fAction %action% (%content%) was detected on: "
