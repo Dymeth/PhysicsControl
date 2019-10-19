@@ -1,8 +1,8 @@
 package ru.dymeth.pcontrol.v13;
 
+import org.bukkit.Tag;
+
 import static org.bukkit.Material.*;
-import static org.bukkit.Material.ANVIL;
-import static org.bukkit.Material.SAND;
 import static org.bukkit.Tag.*;
 
 public final class CustomTag13 {
@@ -116,9 +116,9 @@ public final class CustomTag13 {
     );
 
     public static final MaterialSetModern GRAVITY_BLOCKS = new MaterialSetModern("gravity_blocks",
-            SAND,
-            GRAVEL,
-            ANVIL)
+            GRAVEL)
+            .add(Tag.SAND.getValues())
+            .add(Tag.ANVIL.getValues())
             .add(CONCRETES.getValues());
 
     public static final MaterialSetModern FLOWERS = new MaterialSetModern("flowers",
