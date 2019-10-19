@@ -1,15 +1,12 @@
 package ru.dymeth.pcontrol.v13;
 
-import ru.dymeth.pcontrol.materials.MaterialSet;
-import ru.dymeth.pcontrol.materials.MaterialSetLegacy;
-
 import static org.bukkit.Material.*;
 import static org.bukkit.Material.ANVIL;
 import static org.bukkit.Material.SAND;
 import static org.bukkit.Tag.*;
 
 public final class CustomTag13 {
-    public static final MaterialSet FENCES = new MaterialSet("fences",
+    public static final MaterialSetModern FENCES = new MaterialSetModern("fences",
             ACACIA_FENCE,
             BIRCH_FENCE,
             DARK_OAK_FENCE,
@@ -18,29 +15,29 @@ public final class CustomTag13 {
             OAK_FENCE,
             SPRUCE_FENCE);
 
-    public static final MaterialSet PRESSURE_PLATES = new MaterialSet("fences",
+    public static final MaterialSetModern PRESSURE_PLATES = new MaterialSetModern("fences",
             STONE_PRESSURE_PLATE,
             LIGHT_WEIGHTED_PRESSURE_PLATE,
             HEAVY_WEIGHTED_PRESSURE_PLATE)
             .add(WOODEN_PRESSURE_PLATES.getValues());
 
-    public static final MaterialSet WALLS = new MaterialSet("walls",
+    public static final MaterialSetModern WALLS = new MaterialSetModern("walls",
             COBBLESTONE_WALL,
             MOSSY_COBBLESTONE_WALL);
 
-    public static final MaterialSet REDSTONE_ACTIVE_INPUTS = new MaterialSet("redstone_inputs",
+    public static final MaterialSetModern REDSTONE_ACTIVE_INPUTS = new MaterialSetModern("redstone_inputs",
             LEVER,
             TRAPPED_CHEST,
             DAYLIGHT_DETECTOR,
             OBSERVER)
             .add(BUTTONS.getValues());
 
-    public static final MaterialSet REDSTONE_PASSIVE_INPUTS = new MaterialSet("redstone_inputs",
+    public static final MaterialSetModern REDSTONE_PASSIVE_INPUTS = new MaterialSetModern("redstone_inputs",
             TRIPWIRE_HOOK,
             TRIPWIRE)
             .add(PRESSURE_PLATES.getValues());
 
-    public static final MaterialSet REDSTONE_TRANSMITTERS_AND_OUTPUTS = new MaterialSet("redstone_transmitters",
+    public static final MaterialSetModern REDSTONE_TRANSMITTERS_AND_OUTPUTS = new MaterialSetModern("redstone_transmitters",
             DISPENSER,
             STICKY_PISTON,
             PISTON,
@@ -60,7 +57,7 @@ public final class CustomTag13 {
             .add(FENCES.getValues())
             .add(DOORS.getValues());
 
-    public static final MaterialSet GLASS_PANES = new MaterialSet("glass_panes",
+    public static final MaterialSetModern GLASS_PANES = new MaterialSetModern("glass_panes",
             GLASS_PANE,
             BLACK_STAINED_GLASS_PANE,
             BLUE_STAINED_GLASS_PANE,
@@ -80,7 +77,7 @@ public final class CustomTag13 {
             YELLOW_STAINED_GLASS_PANE
     );
 
-    public static final MaterialSet CONCRETES = new MaterialSet("concretes",
+    public static final MaterialSetModern CONCRETES = new MaterialSetModern("concretes",
             BLACK_CONCRETE,
             BLUE_CONCRETE,
             BROWN_CONCRETE,
@@ -99,7 +96,7 @@ public final class CustomTag13 {
             YELLOW_CONCRETE
     );
 
-    public static final MaterialSet CONCRETE_POWDERS = new MaterialSet("concrete_powders",
+    public static final MaterialSetModern CONCRETE_POWDERS = new MaterialSetModern("concrete_powders",
             BLACK_CONCRETE_POWDER,
             BLUE_CONCRETE_POWDER,
             BROWN_CONCRETE_POWDER,
@@ -118,13 +115,13 @@ public final class CustomTag13 {
             YELLOW_CONCRETE_POWDER
     );
 
-    public static final MaterialSetLegacy GRAVITY_BLOCKS = new MaterialSetLegacy(
+    public static final MaterialSetModern GRAVITY_BLOCKS = new MaterialSetModern("gravity_blocks",
             SAND,
             GRAVEL,
             ANVIL)
             .add(CONCRETES.getValues());
 
-    public static final MaterialSet FLOWERS = new MaterialSet("flowers",
+    public static final MaterialSetModern FLOWERS = new MaterialSetModern("flowers",
             DANDELION,
             POPPY,
             BLUE_ORCHID,
@@ -143,7 +140,7 @@ public final class CustomTag13 {
             ROSE_BUSH,
             PEONY);
 
-    public static final MaterialSet LONG_PLANTS = new MaterialSet("long_plants",
+    public static final MaterialSetModern LONG_PLANTS = new MaterialSetModern("long_plants",
             SUNFLOWER,
             ROSE_BUSH,
             PEONY,
@@ -154,24 +151,24 @@ public final class CustomTag13 {
             KELP,
             KELP_PLANT);
 
-    public static final MaterialSet LITTLE_MUSHROOMS = new MaterialSet("little_mushrooms",
+    public static final MaterialSetModern LITTLE_MUSHROOMS = new MaterialSetModern("little_mushrooms",
             RED_MUSHROOM,
             BROWN_MUSHROOM);
 
-    public static final MaterialSet ALL_ALIVE_CORALS = new MaterialSet("all_alive_corals")
+    public static final MaterialSetModern ALL_ALIVE_CORALS = new MaterialSetModern("all_alive_corals")
             .add(CORAL_BLOCKS.getValues())
             .add(WALL_CORALS.getValues())
             .add(CORAL_PLANTS.getValues())
             .add(CORALS.getValues());
 
-    public static final MaterialSet DEAD_CORAL_PLANTS = new MaterialSet("dead_coral_plants",
+    public static final MaterialSetModern DEAD_CORAL_PLANTS = new MaterialSetModern("dead_coral_plants",
             DEAD_TUBE_CORAL,
             DEAD_BRAIN_CORAL,
             DEAD_BUBBLE_CORAL,
             DEAD_FIRE_CORAL,
             DEAD_HORN_CORAL);
 
-    public static final MaterialSet DEAD_CORALS = new MaterialSet("dead_corals",
+    public static final MaterialSetModern DEAD_CORALS = new MaterialSetModern("dead_corals",
             DEAD_TUBE_CORAL_FAN,
             DEAD_BRAIN_CORAL_FAN,
             DEAD_BUBBLE_CORAL_FAN,
@@ -179,21 +176,21 @@ public final class CustomTag13 {
             DEAD_HORN_CORAL_FAN)
             .add(DEAD_CORAL_PLANTS.getValues());
 
-    public static final MaterialSet DEAD_WALL_CORALS = new MaterialSet("dead_wall_corals",
+    public static final MaterialSetModern DEAD_WALL_CORALS = new MaterialSetModern("dead_wall_corals",
             DEAD_TUBE_CORAL_WALL_FAN,
             DEAD_BRAIN_CORAL_WALL_FAN,
             DEAD_BUBBLE_CORAL_WALL_FAN,
             DEAD_FIRE_CORAL_WALL_FAN,
             DEAD_HORN_CORAL_WALL_FAN);
 
-    public static final MaterialSet DEAD_CORAL_BLOCKS = new MaterialSet("dead_coral_blocks",
+    public static final MaterialSetModern DEAD_CORAL_BLOCKS = new MaterialSetModern("dead_coral_blocks",
             DEAD_TUBE_CORAL_BLOCK,
             DEAD_BRAIN_CORAL_BLOCK,
             DEAD_BUBBLE_CORAL_BLOCK,
             DEAD_FIRE_CORAL_BLOCK,
             DEAD_HORN_CORAL_BLOCK);
 
-    public static final MaterialSet ALL_DEAD_CORALS = new MaterialSet("all_dead_corals")
+    public static final MaterialSetModern ALL_DEAD_CORALS = new MaterialSetModern("all_dead_corals")
             .add(DEAD_CORAL_BLOCKS.getValues())
             .add(DEAD_WALL_CORALS.getValues())
             .add(DEAD_CORAL_PLANTS.getValues())

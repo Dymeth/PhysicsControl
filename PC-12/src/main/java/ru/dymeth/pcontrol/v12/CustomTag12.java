@@ -1,7 +1,6 @@
 package ru.dymeth.pcontrol.v12;
 
 import org.bukkit.Material;
-import ru.dymeth.pcontrol.materials.MaterialSetLegacy;
 
 import static org.bukkit.Material.*;
 

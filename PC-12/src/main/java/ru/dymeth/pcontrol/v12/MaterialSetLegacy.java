@@ -1,4 +1,4 @@
-package ru.dymeth.pcontrol.materials;
+package ru.dymeth.pcontrol.v12;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
