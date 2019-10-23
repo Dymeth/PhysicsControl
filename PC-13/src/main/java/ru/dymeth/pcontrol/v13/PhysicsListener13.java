@@ -82,6 +82,8 @@ public final class PhysicsListener13 extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.PUMPKINS_GROWING);
         else if (to == Material.MELON_STEM || to == Material.MELON)
             this.data.cancelIfDisabled(event, PControlTrigger.MELONS_GROWING);
+        else if (to == Material.COCOA)
+            this.data.cancelIfDisabled(event, PControlTrigger.COCOAS_GROWING);
         else if (to == Material.NETHER_WART_BLOCK)
             this.data.cancelIfDisabled(event, PControlTrigger.NETHER_WARTS_GROWING);
         else if (to == Material.GRASS || CustomTag13.FLOWERS.isTagged(to))
@@ -171,8 +173,6 @@ public final class PhysicsListener13 extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.MYCELIUM_SPREADING);
         else if (to == Material.VINE && (from == Material.AIR || from == Material.VINE))
             this.data.cancelIfDisabled(event, PControlTrigger.VINES_GROWING);
-        else if (to == Material.COCOA && from == Material.COCOA)
-            this.data.cancelIfDisabled(event, PControlTrigger.COCOAS_GROWING);
         else if (CustomTag13.LITTLE_MUSHROOMS.isTagged(to) && from == Material.AIR)
             this.data.cancelIfDisabled(event, PControlTrigger.LITTLE_MUSHROOMS_SPREADING);
         else if (to == Material.KELP && from == Material.WATER)
