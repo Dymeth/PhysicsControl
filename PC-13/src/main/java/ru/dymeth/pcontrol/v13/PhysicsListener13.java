@@ -124,6 +124,8 @@ public final class PhysicsListener13 extends PhysicsListener {
             return; // Already existing falling blocks
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), "falling block from " + from + " to " + to);
+
+        if (event.isCancelled()) event.getBlock().getState().update(false, false);
     }
 
     @EventHandler(ignoreCancelled = true)
