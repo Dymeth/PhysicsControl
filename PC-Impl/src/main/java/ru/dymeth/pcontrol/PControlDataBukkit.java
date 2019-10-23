@@ -7,6 +7,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.block.BlockEvent;
 import org.bukkit.plugin.Plugin;
@@ -14,34 +15,57 @@ import ru.dymeth.pcontrol.v12.FakeEnchantmentLegacy;
 import ru.dymeth.pcontrol.v13.FakeEnchantmentModern;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 public final class PControlDataBukkit implements PControlData {
     private final Plugin plugin;
     private final short serverVersion;
     private final Enchantment fakeEnchantment;
+    private final Set<EntityType> removableProjectileTypes;
     private final Map<String, String> messages = new HashMap<>();
     private final Map<World, Map<PControlTrigger, Boolean>> triggers = new HashMap<>();
     private final Map<World, PControlInventory> inventories = new HashMap<>();
 
     PControlDataBukkit(@Nonnull Plugin plugin) {
         this.plugin = plugin;
+
         try {
             this.serverVersion = Short.parseShort(Bukkit.getServer().getClass().getName().split("\\.")[3].split("_")[1]);
             if (this.serverVersion < 12) throw new IllegalArgumentException();
         } catch (Exception e) {
             throw new RuntimeException("Unsupported server version. It must be Spigot 1.12 or higher");
         }
+
         if (this.serverVersion >= 13)
             this.fakeEnchantment = FakeEnchantmentModern.getInstance();
         else
             this.fakeEnchantment = FakeEnchantmentLegacy.getInstance();
+
+        this.removableProjectileTypes = this.loadEntityTypes(null,
+                "ARROW",
+                "SPECTRAL_ARROW",
+                "TIPPED_ARROW",
+                "TRIDENT");
+
         this.reloadConfigs();
+    }
+
+    private Set<EntityType> loadEntityTypes(@Nullable Consumer<String> onFail, @Nonnull String... typeNames) {
+        Set<EntityType> result = new HashSet<>();
+        for (String typeName : typeNames) {
+            EntityType type = JavaUtils.getEnum(EntityType.class, typeName);
+            if (type == null) {
+                if (onFail != null) onFail.accept(typeName);
+            } else {
+                result.add(type);
+            }
+        }
+        return result;
     }
 
     @Nonnull
@@ -56,6 +80,12 @@ public final class PControlDataBukkit implements PControlData {
     @Nonnull
     Enchantment getFakeEnchantment() {
         return this.fakeEnchantment;
+    }
+
+    @Override
+    @Nonnull
+    public Set<EntityType> getRemovableProjectileTypes() {
+        return this.removableProjectileTypes;
     }
 
     void reloadConfigs() {

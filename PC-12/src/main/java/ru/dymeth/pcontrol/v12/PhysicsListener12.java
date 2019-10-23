@@ -4,12 +4,14 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.material.Attachable;
@@ -239,6 +241,15 @@ public final class PhysicsListener12 extends PhysicsListener {
     private void on(BlockIgniteEvent event) {
         if (event.getCause() != BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL)
             this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    private void on(ProjectileHitEvent event) {
+        if (event.getHitBlock() == null) return;
+        Entity entity = event.getEntity();
+        if (!this.data.getRemovableProjectileTypes().contains(entity.getType())) return;
+        if (!this.data.isActionAllowed(entity.getWorld(), PControlTrigger.BLOCK_HIT_PROJECTILES_REMOVING)) return;
+        entity.remove();
     }
 
     @EventHandler(ignoreCancelled = true)
