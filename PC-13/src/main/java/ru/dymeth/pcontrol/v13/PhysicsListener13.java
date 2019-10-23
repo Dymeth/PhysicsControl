@@ -255,7 +255,9 @@ public final class PhysicsListener13 extends PhysicsListener {
 
     @EventHandler(ignoreCancelled = true)
     private void on(BlockIgniteEvent event) {
-        if (event.getCause() != BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL)
+        if (event.getCause() == BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL)
+            this.data.cancelIfDisabled(event, PControlTrigger.PLAYERS_FLINT_USAGE);
+        else
             this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
     }
 
