@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public final class PControlInventory implements InventoryHolder {
+    private static final ItemStack DISALLOWED_TRIGGER = new ItemStack(Material.BARRIER);
     private final PControlDataBukkit data;
     private final World world;
     private final Inventory inventory;
@@ -41,13 +42,13 @@ public final class PControlInventory implements InventoryHolder {
     void updateTriggerStack(@Nonnull PControlTrigger trigger) {
         boolean allowed = this.data.getServerVersion() >= trigger.getMinVersion();
         boolean enabled = this.data.isActionAllowed(this.world, trigger);
-        Material icon = allowed ? trigger.getIcon() : Material.BARRIER;
+        ItemStack icon = allowed ? trigger.getIcon() : DISALLOWED_TRIGGER;
         if (icon == null) {
             this.data.getLogger().severe("Could not find material icon for trigger " + trigger.name() + ". Server version: " + this.data.getServerVersion() + ". Contact with plugin developer");
-            icon = Material.BARRIER;
+            icon = DISALLOWED_TRIGGER;
         }
-        ItemStack stack = new ItemStack(icon);
-        ItemMeta meta = stack.getItemMeta();
+        icon = icon.clone();
+        ItemMeta meta = icon.getItemMeta();
         if (meta == null)
             throw new IllegalArgumentException("Item meta could not be null");
         if (allowed)
@@ -64,9 +65,9 @@ public final class PControlInventory implements InventoryHolder {
         meta.setLore(lore);
         if (allowed && enabled)
             meta.addEnchant(this.data.getFakeEnchantment(), 1, true);
-        stack.setItemMeta(meta);
+        icon.setItemMeta(meta);
 
-        this.inventory.setItem(this.slotByTrigger.get(trigger), stack);
+        this.inventory.setItem(this.slotByTrigger.get(trigger), icon);
     }
 
     @Nonnull

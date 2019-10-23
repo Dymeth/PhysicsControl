@@ -1,6 +1,7 @@
 package ru.dymeth.pcontrol;
 
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -9,7 +10,7 @@ public enum PControlTrigger {
     SAND_FALLING(false, 1, 2, "SAND"),
     GRAVEL_FALLING(false, 1, 3, "GRAVEL"),
     ANVILS_FALLING(false, 1, 4, "ANVIL"),
-    CONCRETE_POWDERS_FALLING(12, false, 1, 5, "WHITE_CONCRETE_POWDER", "CONCRETE_POWDER"),
+    CONCRETE_POWDERS_FALLING(12, false, 1, 5, "LIME_CONCRETE_POWDER", "CONCRETE_POWDER:5"),
     WATER_FLOWING(false, 1, 7, "WATER_BUCKET"),
     LAVA_FLOWING(false, 1, 8, "LAVA_BUCKET"),
 
@@ -42,7 +43,7 @@ public enum PControlTrigger {
     KELPS_GROWING(13, true, 5, 1, "KELP"),
     SUGAR_CANE_GROWING(true, 5, 2, "SUGAR_CANE"),
     CACTUS_GROWING(true, 5, 3, "CACTUS"),
-    TREES_GROWING(true, 5, 4, "OAK_SAPLING", "SAPLING"),
+    TREES_GROWING(true, 5, 4, "BIRCH_SAPLING", "SAPLING:2"),
     VINES_GROWING(true, 5, 5, "VINE"),
     LITTLE_MUSHROOMS_SPREADING(true, 5, 7, "RED_MUSHROOM"),
     GIANT_MUSHROOMS_GROWING(true, 5, 8, "RED_MUSHROOM_BLOCK", "HUGE_MUSHROOM_2"),
@@ -52,7 +53,7 @@ public enum PControlTrigger {
     ALLOW_UNRECOGNIZED_ACTIONS(true, 6, 6, "COMMAND_BLOCK", "COMMAND");
 
     private final short minVersion;
-    private final Material icon;
+    private final ItemStack icon;
     private final boolean realtime;
     private final short slot;
     private final boolean defaults;
@@ -71,15 +72,35 @@ public enum PControlTrigger {
 
     PControlTrigger(int minVersion, boolean realtime, int row, int column, boolean defaults, @Nonnull String... iconVariants) {
         this.minVersion = (short) minVersion;
-        Material icon = null;
-        for (String iconVariant : iconVariants) {
-            icon = Material.matchMaterial(iconVariant);
-            if (icon != null) break;
-        }
-        this.icon = icon;
         this.realtime = realtime;
         this.slot = (short) ((row - 1) * 9 + column - 1);
         this.defaults = defaults;
+        this.icon = this.createIcon(iconVariants);
+    }
+
+    @Nullable
+    private ItemStack createIcon(@Nonnull String... iconVariants) {
+        try {
+            Byte data = null;
+            Material iconMaterial = null;
+            for (String iconVariant : iconVariants) {
+                int damageSplitter = iconVariant.indexOf(':');
+                if (damageSplitter >= 0) {
+                    data = Byte.parseByte(iconVariant.substring(damageSplitter + 1));
+                    iconVariant = iconVariant.substring(0, damageSplitter);
+                } else {
+                    data = null;
+                }
+                iconMaterial = Material.matchMaterial(iconVariant);
+                if (iconMaterial != null) break;
+            }
+            if (iconMaterial == null) return null;
+            if (data == null) return new ItemStack(iconMaterial);
+            return new ItemStack(iconMaterial, 1, (short) 0, data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public short getMinVersion() {
@@ -92,7 +113,7 @@ public enum PControlTrigger {
     }
 
     @Nullable
-    public Material getIcon() {
+    public ItemStack getIcon() {
         return this.icon;
     }
 
