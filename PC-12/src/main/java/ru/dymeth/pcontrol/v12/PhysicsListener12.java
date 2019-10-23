@@ -161,13 +161,13 @@ public final class PhysicsListener12 extends PhysicsListener {
         Material from = event.getBlock().getType();
         Material to = event.getNewState().getType();
 
-        if (from == Material.DIRT && to == Material.GRASS)
+        if (to == Material.GRASS && from == Material.DIRT)
             this.data.cancelIfDisabled(event, PControlTrigger.GRASS_SPREADING);
-        else if (from == Material.DIRT && to == Material.MYCEL)
+        else if (to == Material.MYCEL && from == Material.DIRT)
             this.data.cancelIfDisabled(event, PControlTrigger.MYCELIUM_SPREADING);
-        else if (from == Material.AIR && to == Material.VINE)
+        else if (to == Material.VINE && (from == Material.AIR || from == Material.VINE))
             this.data.cancelIfDisabled(event, PControlTrigger.VINES_GROWING);
-        else if (from == Material.AIR && CustomTag12.LITTLE_MUSHROOMS.isTagged(to))
+        else if (CustomTag12.LITTLE_MUSHROOMS.isTagged(to) && from == Material.AIR)
             this.data.cancelIfDisabled(event, PControlTrigger.LITTLE_MUSHROOMS_SPREADING);
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
