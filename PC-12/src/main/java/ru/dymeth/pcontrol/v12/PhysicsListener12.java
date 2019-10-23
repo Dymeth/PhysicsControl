@@ -167,6 +167,8 @@ public final class PhysicsListener12 extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.MYCELIUM_SPREADING);
         else if (to == Material.VINE && (from == Material.AIR || from == Material.VINE))
             this.data.cancelIfDisabled(event, PControlTrigger.VINES_GROWING);
+        else if (to == Material.COCOA && from == Material.COCOA)
+            this.data.cancelIfDisabled(event, PControlTrigger.COCOAS_GROWING);
         else if (CustomTag12.LITTLE_MUSHROOMS.isTagged(to) && from == Material.AIR)
             this.data.cancelIfDisabled(event, PControlTrigger.LITTLE_MUSHROOMS_SPREADING);
         else
