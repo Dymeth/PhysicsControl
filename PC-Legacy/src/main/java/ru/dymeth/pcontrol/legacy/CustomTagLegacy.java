@@ -1,10 +1,10 @@
-package ru.dymeth.pcontrol.v12;
+package ru.dymeth.pcontrol.legacy;
 
 import org.bukkit.Material;
 
 import static org.bukkit.Material.*;
 
-public final class CustomTag12 {
+public final class CustomTagLegacy {
     public static final MaterialSetLegacy RAILS = new MaterialSetLegacy(
             Material.RAILS,
             ACTIVATOR_RAIL,

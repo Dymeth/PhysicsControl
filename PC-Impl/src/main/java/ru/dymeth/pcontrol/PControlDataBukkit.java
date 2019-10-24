@@ -11,8 +11,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.block.BlockEvent;
 import org.bukkit.plugin.Plugin;
-import ru.dymeth.pcontrol.v12.FakeEnchantmentLegacy;
-import ru.dymeth.pcontrol.v13.FakeEnchantmentModern;
+import ru.dymeth.pcontrol.legacy.FakeEnchantmentLegacy;
+import ru.dymeth.pcontrol.modern.FakeEnchantmentModern;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.logging.Logger;
 
 public final class PControlDataBukkit implements PControlData {
     private final Plugin plugin;

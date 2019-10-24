@@ -26,8 +26,8 @@
     </build>
     <modules>
         <module>PC-Impl</module>
-        <module>PC-12</module>
-        <module>PC-13</module>
+        <module>PC-Legacy</module>
+        <module>PC-Modern</module>
     </modules>
 
     <repositories>

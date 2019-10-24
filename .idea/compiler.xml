@@ -7,14 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="PC-Impl" />
-        <module name="PC-13" />
-        <module name="PC-12" />
+        <module name="PC-Legacy" />
+        <module name="PC-Modern" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="PC-12" target="8" />
-      <module name="PC-13" target="8" />
       <module name="PC-Impl" target="1.8" />
+      <module name="PC-Legacy" target="8" />
+      <module name="PC-Modern" target="8" />
       <module name="PhysicsControl" target="8" />
     </bytecodeTargetLevel>
   </component>

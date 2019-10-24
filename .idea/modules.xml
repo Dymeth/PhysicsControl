@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PC-12/PC-12.iml" filepath="$PROJECT_DIR$/PC-12/PC-12.iml" />
-      <module fileurl="file://$PROJECT_DIR$/PC-13/PC-13.iml" filepath="$PROJECT_DIR$/PC-13/PC-13.iml" />
       <module fileurl="file://$PROJECT_DIR$/PC-Impl/PC-Impl.iml" filepath="$PROJECT_DIR$/PC-Impl/PC-Impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PC-Legacy/PC-Legacy.iml" filepath="$PROJECT_DIR$/PC-Legacy/PC-Legacy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PC-Modern/PC-Modern.iml" filepath="$PROJECT_DIR$/PC-Modern/PC-Modern.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/PhysicsControl.iml" filepath="$PROJECT_DIR$/.idea/PhysicsControl.iml" />
     </modules>
   </component>

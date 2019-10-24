@@ -1,11 +1,11 @@
-package ru.dymeth.pcontrol.v13;
+package ru.dymeth.pcontrol.modern;
 
 import org.bukkit.Tag;
 
 import static org.bukkit.Material.*;
 import static org.bukkit.Tag.*;
 
-public final class CustomTag13 {
+public final class CustomTagModern {
     public static final MaterialSetModern WORLD_AIR = new MaterialSetModern("world_air",
             AIR,
             CAVE_AIR);

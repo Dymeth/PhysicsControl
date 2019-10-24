@@ -1,4 +1,4 @@
-package ru.dymeth.pcontrol.v13;
+package ru.dymeth.pcontrol.modern;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;

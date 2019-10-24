@@ -13,8 +13,8 @@ import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import ru.dymeth.pcontrol.v12.PhysicsListener12;
-import ru.dymeth.pcontrol.v13.PhysicsListener13;
+import ru.dymeth.pcontrol.legacy.PhysicsListenerLegacy;
+import ru.dymeth.pcontrol.modern.PhysicsListenerModern;
 
 import javax.annotation.Nonnull;
 import java.util.StringJoiner;
@@ -28,9 +28,9 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         PhysicsListener listener;
 
         if (this.data.getServerVersion() >= 13)
-            listener = new PhysicsListener13(this.data);
+            listener = new PhysicsListenerModern(this.data);
         else
-            listener = new PhysicsListener12(this.data);
+            listener = new PhysicsListenerLegacy(this.data);
 
         Bukkit.getPluginManager().registerEvents(listener, this);
         Bukkit.getPluginManager().registerEvents(this, this);

@@ -1,4 +1,4 @@
-package ru.dymeth.pcontrol.v13;
+package ru.dymeth.pcontrol.modern;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;

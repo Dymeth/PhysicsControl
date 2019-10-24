@@ -3,8 +3,8 @@
     <output-path>E:/MC/Servers/1.12.2/plugins</output-path>
     <root id="archive" name="PhysicsControl.jar">
       <element id="module-output" name="PhysicsControl" />
-      <element id="module-output" name="PC-13" />
-      <element id="module-output" name="PC-12" />
+      <element id="module-output" name="PC-Modern" />
+      <element id="module-output" name="PC-Legacy" />
       <element id="module-output" name="PC-Impl" />
     </root>
   </artifact>

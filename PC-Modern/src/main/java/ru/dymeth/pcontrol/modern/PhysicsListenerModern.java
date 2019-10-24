@@ -1,4 +1,4 @@
-package ru.dymeth.pcontrol.v13;
+package ru.dymeth.pcontrol.modern;
 
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -26,8 +26,8 @@ import ru.dymeth.pcontrol.PhysicsListener;
 
 import javax.annotation.Nonnull;
 
-public final class PhysicsListener13 extends PhysicsListener {
-    public PhysicsListener13(@Nonnull PControlData data) {
+public final class PhysicsListenerModern extends PhysicsListener {
+    public PhysicsListenerModern(@Nonnull PControlData data) {
         super(data);
     }
 
@@ -108,7 +108,7 @@ public final class PhysicsListener13 extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.COCOAS_GROWING);
         else if (to == Material.NETHER_WART_BLOCK)
             this.data.cancelIfDisabled(event, PControlTrigger.NETHER_WARTS_GROWING);
-        else if (CustomTag13.BONE_MEAL_HERBS.isTagged(to))
+        else if (CustomTagModern.BONE_MEAL_HERBS.isTagged(to))
             this.data.cancelIfDisabled(event, PControlTrigger.BONE_MEAL_USAGE);
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
@@ -144,9 +144,9 @@ public final class PhysicsListener13 extends PhysicsListener {
             this.data.cancelIfDisabled(event, world, PControlTrigger.GRAVEL_FALLING);
         else if (Tag.ANVIL.isTagged(from))
             this.data.cancelIfDisabled(event, world, PControlTrigger.ANVILS_FALLING);
-        else if (CustomTag13.CONCRETE_POWDERS.isTagged(from))
+        else if (CustomTagModern.CONCRETE_POWDERS.isTagged(from))
             this.data.cancelIfDisabled(event, world, PControlTrigger.CONCRETE_POWDERS_FALLING);
-        else if (CustomTag13.GRAVITY_BLOCKS.isTagged(to))
+        else if (CustomTagModern.GRAVITY_BLOCKS.isTagged(to))
             return; // Already existing falling blocks
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), "falling block from " + from + " to " + to);
@@ -161,7 +161,7 @@ public final class PhysicsListener13 extends PhysicsListener {
 
         if (from == Material.LAVA)
             this.data.cancelIfDisabled(event, PControlTrigger.LAVA_FLOWING);
-        else if (CustomTag13.UNDERWATER_BLOCKS_ONLY.isTagged(from)
+        else if (CustomTagModern.UNDERWATER_BLOCKS_ONLY.isTagged(from)
                 || (event.getBlock().getBlockData() instanceof Waterlogged
                 && ((Waterlogged) event.getBlock().getBlockData()).isWaterlogged()))
             this.data.cancelIfDisabled(event, PControlTrigger.WATER_FLOWING);
@@ -180,13 +180,13 @@ public final class PhysicsListener13 extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.MYCELIUM_SPREADING);
         else if (from == Material.FARMLAND && to == Material.DIRT)
             this.data.cancelIfDisabled(event, PControlTrigger.FARMLANDS_DRYING);
-        else if (from == Material.SNOW && CustomTag13.WORLD_AIR.isTagged(to))
+        else if (from == Material.SNOW && CustomTagModern.WORLD_AIR.isTagged(to))
             this.data.cancelIfDisabled(event, PControlTrigger.SNOW_MELTING);
         else if (from == Material.ICE && to == Material.WATER)
             this.data.cancelIfDisabled(event, PControlTrigger.ICE_MELTING);
-        else if (CustomTag13.ALL_ALIVE_CORALS.isTagged(from) && CustomTag13.ALL_DEAD_CORALS.isTagged(to))
+        else if (CustomTagModern.ALL_ALIVE_CORALS.isTagged(from) && CustomTagModern.ALL_DEAD_CORALS.isTagged(to))
             this.data.cancelIfDisabled(event, PControlTrigger.CORALS_DRYING);
-        else if (from == Material.FIRE && CustomTag13.WORLD_AIR.isTagged(to))
+        else if (from == Material.FIRE && CustomTagModern.WORLD_AIR.isTagged(to))
             this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
         else if (from == Material.REDSTONE_ORE && to == Material.REDSTONE_ORE)
             return; // Redstone ore deactivation
@@ -221,13 +221,13 @@ public final class PhysicsListener13 extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.GRASS_SPREADING);
         else if (to == Material.MYCELIUM && from == Material.DIRT)
             this.data.cancelIfDisabled(event, PControlTrigger.MYCELIUM_SPREADING);
-        else if (to == Material.VINE && (CustomTag13.WORLD_AIR.isTagged(from) || from == Material.VINE))
+        else if (to == Material.VINE && (CustomTagModern.WORLD_AIR.isTagged(from) || from == Material.VINE))
             this.data.cancelIfDisabled(event, PControlTrigger.VINES_GROWING);
-        else if (CustomTag13.LITTLE_MUSHROOMS.isTagged(to) && CustomTag13.WORLD_AIR.isTagged(from))
+        else if (CustomTagModern.LITTLE_MUSHROOMS.isTagged(to) && CustomTagModern.WORLD_AIR.isTagged(from))
             this.data.cancelIfDisabled(event, PControlTrigger.LITTLE_MUSHROOMS_SPREADING);
         else if (to == Material.KELP && from == Material.WATER)
             this.data.cancelIfDisabled(event, PControlTrigger.KELPS_GROWING);
-        else if (to == Material.FIRE && CustomTag13.WORLD_AIR.isTagged(from))
+        else if (to == Material.FIRE && CustomTagModern.WORLD_AIR.isTagged(from))
             this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
@@ -243,7 +243,7 @@ public final class PhysicsListener13 extends PhysicsListener {
 
         if (source == Material.FARMLAND)
             this.data.cancelIfDisabled(event, world, PControlTrigger.FARMLANDS_TRAMPLING);
-        else if (CustomTag13.REDSTONE_PASSIVE_INPUTS.isTagged(source))
+        else if (CustomTagModern.REDSTONE_PASSIVE_INPUTS.isTagged(source))
             return; // Redstone activators
         else if (source == Material.REDSTONE_ORE)
             return; // Redstone ore activation
