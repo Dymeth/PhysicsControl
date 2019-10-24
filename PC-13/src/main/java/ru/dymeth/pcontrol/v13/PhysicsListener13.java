@@ -204,6 +204,8 @@ public final class PhysicsListener13 extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.LITTLE_MUSHROOMS_SPREADING);
         else if (to == Material.KELP && from == Material.WATER)
             this.data.cancelIfDisabled(event, PControlTrigger.KELPS_GROWING);
+        else if (to == Material.FIRE && CustomTag13.WORLD_AIR.isTagged(from))
+            this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
     }

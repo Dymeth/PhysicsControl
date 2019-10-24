@@ -201,6 +201,8 @@ public final class PhysicsListener12 extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.VINES_GROWING);
         else if (CustomTag12.LITTLE_MUSHROOMS.isTagged(to) && from == Material.AIR)
             this.data.cancelIfDisabled(event, PControlTrigger.LITTLE_MUSHROOMS_SPREADING);
+        else if (to == Material.FIRE && from == Material.AIR)
+            this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
     }
