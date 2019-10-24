@@ -33,6 +33,16 @@ public final class MaterialSetLegacy {
     }
 
     @Nonnull
+    public MaterialSetLegacy add(@Nonnull String... materialNames) {
+        for (String materialName : materialNames) {
+            Material material = Material.matchMaterial(materialName);
+            if (material == null) continue;
+            this.materials.add(material);
+        }
+        return this;
+    }
+
+    @Nonnull
     public Set<Material> getValues() {
         return this.materials;
     }
