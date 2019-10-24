@@ -15,7 +15,7 @@ public enum PControlTrigger {
     LAVA_FLOWING(false, 1, 8, "LAVA_BUCKET"),
 
     LADDERS_DESTROYING(false, 2, 2, "LADDER"),
-    SIGNS_DESTROYING(false, 2, 3, "SIGN"),
+    SIGNS_DESTROYING(false, 2, 3, "OAK_SIGN", "SIGN"),
     RAILS_DESTROYING(13, false, 2, 4, "RAIL", "RAILS"),
     TORCHES_DESTROYING(false, 2, 5, "TORCH"),
     REDSTONE_TORCHES_DESTROYING(false, 2, 6, "REDSTONE_TORCH", "REDSTONE_TORCH_ON"),
