@@ -68,9 +68,10 @@ public final class PControlDataBukkit implements PControlData {
         return result;
     }
 
+    @Override
     @Nonnull
-    Logger getLogger() {
-        return this.plugin.getLogger();
+    public Plugin getPlugin() {
+        return this.plugin;
     }
 
     short getServerVersion() {

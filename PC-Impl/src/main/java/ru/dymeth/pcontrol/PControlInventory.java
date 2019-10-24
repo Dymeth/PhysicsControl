@@ -44,7 +44,7 @@ public final class PControlInventory implements InventoryHolder {
         boolean enabled = this.data.isActionAllowed(this.world, trigger);
         ItemStack icon = allowed ? trigger.getIcon() : DISALLOWED_TRIGGER;
         if (icon == null) {
-            this.data.getLogger().severe("Could not find material icon for trigger " + trigger.name() + ". Server version: " + this.data.getServerVersion() + ". Contact with plugin developer");
+            this.data.getPlugin().getLogger().severe("Could not find material icon for trigger " + trigger.name() + ". Server version: " + this.data.getServerVersion() + ". Contact with plugin developer");
             icon = DISALLOWED_TRIGGER;
         }
         icon = icon.clone();
