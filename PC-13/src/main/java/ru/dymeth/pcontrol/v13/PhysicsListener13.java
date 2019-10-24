@@ -121,12 +121,14 @@ public final class PhysicsListener13 extends PhysicsListener {
         if (!(event.getEntity() instanceof FallingBlock)) {
             EntityType entityType = event.getEntity().getType();
 
-            if (entityType == EntityType.SHEEP)
+            if (from == Material.DIRT && to == Material.FARMLAND)
+                this.data.cancelIfDisabled(event, world, PControlTrigger.FARMLANDS_TRAMPLING);
+            else if (to == Material.REDSTONE_ORE)
+                return; // Redstone ore activation
+            else if (entityType == EntityType.SHEEP)
                 this.data.cancelIfDisabled(event, world, PControlTrigger.SHEEPS_EATING_GRASS);
             else if (entityType == EntityType.ENDERMAN)
                 this.data.cancelIfDisabled(event, world, PControlTrigger.ENDERMANS_GRIEFING);
-            else if (to == Material.REDSTONE_ORE)
-                return; // Redstone ore activation
             else
                 this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to + " (" + event.getEntityType() + ")");
 
