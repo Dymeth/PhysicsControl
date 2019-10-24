@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="PhysicsControl:jar">
-    <output-path>$USER_HOME$/Desktop</output-path>
+    <output-path>E:/MC/Servers/1.12.2/plugins</output-path>
     <root id="archive" name="PhysicsControl.jar">
       <element id="module-output" name="PhysicsControl" />
       <element id="module-output" name="PC-13" />

@@ -106,6 +106,8 @@ public final class PhysicsListener12 extends PhysicsListener {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.SHEEPS_EATING_GRASS);
             else if (entityType == EntityType.ENDERMAN)
                 this.data.cancelIfDisabled(event, world, PControlTrigger.ENDERMANS_GRIEFING);
+            else if (to == Material.GLOWING_REDSTONE_ORE)
+                return; // Redstone ore activation
             else
                 this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to + " (" + event.getEntityType() + ")");
 
@@ -158,6 +160,8 @@ public final class PhysicsListener12 extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.ICE_MELTING);
         else if (from == Material.FIRE && to == Material.AIR)
             this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
+        else if (from == Material.GLOWING_REDSTONE_ORE && to == Material.REDSTONE_ORE)
+            return; // Redstone ore deactivation
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
     }
@@ -185,14 +189,16 @@ public final class PhysicsListener12 extends PhysicsListener {
         if (event.getBlockFace() != BlockFace.SELF) return;
         if (event.getClickedBlock() == null) return;
         World world = event.getClickedBlock().getWorld();
-        Material to = event.getClickedBlock().getType();
+        Material source = event.getClickedBlock().getType();
 
-        if (to == Material.SOIL)
+        if (source == Material.SOIL)
             this.data.cancelIfDisabled(event, world, PControlTrigger.FARMLANDS_TRAMPLING);
-        else if (CustomTag12.REDSTONE_PASSIVE_INPUTS.isTagged(to))
+        else if (CustomTag12.REDSTONE_PASSIVE_INPUTS.isTagged(source))
             return; // Redstone activators
+        else if (source == Material.REDSTONE_ORE || source == Material.GLOWING_REDSTONE_ORE)
+            return; // Redstone ore activation
         else
-            this.unrecognizedAction(event, event.getClickedBlock().getLocation(), to);
+            this.unrecognizedAction(event, event.getClickedBlock().getLocation(), source);
     }
 
     @EventHandler(ignoreCancelled = true)
