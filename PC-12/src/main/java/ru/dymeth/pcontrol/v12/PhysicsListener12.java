@@ -132,6 +132,8 @@ public final class PhysicsListener12 extends PhysicsListener {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.SHEEPS_EATING_GRASS);
             else if (entityType == EntityType.ENDERMAN)
                 this.data.cancelIfDisabled(event, world, PControlTrigger.ENDERMANS_GRIEFING);
+            else if (entityType == EntityType.VILLAGER)
+                return; // Villagers plant/harvest crops
             else
                 this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to + " (" + event.getEntityType() + ")");
 
