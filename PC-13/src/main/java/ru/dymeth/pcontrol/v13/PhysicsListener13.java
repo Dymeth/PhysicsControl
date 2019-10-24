@@ -156,13 +156,13 @@ public final class PhysicsListener13 extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.MYCELIUM_SPREADING);
         else if (from == Material.FARMLAND && to == Material.DIRT)
             this.data.cancelIfDisabled(event, PControlTrigger.FARMLANDS_DRYING);
-        else if (from == Material.SNOW && to == Material.AIR)
+        else if (from == Material.SNOW && CustomTag13.WORLD_AIR.isTagged(to))
             this.data.cancelIfDisabled(event, PControlTrigger.SNOW_MELTING);
         else if (from == Material.ICE && to == Material.WATER)
             this.data.cancelIfDisabled(event, PControlTrigger.ICE_MELTING);
         else if (CustomTag13.ALL_ALIVE_CORALS.isTagged(from) && CustomTag13.ALL_DEAD_CORALS.isTagged(to))
             this.data.cancelIfDisabled(event, PControlTrigger.CORALS_DRYING);
-        else if (from == Material.FIRE && to == Material.AIR)
+        else if (from == Material.FIRE && CustomTag13.WORLD_AIR.isTagged(to))
             this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
         else if (from == Material.REDSTONE_ORE && to == Material.REDSTONE_ORE)
             return; // Redstone ore deactivation
@@ -179,9 +179,9 @@ public final class PhysicsListener13 extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.GRASS_SPREADING);
         else if (to == Material.MYCELIUM && from == Material.DIRT)
             this.data.cancelIfDisabled(event, PControlTrigger.MYCELIUM_SPREADING);
-        else if (to == Material.VINE && (from == Material.AIR || from == Material.VINE))
+        else if (to == Material.VINE && (CustomTag13.WORLD_AIR.isTagged(from) || from == Material.VINE))
             this.data.cancelIfDisabled(event, PControlTrigger.VINES_GROWING);
-        else if (CustomTag13.LITTLE_MUSHROOMS.isTagged(to) && from == Material.AIR)
+        else if (CustomTag13.LITTLE_MUSHROOMS.isTagged(to) && CustomTag13.WORLD_AIR.isTagged(from))
             this.data.cancelIfDisabled(event, PControlTrigger.LITTLE_MUSHROOMS_SPREADING);
         else if (to == Material.KELP && from == Material.WATER)
             this.data.cancelIfDisabled(event, PControlTrigger.KELPS_GROWING);

@@ -6,6 +6,10 @@ import static org.bukkit.Material.*;
 import static org.bukkit.Tag.*;
 
 public final class CustomTag13 {
+    public static final MaterialSetModern WORLD_AIR = new MaterialSetModern("fences",
+            AIR,
+            CAVE_AIR);
+
     public static final MaterialSetModern FENCES = new MaterialSetModern("fences",
             ACACIA_FENCE,
             BIRCH_FENCE,
