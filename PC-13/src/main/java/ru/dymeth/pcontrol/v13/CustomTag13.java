@@ -166,4 +166,10 @@ public final class CustomTag13 {
             .add(DEAD_WALL_CORALS.getValues())
             .add(DEAD_CORAL_PLANTS.getValues())
             .add(DEAD_CORALS.getValues());
+
+    public static final MaterialSetModern UNDERWATER_BLOCKS_ONLY = new MaterialSetModern("underwater_blocks_only",
+            WATER,
+            BUBBLE_COLUMN,
+            KELP_PLANT,
+            SEAGRASS);
 }

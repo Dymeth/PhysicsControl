@@ -160,7 +160,7 @@ public final class PhysicsListener13 extends PhysicsListener {
 
         if (from == Material.LAVA)
             this.data.cancelIfDisabled(event, PControlTrigger.LAVA_FLOWING);
-        else if (from == Material.WATER
+        else if (CustomTag13.UNDERWATER_BLOCKS_ONLY.isTagged(from)
                 || (event.getBlock().getBlockData() instanceof Waterlogged
                 && ((Waterlogged) event.getBlock().getBlockData()).isWaterlogged()))
             this.data.cancelIfDisabled(event, PControlTrigger.WATER_FLOWING);
