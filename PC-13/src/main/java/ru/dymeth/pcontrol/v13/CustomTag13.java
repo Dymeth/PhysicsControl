@@ -25,10 +25,6 @@ public final class CustomTag13 {
             HEAVY_WEIGHTED_PRESSURE_PLATE)
             .add(WOODEN_PRESSURE_PLATES.getValues());
 
-    public static final MaterialSetModern WALLS = new MaterialSetModern("walls",
-            COBBLESTONE_WALL,
-            MOSSY_COBBLESTONE_WALL);
-
     public static final MaterialSetModern REDSTONE_ACTIVE_INPUTS = new MaterialSetModern("redstone_active_inputs",
             LEVER,
             TRAPPED_CHEST,
@@ -60,26 +56,6 @@ public final class CustomTag13 {
             .add(TRAPDOORS.getValues())
             .add(FENCES.getValues())
             .add(DOORS.getValues());
-
-    public static final MaterialSetModern GLASS_PANES = new MaterialSetModern("glass_panes",
-            GLASS_PANE,
-            BLACK_STAINED_GLASS_PANE,
-            BLUE_STAINED_GLASS_PANE,
-            BROWN_STAINED_GLASS_PANE,
-            CYAN_STAINED_GLASS_PANE,
-            GRAY_STAINED_GLASS_PANE,
-            GREEN_STAINED_GLASS_PANE,
-            LIGHT_BLUE_STAINED_GLASS_PANE,
-            LIGHT_GRAY_STAINED_GLASS_PANE,
-            LIME_STAINED_GLASS_PANE,
-            MAGENTA_STAINED_GLASS_PANE,
-            ORANGE_STAINED_GLASS_PANE,
-            PINK_STAINED_GLASS_PANE,
-            PURPLE_STAINED_GLASS_PANE,
-            RED_STAINED_GLASS_PANE,
-            WHITE_STAINED_GLASS_PANE,
-            YELLOW_STAINED_GLASS_PANE
-    );
 
     public static final MaterialSetModern CONCRETES = new MaterialSetModern("concretes",
             BLACK_CONCRETE,
@@ -145,17 +121,6 @@ public final class CustomTag13 {
                     "CORNFLOWER",
                     "LILY_OF_THE_VALLEY"
             );
-
-    public static final MaterialSetModern LONG_PLANTS = new MaterialSetModern("long_plants",
-            SUNFLOWER,
-            ROSE_BUSH,
-            PEONY,
-            TALL_GRASS,
-            LARGE_FERN,
-            SEAGRASS,
-            TALL_SEAGRASS,
-            KELP,
-            KELP_PLANT);
 
     public static final MaterialSetModern LITTLE_MUSHROOMS = new MaterialSetModern("little_mushrooms",
             RED_MUSHROOM,
