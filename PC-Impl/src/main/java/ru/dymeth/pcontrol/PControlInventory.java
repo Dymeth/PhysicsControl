@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public final class PControlInventory implements InventoryHolder {
     private static final ItemStack DISALLOWED_TRIGGER = new ItemStack(Material.BARRIER);
@@ -104,7 +106,11 @@ public final class PControlInventory implements InventoryHolder {
                 "%trigger%", trigger.getDisplayName(),
                 "%world%", this.world.getName());
 
-        if (!msg.isEmpty()) Bukkit.broadcast(msg, "physicscontrol.announce");
+        if (msg.isEmpty()) return;
+        Bukkit.getConsoleSender().sendMessage(msg);
+        Bukkit.getOnlinePlayers().stream()
+                .filter((Predicate<Player>) player -> player.isOp() || player.hasPermission("physicscontrol.announce"))
+                .forEach((Consumer<Player>) player -> player.sendMessage(msg));
     }
 
     void close() {

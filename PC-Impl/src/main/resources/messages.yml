@@ -7,14 +7,14 @@ inventory-title: "Physics of %world%"
 trigger-enabled-state: "&aEnabled"
 trigger-disabled-state: "&cDisabled"
 trigger-unsupported-state: "&cUnsupported server version"
-trigger-realtime: "&eWarning!\n&eChanging this option will affect\n&ethe whole world (all loaded chunks)!"
+trigger-realtime: "&eWarning!\n&eSwitching this option will affect\n&ethe whole world (all loaded chunks)!"
 trigger-on-update: "&aWill affect updated blocks only"
 
 # Switching trigger command
 only-players-menu: "&c[%plugin%] Only players can open the menu"
 bad-perms-inventory: "&c[%plugin%] You don't have permissions to open the menu"
 bad-perms-trigger: "&c[%plugin%] You don't have permissions to switch trigger %trigger%"
-world-or-key-not-specified: "&c[%plugin%] Specify the world name and the option name"
+world-or-key-not-specified: "&c[%plugin%] Specify the world name and the trigger name"
 world-not-found: "&c[%plugin%] Specified world not found"
 key-not-found: "&c[%plugin%] Specified key not found"
 
