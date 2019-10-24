@@ -15,7 +15,7 @@ public final class CustomTag13 {
             OAK_FENCE,
             SPRUCE_FENCE);
 
-    public static final MaterialSetModern PRESSURE_PLATES = new MaterialSetModern("fences",
+    public static final MaterialSetModern PRESSURE_PLATES = new MaterialSetModern("pressure_plates",
             STONE_PRESSURE_PLATE,
             LIGHT_WEIGHTED_PRESSURE_PLATE,
             HEAVY_WEIGHTED_PRESSURE_PLATE)
@@ -25,19 +25,19 @@ public final class CustomTag13 {
             COBBLESTONE_WALL,
             MOSSY_COBBLESTONE_WALL);
 
-    public static final MaterialSetModern REDSTONE_ACTIVE_INPUTS = new MaterialSetModern("redstone_inputs",
+    public static final MaterialSetModern REDSTONE_ACTIVE_INPUTS = new MaterialSetModern("redstone_active_inputs",
             LEVER,
             TRAPPED_CHEST,
             DAYLIGHT_DETECTOR,
             OBSERVER)
             .add(BUTTONS.getValues());
 
-    public static final MaterialSetModern REDSTONE_PASSIVE_INPUTS = new MaterialSetModern("redstone_inputs",
+    public static final MaterialSetModern REDSTONE_PASSIVE_INPUTS = new MaterialSetModern("redstone_passive_inputs",
             TRIPWIRE_HOOK,
             TRIPWIRE)
             .add(PRESSURE_PLATES.getValues());
 
-    public static final MaterialSetModern REDSTONE_TRANSMITTERS_AND_OUTPUTS = new MaterialSetModern("redstone_transmitters",
+    public static final MaterialSetModern REDSTONE_TRANSMITTERS_AND_OUTPUTS = new MaterialSetModern("redstone_transmitters_and_outputs",
             DISPENSER,
             STICKY_PISTON,
             PISTON,
