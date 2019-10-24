@@ -57,7 +57,7 @@ public abstract class PhysicsListener implements Listener {
         Bukkit.getConsoleSender().sendMessage(message.toPlainText());
     }
 
-    private String genOffsetMsg(Block first, Block second) {
+    protected String genOffsetMsg(Block first, Block second) {
         return genOffsetMsg(
                 first.getX() - second.getX(),
                 first.getY() - second.getY(),

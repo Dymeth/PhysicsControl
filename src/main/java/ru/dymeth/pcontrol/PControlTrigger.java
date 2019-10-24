@@ -78,6 +78,8 @@ public enum PControlTrigger {
         this.minVersion = (short) minVersion;
         this.realtime = realtime;
         this.slot = (short) ((row - 1) * 9 + column - 1);
+        if (this.slot < 0 || this.slot >= 6 * 9)
+            throw new IllegalArgumentException("Invalid slot of trigger " + this);
         this.defaults = defaults;
         this.icon = this.createIcon(iconVariants);
     }

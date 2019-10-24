@@ -33,7 +33,8 @@ public final class PControlInventory implements InventoryHolder {
         this.triggerBySlot = new HashMap<>();
         this.slotByTrigger = new HashMap<>();
         for (PControlTrigger trigger : PControlTrigger.values()) {
-            this.triggerBySlot.put(trigger.getSlot(), trigger);
+            if (this.triggerBySlot.put(trigger.getSlot(), trigger) != null)
+                this.data.getPlugin().getLogger().severe("Duplicate trigger slot - " + trigger.getSlot());
             this.slotByTrigger.put(trigger, trigger.getSlot());
             updateTriggerStack(trigger);
         }
@@ -42,12 +43,16 @@ public final class PControlInventory implements InventoryHolder {
     void updateTriggerStack(@Nonnull PControlTrigger trigger) {
         boolean allowed = this.data.getServerVersion() >= trigger.getMinVersion();
         boolean enabled = this.data.isActionAllowed(this.world, trigger);
+
         ItemStack icon = allowed ? trigger.getIcon() : DISALLOWED_TRIGGER;
-        if (icon == null) {
-            this.data.getPlugin().getLogger().severe("Could not find material icon for trigger " + trigger.name() + ". Server version: " + this.data.getServerVersion() + ". Contact with plugin developer");
+        short slot = this.slotByTrigger.get(trigger);
+        this.inventory.setItem(slot, icon); // FIXME Checks of some invalid ItemStack's aren't work (FROSTED_ICE for example)
+        if (icon == null || this.inventory.getItem(slot) == null) {
+            this.data.getPlugin().getLogger().severe("Could not find material icon of trigger " + trigger + ". Server version: " + this.data.getServerVersion() + ". Contact with plugin developer");
             icon = DISALLOWED_TRIGGER;
         }
         icon = icon.clone();
+
         ItemMeta meta = icon.getItemMeta();
         if (meta == null)
             throw new IllegalArgumentException("Item meta could not be null");
@@ -66,8 +71,7 @@ public final class PControlInventory implements InventoryHolder {
         if (allowed && enabled)
             meta.addEnchant(this.data.getFakeEnchantment(), 1, true);
         icon.setItemMeta(meta);
-
-        this.inventory.setItem(this.slotByTrigger.get(trigger), icon);
+        this.inventory.setItem(slot, icon);
     }
 
     @Nonnull
