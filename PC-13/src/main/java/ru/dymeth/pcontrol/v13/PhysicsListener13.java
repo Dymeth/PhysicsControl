@@ -189,6 +189,8 @@ public final class PhysicsListener13 extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
         else if (from == Material.REDSTONE_ORE && to == Material.REDSTONE_ORE)
             return; // Redstone ore deactivation
+        else if (from == Material.AIR && to == Material.AIR)
+            return; // Strange server action. Perhaps this is due to the fall of blocks without a base (torches for example) during generation (only in mineshafts?)
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
     }
