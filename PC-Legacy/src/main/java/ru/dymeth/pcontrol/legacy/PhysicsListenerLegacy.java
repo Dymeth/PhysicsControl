@@ -144,6 +144,8 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.SNOW_MELTING);
         else if (from == Material.ICE && to == Material.WATER)
             this.data.cancelIfDisabled(event, PControlTrigger.ICE_MELTING);
+        else if (from == Material.FROSTED_ICE && to == Material.WATER)
+            this.data.cancelIfDisabled(event, PControlTrigger.FROSTED_ICE_PHYSICS);
         else if (from == Material.FIRE && to == Material.AIR)
             this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
         else if (from == Material.GLOWING_REDSTONE_ORE && to == Material.REDSTONE_ORE)
@@ -193,7 +195,6 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
 
     @EventHandler(ignoreCancelled = true)
     private void on(BlockPhysicsEvent event) {
-        // Block fromBlock = event.getSourceBlock(); // 1.13
         Block fromBlock = event.getBlock();
         Block toBlock;
         MaterialData toData;

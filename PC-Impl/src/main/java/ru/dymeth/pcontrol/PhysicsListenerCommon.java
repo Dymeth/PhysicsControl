@@ -86,6 +86,10 @@ class PhysicsListenerCommon extends PhysicsListener {
     private void on(EntityBlockFormEvent event) {
         Material from = event.getBlock().getType();
         Material to = event.getNewState().getType();
-        this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
+
+        if (from == Material.WATER && to == Material.FROSTED_ICE)
+            this.data.cancelIfDisabled(event, PControlTrigger.FROSTED_ICE_PHYSICS);
+        else
+            this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
     }
 }

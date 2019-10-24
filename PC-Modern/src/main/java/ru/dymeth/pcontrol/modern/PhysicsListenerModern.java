@@ -144,6 +144,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.SNOW_MELTING);
         else if (from == Material.ICE && to == Material.WATER)
             this.data.cancelIfDisabled(event, PControlTrigger.ICE_MELTING);
+        else if (from == Material.FROSTED_ICE && to == Material.WATER)
+            this.data.cancelIfDisabled(event, PControlTrigger.FROSTED_ICE_PHYSICS);
         else if (CustomTagModern.ALL_ALIVE_CORALS.isTagged(from) && CustomTagModern.ALL_DEAD_CORALS.isTagged(to))
             this.data.cancelIfDisabled(event, PControlTrigger.CORALS_DRYING);
         else if (from == Material.FIRE && CustomTagModern.WORLD_AIR.isTagged(to))
