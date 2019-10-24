@@ -33,6 +33,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
             listener = new PhysicsListenerLegacy(this.data);
 
         Bukkit.getPluginManager().registerEvents(listener, this);
+        Bukkit.getPluginManager().registerEvents(new PhysicsListenerCommon(this.data), this);
         Bukkit.getPluginManager().registerEvents(this, this);
     }
 
