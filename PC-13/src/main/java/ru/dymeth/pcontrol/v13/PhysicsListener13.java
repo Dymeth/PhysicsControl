@@ -8,6 +8,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Waterlogged;
+import org.bukkit.block.data.type.Farmland;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
@@ -193,6 +194,22 @@ public final class PhysicsListener13 extends PhysicsListener {
             return; // Strange server action. Perhaps this is due to the fall of blocks without a base (torches for example) during generation (only in mineshafts?)
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    private void on(MoistureChangeEvent event) {
+        BlockData oldData = event.getBlock().getBlockData();
+        BlockData newData = event.getNewState().getBlockData();
+        if (oldData instanceof Farmland && newData instanceof Farmland) {
+            int oldMoisture = ((Farmland) oldData).getMoisture();
+            int newMoisture = ((Farmland) newData).getMoisture();
+            if (newMoisture < oldMoisture)
+                this.data.cancelIfDisabled(event, PControlTrigger.FARMLANDS_DRYING);
+            return;
+        }
+        Material from = oldData.getMaterial();
+        Material to = newData.getMaterial();
+        this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
     }
 
     @EventHandler(ignoreCancelled = true)
