@@ -1,5 +1,6 @@
 package ru.dymeth.pcontrol.v12;
 
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -14,7 +15,9 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.StructureGrowEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Attachable;
+import org.bukkit.material.Dye;
 import org.bukkit.material.MaterialData;
 import ru.dymeth.pcontrol.PControlData;
 import ru.dymeth.pcontrol.PControlTrigger;
@@ -31,8 +34,11 @@ public final class PhysicsListener12 extends PhysicsListener {
 
     @EventHandler(ignoreCancelled = true)
     private void on(StructureGrowEvent event) {
-        if (event.getPlayer() != null) return;
         World world = event.getWorld();
+        if (event.getPlayer() != null) {
+            this.data.cancelIfDisabled(event, world, PControlTrigger.BONE_MEAL_USAGE);
+            return;
+        }
         Material from = event.getLocation().getBlock().getType();
         switch (event.getSpecies()) {
             case TREE:
@@ -63,8 +69,24 @@ public final class PhysicsListener12 extends PhysicsListener {
         }
     }
 
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+    private void onBoneMeal(PlayerInteractEvent event) {
+        if (event.getClickedBlock() == null) return;
+        ItemStack usedItem = event.getItem();
+        if (usedItem == null) return;
+        if (!(usedItem.getData() instanceof Dye)) return;
+        if (((Dye) usedItem.getData()).getColor() != DyeColor.WHITE) return;
+        this.data.cancelIfDisabled(event, event.getClickedBlock().getWorld(), PControlTrigger.BONE_MEAL_USAGE);
+        if (event.isCancelled()) return;
+        this.fertilizedBlocks.add(event.getClickedBlock().getLocation().toVector());
+    }
+
     @EventHandler(ignoreCancelled = true)
     private void on(BlockGrowEvent event) {
+        if (this.fertilizedBlocks.remove(event.getBlock().getLocation().toVector())) {
+            this.data.cancelIfDisabled(event, PControlTrigger.BONE_MEAL_USAGE);
+            return;
+        }
         Material from = event.getBlock().getType();
         Material to = event.getNewState().getType();
 
@@ -88,8 +110,8 @@ public final class PhysicsListener12 extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.COCOAS_GROWING);
         else if (to == Material.NETHER_WART_BLOCK)
             this.data.cancelIfDisabled(event, PControlTrigger.NETHER_WARTS_GROWING);
-        else if (to == Material.GRASS || CustomTag12.FLOWERS.isTagged(to))
-            return; // Bone meal
+        else if (CustomTag12.BONE_MEAL_HERBS.isTagged(to))
+            this.data.cancelIfDisabled(event, PControlTrigger.BONE_MEAL_USAGE);
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
     }

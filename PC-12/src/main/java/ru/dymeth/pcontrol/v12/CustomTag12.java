@@ -28,10 +28,10 @@ public final class CustomTag12 {
             ANVIL,
             CONCRETE_POWDER);
 
-    public static final MaterialSetLegacy FLOWERS = new MaterialSetLegacy(
+    public static final MaterialSetLegacy BONE_MEAL_HERBS = new MaterialSetLegacy(
+            LONG_GRASS,
             YELLOW_FLOWER,
-            RED_ROSE,
-            DOUBLE_PLANT);
+            RED_ROSE);
 
     public static final MaterialSetLegacy LITTLE_MUSHROOMS = new MaterialSetLegacy(
             RED_MUSHROOM,

@@ -125,7 +125,8 @@ public final class CustomTag13 {
             .add(Tag.ANVIL.getValues())
             .add(CONCRETES.getValues());
 
-    public static final MaterialSetModern FLOWERS = new MaterialSetModern("flowers",
+    public static final MaterialSetModern BONE_MEAL_HERBS = new MaterialSetModern("flowers",
+            GRASS,
             DANDELION,
             POPPY,
             BLUE_ORCHID,
@@ -142,8 +143,7 @@ public final class CustomTag13 {
             PEONY)
             .add(
                     "CORNFLOWER",
-                    "LILY_OF_THE_VALLEY",
-                    "WITHER_ROSE"
+                    "LILY_OF_THE_VALLEY"
             );
 
     public static final MaterialSetModern LONG_PLANTS = new MaterialSetModern("long_plants",

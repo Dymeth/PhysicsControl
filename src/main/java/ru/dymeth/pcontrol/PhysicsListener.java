@@ -10,8 +10,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
+import org.bukkit.util.Vector;
 
 import javax.annotation.Nonnull;
+import java.util.HashSet;
+import java.util.Set;
 
 public abstract class PhysicsListener implements Listener {
     protected final BlockFace[] nsweFaces = new BlockFace[]{
@@ -23,9 +26,12 @@ public abstract class PhysicsListener implements Listener {
     protected final boolean debugPhysicsEvent = false;
 
     protected final PControlData data;
+    protected final Set<Vector> fertilizedBlocks;
 
     public PhysicsListener(@Nonnull PControlData data) {
         this.data = data;
+        this.fertilizedBlocks = new HashSet<>();
+        Bukkit.getScheduler().runTaskTimer(data.getPlugin(), this.fertilizedBlocks::clear, 1L, 1L);
     }
 
     protected void unrecognizedAction(@Nonnull Cancellable event, @Nonnull Location l, @Nonnull Object content) {

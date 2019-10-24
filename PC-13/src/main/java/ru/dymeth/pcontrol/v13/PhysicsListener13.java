@@ -18,6 +18,7 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.StructureGrowEvent;
+import org.bukkit.inventory.ItemStack;
 import ru.dymeth.pcontrol.PControlData;
 import ru.dymeth.pcontrol.PControlTrigger;
 import ru.dymeth.pcontrol.PhysicsListener;
@@ -31,8 +32,11 @@ public final class PhysicsListener13 extends PhysicsListener {
 
     @EventHandler(ignoreCancelled = true)
     private void on(StructureGrowEvent event) {
-        if (event.getPlayer() != null) return;
         World world = event.getWorld();
+        if (event.getPlayer() != null) {
+            this.data.cancelIfDisabled(event, world, PControlTrigger.BONE_MEAL_USAGE);
+            return;
+        }
         Material from = event.getLocation().getBlock().getType();
         switch (event.getSpecies()) {
             case TREE:
@@ -63,8 +67,23 @@ public final class PhysicsListener13 extends PhysicsListener {
         }
     }
 
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+    private void onBoneMeal(PlayerInteractEvent event) {
+        if (event.getClickedBlock() == null) return;
+        ItemStack usedItem = event.getItem();
+        if (usedItem == null) return;
+        if (usedItem.getType() != Material.BONE_MEAL) return;
+        this.data.cancelIfDisabled(event, event.getClickedBlock().getWorld(), PControlTrigger.BONE_MEAL_USAGE);
+        if (event.isCancelled()) return;
+        this.fertilizedBlocks.add(event.getClickedBlock().getLocation().toVector());
+    }
+
     @EventHandler(ignoreCancelled = true)
     private void on(BlockGrowEvent event) {
+        if (this.fertilizedBlocks.remove(event.getBlock().getLocation().toVector())) {
+            this.data.cancelIfDisabled(event, PControlTrigger.BONE_MEAL_USAGE);
+            return;
+        }
         Material from = event.getBlock().getType();
         Material to = event.getNewState().getType();
 
@@ -88,8 +107,8 @@ public final class PhysicsListener13 extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.COCOAS_GROWING);
         else if (to == Material.NETHER_WART_BLOCK)
             this.data.cancelIfDisabled(event, PControlTrigger.NETHER_WARTS_GROWING);
-        else if (to == Material.GRASS || CustomTag13.FLOWERS.isTagged(to))
-            return; // Bone meal
+        else if (CustomTag13.BONE_MEAL_HERBS.isTagged(to))
+            this.data.cancelIfDisabled(event, PControlTrigger.BONE_MEAL_USAGE);
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
     }
