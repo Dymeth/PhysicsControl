@@ -136,13 +136,15 @@ public final class CustomTag13 {
             WHITE_TULIP,
             PINK_TULIP,
             OXEYE_DAISY,
-            // cornflower,
-            // lily_of_the_valley,
-            // wither_rose,
             SUNFLOWER,
             LILAC,
             ROSE_BUSH,
-            PEONY);
+            PEONY)
+            .add(
+                    "CORNFLOWER",
+                    "LILY_OF_THE_VALLEY",
+                    "WITHER_ROSE"
+            );
 
     public static final MaterialSetModern LONG_PLANTS = new MaterialSetModern("long_plants",
             SUNFLOWER,
