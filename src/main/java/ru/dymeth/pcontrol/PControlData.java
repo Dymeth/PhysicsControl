@@ -1,5 +1,6 @@
 package ru.dymeth.pcontrol;
 
+import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.Cancellable;
@@ -7,6 +8,7 @@ import org.bukkit.event.block.BlockEvent;
 import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Set;
 
 public interface PControlData {
@@ -28,4 +30,6 @@ public interface PControlData {
     void cancelIfDisabled(@Nonnull Cancellable event, @Nonnull World world, @Nonnull PControlTrigger trigger);
 
     boolean isActionAllowed(@Nonnull World world, @Nonnull PControlTrigger trigger);
+
+    void announce(@Nonnull String raw, @Nullable BaseComponent component);
 }

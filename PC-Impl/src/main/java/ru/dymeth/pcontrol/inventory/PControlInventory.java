@@ -107,10 +107,7 @@ public final class PControlInventory implements InventoryHolder {
                 "%world%", this.world.getName());
 
         if (msg.isEmpty()) return;
-        Bukkit.getConsoleSender().sendMessage(msg);
-        Bukkit.getOnlinePlayers().stream()
-                .filter((Predicate<Player>) player -> player.isOp() || player.hasPermission("physicscontrol.announce"))
-                .forEach((Consumer<Player>) player -> player.sendMessage(msg));
+        this.data.announce(msg, null);
     }
 
     void close() {

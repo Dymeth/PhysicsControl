@@ -6,7 +6,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
@@ -49,12 +48,7 @@ public abstract class PhysicsListener implements Listener {
         TextComponent posPart = new TextComponent(l.getWorld().getName() + " " + xyz);
         posPart.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/teleport " + xyz));
         message.addExtra(posPart);
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            if (player.hasPermission("physicscontrol.announce")) {
-                player.spigot().sendMessage(message);
-            }
-        }
-        Bukkit.getConsoleSender().sendMessage(message.toPlainText());
+        this.data.announce(message.toPlainText(), message);
     }
 
     protected String genOffsetMsg(Block first, Block second) {

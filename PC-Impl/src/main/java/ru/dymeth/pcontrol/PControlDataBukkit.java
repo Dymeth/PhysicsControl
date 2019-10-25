@@ -1,5 +1,6 @@
 package ru.dymeth.pcontrol;
 
+import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -237,5 +238,15 @@ public final class PControlDataBukkit implements PControlData {
         if (worldTriggers == null)
             throw new IllegalArgumentException("Synchronisation error. World " + world.getName() + " not found in cache");
         return worldTriggers;
+    }
+
+    @Override
+    public void announce(@Nonnull String plain, @Nullable BaseComponent component) {
+        Bukkit.getConsoleSender().sendMessage(plain);
+        Bukkit.getOnlinePlayers().stream()
+                .filter(player -> player.isOp() || player.hasPermission("physicscontrol.announce"))
+                .forEach(component == null
+                        ? player -> player.sendMessage(plain)
+                        : player -> player.spigot().sendMessage(component));
     }
 }
