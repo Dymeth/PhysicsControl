@@ -35,7 +35,7 @@ public final class PControlDataBukkit implements PControlData {
 
         try {
             this.serverVersion = Short.parseShort(Bukkit.getServer().getClass().getName().split("\\.")[3].split("_")[1]);
-            if (this.serverVersion < 12) throw new IllegalArgumentException();
+            if (this.serverVersion < 8) throw new IllegalArgumentException();
         } catch (Exception e) {
             throw new RuntimeException("Unsupported server version. It must be Spigot 1.12 or higher");
         }
@@ -196,6 +196,16 @@ public final class PControlDataBukkit implements PControlData {
     void unloadWorldData(@Nonnull World world) {
         this.triggers.remove(world);
         this.inventories.remove(world);
+    }
+
+    @Override
+    public boolean hasVersion(int version) {
+        return this.serverVersion >= version;
+    }
+
+    @Override
+    public boolean isTriggerSupported(@Nonnull PControlTrigger trigger) {
+        return this.serverVersion >= trigger.getMinVersion();
     }
 
     @Override

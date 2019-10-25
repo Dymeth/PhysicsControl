@@ -22,8 +22,6 @@ import ru.dymeth.pcontrol.PhysicsListener;
 
 import javax.annotation.Nonnull;
 
-import static org.bukkit.Material.CONCRETE_POWDER;
-
 public final class PhysicsListenerLegacy extends PhysicsListener {
     public PhysicsListenerLegacy(@Nonnull PControlData data) {
         super(data);
@@ -60,7 +58,7 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.POTATOES_GROWING);
         else if (to == Material.CARROT)
             this.data.cancelIfDisabled(event, PControlTrigger.CARROTS_GROWING);
-        else if (to == Material.BEETROOT_BLOCK)
+        else if (this.data.isTriggerSupported(PControlTrigger.BEETROOTS_GROWING) && to == Material.BEETROOT_BLOCK)
             this.data.cancelIfDisabled(event, PControlTrigger.BEETROOTS_GROWING);
         else if (to == Material.PUMPKIN_STEM || to == Material.PUMPKIN)
             this.data.cancelIfDisabled(event, PControlTrigger.PUMPKINS_GROWING);
@@ -68,7 +66,7 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.MELONS_GROWING);
         else if (to == Material.COCOA && from == Material.COCOA)
             this.data.cancelIfDisabled(event, PControlTrigger.COCOAS_GROWING);
-        else if (to == Material.NETHER_WART_BLOCK)
+        else if (this.data.hasVersion(10) ? to == Material.NETHER_WART_BLOCK : to == Material.NETHER_WARTS)
             this.data.cancelIfDisabled(event, PControlTrigger.NETHER_WARTS_GROWING);
         else if (CustomTagLegacy.BONE_MEAL_HERBS.isTagged(to))
             this.data.cancelIfDisabled(event, PControlTrigger.BONE_MEAL_USAGE);
@@ -106,7 +104,7 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
             this.data.cancelIfDisabled(event, world, PControlTrigger.GRAVEL_FALLING);
         else if (from == Material.ANVIL)
             this.data.cancelIfDisabled(event, world, PControlTrigger.ANVILS_FALLING);
-        else if (from == CONCRETE_POWDER)
+        else if (this.data.isTriggerSupported(PControlTrigger.CONCRETE_POWDERS_FALLING) && from == Material.CONCRETE_POWDER)
             this.data.cancelIfDisabled(event, world, PControlTrigger.CONCRETE_POWDERS_FALLING);
         else if (CustomTagLegacy.GRAVITY_BLOCKS.isTagged(to))
             return; // Already existing falling blocks
@@ -134,7 +132,7 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
         Material from = event.getBlock().getType();
         Material to = event.getNewState().getType();
 
-        if ((from == Material.GRASS || from == Material.GRASS_PATH) && to == Material.DIRT)
+        if ((from == Material.GRASS || (this.data.hasVersion(9) && from == Material.GRASS_PATH)) && to == Material.DIRT)
             this.data.cancelIfDisabled(event, PControlTrigger.GRASS_SPREADING);
         else if (from == Material.MYCEL && to == Material.DIRT)
             this.data.cancelIfDisabled(event, PControlTrigger.MYCELIUM_SPREADING);
@@ -144,7 +142,7 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.SNOW_MELTING);
         else if (from == Material.ICE && to == Material.WATER)
             this.data.cancelIfDisabled(event, PControlTrigger.ICE_MELTING);
-        else if (from == Material.FROSTED_ICE && to == Material.WATER)
+        else if (this.data.isTriggerSupported(PControlTrigger.FROSTED_ICE_PHYSICS) && from == Material.FROSTED_ICE && to == Material.WATER)
             this.data.cancelIfDisabled(event, PControlTrigger.FROSTED_ICE_PHYSICS);
         else if (from == Material.FIRE && to == Material.AIR)
             this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);

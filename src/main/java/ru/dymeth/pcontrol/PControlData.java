@@ -19,6 +19,10 @@ public interface PControlData {
     @Nonnull
     String getMessage(@Nonnull String key, @Nonnull String... placeholders);
 
+    boolean hasVersion(int version);
+
+    boolean isTriggerSupported(@Nonnull PControlTrigger trigger);
+
     void cancelIfDisabled(@Nonnull BlockEvent event, @Nonnull PControlTrigger trigger);
 
     void cancelIfDisabled(@Nonnull Cancellable event, @Nonnull World world, @Nonnull PControlTrigger trigger);
