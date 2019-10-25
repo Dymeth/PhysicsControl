@@ -29,14 +29,17 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     private void onBoneMeal(PlayerInteractEvent event) {
-        if (event.getClickedBlock() == null) return;
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        Block targetBlock = event.getClickedBlock();
+        if (targetBlock == null) throw new IllegalArgumentException("Block absent on PlayerInteractEvent with Action.RIGHT_CLICK_BLOCK");
+
         ItemStack usedItem = event.getItem();
         if (usedItem == null) return;
         if (!(usedItem.getData() instanceof Dye)) return;
         if (((Dye) usedItem.getData()).getColor() != DyeColor.WHITE) return;
-        this.data.cancelIfDisabled(event, event.getClickedBlock().getWorld(), PControlTrigger.BONE_MEAL_USAGE);
+        this.data.cancelIfDisabled(event, targetBlock.getWorld(), PControlTrigger.BONE_MEAL_USAGE);
         if (event.isCancelled()) return;
-        this.fertilizedBlocks.add(event.getClickedBlock().getLocation().toVector());
+        this.fertilizedBlocks.add(targetBlock.getLocation().toVector());
     }
 
     @EventHandler(ignoreCancelled = true)
