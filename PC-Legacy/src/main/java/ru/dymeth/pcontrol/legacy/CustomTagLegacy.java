@@ -25,8 +25,10 @@ public final class CustomTagLegacy {
     public static final MaterialSetLegacy GRAVITY_BLOCKS = new MaterialSetLegacy(
             SAND,
             GRAVEL,
-            ANVIL,
-            CONCRETE_POWDER);
+            ANVIL)
+            .add(
+                    "CONCRETE_POWDER"
+            );
 
     public static final MaterialSetLegacy BONE_MEAL_HERBS = new MaterialSetLegacy(
             LONG_GRASS,
