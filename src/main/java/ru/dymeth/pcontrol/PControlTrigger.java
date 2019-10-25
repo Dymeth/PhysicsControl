@@ -82,32 +82,7 @@ public enum PControlTrigger {
         if (this.slot < 0 || this.slot >= 6 * 9)
             throw new IllegalArgumentException("Invalid slot of trigger " + this);
         this.defaults = defaults;
-        this.icon = this.createIcon(iconVariants);
-    }
-
-    @Nullable
-    private ItemStack createIcon(@Nonnull String... iconVariants) {
-        try {
-            Byte data = null;
-            Material iconMaterial = null;
-            for (String iconVariant : iconVariants) {
-                int damageSplitter = iconVariant.indexOf(':');
-                if (damageSplitter >= 0) {
-                    data = Byte.parseByte(iconVariant.substring(damageSplitter + 1));
-                    iconVariant = iconVariant.substring(0, damageSplitter);
-                } else {
-                    data = null;
-                }
-                iconMaterial = Material.matchMaterial(iconVariant);
-                if (iconMaterial != null) break;
-            }
-            if (iconMaterial == null) return null;
-            if (data == null) return new ItemStack(iconMaterial);
-            return new ItemStack(iconMaterial, 1, (short) 0, data);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        this.icon = BukkitUtils.matchIcon(iconVariants);
     }
 
     public short getMinVersion() {

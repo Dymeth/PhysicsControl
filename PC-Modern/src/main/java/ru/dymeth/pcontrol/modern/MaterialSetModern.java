@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import ru.dymeth.pcontrol.BukkitUtils;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
@@ -42,11 +43,7 @@ public final class MaterialSetModern {
 
     @Nonnull
     public MaterialSetModern add(@Nonnull String... materialNames) {
-        for (String materialName : materialNames) {
-            Material material = Material.matchMaterial(materialName);
-            if (material == null) continue;
-            this.materials.add(material);
-        }
+        this.materials.addAll(BukkitUtils.matchMaterials(null, materialNames));
         return this;
     }
 

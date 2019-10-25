@@ -20,7 +20,6 @@ import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.function.Consumer;
 
 public final class PControlDataBukkit implements PControlData {
     private final Plugin plugin;
@@ -46,26 +45,13 @@ public final class PControlDataBukkit implements PControlData {
         else
             this.fakeEnchantment = FakeEnchantmentLegacy.getInstance();
 
-        this.removableProjectileTypes = this.loadEntityTypes(null,
+        this.removableProjectileTypes = BukkitUtils.matchEntityTypes(null,
                 "ARROW",
                 "SPECTRAL_ARROW",
                 "TIPPED_ARROW",
                 "TRIDENT");
 
         this.reloadConfigs();
-    }
-
-    private Set<EntityType> loadEntityTypes(@Nullable Consumer<String> onFail, @Nonnull String... typeNames) {
-        Set<EntityType> result = new HashSet<>();
-        for (String typeName : typeNames) {
-            EntityType type = JavaUtils.getEnum(EntityType.class, typeName);
-            if (type == null) {
-                if (onFail != null) onFail.accept(typeName);
-            } else {
-                result.add(type);
-            }
-        }
-        return result;
     }
 
     @Override
