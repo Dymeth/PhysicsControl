@@ -73,6 +73,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.NETHER_WARTS_GROWING);
         else if (CustomTagModern.BONE_MEAL_HERBS.isTagged(to))
             this.data.cancelIfDisabled(event, PControlTrigger.BONE_MEAL_USAGE);
+        else if (to == Material.TURTLE_EGG)
+            this.data.cancelIfDisabled(event, PControlTrigger.TURTLES_LAYING_EGGS);
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
     }
@@ -95,6 +97,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.RABBITS_EATING_CARROTS);
             else if (entityType == EntityType.SHEEP)
                 this.data.cancelIfDisabled(event, world, PControlTrigger.SHEEPS_EATING_GRASS);
+            else if (entityType == EntityType.TURTLE)
+                this.data.cancelIfDisabled(event, world, PControlTrigger.TURTLES_LAYING_EGGS);
             else if (entityType == EntityType.ENDERMAN)
                 this.data.cancelIfDisabled(event, world, PControlTrigger.ENDERMANS_GRIEFING);
             else if (entityType == EntityType.WITHER)
