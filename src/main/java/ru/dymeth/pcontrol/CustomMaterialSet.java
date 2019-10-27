@@ -1,9 +1,8 @@
-package ru.dymeth.pcontrol.legacy;
+package ru.dymeth.pcontrol;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.bukkit.Material;
-import ru.dymeth.pcontrol.BukkitUtils;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
@@ -12,29 +11,29 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public final class MaterialSetLegacy {
+public final class CustomMaterialSet {
     private final Set<Material> materials;
 
-    public MaterialSetLegacy(@Nonnull Predicate<Material> filter) {
+    public CustomMaterialSet(@Nonnull Predicate<Material> filter) {
         this(Stream.of(Material.values()).filter(filter).collect(Collectors.toList()));
     }
 
-    public MaterialSetLegacy(@Nonnull Material... materials) {
+    public CustomMaterialSet(@Nonnull Material... materials) {
         this(Lists.newArrayList(materials));
     }
 
-    public MaterialSetLegacy(@Nonnull Collection<Material> materials) {
+    public CustomMaterialSet(@Nonnull Collection<Material> materials) {
         this.materials = Sets.newEnumSet(materials, Material.class);
     }
 
     @Nonnull
-    public MaterialSetLegacy add(@Nonnull Collection<Material> materials) {
+    public CustomMaterialSet add(@Nonnull Collection<Material> materials) {
         this.materials.addAll(materials);
         return this;
     }
 
     @Nonnull
-    public MaterialSetLegacy add(@Nonnull String... materialNames) {
+    public CustomMaterialSet add(@Nonnull String... materialNames) {
         this.materials.addAll(BukkitUtils.matchMaterials(null, materialNames));
         return this;
     }

@@ -1,28 +1,29 @@
 package ru.dymeth.pcontrol.legacy;
 
 import org.bukkit.Material;
+import ru.dymeth.pcontrol.CustomMaterialSet;
 
 import static org.bukkit.Material.*;
 
 public final class CustomTagLegacy {
-    public static final MaterialSetLegacy RAILS = new MaterialSetLegacy(
+    public static final CustomMaterialSet RAILS = new CustomMaterialSet(
             Material.RAILS,
             ACTIVATOR_RAIL,
             DETECTOR_RAIL,
             POWERED_RAIL);
 
-    public static final MaterialSetLegacy PRESSURE_PLATES = new MaterialSetLegacy(
+    public static final CustomMaterialSet PRESSURE_PLATES = new CustomMaterialSet(
             STONE_PLATE,
             GOLD_PLATE,
             IRON_PLATE,
             WOOD_PLATE);
 
-    public static final MaterialSetLegacy REDSTONE_PASSIVE_INPUTS = new MaterialSetLegacy(
+    public static final CustomMaterialSet REDSTONE_PASSIVE_INPUTS = new CustomMaterialSet(
             TRIPWIRE_HOOK,
             TRIPWIRE)
             .add(PRESSURE_PLATES.getValues());
 
-    public static final MaterialSetLegacy GRAVITY_BLOCKS = new MaterialSetLegacy(
+    public static final CustomMaterialSet GRAVITY_BLOCKS = new CustomMaterialSet(
             SAND,
             GRAVEL,
             ANVIL)
@@ -30,12 +31,12 @@ public final class CustomTagLegacy {
                     "CONCRETE_POWDER"
             );
 
-    public static final MaterialSetLegacy BONE_MEAL_HERBS = new MaterialSetLegacy(
+    public static final CustomMaterialSet BONE_MEAL_HERBS = new CustomMaterialSet(
             LONG_GRASS,
             YELLOW_FLOWER,
             RED_ROSE);
 
-    public static final MaterialSetLegacy LITTLE_MUSHROOMS = new MaterialSetLegacy(
+    public static final CustomMaterialSet LITTLE_MUSHROOMS = new CustomMaterialSet(
             RED_MUSHROOM,
             BROWN_MUSHROOM);
 }

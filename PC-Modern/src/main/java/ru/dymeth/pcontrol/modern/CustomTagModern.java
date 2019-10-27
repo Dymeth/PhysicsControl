@@ -1,16 +1,17 @@
 package ru.dymeth.pcontrol.modern;
 
 import org.bukkit.Tag;
+import ru.dymeth.pcontrol.CustomMaterialSet;
 
 import static org.bukkit.Material.*;
 import static org.bukkit.Tag.*;
 
 public final class CustomTagModern {
-    public static final MaterialSetModern WORLD_AIR = new MaterialSetModern("world_air",
+    public static final CustomMaterialSet WORLD_AIR = new CustomMaterialSet(
             AIR,
             CAVE_AIR);
 
-    public static final MaterialSetModern FENCES = new MaterialSetModern("fences",
+    public static final CustomMaterialSet FENCES = new CustomMaterialSet(
             ACACIA_FENCE,
             BIRCH_FENCE,
             DARK_OAK_FENCE,
@@ -19,25 +20,25 @@ public final class CustomTagModern {
             OAK_FENCE,
             SPRUCE_FENCE);
 
-    public static final MaterialSetModern PRESSURE_PLATES = new MaterialSetModern("pressure_plates",
+    public static final CustomMaterialSet PRESSURE_PLATES = new CustomMaterialSet(
             STONE_PRESSURE_PLATE,
             LIGHT_WEIGHTED_PRESSURE_PLATE,
             HEAVY_WEIGHTED_PRESSURE_PLATE)
             .add(WOODEN_PRESSURE_PLATES.getValues());
 
-    public static final MaterialSetModern REDSTONE_ACTIVE_INPUTS = new MaterialSetModern("redstone_active_inputs",
+    public static final CustomMaterialSet REDSTONE_ACTIVE_INPUTS = new CustomMaterialSet(
             LEVER,
             TRAPPED_CHEST,
             DAYLIGHT_DETECTOR,
             OBSERVER)
             .add(BUTTONS.getValues());
 
-    public static final MaterialSetModern REDSTONE_PASSIVE_INPUTS = new MaterialSetModern("redstone_passive_inputs",
+    public static final CustomMaterialSet REDSTONE_PASSIVE_INPUTS = new CustomMaterialSet(
             TRIPWIRE_HOOK,
             TRIPWIRE)
             .add(PRESSURE_PLATES.getValues());
 
-    public static final MaterialSetModern REDSTONE_TRANSMITTERS_AND_OUTPUTS = new MaterialSetModern("redstone_transmitters_and_outputs",
+    public static final CustomMaterialSet REDSTONE_TRANSMITTERS_AND_OUTPUTS = new CustomMaterialSet(
             DISPENSER,
             STICKY_PISTON,
             PISTON,
@@ -57,7 +58,7 @@ public final class CustomTagModern {
             .add(FENCES.getValues())
             .add(DOORS.getValues());
 
-    public static final MaterialSetModern CONCRETES = new MaterialSetModern("concretes",
+    public static final CustomMaterialSet CONCRETES = new CustomMaterialSet(
             BLACK_CONCRETE,
             BLUE_CONCRETE,
             BROWN_CONCRETE,
@@ -76,7 +77,7 @@ public final class CustomTagModern {
             YELLOW_CONCRETE
     );
 
-    public static final MaterialSetModern CONCRETE_POWDERS = new MaterialSetModern("concrete_powders",
+    public static final CustomMaterialSet CONCRETE_POWDERS = new CustomMaterialSet(
             BLACK_CONCRETE_POWDER,
             BLUE_CONCRETE_POWDER,
             BROWN_CONCRETE_POWDER,
@@ -95,13 +96,13 @@ public final class CustomTagModern {
             YELLOW_CONCRETE_POWDER
     );
 
-    public static final MaterialSetModern GRAVITY_BLOCKS = new MaterialSetModern("gravity_blocks",
+    public static final CustomMaterialSet GRAVITY_BLOCKS = new CustomMaterialSet(
             GRAVEL)
             .add(Tag.SAND.getValues())
             .add(Tag.ANVIL.getValues())
             .add(CONCRETES.getValues());
 
-    public static final MaterialSetModern BONE_MEAL_HERBS = new MaterialSetModern("flowers",
+    public static final CustomMaterialSet BONE_MEAL_HERBS = new CustomMaterialSet(
             GRASS,
             DANDELION,
             POPPY,
@@ -122,24 +123,24 @@ public final class CustomTagModern {
                     "LILY_OF_THE_VALLEY"
             );
 
-    public static final MaterialSetModern LITTLE_MUSHROOMS = new MaterialSetModern("little_mushrooms",
+    public static final CustomMaterialSet LITTLE_MUSHROOMS = new CustomMaterialSet(
             RED_MUSHROOM,
             BROWN_MUSHROOM);
 
-    public static final MaterialSetModern ALL_ALIVE_CORALS = new MaterialSetModern("all_alive_corals")
+    public static final CustomMaterialSet ALL_ALIVE_CORALS = new CustomMaterialSet()
             .add(CORAL_BLOCKS.getValues())
             .add(WALL_CORALS.getValues())
             .add(CORAL_PLANTS.getValues())
             .add(CORALS.getValues());
 
-    public static final MaterialSetModern DEAD_CORAL_PLANTS = new MaterialSetModern("dead_coral_plants",
+    public static final CustomMaterialSet DEAD_CORAL_PLANTS = new CustomMaterialSet(
             DEAD_TUBE_CORAL,
             DEAD_BRAIN_CORAL,
             DEAD_BUBBLE_CORAL,
             DEAD_FIRE_CORAL,
             DEAD_HORN_CORAL);
 
-    public static final MaterialSetModern DEAD_CORALS = new MaterialSetModern("dead_corals",
+    public static final CustomMaterialSet DEAD_CORALS = new CustomMaterialSet(
             DEAD_TUBE_CORAL_FAN,
             DEAD_BRAIN_CORAL_FAN,
             DEAD_BUBBLE_CORAL_FAN,
@@ -147,27 +148,27 @@ public final class CustomTagModern {
             DEAD_HORN_CORAL_FAN)
             .add(DEAD_CORAL_PLANTS.getValues());
 
-    public static final MaterialSetModern DEAD_WALL_CORALS = new MaterialSetModern("dead_wall_corals",
+    public static final CustomMaterialSet DEAD_WALL_CORALS = new CustomMaterialSet(
             DEAD_TUBE_CORAL_WALL_FAN,
             DEAD_BRAIN_CORAL_WALL_FAN,
             DEAD_BUBBLE_CORAL_WALL_FAN,
             DEAD_FIRE_CORAL_WALL_FAN,
             DEAD_HORN_CORAL_WALL_FAN);
 
-    public static final MaterialSetModern DEAD_CORAL_BLOCKS = new MaterialSetModern("dead_coral_blocks",
+    public static final CustomMaterialSet DEAD_CORAL_BLOCKS = new CustomMaterialSet(
             DEAD_TUBE_CORAL_BLOCK,
             DEAD_BRAIN_CORAL_BLOCK,
             DEAD_BUBBLE_CORAL_BLOCK,
             DEAD_FIRE_CORAL_BLOCK,
             DEAD_HORN_CORAL_BLOCK);
 
-    public static final MaterialSetModern ALL_DEAD_CORALS = new MaterialSetModern("all_dead_corals")
+    public static final CustomMaterialSet ALL_DEAD_CORALS = new CustomMaterialSet()
             .add(DEAD_CORAL_BLOCKS.getValues())
             .add(DEAD_WALL_CORALS.getValues())
             .add(DEAD_CORAL_PLANTS.getValues())
             .add(DEAD_CORALS.getValues());
 
-    public static final MaterialSetModern UNDERWATER_BLOCKS_ONLY = new MaterialSetModern("underwater_blocks_only",
+    public static final CustomMaterialSet UNDERWATER_BLOCKS_ONLY = new CustomMaterialSet(
             WATER,
             BUBBLE_COLUMN,
             KELP_PLANT,
