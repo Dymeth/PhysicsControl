@@ -12,6 +12,14 @@ public final class CustomTagLegacy {
             DETECTOR_RAIL,
             POWERED_RAIL);
 
+    public static final CustomMaterialSet WOODEN_DOORS = new CustomMaterialSet(
+            ACACIA_DOOR,
+            BIRCH_DOOR,
+            DARK_OAK_DOOR,
+            JUNGLE_DOOR,
+            WOODEN_DOOR,
+            SPRUCE_FENCE);
+
     public static final CustomMaterialSet PRESSURE_PLATES = new CustomMaterialSet(
             STONE_PLATE,
             GOLD_PLATE,

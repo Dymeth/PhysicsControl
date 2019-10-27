@@ -204,6 +204,8 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
 
     @EventHandler(ignoreCancelled = true)
     private void on(EntityInteractEvent event) {
+        if (event.getEntityType() == EntityType.VILLAGER && CustomTagLegacy.WOODEN_DOORS.isTagged(event.getBlock().getType()))
+            return;
         this.handleInteraction(event, event.getBlock());
     }
 
