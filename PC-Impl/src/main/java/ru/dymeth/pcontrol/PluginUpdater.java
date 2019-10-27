@@ -15,6 +15,8 @@ class PluginUpdater {
                 return 3;
             case "Beta-4":
                 return 4;
+            case "Beta-5":
+                return 5;
         }
         throw new RuntimeException("Unknown plugin version: " + name);
     }
