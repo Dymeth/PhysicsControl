@@ -13,6 +13,8 @@ class PluginUpdater {
         switch (name) {
             case "Beta-3":
                 return 3;
+            case "Beta-4":
+                return 4;
         }
         throw new RuntimeException("Unknown plugin version: " + name);
     }
@@ -57,6 +59,7 @@ class PluginUpdater {
             throw new RuntimeException("Could not delete plugin-version file");
         }
         try {
+            f.getParentFile().mkdirs();
             if (f.createNewFile()) {
                 Files.write(f.toPath(), Arrays.asList(
                         plugin.getDescription().getVersion(),
