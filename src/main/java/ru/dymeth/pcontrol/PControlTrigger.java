@@ -52,7 +52,7 @@ public enum PControlTrigger {
             ENTITIES_INTERACTIONS, false, 2, 5, false, "STONE"),
     ENDERMANS_GRIEFING(
             ENTITIES_INTERACTIONS, false, 2, 6, false, "ENDER_PEARL"),
-    WITHER_GRIEFING(
+    WITHERS_GRIEFING(
             ENTITIES_INTERACTIONS, false, 2, 7, false, "WITHER_SKELETON_SKULL", "SKULL_ITEM:1"),
 
     PLAYERS_FLINT_USAGE(
