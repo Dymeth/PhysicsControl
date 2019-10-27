@@ -13,6 +13,8 @@ import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import ru.dymeth.pcontrol.inventory.PControlCategoryInventory;
+import ru.dymeth.pcontrol.inventory.PControlInventory;
 import ru.dymeth.pcontrol.legacy.PhysicsListenerLegacy;
 import ru.dymeth.pcontrol.modern.PhysicsListenerModern;
 
@@ -56,7 +58,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
                 sender.sendMessage(this.data.getMessage("bad-perms-inventory"));
                 return true;
             }
-            ((Player) sender).openInventory(this.data.getInventory(((Player) sender).getWorld()).getInventory());
+            ((Player) sender).openInventory(new PControlCategoryInventory(this.data, ((Player) sender).getWorld()).getInventory());
             return true;
         }
         if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
@@ -87,7 +89,8 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
             }
         }
         try {
-            this.data.switchTrigger(world, PControlTrigger.valueOf(join("_", 1, args).toUpperCase()));
+            PControlTrigger trigger = PControlTrigger.valueOf(join("_", 1, args).toUpperCase());
+            this.data.getInventory(trigger.getCategory(), world).switchTrigger(sender, trigger);
         } catch (Exception e) {
             sender.sendMessage(this.data.getMessage("key-not-found"));
         }
@@ -103,10 +106,8 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     private void on(InventoryClickEvent event) {
-        if (event.getClickedInventory() == null || !(event.getClickedInventory().getHolder() instanceof PControlInventory))
-            return;
-        event.setCancelled(true);
-        ((PControlInventory) event.getClickedInventory().getHolder()).performAction((Player) event.getWhoClicked(), event.getRawSlot());
+        if (event.getClickedInventory() != null && event.getClickedInventory().getHolder() instanceof PControlInventory)
+            ((PControlInventory) event.getClickedInventory().getHolder()).handleEvent(event);
     }
 
     @EventHandler(ignoreCancelled = true)

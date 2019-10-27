@@ -27,7 +27,7 @@ public abstract class PhysicsListener implements Listener {
     protected final PControlData data;
     protected final Set<Vector> fertilizedBlocks;
 
-    public PhysicsListener(@Nonnull PControlData data) {
+    protected PhysicsListener(@Nonnull PControlData data) {
         this.data = data;
         this.fertilizedBlocks = new HashSet<>();
         Bukkit.getScheduler().runTaskTimer(data.getPlugin(), this.fertilizedBlocks::clear, 1L, 1L);

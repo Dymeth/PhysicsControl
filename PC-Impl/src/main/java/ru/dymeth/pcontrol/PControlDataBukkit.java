@@ -11,7 +11,10 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.block.BlockEvent;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.plugin.Plugin;
+import ru.dymeth.pcontrol.inventory.PControlInventory;
+import ru.dymeth.pcontrol.inventory.PControlTriggerInventory;
 import ru.dymeth.pcontrol.legacy.FakeEnchantmentLegacy;
 import ru.dymeth.pcontrol.modern.FakeEnchantmentModern;
 
@@ -19,7 +22,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public final class PControlDataBukkit implements PControlData {
     private final Plugin plugin;
@@ -28,7 +34,7 @@ public final class PControlDataBukkit implements PControlData {
     private final Set<EntityType> removableProjectileTypes;
     private final Map<String, String> messages = new HashMap<>();
     private final Map<World, Map<PControlTrigger, Boolean>> triggers = new HashMap<>();
-    private final Map<World, PControlInventory> inventories = new HashMap<>();
+    private final Map<World, Map<PControlCategory, PControlTriggerInventory>> inventories = new HashMap<>();
 
     PControlDataBukkit(@Nonnull Plugin plugin) {
         this.plugin = plugin;
@@ -60,12 +66,12 @@ public final class PControlDataBukkit implements PControlData {
         return this.plugin;
     }
 
-    short getServerVersion() {
+    public short getServerVersion() {
         return this.serverVersion;
     }
 
     @Nonnull
-    Enchantment getFakeEnchantment() {
+    public Enchantment getFakeEnchantment() {
         return this.fakeEnchantment;
     }
 
@@ -107,7 +113,11 @@ public final class PControlDataBukkit implements PControlData {
     void unloadData() {
         this.messages.clear();
         this.triggers.clear();
-        this.inventories.values().forEach(PControlInventory::close);
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            InventoryHolder holder = player.getOpenInventory().getTopInventory().getHolder();
+            if (!(holder instanceof PControlInventory)) return;
+            player.closeInventory();
+        });
         this.inventories.clear();
     }
 
@@ -142,8 +152,8 @@ public final class PControlDataBukkit implements PControlData {
     }
 
     @Nonnull
-    PControlInventory getInventory(@Nonnull World world) {
-        return this.inventories.get(world);
+    public PControlTriggerInventory getInventory(@Nonnull PControlCategory category, @Nonnull World world) {
+        return this.inventories.get(world).get(category);
     }
 
     void updateWorldData(@Nonnull World world) {
@@ -159,7 +169,13 @@ public final class PControlDataBukkit implements PControlData {
         }
 
         Map<PControlTrigger, Boolean> triggers = this.triggers.computeIfAbsent(world, k -> new HashMap<>());
-        PControlInventory inventory = this.inventories.computeIfAbsent(world, k -> new PControlInventory(this, world));
+        Map<PControlCategory, PControlTriggerInventory> inventories = this.inventories.computeIfAbsent(world, world1 -> {
+            Map<PControlCategory, PControlTriggerInventory> result = new HashMap<>();
+            for (PControlCategory category : PControlCategory.values()) {
+                result.put(category, new PControlTriggerInventory(this, category, world));
+            }
+            return result;
+        });
         for (PControlTrigger trigger : PControlTrigger.values()) {
             Boolean memoryValue = triggers.get(trigger);
             Boolean configValue = worldConfig.contains(trigger.name()) ? worldConfig.getBoolean(trigger.name()) : null;
@@ -174,7 +190,7 @@ public final class PControlDataBukkit implements PControlData {
             }
             if (memoryValue == null || memoryValue != currentValue) {
                 triggers.put(trigger, currentValue);
-                inventory.updateTriggerStack(trigger);
+                inventories.get(trigger.getCategory()).updateTriggerStack(trigger);
             }
         }
         return changed;
@@ -212,7 +228,7 @@ public final class PControlDataBukkit implements PControlData {
         return this.getWorldTriggers(world).getOrDefault(trigger, false);
     }
 
-    void switchTrigger(@Nonnull World world, @Nonnull PControlTrigger trigger) {
+    public void switchTrigger(@Nonnull World world, @Nonnull PControlTrigger trigger) {
         Map<PControlTrigger, Boolean> worldTriggers = this.getWorldTriggers(world);
         worldTriggers.put(trigger, !worldTriggers.get(trigger));
         if (this.updateWorldData(world, this.plugin.getConfig(), false)) this.plugin.saveConfig();

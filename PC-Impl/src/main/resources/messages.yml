@@ -2,13 +2,15 @@
 trigger-enabled: "&e[%plugin%] &f%player% enabled %trigger% in world %world%"
 trigger-disabled: "&e[%plugin%] &f%player% disabled %trigger% in world %world%"
 
-# Inventory
-inventory-title: "Physics of %world%"
+# Inventories
+inventory-title: "%category% of %world%"
 trigger-enabled-state: "&aEnabled"
 trigger-disabled-state: "&cDisabled"
 trigger-unsupported-state: "&cUnsupported server version"
 trigger-realtime: "&eWarning!\n&eSwitching this option will affect\n&ethe whole world (all loaded chunks)!"
 trigger-on-update: "&aWill affect updated blocks only"
+category-inventory-title: "Physics of %world%"
+select-another-category-item: "&eSelect another category"
 
 # Switching trigger command
 only-players-menu: "&c[%plugin%] Only players can open the menu"

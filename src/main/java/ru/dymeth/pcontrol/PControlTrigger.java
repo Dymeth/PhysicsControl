@@ -1,100 +1,167 @@
 package ru.dymeth.pcontrol;
 
-import org.bukkit.Material;
+import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static ru.dymeth.pcontrol.PControlCategory.*;
 
 public enum PControlTrigger {
-    SAND_FALLING(false, 1, 2, "SAND"),
-    GRAVEL_FALLING(false, 1, 3, "GRAVEL"),
-    ANVILS_FALLING(false, 1, 4, "ANVIL"),
-    CONCRETE_POWDERS_FALLING(12, false, 1, 5, "LIME_CONCRETE_POWDER", "CONCRETE_POWDER:5"),
-    WATER_FLOWING(false, 1, 7, "WATER_BUCKET"),
-    LAVA_FLOWING(false, 1, 8, "LAVA_BUCKET"),
+    SAND_FALLING(
+            GRAVITY_BLOCKS, false, 2, 2, "SAND"),
+    GRAVEL_FALLING(
+            GRAVITY_BLOCKS, false, 2, 4, "GRAVEL"),
+    ANVILS_FALLING(
+            GRAVITY_BLOCKS, false, 2, 6, "ANVIL"),
+    CONCRETE_POWDERS_FALLING(
+            GRAVITY_BLOCKS, false, 2, 8, 12, "LIME_CONCRETE_POWDER", "CONCRETE_POWDER:5"),
 
-    LADDERS_DESTROYING(false, 2, 1, "LADDER"),
-    SIGNS_DESTROYING(false, 2, 2, "OAK_SIGN", "SIGN"),
-    RAILS_DESTROYING(13, false, 2, 3, "RAIL", "RAILS"),
-    TORCHES_DESTROYING(false, 2, 4, "TORCH"),
-    REDSTONE_TORCHES_DESTROYING(false, 2, 5, "REDSTONE_TORCH", "REDSTONE_TORCH_ON"),
-    FARMLANDS_TRAMPLING(false, 2, 6, "FARMLAND", "SOIL"),
-    BLOCK_HIT_PROJECTILES_REMOVING(false, 2, 7, "ARROW"),
-    BONE_MEAL_USAGE(false, 2, 8, true, "BONE_MEAL", "INK_SACK:15"),
-    PLAYERS_FLINT_USAGE(false, 2, 9, true, "FLINT_AND_STEEL"),
+    WATER_FLOWING(
+            LIQUIDS, false, 2, 4, "WATER_BUCKET"),
+    LAVA_FLOWING(
+            LIQUIDS, false, 2, 6, "LAVA_BUCKET"),
 
-    FIRE_SPREADING(true, 3, 1, "FLINT_AND_STEEL"),
-    LEAVES_DECAY(true, 3, 2, "OAK_LEAVES", "LEAVES"),
-    CORALS_DRYING(13, true, 3, 3, "FIRE_CORAL"),
-    SNOW_MELTING(true, 3, 4, "SNOW_BLOCK"),
-    FARMLANDS_DRYING(true, 3, 5, "FARMLAND", "SOIL"),
-    ICE_MELTING(true, 3, 6, "ICE"),
-    FROSTED_ICE_PHYSICS(9, false, 3, 7, true, "ICE"),
-    SHEEPS_EATING_GRASS(false, 3, 8, "WHITE_WOOL", "WOOL"),
-    ENDERMANS_GRIEFING(false, 3, 9, "ENDER_PEARL"),
+    LADDERS_DESTROYING(
+            BUILDING, false, 2, 3, "LADDER"),
+    SIGNS_DESTROYING(
+            BUILDING, false, 2, 4, "OAK_SIGN", "SIGN"),
+    TORCHES_DESTROYING(
+            BUILDING, false, 2, 5, "TORCH"),
+    REDSTONE_TORCHES_DESTROYING(
+            BUILDING, false, 2, 6, "REDSTONE_TORCH", "REDSTONE_TORCH_ON"),
+    RAILS_DESTROYING(
+            BUILDING, false, 2, 7, 13, "RAIL", "RAILS"),
 
-    GRASS_SPREADING(true, 4, 1, "GRASS_BLOCK", "GRASS"),
-    MYCELIUM_SPREADING(true, 4, 2, "MYCELIUM", "MYCEL"),
-    WHEAT_GROWING(true, 4, 3, "WHEAT"),
-    POTATOES_GROWING(true, 4, 4, "POTATO_ITEM", "POTATO"),
-    CARROTS_GROWING(true, 4, 5, "CARROT_ITEM", "CARROT"),
-    BEETROOTS_GROWING(9, true, 4, 6, "BEETROOT"),
-    PUMPKINS_GROWING(true, 4, 7, "PUMPKIN"),
-    MELONS_GROWING(true, 4, 8, "MELON_BLOCK", "MELON"),
-    NETHER_WARTS_GROWING(true, 4, 9, "NETHER_WART", "NETHER_STALK"),
+    SHEEPS_EATING_GRASS(
+            ENTITIES_INTERACTIONS, false, 2, 2, "WHITE_WOOL", "WOOL"),
+    ENDERMANS_GRIEFING(
+            ENTITIES_INTERACTIONS, false, 2, 3, "ENDER_PEARL"),
+    FARMLANDS_TRAMPLING(
+            ENTITIES_INTERACTIONS, false, 2, 4, "FARMLAND", "SOIL"),
+    BLOCK_HIT_PROJECTILES_REMOVING(
+            ENTITIES_INTERACTIONS, false, 2, 5, "ARROW"),
+    PLAYERS_FLINT_USAGE(
+            ENTITIES_INTERACTIONS, false, 2, 6, true, "FLINT_AND_STEEL"),
+    BONE_MEAL_USAGE(
+            ENTITIES_INTERACTIONS, false, 2, 7, true, "BONE_MEAL", "INK_SACK:15"),
+    FROSTED_ICE_PHYSICS(
+            ENTITIES_INTERACTIONS, false, 2, 8, true, 9, "ICE"),
 
-    KELPS_GROWING(13, true, 5, 1, "KELP"),
-    SUGAR_CANE_GROWING(true, 5, 2, "SUGAR_CANE"),
-    CACTUS_GROWING(true, 5, 3, "CACTUS"),
-    TREES_GROWING(true, 5, 4, "BIRCH_SAPLING", "SAPLING:2"),
-    VINES_GROWING(true, 5, 5, "VINE"),
-    COCOAS_GROWING(true, 5, 6, "COCOA_BEANS", "INK_SACK:3"),
-    LITTLE_MUSHROOMS_SPREADING(true, 5, 7, "RED_MUSHROOM"),
-    GIANT_MUSHROOMS_GROWING(true, 5, 8, "RED_MUSHROOM_BLOCK", "HUGE_MUSHROOM_2"),
-    CHORUSES_GROWING(9, true, 5, 9, "CHORUS_FLOWER"),
+    FIRE_SPREADING(
+            WORLD_DESTRUCTION, true, 2, 2, "FLINT_AND_STEEL"),
+    SNOW_MELTING(
+            WORLD_DESTRUCTION, true, 2, 3, "SNOW_BLOCK"),
+    FARMLANDS_DRYING(
+            WORLD_DESTRUCTION, true, 2, 4, "FARMLAND", "SOIL"),
+    ICE_MELTING(
+            WORLD_DESTRUCTION, true, 2, 5, "ICE"),
+    LEAVES_DECAY(
+            WORLD_DESTRUCTION, true, 2, 6, "OAK_LEAVES", "LEAVES"),
+    CORALS_DRYING(
+            WORLD_DESTRUCTION, true, 2, 7, 13, "FIRE_CORAL"),
 
-    DEBUG_MESSAGES(true, 6, 4, true, "COMMAND_BLOCK", "COMMAND"),
-    ALLOW_UNRECOGNIZED_ACTIONS(true, 6, 6, "COMMAND_BLOCK", "COMMAND");
+    SUGAR_CANE_GROWING(
+            PLANTS, true, 1, 2, "SUGAR_CANE"),
+    CACTUS_GROWING(
+            PLANTS, true, 1, 3, "CACTUS"),
+    TREES_GROWING(
+            PLANTS, true, 1, 4, "BIRCH_SAPLING", "SAPLING:2"),
+    VINES_GROWING(
+            PLANTS, true, 1, 5, "VINE"),
+    GIANT_MUSHROOMS_GROWING(
+            PLANTS, true, 1, 6, "RED_MUSHROOM_BLOCK", "HUGE_MUSHROOM_2"),
+    CHORUSES_GROWING(
+            PLANTS, true, 1, 7, 9, "CHORUS_FLOWER"),
+    KELPS_GROWING(
+            PLANTS, true, 1, 8, 13, "KELP"),
 
+    LITTLE_MUSHROOMS_SPREADING(
+            PLANTS, true, 2, 1, "RED_MUSHROOM"),
+    PUMPKINS_GROWING(
+            PLANTS, true, 2, 2, "PUMPKIN"),
+    MELONS_GROWING(
+            PLANTS, true, 2, 3, "MELON_BLOCK", "MELON"),
+    NETHER_WARTS_GROWING(
+            PLANTS, true, 2, 4, "NETHER_WART", "NETHER_STALK"),
+    COCOAS_GROWING(
+            PLANTS, true, 2, 5, "COCOA_BEANS", "INK_SACK:3"),
+    WHEAT_GROWING(
+            PLANTS, true, 2, 6, "WHEAT"),
+    POTATOES_GROWING(
+            PLANTS, true, 2, 7, "POTATO_ITEM", "POTATO"),
+    CARROTS_GROWING(
+            PLANTS, true, 2, 8, "CARROT_ITEM", "CARROT"),
+    BEETROOTS_GROWING(
+            PLANTS, true, 2, 9, 9, "BEETROOT"),
+
+    GRASS_SPREADING(
+            PLANTS, true, 3, 4, "GRASS_BLOCK", "GRASS"),
+    MYCELIUM_SPREADING(
+            PLANTS, true, 3, 6, "MYCELIUM", "MYCEL"),
+
+    DEBUG_MESSAGES(
+            SETTINGS, true, 2, 4, true, "COMMAND_BLOCK", "COMMAND"),
+    ALLOW_UNRECOGNIZED_ACTIONS(
+            SETTINGS, true, 2, 6, "COMMAND_BLOCK", "COMMAND");
+
+    private final PControlCategory category;
     private final short minVersion;
     private final ItemStack icon;
     private final boolean realtime;
     private final short slot;
     private final boolean defaults;
 
-    PControlTrigger(boolean realtime, int row, int column, @Nonnull String... iconVariants) {
-        this(-1, realtime, row, column, false, iconVariants);
+    PControlTrigger(@Nonnull PControlCategory category, boolean realtime, int row, int column, @Nonnull String... iconVariants) {
+        this(category, realtime, row, column, false, -1, iconVariants);
     }
 
-    PControlTrigger(int minVersion, boolean realtime, int row, int column, @Nonnull String... iconVariants) {
-        this(minVersion, realtime, row, column, false, iconVariants);
+    PControlTrigger(@Nonnull PControlCategory category, boolean realtime, int row, int column, int minVersion, @Nonnull String... iconVariants) {
+        this(category, realtime, row, column, false, minVersion, iconVariants);
     }
 
-    PControlTrigger(boolean realtime, int row, int column, boolean defaults, @Nonnull String... iconVariants) {
-        this(-1, realtime, row, column, defaults, iconVariants);
+    PControlTrigger(@Nonnull PControlCategory category, boolean realtime, int row, int column, boolean defaults, @Nonnull String... iconVariants) {
+        this(category, realtime, row, column, defaults, -1, iconVariants);
     }
 
-    PControlTrigger(int minVersion, boolean realtime, int row, int column, boolean defaults, @Nonnull String... iconVariants) {
+    PControlTrigger(@Nonnull PControlCategory category, boolean realtime, int row, int column, boolean defaults, int minVersion, @Nonnull String... iconVariants) {
+        this.category = category;
         this.minVersion = (short) minVersion;
         this.realtime = realtime;
         this.slot = (short) ((row - 1) * 9 + column - 1);
-        if (this.slot < 0 || this.slot >= 6 * 9)
+        if (this.slot < 0 || this.slot >= 3 * 9)
             throw new IllegalArgumentException("Invalid slot of trigger " + this);
         this.defaults = defaults;
         this.icon = BukkitUtils.matchIcon(iconVariants);
+        ItemMeta meta = category.getIcon().getItemMeta();
+        if (meta == null) throw new IllegalArgumentException();
+        List<String> lore = meta.getLore();
+        if (lore == null) lore = new ArrayList<>();
+        lore.add(ChatColor.YELLOW + " - " + this.getDisplayName());
+        meta.setLore(lore);
+        category.getIcon().setItemMeta(meta);
+    }
+
+    @Nonnull
+    public PControlCategory getCategory() {
+        return this.category;
     }
 
     public short getMinVersion() {
         return this.minVersion;
     }
 
+    @Nonnull
     public String getDisplayName() {
         String name = this.name().toLowerCase().replace("_", " ");
         return Character.toUpperCase(name.charAt(0)) + name.substring(1);
     }
 
-    @Nullable
+    @Nonnull
     public ItemStack getIcon() {
         return this.icon;
     }

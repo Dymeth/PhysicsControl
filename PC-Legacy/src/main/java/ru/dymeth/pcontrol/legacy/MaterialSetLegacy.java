@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public final class MaterialSetLegacy {
-    private Set<Material> materials;
+    private final Set<Material> materials;
 
     public MaterialSetLegacy(@Nonnull Predicate<Material> filter) {
         this(Stream.of(Material.values()).filter(filter).collect(Collectors.toList()));
