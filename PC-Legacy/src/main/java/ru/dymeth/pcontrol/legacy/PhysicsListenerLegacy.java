@@ -89,6 +89,8 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.FARMLANDS_TRAMPLING);
             else if (to == Material.GLOWING_REDSTONE_ORE)
                 return; // Redstone ore activation
+            else if (entityType == EntityType.RABBIT)
+                this.data.cancelIfDisabled(event, world, PControlTrigger.RABBITS_EATING_CARROTS);
             else if (entityType == EntityType.SHEEP)
                 this.data.cancelIfDisabled(event, world, PControlTrigger.SHEEPS_EATING_GRASS);
             else if (entityType == EntityType.ENDERMAN)

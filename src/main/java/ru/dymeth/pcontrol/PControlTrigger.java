@@ -37,12 +37,14 @@ public enum PControlTrigger {
     RAILS_DESTROYING(
             BUILDING, false, 2, 7, false, 13, "RAIL", "RAILS"),
 
+    RABBITS_EATING_CARROTS(
+            ENTITIES_INTERACTIONS, false, 1, 2, false, "CARROT_ITEM", "CARROT"),
     SHEEPS_EATING_GRASS(
             ENTITIES_INTERACTIONS, false, 1, 4, false, "WHITE_WOOL", "WOOL"),
     ENDERMANS_GRIEFING(
-            ENTITIES_INTERACTIONS, false, 1, 5, false, "ENDER_PEARL"),
+            ENTITIES_INTERACTIONS, false, 1, 6, false, "ENDER_PEARL"),
     SILVERFISHES_HIDING_IN_BLOCKS(
-            ENTITIES_INTERACTIONS, false, 1, 6, false, "STONE"),
+            ENTITIES_INTERACTIONS, false, 1, 8, false, "STONE"),
 
     FARMLANDS_TRAMPLING(
             ENTITIES_INTERACTIONS, false, 2, 4, false, "FARMLAND", "SOIL"),
