@@ -38,19 +38,23 @@ public enum PControlTrigger {
             BUILDING, false, 2, 7, false, 13, "RAIL", "RAILS"),
 
     SHEEPS_EATING_GRASS(
-            ENTITIES_INTERACTIONS, false, 2, 2, false, "WHITE_WOOL", "WOOL"),
+            ENTITIES_INTERACTIONS, false, 1, 4, false, "WHITE_WOOL", "WOOL"),
     ENDERMANS_GRIEFING(
-            ENTITIES_INTERACTIONS, false, 2, 3, false, "ENDER_PEARL"),
+            ENTITIES_INTERACTIONS, false, 1, 5, false, "ENDER_PEARL"),
+    SILVERFISHES_HIDING_IN_BLOCKS(
+            ENTITIES_INTERACTIONS, false, 1, 6, false, "STONE"),
+
     FARMLANDS_TRAMPLING(
             ENTITIES_INTERACTIONS, false, 2, 4, false, "FARMLAND", "SOIL"),
     BLOCK_HIT_PROJECTILES_REMOVING(
-            ENTITIES_INTERACTIONS, false, 2, 5, false, "ARROW"),
+            ENTITIES_INTERACTIONS, false, 2, 6, false, "ARROW"),
+
     PLAYERS_FLINT_USAGE(
-            ENTITIES_INTERACTIONS, false, 2, 6, true, "FLINT_AND_STEEL"),
+            ENTITIES_INTERACTIONS, false, 3, 4, true, "FLINT_AND_STEEL"),
     BONE_MEAL_USAGE(
-            ENTITIES_INTERACTIONS, false, 2, 7, true, "BONE_MEAL", "INK_SACK:15"),
+            ENTITIES_INTERACTIONS, false, 3, 5, true, "BONE_MEAL", "INK_SACK:15"),
     FROSTED_ICE_PHYSICS(
-            ENTITIES_INTERACTIONS, false, 2, 8, true, 9, "ICE"),
+            ENTITIES_INTERACTIONS, false, 3, 6, true, 9, "ICE"),
 
     FIRE_SPREADING(
             WORLD_DESTRUCTION, true, 2, 2, false, "FLINT_AND_STEEL"),
