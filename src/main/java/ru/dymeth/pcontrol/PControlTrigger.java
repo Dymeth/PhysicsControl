@@ -37,21 +37,23 @@ public enum PControlTrigger {
     RAILS_DESTROYING(
             BUILDING, false, 2, 7, false, 13, "RAIL", "RAILS"),
 
-    RABBITS_EATING_CARROTS(
-            ENTITIES_INTERACTIONS, false, 1, 2, false, "CARROT_ITEM", "CARROT"),
-    SHEEPS_EATING_GRASS(
-            ENTITIES_INTERACTIONS, false, 1, 4, false, "WHITE_WOOL", "WOOL"),
-    ENDERMANS_GRIEFING(
-            ENTITIES_INTERACTIONS, false, 1, 6, false, "ENDER_PEARL"),
-    SILVERFISHES_HIDING_IN_BLOCKS(
-            ENTITIES_INTERACTIONS, false, 1, 8, false, "STONE"),
-
-    FARMLANDS_TRAMPLING(
-            ENTITIES_INTERACTIONS, false, 2, 4, false, "FARMLAND", "SOIL"),
     BLOCK_HIT_PROJECTILES_REMOVING(
-            ENTITIES_INTERACTIONS, false, 2, 5, false, "ARROW"),
+            ENTITIES_INTERACTIONS, false, 1, 4, false, "ARROW"),
+    FARMLANDS_TRAMPLING(
+            ENTITIES_INTERACTIONS, false, 1, 5, false, "FARMLAND", "SOIL"),
     BURNING_ARROWS_ACTIVATE_TNT(
-            ENTITIES_INTERACTIONS, false, 2, 6, true, "ARROW"),
+            ENTITIES_INTERACTIONS, false, 1, 6, true, "ARROW"),
+
+    RABBITS_EATING_CARROTS(
+            ENTITIES_INTERACTIONS, false, 2, 3, false, "CARROT_ITEM", "CARROT"),
+    SHEEPS_EATING_GRASS(
+            ENTITIES_INTERACTIONS, false, 2, 4, false, "WHITE_WOOL", "WOOL"),
+    SILVERFISHES_HIDING_IN_BLOCKS(
+            ENTITIES_INTERACTIONS, false, 2, 5, false, "STONE"),
+    ENDERMANS_GRIEFING(
+            ENTITIES_INTERACTIONS, false, 2, 6, false, "ENDER_PEARL"),
+    WITHER_GRIEFING(
+            ENTITIES_INTERACTIONS, false, 2, 7, false, "WITHER_SKELETON_SKULL", "SKULL_ITEM:1"),
 
     PLAYERS_FLINT_USAGE(
             ENTITIES_INTERACTIONS, false, 3, 4, true, "FLINT_AND_STEEL"),

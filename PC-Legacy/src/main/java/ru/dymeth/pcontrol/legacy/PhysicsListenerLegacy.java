@@ -95,6 +95,8 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.SHEEPS_EATING_GRASS);
             else if (entityType == EntityType.ENDERMAN)
                 this.data.cancelIfDisabled(event, world, PControlTrigger.ENDERMANS_GRIEFING);
+            else if (entityType == EntityType.WITHER)
+                this.data.cancelIfDisabled(event, world, PControlTrigger.WITHER_GRIEFING);
             else if (entityType == EntityType.SILVERFISH)
                 this.data.cancelIfDisabled(event, world, PControlTrigger.SILVERFISHES_HIDING_IN_BLOCKS);
             else if (entityType == EntityType.ARROW && from == Material.TNT)
