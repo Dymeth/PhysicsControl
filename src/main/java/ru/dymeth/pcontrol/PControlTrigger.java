@@ -27,13 +27,13 @@ public enum PControlTrigger {
             LIQUIDS, false, 2, 6, false, "LAVA_BUCKET"),
 
     LADDERS_DESTROYING(
-            BUILDING, false, 2, 3, false, "LADDER"),
+            BUILDING, false, 2, 3, false, 13, "LADDER"),
     SIGNS_DESTROYING(
-            BUILDING, false, 2, 4, false, "OAK_SIGN", "SIGN"),
+            BUILDING, false, 2, 4, false, 13, "OAK_SIGN", "SIGN"),
     TORCHES_DESTROYING(
-            BUILDING, false, 2, 5, false, "TORCH"),
+            BUILDING, false, 2, 5, false, 13, "TORCH"),
     REDSTONE_TORCHES_DESTROYING(
-            BUILDING, false, 2, 6, false, "REDSTONE_TORCH", "REDSTONE_TORCH_ON"),
+            BUILDING, false, 2, 6, false, 13, "REDSTONE_TORCH", "REDSTONE_TORCH_ON"),
     RAILS_DESTROYING(
             BUILDING, false, 2, 7, false, 13, "RAIL", "RAILS"),
 
