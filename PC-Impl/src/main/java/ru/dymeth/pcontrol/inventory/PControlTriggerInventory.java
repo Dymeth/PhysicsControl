@@ -66,7 +66,7 @@ public final class PControlTriggerInventory extends PControlInventory {
             lore.add(enabled ? this.data.getMessage("trigger-enabled-state") : this.data.getMessage("trigger-disabled-state"));
             lore.addAll(Arrays.asList(this.data.getMessage(trigger.isRealtime() ? "trigger-realtime" : "trigger-on-update").split("\\n")));
         } else {
-            lore.add(this.data.getMessage("trigger-unsupported-state"));
+            lore.add(this.data.getMessage("trigger-unsupported-state", "%min_version%", "1." + trigger.getMinVersion()));
         }
         meta.setLore(lore);
         if (allowed && enabled)
