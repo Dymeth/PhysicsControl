@@ -85,7 +85,7 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
         if (!(event.getEntity() instanceof FallingBlock)) {
             EntityType entityType = event.getEntity().getType();
 
-            if (from == Material.DIRT && to == Material.SOIL)
+            if (from == Material.SOIL && to == Material.DIRT)
                 this.data.cancelIfDisabled(event, world, PControlTrigger.FARMLANDS_TRAMPLING);
             else if (to == Material.GLOWING_REDSTONE_ORE)
                 return; // Redstone ore activation
