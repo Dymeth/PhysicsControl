@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
 import org.bukkit.plugin.Plugin;
@@ -107,7 +108,13 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
     @EventHandler(ignoreCancelled = true)
     private void on(InventoryClickEvent event) {
         if (event.getClickedInventory() != null && event.getClickedInventory().getHolder() instanceof PControlInventory)
-            ((PControlInventory) event.getClickedInventory().getHolder()).handleEvent(event);
+            ((PControlInventory) event.getClickedInventory().getHolder()).handle(event);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    private void on(InventoryDragEvent event) {
+        if (event.getInventory().getHolder() instanceof PControlInventory)
+            ((PControlInventory) event.getInventory().getHolder()).handle(event);
     }
 
     @EventHandler(ignoreCancelled = true)

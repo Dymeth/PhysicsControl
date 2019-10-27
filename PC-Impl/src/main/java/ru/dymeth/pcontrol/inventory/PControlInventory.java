@@ -5,6 +5,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -41,12 +42,16 @@ public abstract class PControlInventory implements InventoryHolder {
         return this.inventory.getItem(slot);
     }
 
-    public final void handleEvent(@Nonnull InventoryClickEvent event) {
+    public final void handle(@Nonnull InventoryClickEvent event) {
         event.setCancelled(true);
         if (event.getClick() != ClickType.LEFT) return;
         Consumer<Player> action = this.slotActions.get((short) event.getRawSlot());
         if (action == null) return;
         action.accept((Player) event.getWhoClicked());
+    }
+
+    public final void handle(@Nonnull InventoryDragEvent event) {
+        event.setCancelled(true);
     }
 
     @Override
