@@ -46,7 +46,7 @@ public abstract class PhysicsListener implements Listener {
         String xyz = l.getBlockX() + " " + l.getBlockY() + " " + l.getBlockZ();
         TextComponent message = new TextComponent(this.data.getMessage("debug-message", "%action%", event.getClass().getSimpleName().replace("Event", ""), "%content%", content.toString()));
         TextComponent posPart = new TextComponent(l.getWorld().getName() + " " + xyz);
-        posPart.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/teleport " + xyz));
+        posPart.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/minecraft:tp @p " + xyz));
         message.addExtra(posPart);
         this.data.announce(message.toPlainText(), message);
     }
