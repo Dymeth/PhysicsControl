@@ -37,6 +37,7 @@ public final class PControlDataBukkit implements PControlData {
 
     PControlDataBukkit(@Nonnull Plugin plugin) {
         this.plugin = plugin;
+        new PluginUpdater(plugin);
 
         try {
             this.serverVersion = Short.parseShort(Bukkit.getServer().getClass().getName().split("\\.")[3].split("_")[1]);
