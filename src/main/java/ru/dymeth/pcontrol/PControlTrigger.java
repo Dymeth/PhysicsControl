@@ -47,7 +47,9 @@ public enum PControlTrigger {
     FARMLANDS_TRAMPLING(
             ENTITIES_INTERACTIONS, false, 2, 4, false, "FARMLAND", "SOIL"),
     BLOCK_HIT_PROJECTILES_REMOVING(
-            ENTITIES_INTERACTIONS, false, 2, 6, false, "ARROW"),
+            ENTITIES_INTERACTIONS, false, 2, 5, false, "ARROW"),
+    BURNING_ARROWS_ACTIVATE_TNT(
+            ENTITIES_INTERACTIONS, false, 2, 6, true, "ARROW"),
 
     PLAYERS_FLINT_USAGE(
             ENTITIES_INTERACTIONS, false, 3, 4, true, "FLINT_AND_STEEL"),
