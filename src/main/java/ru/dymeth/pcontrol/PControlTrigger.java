@@ -44,16 +44,18 @@ public enum PControlTrigger {
     BURNING_ARROWS_ACTIVATE_TNT(
             ENTITIES_INTERACTIONS, false, 1, 6, true, "ARROW"),
 
+    VILLAGERS_FARMING(
+            ENTITIES_INTERACTIONS, false, 2, 2, false, "WHEAT"),
     RABBITS_EATING_CARROTS(
             ENTITIES_INTERACTIONS, false, 2, 3, false, "CARROT_ITEM", "CARROT"),
     SHEEPS_EATING_GRASS(
             ENTITIES_INTERACTIONS, false, 2, 4, false, "WHITE_WOOL", "WOOL"),
     SILVERFISHES_HIDING_IN_BLOCKS(
-            ENTITIES_INTERACTIONS, false, 2, 5, false, "STONE"),
+            ENTITIES_INTERACTIONS, false, 2, 6, false, "STONE"),
     ENDERMANS_GRIEFING(
-            ENTITIES_INTERACTIONS, false, 2, 6, false, "ENDER_PEARL"),
+            ENTITIES_INTERACTIONS, false, 2, 7, false, "ENDER_PEARL"),
     WITHERS_GRIEFING(
-            ENTITIES_INTERACTIONS, false, 2, 7, false, "WITHER_SKELETON_SKULL", "SKULL_ITEM:1"),
+            ENTITIES_INTERACTIONS, false, 2, 8, false, "WITHER_SKELETON_SKULL", "SKULL_ITEM:1"),
 
     PLAYERS_FLINT_USAGE(
             ENTITIES_INTERACTIONS, false, 3, 4, true, "FLINT_AND_STEEL"),
