@@ -22,10 +22,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.io.InputStreamReader;
+import java.util.*;
+import java.util.logging.Logger;
 
 public final class PControlDataBukkit implements PControlData {
     private final Plugin plugin;
@@ -90,12 +89,43 @@ public final class PControlDataBukkit implements PControlData {
     private void reloadMessages() {
         File messagesFile = this.createConfigFileIfNotExist("messages.yml", true);
         YamlConfiguration messagesConfig = YamlConfiguration.loadConfiguration(messagesFile);
-        for (String trigger : messagesConfig.getKeys(false)) {
-            String msg = messagesConfig.getString(trigger);
+        YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(
+                new InputStreamReader(Objects.requireNonNull(this.plugin.getResource("messages.yml"))));
+        Map<String, String> defaultValues = new HashMap<>();
+        Map<String, String> deprecatedKeys = new HashMap<>();
+        Map<String, String> unloadedKeys = new HashMap<>();
+
+        for (String key : defaultConfig.getKeys(false)) {
+            defaultValues.put(key, defaultConfig.getString(key));
+        }
+
+        for (String key : messagesConfig.getKeys(false)) {
+            String msg = messagesConfig.getString(key);
             if (msg == null) continue;
             msg = ChatColor.translateAlternateColorCodes('&', msg);
             msg = msg.replace("%plugin%", this.plugin.getName());
-            this.messages.put(trigger, msg);
+            if (defaultValues.containsKey(key))
+                this.messages.put(key, msg);
+            else
+                deprecatedKeys.put(key, msg);
+        }
+
+        for (Map.Entry<String, String> defaultEntry : defaultValues.entrySet()) {
+            String key = defaultEntry.getKey();
+            if (this.messages.containsKey(key)) continue;
+            String value = defaultEntry.getValue();
+            this.messages.put(key, ChatColor.translateAlternateColorCodes('&',value ));
+            unloadedKeys.put(key, value);
+        }
+
+        Logger logger = this.plugin.getLogger();
+        if (unloadedKeys.size() > 0) {
+            logger.warning("Some localization phrases was not found. Used defaults:");
+            unloadedKeys.forEach((key, value) -> logger.warning(key + ": \"" + value + "\""));
+        }
+        if (deprecatedKeys.size() > 0) {
+            logger.warning("Some deprecated localization phrases was not applied:");
+            deprecatedKeys.forEach((key, value) -> logger.warning(key + ": \"" + value + "\""));
         }
     }
 
