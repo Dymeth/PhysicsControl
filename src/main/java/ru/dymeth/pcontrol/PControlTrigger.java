@@ -13,38 +13,38 @@ import static ru.dymeth.pcontrol.PControlCategory.*;
 
 public enum PControlTrigger {
     SAND_FALLING(
-            GRAVITY_BLOCKS, false, 2, 2, "SAND"),
+            GRAVITY_BLOCKS, false, 2, 2, false, "SAND"),
     GRAVEL_FALLING(
-            GRAVITY_BLOCKS, false, 2, 4, "GRAVEL"),
+            GRAVITY_BLOCKS, false, 2, 4, false, "GRAVEL"),
     ANVILS_FALLING(
-            GRAVITY_BLOCKS, false, 2, 6, "ANVIL"),
+            GRAVITY_BLOCKS, false, 2, 6, false, "ANVIL"),
     CONCRETE_POWDERS_FALLING(
-            GRAVITY_BLOCKS, false, 2, 8, 12, "LIME_CONCRETE_POWDER", "CONCRETE_POWDER:5"),
+            GRAVITY_BLOCKS, false, 2, 8, false, 12, "LIME_CONCRETE_POWDER", "CONCRETE_POWDER:5"),
 
     WATER_FLOWING(
-            LIQUIDS, false, 2, 4, "WATER_BUCKET"),
+            LIQUIDS, false, 2, 4, false, "WATER_BUCKET"),
     LAVA_FLOWING(
-            LIQUIDS, false, 2, 6, "LAVA_BUCKET"),
+            LIQUIDS, false, 2, 6, false, "LAVA_BUCKET"),
 
     LADDERS_DESTROYING(
-            BUILDING, false, 2, 3, "LADDER"),
+            BUILDING, false, 2, 3, false, "LADDER"),
     SIGNS_DESTROYING(
-            BUILDING, false, 2, 4, "OAK_SIGN", "SIGN"),
+            BUILDING, false, 2, 4, false, "OAK_SIGN", "SIGN"),
     TORCHES_DESTROYING(
-            BUILDING, false, 2, 5, "TORCH"),
+            BUILDING, false, 2, 5, false, "TORCH"),
     REDSTONE_TORCHES_DESTROYING(
-            BUILDING, false, 2, 6, "REDSTONE_TORCH", "REDSTONE_TORCH_ON"),
+            BUILDING, false, 2, 6, false, "REDSTONE_TORCH", "REDSTONE_TORCH_ON"),
     RAILS_DESTROYING(
-            BUILDING, false, 2, 7, 13, "RAIL", "RAILS"),
+            BUILDING, false, 2, 7, false, 13, "RAIL", "RAILS"),
 
     SHEEPS_EATING_GRASS(
-            ENTITIES_INTERACTIONS, false, 2, 2, "WHITE_WOOL", "WOOL"),
+            ENTITIES_INTERACTIONS, false, 2, 2, false, "WHITE_WOOL", "WOOL"),
     ENDERMANS_GRIEFING(
-            ENTITIES_INTERACTIONS, false, 2, 3, "ENDER_PEARL"),
+            ENTITIES_INTERACTIONS, false, 2, 3, false, "ENDER_PEARL"),
     FARMLANDS_TRAMPLING(
-            ENTITIES_INTERACTIONS, false, 2, 4, "FARMLAND", "SOIL"),
+            ENTITIES_INTERACTIONS, false, 2, 4, false, "FARMLAND", "SOIL"),
     BLOCK_HIT_PROJECTILES_REMOVING(
-            ENTITIES_INTERACTIONS, false, 2, 5, "ARROW"),
+            ENTITIES_INTERACTIONS, false, 2, 5, false, "ARROW"),
     PLAYERS_FLINT_USAGE(
             ENTITIES_INTERACTIONS, false, 2, 6, true, "FLINT_AND_STEEL"),
     BONE_MEAL_USAGE(
@@ -53,61 +53,61 @@ public enum PControlTrigger {
             ENTITIES_INTERACTIONS, false, 2, 8, true, 9, "ICE"),
 
     FIRE_SPREADING(
-            WORLD_DESTRUCTION, true, 2, 2, "FLINT_AND_STEEL"),
+            WORLD_DESTRUCTION, true, 2, 2, false, "FLINT_AND_STEEL"),
     SNOW_MELTING(
-            WORLD_DESTRUCTION, true, 2, 3, "SNOW_BLOCK"),
+            WORLD_DESTRUCTION, true, 2, 3, false, "SNOW_BLOCK"),
     FARMLANDS_DRYING(
-            WORLD_DESTRUCTION, true, 2, 4, "FARMLAND", "SOIL"),
+            WORLD_DESTRUCTION, true, 2, 4, false, "FARMLAND", "SOIL"),
     ICE_MELTING(
-            WORLD_DESTRUCTION, true, 2, 5, "ICE"),
+            WORLD_DESTRUCTION, true, 2, 5, false, "ICE"),
     LEAVES_DECAY(
-            WORLD_DESTRUCTION, true, 2, 6, "OAK_LEAVES", "LEAVES"),
+            WORLD_DESTRUCTION, true, 2, 6, false, "OAK_LEAVES", "LEAVES"),
     CORALS_DRYING(
-            WORLD_DESTRUCTION, true, 2, 7, 13, "FIRE_CORAL"),
+            WORLD_DESTRUCTION, true, 2, 7, false, 13, "FIRE_CORAL"),
 
     SUGAR_CANE_GROWING(
-            PLANTS, true, 1, 2, "SUGAR_CANE"),
+            PLANTS, true, 1, 2, false, "SUGAR_CANE"),
     CACTUS_GROWING(
-            PLANTS, true, 1, 3, "CACTUS"),
+            PLANTS, true, 1, 3, false, "CACTUS"),
     TREES_GROWING(
-            PLANTS, true, 1, 4, "BIRCH_SAPLING", "SAPLING:2"),
+            PLANTS, true, 1, 4, false, "BIRCH_SAPLING", "SAPLING:2"),
     VINES_GROWING(
-            PLANTS, true, 1, 5, "VINE"),
+            PLANTS, true, 1, 5,false,  "VINE"),
     GIANT_MUSHROOMS_GROWING(
-            PLANTS, true, 1, 6, "RED_MUSHROOM_BLOCK", "HUGE_MUSHROOM_2"),
+            PLANTS, true, 1, 6, false, "RED_MUSHROOM_BLOCK", "HUGE_MUSHROOM_2"),
     CHORUSES_GROWING(
-            PLANTS, true, 1, 7, 9, "CHORUS_FLOWER"),
+            PLANTS, true, 1, 7, false, 9, "CHORUS_FLOWER"),
     KELPS_GROWING(
-            PLANTS, true, 1, 8, 13, "KELP"),
+            PLANTS, true, 1, 8, false, 13, "KELP"),
 
     LITTLE_MUSHROOMS_SPREADING(
-            PLANTS, true, 2, 1, "RED_MUSHROOM"),
+            PLANTS, true, 2, 1, false, "RED_MUSHROOM"),
     PUMPKINS_GROWING(
-            PLANTS, true, 2, 2, "PUMPKIN"),
+            PLANTS, true, 2, 2, false, "PUMPKIN"),
     MELONS_GROWING(
-            PLANTS, true, 2, 3, "MELON_BLOCK", "MELON"),
+            PLANTS, true, 2, 3, false, "MELON_BLOCK", "MELON"),
     NETHER_WARTS_GROWING(
-            PLANTS, true, 2, 4, "NETHER_WART", "NETHER_STALK"),
+            PLANTS, true, 2, 4, false, "NETHER_WART", "NETHER_STALK"),
     COCOAS_GROWING(
-            PLANTS, true, 2, 5, "COCOA_BEANS", "INK_SACK:3"),
+            PLANTS, true, 2, 5, false, "COCOA_BEANS", "INK_SACK:3"),
     WHEAT_GROWING(
-            PLANTS, true, 2, 6, "WHEAT"),
+            PLANTS, true, 2, 6, false, "WHEAT"),
     POTATOES_GROWING(
-            PLANTS, true, 2, 7, "POTATO_ITEM", "POTATO"),
+            PLANTS, true, 2, 7, false, "POTATO_ITEM", "POTATO"),
     CARROTS_GROWING(
-            PLANTS, true, 2, 8, "CARROT_ITEM", "CARROT"),
+            PLANTS, true, 2, 8, false, "CARROT_ITEM", "CARROT"),
     BEETROOTS_GROWING(
-            PLANTS, true, 2, 9, 9, "BEETROOT"),
+            PLANTS, true, 2, 9, false, 9, "BEETROOT"),
 
     GRASS_SPREADING(
-            PLANTS, true, 3, 4, "GRASS_BLOCK", "GRASS"),
+            PLANTS, true, 3, 4, false, "GRASS_BLOCK", "GRASS"),
     MYCELIUM_SPREADING(
-            PLANTS, true, 3, 6, "MYCELIUM", "MYCEL"),
+            PLANTS, true, 3, 6, false, "MYCELIUM", "MYCEL"),
 
     DEBUG_MESSAGES(
             SETTINGS, true, 2, 4, true, "COMMAND_BLOCK", "COMMAND"),
     ALLOW_UNRECOGNIZED_ACTIONS(
-            SETTINGS, true, 2, 6, "COMMAND_BLOCK", "COMMAND");
+            SETTINGS, true, 2, 6, false, "COMMAND_BLOCK", "COMMAND");
 
     private final PControlCategory category;
     private final short minVersion;
@@ -115,14 +115,6 @@ public enum PControlTrigger {
     private final boolean realtime;
     private final short slot;
     private final boolean defaults;
-
-    PControlTrigger(@Nonnull PControlCategory category, boolean realtime, int row, int column, @Nonnull String... iconVariants) {
-        this(category, realtime, row, column, false, -1, iconVariants);
-    }
-
-    PControlTrigger(@Nonnull PControlCategory category, boolean realtime, int row, int column, int minVersion, @Nonnull String... iconVariants) {
-        this(category, realtime, row, column, false, minVersion, iconVariants);
-    }
 
     PControlTrigger(@Nonnull PControlCategory category, boolean realtime, int row, int column, boolean defaults, @Nonnull String... iconVariants) {
         this(category, realtime, row, column, defaults, -1, iconVariants);
