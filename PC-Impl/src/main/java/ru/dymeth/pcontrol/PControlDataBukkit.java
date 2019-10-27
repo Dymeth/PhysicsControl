@@ -274,10 +274,11 @@ public final class PControlDataBukkit implements PControlData {
     }
 
     @Override
-    public void announce(@Nonnull String plain, @Nullable BaseComponent component) {
+    public void announce(@Nullable World world, @Nonnull String plain, @Nullable BaseComponent component) {
         Bukkit.getConsoleSender().sendMessage(plain);
         Bukkit.getOnlinePlayers().stream()
                 .filter(player -> player.isOp() || player.hasPermission("physicscontrol.announce"))
+                .filter(player -> world == null || player.getWorld() == world)
                 .forEach(component == null
                         ? player -> player.sendMessage(plain)
                         : player -> player.spigot().sendMessage(component));

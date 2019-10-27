@@ -31,5 +31,5 @@ public interface PControlData {
 
     boolean isActionAllowed(@Nonnull World world, @Nonnull PControlTrigger trigger);
 
-    void announce(@Nonnull String raw, @Nullable BaseComponent component);
+    void announce(@Nullable World world, @Nonnull String plain, @Nullable BaseComponent component);
 }

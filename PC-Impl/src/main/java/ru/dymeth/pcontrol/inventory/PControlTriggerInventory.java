@@ -94,6 +94,6 @@ public final class PControlTriggerInventory extends PControlInventory {
                 "%world%", this.world.getName());
 
         if (msg.isEmpty()) return;
-        this.data.announce(msg, null);
+        this.data.announce(this.world, msg, null);
     }
 }

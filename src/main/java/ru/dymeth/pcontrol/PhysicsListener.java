@@ -48,7 +48,7 @@ public abstract class PhysicsListener implements Listener {
         TextComponent posPart = new TextComponent(l.getWorld().getName() + " " + xyz);
         posPart.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/minecraft:tp @p " + xyz));
         message.addExtra(posPart);
-        this.data.announce(message.toPlainText(), message);
+        this.data.announce(l.getWorld(), message.toPlainText(), message);
     }
 
     protected String genOffsetMsg(Block first, Block second) {
