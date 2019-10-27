@@ -232,6 +232,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
             return; // Redstone activators
         else if (source == Material.REDSTONE_ORE)
             return; // Redstone ore activation
+        else if (source == Material.TURTLE_EGG)
+            this.data.cancelIfDisabled(event, world, PControlTrigger.TURTLE_EGGS_TRAMPLING);
         else
             this.unrecognizedAction(event, event.getClickedBlock().getLocation(), source);
     }

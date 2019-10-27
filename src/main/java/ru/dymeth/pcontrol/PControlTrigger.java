@@ -40,11 +40,13 @@ public enum PControlTrigger {
             BUILDING, false, 2, 7, false, 13, "RAIL", "RAILS"),
 
     BLOCK_HIT_PROJECTILES_REMOVING(
-            ENTITIES_INTERACTIONS, false, 1, 4, false, "ARROW"),
-    FARMLANDS_TRAMPLING(
-            ENTITIES_INTERACTIONS, false, 1, 5, false, "FARMLAND", "SOIL"),
+            ENTITIES_INTERACTIONS, false, 1, 2, false, "ARROW"),
     BURNING_ARROWS_ACTIVATE_TNT(
-            ENTITIES_INTERACTIONS, false, 1, 6, true, "ARROW"),
+            ENTITIES_INTERACTIONS, false, 1, 4, true, "ARROW"),
+    FARMLANDS_TRAMPLING(
+            ENTITIES_INTERACTIONS, false, 1, 6, false, "FARMLAND", "SOIL"),
+    TURTLE_EGGS_TRAMPLING(
+            ENTITIES_INTERACTIONS, false, 1, 8, false, 13, "TURTLE_EGG"),
 
     WITHERS_GRIEFING(
             ENTITIES_INTERACTIONS, false, 2, 2, false, "WITHER_SKELETON_SKULL", "SKULL_ITEM:1"),
@@ -62,13 +64,13 @@ public enum PControlTrigger {
             ENTITIES_INTERACTIONS, false, 2, 8, false, 13, "TURTLE_EGG"),
 
     PLAYERS_FLINT_USAGE(
-            ENTITIES_INTERACTIONS, false, 3, 3, true, "FLINT_AND_STEEL"),
+            ENTITIES_INTERACTIONS, false, 3, 2, true, "FLINT_AND_STEEL"),
     BONE_MEAL_USAGE(
             ENTITIES_INTERACTIONS, false, 3, 4, true, "BONE_MEAL", "INK_SACK:15"),
     DRAGON_EGGS_TELEPORTING(
             ENTITIES_INTERACTIONS, false, 3, 6, false, "DRAGON_EGG"),
     FROSTED_ICE_PHYSICS(
-            ENTITIES_INTERACTIONS, false, 3, 7, true, 9, "ICE"),
+            ENTITIES_INTERACTIONS, false, 3, 8, true, 9, "ICE"),
 
     FIRE_SPREADING(
             WORLD_DESTRUCTION, true, 2, 2, false, "FLINT_AND_STEEL"),
