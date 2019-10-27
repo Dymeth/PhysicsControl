@@ -58,11 +58,13 @@ public enum PControlTrigger {
             ENTITIES_INTERACTIONS, false, 2, 8, false, "WITHER_SKELETON_SKULL", "SKULL_ITEM:1"),
 
     PLAYERS_FLINT_USAGE(
-            ENTITIES_INTERACTIONS, false, 3, 4, true, "FLINT_AND_STEEL"),
+            ENTITIES_INTERACTIONS, false, 3, 3, true, "FLINT_AND_STEEL"),
     BONE_MEAL_USAGE(
-            ENTITIES_INTERACTIONS, false, 3, 5, true, "BONE_MEAL", "INK_SACK:15"),
+            ENTITIES_INTERACTIONS, false, 3, 4, true, "BONE_MEAL", "INK_SACK:15"),
+    DRAGON_EGGS_TELEPORTING(
+            ENTITIES_INTERACTIONS, false, 3, 6, false, "DRAGON_EGG"),
     FROSTED_ICE_PHYSICS(
-            ENTITIES_INTERACTIONS, false, 3, 6, true, 9, "ICE"),
+            ENTITIES_INTERACTIONS, false, 3, 7, true, 9, "ICE"),
 
     FIRE_SPREADING(
             WORLD_DESTRUCTION, true, 2, 2, false, "FLINT_AND_STEEL"),

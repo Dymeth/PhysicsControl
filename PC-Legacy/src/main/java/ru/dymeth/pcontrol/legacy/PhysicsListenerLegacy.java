@@ -134,6 +134,8 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.LAVA_FLOWING);
         else if (from == Material.WATER || from == Material.STATIONARY_WATER)
             this.data.cancelIfDisabled(event, PControlTrigger.WATER_FLOWING);
+        else if (from == Material.DRAGON_EGG)
+            this.data.cancelIfDisabled(event, PControlTrigger.DRAGON_EGGS_TELEPORTING);
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
     }
