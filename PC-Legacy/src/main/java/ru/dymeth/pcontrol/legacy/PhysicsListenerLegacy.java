@@ -7,10 +7,12 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Attachable;
@@ -197,17 +199,26 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
         if (event.getAction() != Action.PHYSICAL) return;
         if (event.getBlockFace() != BlockFace.SELF) return;
         if (event.getClickedBlock() == null) return;
-        World world = event.getClickedBlock().getWorld();
-        Material source = event.getClickedBlock().getType();
+        this.handleInteraction(event, event.getClickedBlock());
+    }
 
-        if (source == Material.SOIL)
+    @EventHandler(ignoreCancelled = true)
+    private void on(EntityInteractEvent event) {
+        this.handleInteraction(event, event.getBlock());
+    }
+
+    private void handleInteraction(@Nonnull Cancellable event, @Nonnull Block source) {
+        World world = source.getWorld();
+        Material material = source.getType();
+
+        if (material == Material.SOIL)
             this.data.cancelIfDisabled(event, world, PControlTrigger.FARMLANDS_TRAMPLING);
-        else if (CustomTagLegacy.REDSTONE_PASSIVE_INPUTS.isTagged(source))
+        else if (CustomTagLegacy.REDSTONE_PASSIVE_INPUTS.isTagged(material))
             return; // Redstone activators
-        else if (source == Material.REDSTONE_ORE || source == Material.GLOWING_REDSTONE_ORE)
+        else if (material == Material.REDSTONE_ORE || material == Material.GLOWING_REDSTONE_ORE)
             return; // Redstone ore activation
         else
-            this.unrecognizedAction(event, event.getClickedBlock().getLocation(), source);
+            this.unrecognizedAction(event, source.getLocation(), material);
     }
 
     @EventHandler(ignoreCancelled = true)

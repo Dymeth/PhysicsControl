@@ -11,10 +11,12 @@ import org.bukkit.block.data.Waterlogged;
 import org.bukkit.block.data.type.Farmland;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import ru.dymeth.pcontrol.PControlData;
@@ -223,19 +225,28 @@ public final class PhysicsListenerModern extends PhysicsListener {
         if (event.getAction() != Action.PHYSICAL) return;
         if (event.getBlockFace() != BlockFace.SELF) return;
         if (event.getClickedBlock() == null) return;
-        World world = event.getClickedBlock().getWorld();
-        Material source = event.getClickedBlock().getType();
+        this.handleInteraction(event, event.getClickedBlock());
+    }
 
-        if (source == Material.FARMLAND)
+    @EventHandler(ignoreCancelled = true)
+    private void on(EntityInteractEvent event) {
+        this.handleInteraction(event, event.getBlock());
+    }
+
+    private void handleInteraction(@Nonnull Cancellable event, @Nonnull Block source) {
+        World world = source.getWorld();
+        Material material = source.getType();
+
+        if (material == Material.FARMLAND)
             this.data.cancelIfDisabled(event, world, PControlTrigger.FARMLANDS_TRAMPLING);
-        else if (CustomTagModern.REDSTONE_PASSIVE_INPUTS.isTagged(source))
+        else if (CustomTagModern.REDSTONE_PASSIVE_INPUTS.isTagged(material))
             return; // Redstone activators
-        else if (source == Material.REDSTONE_ORE)
+        else if (material == Material.REDSTONE_ORE)
             return; // Redstone ore activation
-        else if (source == Material.TURTLE_EGG)
+        else if (material == Material.TURTLE_EGG)
             this.data.cancelIfDisabled(event, world, PControlTrigger.TURTLE_EGGS_TRAMPLING);
         else
-            this.unrecognizedAction(event, event.getClickedBlock().getLocation(), source);
+            this.unrecognizedAction(event, source.getLocation(), material);
     }
 
     @EventHandler(ignoreCancelled = true)
