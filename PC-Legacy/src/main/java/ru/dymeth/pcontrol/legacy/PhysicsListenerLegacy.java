@@ -115,6 +115,8 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
             this.data.cancelIfDisabled(event, world, PControlTrigger.GRAVEL_FALLING);
         else if (from == Material.ANVIL)
             this.data.cancelIfDisabled(event, world, PControlTrigger.ANVILS_FALLING);
+        else if (from == Material.DRAGON_EGG)
+            this.data.cancelIfDisabled(event, world, PControlTrigger.DRAGON_EGGS_FALLING);
         else if (this.data.isTriggerSupported(PControlTrigger.CONCRETE_POWDERS_FALLING) && from == Material.CONCRETE_POWDER)
             this.data.cancelIfDisabled(event, world, PControlTrigger.CONCRETE_POWDERS_FALLING);
         else if (CustomTagLegacy.GRAVITY_BLOCKS.isTagged(to))

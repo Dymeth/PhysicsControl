@@ -13,13 +13,15 @@ import static ru.dymeth.pcontrol.PControlCategory.*;
 
 public enum PControlTrigger {
     SAND_FALLING(
-            GRAVITY_BLOCKS, false, 2, 2, false, "SAND"),
+            GRAVITY_BLOCKS, false, 2, 3, false, "SAND"),
     GRAVEL_FALLING(
             GRAVITY_BLOCKS, false, 2, 4, false, "GRAVEL"),
     ANVILS_FALLING(
-            GRAVITY_BLOCKS, false, 2, 6, false, "ANVIL"),
+            GRAVITY_BLOCKS, false, 2, 5, false, "ANVIL"),
+    DRAGON_EGGS_FALLING(
+            GRAVITY_BLOCKS, false, 2, 6, false, "DRAGON_EGG"),
     CONCRETE_POWDERS_FALLING(
-            GRAVITY_BLOCKS, false, 2, 8, false, 12, "LIME_CONCRETE_POWDER", "CONCRETE_POWDER:5"),
+            GRAVITY_BLOCKS, false, 2, 7, false, 12, "LIME_CONCRETE_POWDER", "CONCRETE_POWDER:5"),
 
     WATER_FLOWING(
             LIQUIDS, false, 2, 4, false, "WATER_BUCKET"),

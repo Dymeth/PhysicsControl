@@ -115,6 +115,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, world, PControlTrigger.GRAVEL_FALLING);
         else if (Tag.ANVIL.isTagged(from))
             this.data.cancelIfDisabled(event, world, PControlTrigger.ANVILS_FALLING);
+        else if (from == Material.DRAGON_EGG)
+            this.data.cancelIfDisabled(event, world, PControlTrigger.DRAGON_EGGS_FALLING);
         else if (CustomTagModern.CONCRETE_POWDERS.isTagged(from))
             this.data.cancelIfDisabled(event, world, PControlTrigger.CONCRETE_POWDERS_FALLING);
         else if (CustomTagModern.GRAVITY_BLOCKS.isTagged(to))
