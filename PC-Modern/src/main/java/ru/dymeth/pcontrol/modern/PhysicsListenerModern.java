@@ -239,7 +239,7 @@ public final class PhysicsListenerModern extends PhysicsListener {
         toBlock = fromBlock.getRelative(BlockFace.UP);
         to = toBlock.getType();
 
-        if (to == Material.SIGN)
+        if (CustomTagModern.SIGNS.isTagged(to))
             this.data.cancelIfDisabled(event, PControlTrigger.SIGNS_DESTROYING);
         else if (to == Material.TORCH)
             this.data.cancelIfDisabled(event, PControlTrigger.TORCHES_DESTROYING);
@@ -258,7 +258,7 @@ public final class PhysicsListenerModern extends PhysicsListener {
 
                 if (to == Material.LADDER)
                     this.data.cancelIfDisabled(event, PControlTrigger.LADDERS_DESTROYING);
-                else if (to == Material.WALL_SIGN)
+                else if (CustomTagModern.WALL_SIGNS.isTagged(to))
                     this.data.cancelIfDisabled(event, PControlTrigger.SIGNS_DESTROYING);
                 else if (to == Material.WALL_TORCH)
                     this.data.cancelIfDisabled(event, PControlTrigger.TORCHES_DESTROYING);

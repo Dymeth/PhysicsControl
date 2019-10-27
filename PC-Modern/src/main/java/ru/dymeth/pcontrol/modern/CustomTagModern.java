@@ -20,6 +20,28 @@ public final class CustomTagModern {
             OAK_FENCE,
             SPRUCE_FENCE);
 
+    public static final CustomMaterialSet SIGNS = new CustomMaterialSet(
+            SIGN)
+            .add(
+                    "ACACIA_SIGN",
+                    "BIRCH_SIGN",
+                    "DARK_OAK_SIGN",
+                    "JUNGLE_SIGN",
+                    "OAK_SIGN",
+                    "SPRUCE_SIGN"
+            );
+
+    public static final CustomMaterialSet WALL_SIGNS = new CustomMaterialSet(
+            WALL_SIGN)
+            .add(
+                    "ACACIA_WALL_SIGN",
+                    "BIRCH_WALL_SIGN",
+                    "DARK_OAK_WALL_SIGN",
+                    "JUNGLE_WALL_SIGN",
+                    "OAK_WALL_SIGN",
+                    "SPRUCE_WALL_SIGN"
+            );
+
     public static final CustomMaterialSet PRESSURE_PLATES = new CustomMaterialSet(
             STONE_PRESSURE_PLATE,
             LIGHT_WEIGHTED_PRESSURE_PLATE,
