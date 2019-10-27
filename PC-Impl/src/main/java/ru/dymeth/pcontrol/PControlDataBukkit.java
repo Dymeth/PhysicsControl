@@ -102,12 +102,13 @@ public final class PControlDataBukkit implements PControlData {
         for (String key : messagesConfig.getKeys(false)) {
             String msg = messagesConfig.getString(key);
             if (msg == null) continue;
-            msg = ChatColor.translateAlternateColorCodes('&', msg);
-            msg = msg.replace("%plugin%", this.plugin.getName());
-            if (defaultValues.containsKey(key))
+            if (defaultValues.containsKey(key)) {
+                msg = ChatColor.translateAlternateColorCodes('&', msg);
+                msg = msg.replace("%plugin%", this.plugin.getName());
                 this.messages.put(key, msg);
-            else
+            } else {
                 deprecatedKeys.put(key, msg);
+            }
         }
 
         for (Map.Entry<String, String> defaultEntry : defaultValues.entrySet()) {
