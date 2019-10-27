@@ -13,7 +13,7 @@ category-inventory-title: "Physics of %world%"
 select-another-category-item: "&eSelect another category"
 
 # Switching trigger command
-only-players-menu: "&c[%plugin%] Only players can open the menu"
+only-players-menu: "&c[%plugin%] Only players can open the menu. For switching triggers use /pc <world> <trigger>"
 bad-perms-inventory: "&c[%plugin%] You don't have permissions to open the menu"
 bad-perms-trigger: "&c[%plugin%] You don't have permissions to switch trigger %trigger%"
 world-or-key-not-specified: "&c[%plugin%] Specify the world name and the trigger name"
