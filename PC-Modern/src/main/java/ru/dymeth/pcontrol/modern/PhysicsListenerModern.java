@@ -77,6 +77,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.BONE_MEAL_USAGE);
         else if (to == Material.TURTLE_EGG)
             this.data.cancelIfDisabled(event, PControlTrigger.TURTLES_LAYING_EGGS);
+        else if (to == Material.CHORUS_FLOWER)
+            this.data.cancelIfDisabled(event, PControlTrigger.CHORUSES_GROWING);
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
     }
@@ -218,6 +220,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.KELPS_GROWING);
         else if (to == Material.FIRE && CustomTagModern.WORLD_AIR.isTagged(from))
             this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
+        else if (to == Material.CHORUS_FLOWER)
+            this.data.cancelIfDisabled(event, PControlTrigger.CHORUSES_GROWING);
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
     }

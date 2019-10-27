@@ -75,6 +75,8 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.NETHER_WARTS_GROWING);
         else if (CustomTagLegacy.BONE_MEAL_HERBS.isTagged(to))
             this.data.cancelIfDisabled(event, PControlTrigger.BONE_MEAL_USAGE);
+        else if (this.data.isTriggerSupported(PControlTrigger.CHORUSES_GROWING) && to == Material.CHORUS_FLOWER)
+            this.data.cancelIfDisabled(event, PControlTrigger.CHORUSES_GROWING);
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
     }
@@ -192,6 +194,8 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.LITTLE_MUSHROOMS_SPREADING);
         else if (to == Material.FIRE && from == Material.AIR)
             this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
+        else if (this.data.isTriggerSupported(PControlTrigger.CHORUSES_GROWING) && to == Material.CHORUS_FLOWER)
+            this.data.cancelIfDisabled(event, PControlTrigger.CHORUSES_GROWING);
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
     }
