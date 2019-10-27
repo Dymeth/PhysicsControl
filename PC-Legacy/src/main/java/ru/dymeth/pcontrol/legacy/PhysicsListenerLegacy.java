@@ -89,6 +89,8 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.FARMLANDS_TRAMPLING);
             else if (to == Material.GLOWING_REDSTONE_ORE)
                 return; // Redstone ore activation
+            else if (entityType == EntityType.BOAT)
+                return; // Boats destroys lilies. TODO It is necessary to implement a smart system of destruction and restoration of water lilies so that there are no problems with movement
             else if (entityType == EntityType.RABBIT)
                 this.data.cancelIfDisabled(event, world, PControlTrigger.RABBITS_EATING_CARROTS);
             else if (entityType == EntityType.SHEEP)
