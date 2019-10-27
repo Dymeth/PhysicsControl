@@ -49,19 +49,22 @@ public enum PControlTrigger {
             ENTITIES_INTERACTIONS, false, 1, 8, false, 13, "TURTLE_EGG"),
 
     WITHERS_GRIEFING(
-            ENTITIES_INTERACTIONS, false, 2, 2, false, "WITHER_SKELETON_SKULL", "SKULL_ITEM:1"),
+            ENTITIES_INTERACTIONS, false, 2, 1, false, "WITHER_SKELETON_SKULL", "SKULL_ITEM:1"),
     ENDERMANS_GRIEFING(
-            ENTITIES_INTERACTIONS, false, 2, 3, false, "ENDER_PEARL"),
+            ENTITIES_INTERACTIONS, false, 2, 2, false, "ENDER_PEARL"),
     SILVERFISHES_HIDING_IN_BLOCKS(
-            ENTITIES_INTERACTIONS, false, 2, 4, false, "STONE"),
+            ENTITIES_INTERACTIONS, false, 2, 3, false, "STONE"),
+    ZOMBIES_BREAK_DOORS(
+            ENTITIES_INTERACTIONS, false, 2, 4, false, "ZOMBIE_HEAD", "SKULL_ITEM:2"),
+
     VILLAGERS_FARMING(
-            ENTITIES_INTERACTIONS, false, 2, 5, false, "WHEAT"),
+            ENTITIES_INTERACTIONS, false, 2, 6, false, "WHEAT"),
     RABBITS_EATING_CARROTS(
-            ENTITIES_INTERACTIONS, false, 2, 6, false, "CARROT_ITEM", "CARROT"),
+            ENTITIES_INTERACTIONS, false, 2, 7, false, "CARROT_ITEM", "CARROT"),
     SHEEPS_EATING_GRASS(
-            ENTITIES_INTERACTIONS, false, 2, 7, false, "WHITE_WOOL", "WOOL"),
+            ENTITIES_INTERACTIONS, false, 2, 8, false, "WHITE_WOOL", "WOOL"),
     TURTLES_LAYING_EGGS(
-            ENTITIES_INTERACTIONS, false, 2, 8, false, 13, "TURTLE_EGG"),
+            ENTITIES_INTERACTIONS, false, 2, 9, false, 13, "TURTLE_EGG"),
 
     PLAYERS_FLINT_USAGE(
             ENTITIES_INTERACTIONS, false, 3, 2, true, "FLINT_AND_STEEL"),

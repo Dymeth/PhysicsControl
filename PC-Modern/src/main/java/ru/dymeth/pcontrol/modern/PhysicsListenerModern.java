@@ -111,6 +111,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.BURNING_ARROWS_ACTIVATE_TNT);
             else if (entityType == EntityType.VILLAGER)
                 this.data.cancelIfDisabled(event, world, PControlTrigger.VILLAGERS_FARMING);
+            else if ((entityType == EntityType.ZOMBIE || entityType == EntityType.ZOMBIE_VILLAGER) && Tag.WOODEN_DOORS.isTagged(from))
+                this.data.cancelIfDisabled(event, world, PControlTrigger.ZOMBIES_BREAK_DOORS);
             else
                 this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to + " (" + event.getEntityType() + ")");
 
