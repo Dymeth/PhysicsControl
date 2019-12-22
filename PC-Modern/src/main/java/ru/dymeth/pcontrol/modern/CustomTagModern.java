@@ -194,5 +194,6 @@ public final class CustomTagModern {
             WATER,
             BUBBLE_COLUMN,
             KELP_PLANT,
+            TALL_SEAGRASS,
             SEAGRASS);
 }
