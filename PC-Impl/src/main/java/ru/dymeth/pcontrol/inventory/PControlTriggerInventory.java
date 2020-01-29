@@ -46,12 +46,6 @@ public final class PControlTriggerInventory extends PControlInventory {
         boolean enabled = this.data.isActionAllowed(this.world, trigger);
 
         ItemStack icon = allowed ? trigger.getIcon() : DISALLOWED_TRIGGER;
-        short slot = this.slotByTrigger.get(trigger);
-        this.setItem(slot, icon, null); // FIXME Checks of some invalid ItemStack's aren't work (FROSTED_ICE for example)
-        if (this.getItem(slot) == null) {
-            this.data.getPlugin().getLogger().severe("Could not find material icon of trigger " + trigger + ". Server version: " + this.data.getServerVersion() + ". Contact with plugin developer");
-            icon = DISALLOWED_TRIGGER;
-        }
         icon = icon.clone();
 
         ItemMeta meta = icon.getItemMeta();
@@ -72,6 +66,7 @@ public final class PControlTriggerInventory extends PControlInventory {
         if (allowed && enabled)
             meta.addEnchant(this.data.getFakeEnchantment(), 1, true);
         icon.setItemMeta(meta);
+        short slot = this.slotByTrigger.get(trigger);
         this.setItem(slot, icon, player -> this.switchTrigger(player, trigger));
     }
 

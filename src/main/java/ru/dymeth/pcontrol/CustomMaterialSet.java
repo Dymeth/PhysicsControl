@@ -33,8 +33,14 @@ public final class CustomMaterialSet {
     }
 
     @Nonnull
-    public CustomMaterialSet add(@Nonnull String... materialNames) {
-        this.materials.addAll(BukkitUtils.matchMaterials(null, materialNames));
+    public CustomMaterialSet addBlocks(@Nonnull String... materialNames) {
+        this.materials.addAll(BukkitUtils.matchBlockMaterials(null, materialNames));
+        return this;
+    }
+
+    @Nonnull
+    public CustomMaterialSet addItems(@Nonnull String... materialNames) {
+        this.materials.addAll(BukkitUtils.matchBlockMaterials(null, materialNames));
         return this;
     }
 

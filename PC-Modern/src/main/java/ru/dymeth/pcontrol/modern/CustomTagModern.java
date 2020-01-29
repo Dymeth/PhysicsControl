@@ -20,9 +20,9 @@ public final class CustomTagModern {
             OAK_FENCE,
             SPRUCE_FENCE);
 
-    public static final CustomMaterialSet SIGNS = new CustomMaterialSet(
-            SIGN)
-            .add(
+    public static final CustomMaterialSet SIGNS = new CustomMaterialSet()
+            .addBlocks(
+                    "SIGN",
                     "ACACIA_SIGN",
                     "BIRCH_SIGN",
                     "DARK_OAK_SIGN",
@@ -31,9 +31,9 @@ public final class CustomTagModern {
                     "SPRUCE_SIGN"
             );
 
-    public static final CustomMaterialSet WALL_SIGNS = new CustomMaterialSet(
-            WALL_SIGN)
-            .add(
+    public static final CustomMaterialSet WALL_SIGNS = new CustomMaterialSet()
+            .addBlocks(
+                    "WALL_SIGN",
                     "ACACIA_WALL_SIGN",
                     "BIRCH_WALL_SIGN",
                     "DARK_OAK_WALL_SIGN",
@@ -140,7 +140,7 @@ public final class CustomTagModern {
             LILAC,
             ROSE_BUSH,
             PEONY)
-            .add(
+            .addBlocks(
                     "CORNFLOWER",
                     "LILY_OF_THE_VALLEY"
             );

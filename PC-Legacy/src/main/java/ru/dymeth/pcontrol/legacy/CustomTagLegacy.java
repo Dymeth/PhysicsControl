@@ -35,7 +35,7 @@ public final class CustomTagLegacy {
             SAND,
             GRAVEL,
             ANVIL)
-            .add(
+            .addBlocks(
                     "CONCRETE_POWDER"
             );
 
