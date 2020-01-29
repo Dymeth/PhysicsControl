@@ -85,15 +85,16 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
             }
             world = Bukkit.getWorld(args[0]);
             if (world == null) {
-                sender.sendMessage(this.data.getMessage("world-not-found"));
+                sender.sendMessage(this.data.getMessage("world-not-found", "%world%", args[0]));
                 return true;
             }
         }
+        String key = join("_", 1, args).toUpperCase();
         try {
-            PControlTrigger trigger = PControlTrigger.valueOf(join("_", 1, args).toUpperCase());
+            PControlTrigger trigger = PControlTrigger.valueOf(key);
             this.data.getInventory(trigger.getCategory(), world).switchTrigger(sender, trigger);
-        } catch (Exception e) {
-            sender.sendMessage(this.data.getMessage("key-not-found"));
+        } catch (IllegalArgumentException e) {
+            sender.sendMessage(this.data.getMessage("key-not-found", "%key%", key));
         }
         return true;
     }

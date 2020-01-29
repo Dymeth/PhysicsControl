@@ -17,8 +17,8 @@ only-players-menu: "&c[%plugin%] Only players can open the menu. For switching t
 bad-perms-inventory: "&c[%plugin%] You don't have permissions to open the menu"
 bad-perms-trigger: "&c[%plugin%] You don't have permissions to switch trigger %trigger%"
 world-or-key-not-specified: "&c[%plugin%] Specify the world name and the trigger name"
-world-not-found: "&c[%plugin%] Specified world not found"
-key-not-found: "&c[%plugin%] Specified key not found"
+world-not-found: "&c[%plugin%] World %world% not found"
+key-not-found: "&c[%plugin%] Key %key% not found"
 
 # Reloading command
 bad-perms-reload: "&c[%plugin%] You don't have permissions to reload plugin configs"
