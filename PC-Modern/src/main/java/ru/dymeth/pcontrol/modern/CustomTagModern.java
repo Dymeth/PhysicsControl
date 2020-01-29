@@ -122,7 +122,8 @@ public final class CustomTagModern {
             GRAVEL)
             .add(Tag.SAND.getValues())
             .add(Tag.ANVIL.getValues())
-            .add(CONCRETES.getValues());
+            .add(CONCRETES.getValues())
+            .addBlocks("SCAFFOLDING");
 
     public static final CustomMaterialSet BONE_MEAL_HERBS = new CustomMaterialSet(
             GRASS,

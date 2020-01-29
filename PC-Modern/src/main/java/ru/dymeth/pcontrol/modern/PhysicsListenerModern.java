@@ -79,6 +79,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.TURTLES_LAYING_EGGS);
         else if (to == Material.CHORUS_FLOWER)
             this.data.cancelIfDisabled(event, PControlTrigger.CHORUSES_GROWING);
+        else if (this.data.hasVersion(14) && to == Material.SWEET_BERRY_BUSH)
+            this.data.cancelIfDisabled(event, PControlTrigger.SWEET_BERRIES_GROWING);
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
     }
@@ -131,6 +133,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, world, PControlTrigger.DRAGON_EGGS_FALLING);
         else if (CustomTagModern.CONCRETE_POWDERS.isTagged(from))
             this.data.cancelIfDisabled(event, world, PControlTrigger.CONCRETE_POWDERS_FALLING);
+        else if (this.data.hasVersion(14) && from == Material.SCAFFOLDING)
+            this.data.cancelIfDisabled(event, world, PControlTrigger.SCAFFOLDING_FALLING);
         else if (CustomTagModern.GRAVITY_BLOCKS.isTagged(to))
             return; // Already existing falling blocks
         else
@@ -179,6 +183,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.CORALS_DRYING);
         else if (from == Material.FIRE && CustomTagModern.WORLD_AIR.isTagged(to))
             this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
+        else if (this.data.hasVersion(14) && from == Material.SCAFFOLDING && to == Material.AIR)
+            this.data.cancelIfDisabled(event, PControlTrigger.SCAFFOLDING_FALLING);
         else if (from == Material.REDSTONE_ORE && to == Material.REDSTONE_ORE)
             return; // Redstone ore deactivation
         else if (from == Material.AIR && to == Material.AIR)
@@ -222,6 +228,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
         else if (to == Material.CHORUS_FLOWER)
             this.data.cancelIfDisabled(event, PControlTrigger.CHORUSES_GROWING);
+        else if (this.data.hasVersion(14) && to == Material.BAMBOO && from == Material.AIR)
+            this.data.cancelIfDisabled(event, PControlTrigger.BAMBOO_GROWING);
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
     }

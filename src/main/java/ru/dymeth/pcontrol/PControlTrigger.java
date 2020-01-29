@@ -13,15 +13,17 @@ import static ru.dymeth.pcontrol.PControlCategory.*;
 
 public enum PControlTrigger {
     SAND_FALLING(
-            GRAVITY_BLOCKS, false, 2, 3, false, "SAND"),
+            GRAVITY_BLOCKS, false, 2, 2, false, "SAND"),
     GRAVEL_FALLING(
-            GRAVITY_BLOCKS, false, 2, 4, false, "GRAVEL"),
+            GRAVITY_BLOCKS, false, 2, 3, false, "GRAVEL"),
     ANVILS_FALLING(
-            GRAVITY_BLOCKS, false, 2, 5, false, "ANVIL"),
+            GRAVITY_BLOCKS, false, 2, 4, false, "ANVIL"),
     DRAGON_EGGS_FALLING(
             GRAVITY_BLOCKS, false, 2, 6, false, "DRAGON_EGG"),
     CONCRETE_POWDERS_FALLING(
             GRAVITY_BLOCKS, false, 2, 7, false, 12, "LIME_CONCRETE_POWDER", "CONCRETE_POWDER:5"),
+    SCAFFOLDING_FALLING(
+            GRAVITY_BLOCKS, false, 2, 8, false, 14, "SCAFFOLDING"),
 
     WATER_FLOWING(
             LIQUIDS, false, 2, 4, false, "WATER_BUCKET"),
@@ -89,19 +91,23 @@ public enum PControlTrigger {
             WORLD_DESTRUCTION, true, 2, 7, false, 13, "FIRE_CORAL"),
 
     SUGAR_CANE_GROWING(
-            PLANTS, true, 1, 2, false, "SUGAR_CANE"),
+            PLANTS, true, 1, 1, false, "SUGAR_CANE"),
     CACTUS_GROWING(
-            PLANTS, true, 1, 3, false, "CACTUS"),
+            PLANTS, true, 1, 2, false, "CACTUS"),
     TREES_GROWING(
-            PLANTS, true, 1, 4, false, "BIRCH_SAPLING", "SAPLING:2"),
+            PLANTS, true, 1, 3, false, "BIRCH_SAPLING", "SAPLING:2"),
     VINES_GROWING(
-            PLANTS, true, 1, 5,false,  "VINE"),
+            PLANTS, true, 1, 4,false,  "VINE"),
     GIANT_MUSHROOMS_GROWING(
-            PLANTS, true, 1, 6, false, "RED_MUSHROOM_BLOCK", "HUGE_MUSHROOM_2"),
+            PLANTS, true, 1, 5, false, "RED_MUSHROOM_BLOCK", "HUGE_MUSHROOM_2"),
     CHORUSES_GROWING(
-            PLANTS, true, 1, 7, false, 9, "CHORUS_FLOWER"),
+            PLANTS, true, 1, 6, false, 9, "CHORUS_FLOWER"),
     KELPS_GROWING(
-            PLANTS, true, 1, 8, false, 13, "KELP"),
+            PLANTS, true, 1, 7, false, 13, "KELP"),
+    SWEET_BERRIES_GROWING(
+            PLANTS, true, 1, 8, false, 14, "SWEET_BERRIES"),
+    BAMBOO_GROWING(
+            PLANTS, true, 1, 9, false, 14, "BAMBOO"),
 
     LITTLE_MUSHROOMS_SPREADING(
             PLANTS, true, 2, 1, false, "RED_MUSHROOM"),
