@@ -12,6 +12,7 @@ import org.bukkit.block.data.type.Farmland;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.*;
@@ -25,6 +26,7 @@ import ru.dymeth.pcontrol.PhysicsListener;
 
 import javax.annotation.Nonnull;
 
+@SuppressWarnings({"IsCancelled", "UnnecessaryReturnStatement"})
 public final class PhysicsListenerModern extends PhysicsListener {
     public PhysicsListenerModern(@Nonnull PControlData data) {
         super(data);
@@ -40,7 +42,7 @@ public final class PhysicsListenerModern extends PhysicsListener {
         if (usedItem == null) return;
         if (usedItem.getType() != Material.BONE_MEAL) return;
         this.data.cancelIfDisabled(event, targetBlock.getWorld(), PControlTrigger.BONE_MEAL_USAGE);
-        if (event.isCancelled()) return;
+        if (event.useItemInHand() == Event.Result.DENY) return;
         this.fertilizedBlocks.add(targetBlock.getLocation().toVector());
     }
 

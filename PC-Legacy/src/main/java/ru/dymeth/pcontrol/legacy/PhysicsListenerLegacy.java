@@ -24,6 +24,7 @@ import ru.dymeth.pcontrol.PhysicsListener;
 
 import javax.annotation.Nonnull;
 
+@SuppressWarnings({"UnnecessaryReturnStatement", "IsCancelled"})
 public final class PhysicsListenerLegacy extends PhysicsListener {
     public PhysicsListenerLegacy(@Nonnull PControlData data) {
         super(data);
