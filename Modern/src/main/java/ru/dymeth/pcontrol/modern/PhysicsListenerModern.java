@@ -143,6 +143,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, world, PControlTrigger.SCAFFOLDING_FALLING);
         else if (CustomTagModern.GRAVITY_BLOCKS.isTagged(to))
             return; // Already existing falling blocks
+        else if (this.data.hasVersion(17) && from == Material.POINTED_DRIPSTONE)
+            this.data.cancelIfDisabled(event, world, PControlTrigger.POINTED_DRIPSTONES_FALLING);
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), "falling block from " + from + " to " + to);
 

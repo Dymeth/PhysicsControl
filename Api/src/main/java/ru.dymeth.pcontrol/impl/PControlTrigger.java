@@ -19,11 +19,13 @@ public enum PControlTrigger {
     ANVILS_FALLING(
             GRAVITY_BLOCKS, false, 2, 4, false, "ANVIL"),
     DRAGON_EGGS_FALLING(
-            GRAVITY_BLOCKS, false, 2, 6, false, "DRAGON_EGG"),
+            GRAVITY_BLOCKS, false, 2, 5, false, "DRAGON_EGG"),
     CONCRETE_POWDERS_FALLING(
-            GRAVITY_BLOCKS, false, 2, 7, false, 12, "LIME_CONCRETE_POWDER", "CONCRETE_POWDER:5"),
+            GRAVITY_BLOCKS, false, 2, 6, false, 12, "LIME_CONCRETE_POWDER", "CONCRETE_POWDER:5"),
     SCAFFOLDING_FALLING(
-            GRAVITY_BLOCKS, false, 2, 8, false, 14, "SCAFFOLDING"),
+            GRAVITY_BLOCKS, false, 2, 7, false, 14, "SCAFFOLDING"),
+    POINTED_DRIPSTONES_FALLING(
+            GRAVITY_BLOCKS, false, 2, 8, false, 17, "POINTED_DRIPSTONE"),
 
     WATER_FLOWING(
             LIQUIDS, false, 2, 4, false, "WATER_BUCKET"),
