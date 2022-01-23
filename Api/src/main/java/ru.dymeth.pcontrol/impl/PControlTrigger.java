@@ -82,19 +82,23 @@ public enum PControlTrigger {
             ENTITIES_INTERACTIONS, false, 3, 8, true, 9, "ICE"),
 
     FIRE_SPREADING(
-            WORLD_DESTRUCTION, true, 2, 2, false, "FLINT_AND_STEEL"),
+            WORLD_DESTRUCTION, true, 2, 1, false, "FLINT_AND_STEEL"),
     SNOW_MELTING(
-            WORLD_DESTRUCTION, true, 2, 3, false, "SNOW_BLOCK"),
+            WORLD_DESTRUCTION, true, 2, 2, false, "SNOW_BLOCK"),
     FARMLANDS_DRYING(
-            WORLD_DESTRUCTION, true, 2, 4, false, "FARMLAND", "SOIL"),
+            WORLD_DESTRUCTION, true, 2, 3, false, "FARMLAND", "SOIL"),
     ICE_MELTING(
-            WORLD_DESTRUCTION, true, 2, 5, false, "ICE"),
+            WORLD_DESTRUCTION, true, 2, 4, false, "ICE"),
     LEAVES_DECAY(
-            WORLD_DESTRUCTION, true, 2, 6, false, "OAK_LEAVES", "LEAVES"),
+            WORLD_DESTRUCTION, true, 2, 5, false, "OAK_LEAVES", "LEAVES"),
     CORALS_DRYING(
-            WORLD_DESTRUCTION, true, 2, 7, false, 13, "FIRE_CORAL"),
+            WORLD_DESTRUCTION, true, 2, 6, false, 13, "FIRE_CORAL"),
     GRASS_BLOCKS_FADING(
-            WORLD_DESTRUCTION, true, 2, 8, false, "GRASS_BLOCK", "GRASS"),
+            WORLD_DESTRUCTION, true, 2, 7, false, "GRASS_BLOCK", "GRASS"),
+    CRIMSON_NYLIUM_FADING(
+            WORLD_DESTRUCTION, true, 2, 8, false, 16, "CRIMSON_NYLIUM"),
+    WARPED_NYLIUM_FADING(
+            WORLD_DESTRUCTION, true, 2, 9, false, 16, "WARPED_NYLIUM"),
 
     SUGAR_CANE_GROWING(
             PLANTS, true, 1, 1, false, "SUGAR_CANE"),

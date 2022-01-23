@@ -177,6 +177,10 @@ public final class PhysicsListenerModern extends PhysicsListener {
 
         if (CustomTagModern.GRASS_AND_PATH_BLOCKS.isTagged(from) && to == Material.DIRT)
             this.data.cancelIfDisabled(event, PControlTrigger.GRASS_BLOCKS_FADING);
+        else if (from == Material.CRIMSON_NYLIUM && to == Material.NETHERRACK)
+            this.data.cancelIfDisabled(event, PControlTrigger.CRIMSON_NYLIUM_FADING);
+        else if (from == Material.WARPED_NYLIUM && to == Material.NETHERRACK)
+            this.data.cancelIfDisabled(event, PControlTrigger.WARPED_NYLIUM_FADING);
         else if (from == Material.MYCELIUM && to == Material.DIRT)
             this.data.cancelIfDisabled(event, PControlTrigger.MYCELIUM_SPREADING);
         else if (from == Material.FARMLAND && to == Material.DIRT)
