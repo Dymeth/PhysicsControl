@@ -17,10 +17,12 @@ public enum PControlCategory {
             2, 5, "PLAYER_HEAD", "SKULL_ITEM:3"),
     WORLD_DESTRUCTION(
             2, 6, "OAK_LEAVES", "LEAVES"),
-    PLANTS(
-            2, 7, "BIRCH_SAPLING", "SAPLING:2"),
+    GROWING_BLOCKS_AND_SMALL_PLANTS(
+            2, 7, "MELON"),
+    VINES_AND_TALL_STRUCTURES(
+            2, 8, "BIRCH_SAPLING", "SAPLING:2"),
     SETTINGS(
-            2, 8, "COMMAND_BLOCK", "COMMAND");
+            3, 5, "COMMAND_BLOCK", "COMMAND");
 
     private final short slot;
     private final ItemStack icon;
