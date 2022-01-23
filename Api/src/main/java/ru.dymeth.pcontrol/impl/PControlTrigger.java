@@ -99,9 +99,9 @@ public enum PControlTrigger {
     TREES_GROWING(
             PLANTS, true, 1, 3, false, "BIRCH_SAPLING", "SAPLING:2"),
     VINES_GROWING(
-            PLANTS, true, 1, 4,false,  "VINE"),
-    GIANT_MUSHROOMS_GROWING(
-            PLANTS, true, 1, 5, false, "RED_MUSHROOM_BLOCK", "HUGE_MUSHROOM_2"),
+            PLANTS, true, 1, 4, false,  "VINE"),
+    GLOW_BERRIES_GROWING(
+            PLANTS, true, 1, 5, false,  "GLOW_BERRIES"),
     CHORUSES_GROWING(
             PLANTS, true, 1, 6, false, 9, "CHORUS_FLOWER"),
     KELPS_GROWING(
@@ -132,6 +132,8 @@ public enum PControlTrigger {
 
     GRASS_SPREADING(
             PLANTS, true, 3, 4, false, "GRASS_BLOCK", "GRASS"),
+    GIANT_MUSHROOMS_GROWING(
+            PLANTS, true, 3, 5, false, "RED_MUSHROOM_BLOCK", "HUGE_MUSHROOM_2"),
     MYCELIUM_SPREADING(
             PLANTS, true, 3, 6, false, "MYCELIUM", "MYCEL"),
 
