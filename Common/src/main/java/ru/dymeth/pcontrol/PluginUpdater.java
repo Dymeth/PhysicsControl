@@ -62,7 +62,6 @@ class PluginUpdater {
         while (true) {
             String nextVersion = updateAndReturnNewVersion(previousVersion);
             if (nextVersion == null) return; // config is newer than plugin
-            this.plugin.getLogger().info("Updated plugin from " + previousVersion + " to " + nextVersion);
             if (nextVersion.equals(currentVersion)) break;
             previousVersion = nextVersion;
         }
