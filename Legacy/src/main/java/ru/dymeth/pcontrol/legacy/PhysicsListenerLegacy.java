@@ -72,7 +72,7 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.MELONS_GROWING);
         else if (to == Material.COCOA && from == Material.COCOA)
             this.data.cancelIfDisabled(event, PControlTrigger.COCOAS_GROWING);
-        else if (this.data.hasVersion(10) ? to == Material.NETHER_WART_BLOCK : to == Material.NETHER_WARTS)
+        else if (to == Material.NETHER_WARTS)
             this.data.cancelIfDisabled(event, PControlTrigger.NETHER_WARTS_GROWING);
         else if (CustomTagLegacy.BONE_MEAL_HERBS.isTagged(to))
             this.data.cancelIfDisabled(event, PControlTrigger.BONE_MEAL_USAGE);
@@ -110,7 +110,7 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.BURNING_ARROWS_ACTIVATE_TNT);
             else if (entityType == EntityType.VILLAGER)
                 this.data.cancelIfDisabled(event, world, PControlTrigger.VILLAGERS_FARMING);
-            else if ((entityType == EntityType.ZOMBIE || entityType == EntityType.ZOMBIE_VILLAGER) && CustomTagLegacy.WOODEN_DOORS.isTagged(from))
+            else if ((entityType == EntityType.ZOMBIE || (this.data.hasVersion(11) && entityType == EntityType.ZOMBIE_VILLAGER)) && CustomTagLegacy.WOODEN_DOORS.isTagged(from))
                 this.data.cancelIfDisabled(event, world, PControlTrigger.ZOMBIES_BREAK_DOORS);
             else
                 this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to + " (" + event.getEntityType() + ")");

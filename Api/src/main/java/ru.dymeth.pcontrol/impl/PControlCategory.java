@@ -30,10 +30,12 @@ public enum PControlCategory {
     PControlCategory(int row, int column, @Nonnull String... iconVariants) {
         this.slot = (short) ((row - 1) * 9 + column - 1);
         this.icon = BukkitUtils.matchIcon(iconVariants);
-        ItemMeta meta = this.icon.getItemMeta();
-        if (meta == null) throw new IllegalArgumentException();
-        meta.setDisplayName(ChatColor.YELLOW + this.getDisplayName());
-        this.icon.setItemMeta(meta);
+        if (this.icon != null) {
+            ItemMeta meta = this.icon.getItemMeta();
+            if (meta == null) throw new IllegalArgumentException();
+            meta.setDisplayName(ChatColor.YELLOW + this.getDisplayName());
+            this.icon.setItemMeta(meta);
+        }
     }
 
     public short getSlot() {
@@ -42,6 +44,7 @@ public enum PControlCategory {
 
     @Nonnull
     public ItemStack getIcon() {
+        if (this.icon == null) throw new IllegalArgumentException("Unable to find icon of category " + this);
         return this.icon;
     }
 

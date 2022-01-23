@@ -6,21 +6,33 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class BukkitUtils {
+    private static final boolean MATERIAL_IS_ITEM_SUPPORT = isMethodExist(Material.class, "isItem");
+    private static final boolean MATERIAL_IS_BLOCK_SUPPORT = isMethodExist(Material.class, "isBlock");
+
+    @SuppressWarnings("SameParameterValue")
+    private static boolean isMethodExist(Class<?> clazz, String methodName, Class<?>... methodParameters) {
+        try {
+            clazz.getDeclaredMethod(methodName, methodParameters);
+            return true;
+        } catch (NoSuchMethodException exception) {
+            return false;
+        }
+    }
+
     @Nonnull
     public static Set<Material> matchBlockMaterials(@Nullable Consumer<String> onFail, @Nonnull String... names) {
-        return matchMaterials(Material::isBlock, onFail, names);
+        return matchMaterials(MATERIAL_IS_BLOCK_SUPPORT ? Material::isBlock : material -> material != Material.AIR, onFail, names);
     }
 
     @Nonnull
     public static Set<Material> matchItemMaterials(@Nullable Consumer<String> onFail, @Nonnull String... names) {
-        return matchMaterials(Material::isItem, onFail, names);
+        return matchMaterials(MATERIAL_IS_ITEM_SUPPORT ? Material::isItem : material -> material != Material.AIR, onFail, names);
     }
 
     @Nonnull
@@ -37,7 +49,7 @@ public class BukkitUtils {
         return result;
     }
 
-    @Nonnull
+    @Nullable
     public static ItemStack matchIcon(@Nonnull String... iconVariants) {
         for (String iconVariant : iconVariants) {
             try {
@@ -52,19 +64,19 @@ public class BukkitUtils {
                 Material iconMaterial = Material.matchMaterial(iconVariant);
 
                 if (!isValidMaterial(iconMaterial)) continue;
-                if (!iconMaterial.isItem()) continue;
+                if (MATERIAL_IS_ITEM_SUPPORT && !iconMaterial.isItem()) continue;
 
                 if (data == null) {
                     return new ItemStack(iconMaterial);
                 } else {
+                    //noinspection deprecation
                     return new ItemStack(iconMaterial, 1, (short) 0, data);
                 }
             } catch (Throwable t) {
                 t.printStackTrace();
             }
         }
-        new IllegalArgumentException("Unable to load icon from variants: " + Arrays.toString(iconVariants)).printStackTrace();
-        return new ItemStack(Material.BARRIER);
+        return null;
     }
 
     @Nonnull

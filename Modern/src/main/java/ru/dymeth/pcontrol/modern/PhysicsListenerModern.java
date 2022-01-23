@@ -73,7 +73,7 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.MELONS_GROWING);
         else if (to == Material.COCOA)
             this.data.cancelIfDisabled(event, PControlTrigger.COCOAS_GROWING);
-        else if (to == Material.NETHER_WART_BLOCK)
+        else if (to == Material.NETHER_WART)
             this.data.cancelIfDisabled(event, PControlTrigger.NETHER_WARTS_GROWING);
         else if (CustomTagModern.BONE_MEAL_HERBS.isTagged(to))
             this.data.cancelIfDisabled(event, PControlTrigger.BONE_MEAL_USAGE);
@@ -81,7 +81,7 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.TURTLES_LAYING_EGGS);
         else if (to == Material.CHORUS_FLOWER)
             this.data.cancelIfDisabled(event, PControlTrigger.CHORUSES_GROWING);
-        else if (this.data.hasVersion(14) && to == Material.SWEET_BERRY_BUSH)
+        else if (this.data.isTriggerSupported(PControlTrigger.SWEET_BERRIES_GROWING) && to == Material.SWEET_BERRY_BUSH)
             this.data.cancelIfDisabled(event, PControlTrigger.SWEET_BERRIES_GROWING);
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
@@ -97,7 +97,7 @@ public final class PhysicsListenerModern extends PhysicsListener {
 
             if (from == Material.FARMLAND && to == Material.DIRT)
                 this.data.cancelIfDisabled(event, world, PControlTrigger.FARMLANDS_TRAMPLING);
-            else if (this.data.hasVersion(17) && from == Material.BIG_DRIPLEAF && to == Material.BIG_DRIPLEAF)
+            else if (this.data.isTriggerSupported(PControlTrigger.DRIPLEAFS_LOWERING) && from == Material.BIG_DRIPLEAF && to == Material.BIG_DRIPLEAF)
                 this.data.cancelIfDisabled(event, world, PControlTrigger.DRIPLEAFS_LOWERING);
             else if (to == Material.REDSTONE_ORE)
                 return; // Redstone ore activation
@@ -139,11 +139,11 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, world, PControlTrigger.DRAGON_EGGS_FALLING);
         else if (CustomTagModern.CONCRETE_POWDERS.isTagged(from))
             this.data.cancelIfDisabled(event, world, PControlTrigger.CONCRETE_POWDERS_FALLING);
-        else if (this.data.hasVersion(14) && from == Material.SCAFFOLDING)
+        else if (this.data.isTriggerSupported(PControlTrigger.SCAFFOLDING_FALLING) && from == Material.SCAFFOLDING)
             this.data.cancelIfDisabled(event, world, PControlTrigger.SCAFFOLDING_FALLING);
         else if (CustomTagModern.GRAVITY_BLOCKS.isTagged(to))
             return; // Already existing falling blocks
-        else if (this.data.hasVersion(17) && from == Material.POINTED_DRIPSTONE)
+        else if (this.data.isTriggerSupported(PControlTrigger.POINTED_DRIPSTONES_FALLING) && from == Material.POINTED_DRIPSTONE)
             this.data.cancelIfDisabled(event, world, PControlTrigger.POINTED_DRIPSTONES_FALLING);
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), "falling block from " + from + " to " + to);
@@ -177,9 +177,9 @@ public final class PhysicsListenerModern extends PhysicsListener {
 
         if (CustomTagModern.GRASS_AND_PATH_BLOCKS.isTagged(from) && to == Material.DIRT)
             this.data.cancelIfDisabled(event, PControlTrigger.GRASS_BLOCKS_FADING);
-        else if (from == Material.CRIMSON_NYLIUM && to == Material.NETHERRACK)
+        else if (this.data.isTriggerSupported(PControlTrigger.CRIMSON_NYLIUM_FADING) && from == Material.CRIMSON_NYLIUM && to == Material.NETHERRACK)
             this.data.cancelIfDisabled(event, PControlTrigger.CRIMSON_NYLIUM_FADING);
-        else if (from == Material.WARPED_NYLIUM && to == Material.NETHERRACK)
+        else if (this.data.isTriggerSupported(PControlTrigger.WARPED_NYLIUM_FADING) && from == Material.WARPED_NYLIUM && to == Material.NETHERRACK)
             this.data.cancelIfDisabled(event, PControlTrigger.WARPED_NYLIUM_FADING);
         else if (from == Material.MYCELIUM && to == Material.DIRT)
             this.data.cancelIfDisabled(event, PControlTrigger.MYCELIUM_SPREADING);
@@ -195,7 +195,7 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.CORALS_DRYING);
         else if (from == Material.FIRE && CustomTagModern.WORLD_AIR.isTagged(to))
             this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
-        else if (this.data.hasVersion(14) && from == Material.SCAFFOLDING && to == Material.AIR)
+        else if (this.data.isTriggerSupported(PControlTrigger.SCAFFOLDING_FALLING) && from == Material.SCAFFOLDING && to == Material.AIR)
             this.data.cancelIfDisabled(event, PControlTrigger.SCAFFOLDING_FALLING);
         else if (from == Material.REDSTONE_ORE && to == Material.REDSTONE_ORE)
             return; // Redstone ore deactivation
@@ -242,11 +242,11 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
         else if (to == Material.CHORUS_FLOWER)
             this.data.cancelIfDisabled(event, PControlTrigger.CHORUSES_GROWING);
-        else if (this.data.hasVersion(14) && to == Material.BAMBOO && from == Material.AIR)
+        else if (this.data.isTriggerSupported(PControlTrigger.BAMBOO_GROWING) && to == Material.BAMBOO && from == Material.AIR)
             this.data.cancelIfDisabled(event, PControlTrigger.BAMBOO_GROWING);
-        else if (this.data.hasVersion(16) && to == Material.WEEPING_VINES && (CustomTagModern.WORLD_AIR.isTagged(from)))
+        else if (this.data.isTriggerSupported(PControlTrigger.WEEPING_VINES_GROWING) && to == Material.WEEPING_VINES && (CustomTagModern.WORLD_AIR.isTagged(from)))
             this.data.cancelIfDisabled(event, PControlTrigger.WEEPING_VINES_GROWING);
-        else if (this.data.hasVersion(16) && to == Material.TWISTING_VINES && (CustomTagModern.WORLD_AIR.isTagged(from)))
+        else if (this.data.isTriggerSupported(PControlTrigger.TWISTING_VINES_GROWING) && to == Material.TWISTING_VINES && (CustomTagModern.WORLD_AIR.isTagged(from)))
             this.data.cancelIfDisabled(event, PControlTrigger.TWISTING_VINES_GROWING);
         else if (this.data.hasVersion(17)) {
             if (to == Material.CAVE_VINES && (CustomTagModern.WORLD_AIR.isTagged(from) || from == Material.CAVE_VINES))

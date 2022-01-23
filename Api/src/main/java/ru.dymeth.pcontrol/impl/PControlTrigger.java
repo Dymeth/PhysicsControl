@@ -150,9 +150,9 @@ public enum PControlTrigger {
     POINTED_DRIPSTONES_GROWING(
             VINES_AND_TALL_STRUCTURES, true, 2, 6, false, 17, "POINTED_DRIPSTONE"),
     WEEPING_VINES_GROWING(
-            VINES_AND_TALL_STRUCTURES, true, 2, 7, false, 17, "WEEPING_VINES"),
+            VINES_AND_TALL_STRUCTURES, true, 2, 7, false, 16, "WEEPING_VINES"),
     TWISTING_VINES_GROWING(
-            VINES_AND_TALL_STRUCTURES, true, 2, 8, false, 17, "TWISTING_VINES"),
+            VINES_AND_TALL_STRUCTURES, true, 2, 8, false, 16, "TWISTING_VINES"),
 
     DEBUG_MESSAGES(
             SETTINGS, true, 2, 4, true, "COMMAND_BLOCK", "COMMAND"),
@@ -205,6 +205,7 @@ public enum PControlTrigger {
 
     @Nonnull
     public ItemStack getIcon() {
+        if (this.icon == null) throw new IllegalArgumentException("Unable to find icon of trigger " + this);
         return this.icon;
     }
 
