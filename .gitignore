@@ -53,9 +53,10 @@ cmake-build-*/
 # IntelliJ
 out/
 target/
-PC-Impl/target/
-PC-Legacy/target/
-PC-Modern/target/
+Api/target/
+Common/target/
+Legacy/target/
+Modern/target/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/

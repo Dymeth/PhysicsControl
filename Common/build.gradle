@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+version 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
+    shade project(':Legacy')
+    shade project(':Modern')
+}
+
+task wrapper(type: Wrapper){
+    gradleVersion = '2.14.1'
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    destinationDirectory = file('..\\build')
+    archiveName 'PhysicsControl.jar'
+}

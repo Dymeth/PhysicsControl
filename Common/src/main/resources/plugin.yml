@@ -1,0 +1,11 @@
+name: PhysicsControl
+version: "Beta-5"
+main: ru.dymeth.pcontrol.PhysicsControl
+description: 'Spigot server world physics controller plugin'
+api-version: "1.13"
+softdepend: [MultiWorld, MultiVerse]
+commands:
+    physicscontrol:
+        description: 'Basic PhysicsControl plugin command'
+        aliases: ["pcontrol", "physicsc", "pc"]
+author: Dymeth

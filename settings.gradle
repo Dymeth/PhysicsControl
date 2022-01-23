@@ -1,0 +1,5 @@
+rootProject.name = 'PhysicsControl'
+include ':Api'
+include ':Common'
+include ':Legacy'
+include ':Modern'
