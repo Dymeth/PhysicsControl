@@ -230,10 +230,6 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.MYCELIUM_SPREADING);
         else if (to == Material.VINE && (CustomTagModern.WORLD_AIR.isTagged(from) || from == Material.VINE))
             this.data.cancelIfDisabled(event, PControlTrigger.VINES_GROWING);
-        else if (this.data.hasVersion(17) && to == Material.CAVE_VINES && (CustomTagModern.WORLD_AIR.isTagged(from) || from == Material.CAVE_VINES))
-            this.data.cancelIfDisabled(event, PControlTrigger.GLOW_BERRIES_GROWING);
-        else if (this.data.hasVersion(17) && to == Material.POINTED_DRIPSTONE && (CustomTagModern.WORLD_AIR.isTagged(from) || from == Material.POINTED_DRIPSTONE))
-            this.data.cancelIfDisabled(event, PControlTrigger.POINTED_DRIPSTONES_GROWING);
         else if (CustomTagModern.LITTLE_MUSHROOMS.isTagged(to) && CustomTagModern.WORLD_AIR.isTagged(from))
             this.data.cancelIfDisabled(event, PControlTrigger.LITTLE_MUSHROOMS_SPREADING);
         else if (to == Material.KELP && from == Material.WATER)
@@ -244,12 +240,20 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.CHORUSES_GROWING);
         else if (this.data.hasVersion(14) && to == Material.BAMBOO && from == Material.AIR)
             this.data.cancelIfDisabled(event, PControlTrigger.BAMBOO_GROWING);
-        else if (this.data.hasVersion(17) && to == Material.HANGING_ROOTS && from == Material.AIR)
-            return; // BONE_MEAL_USAGE
-        else if (this.data.hasVersion(17) && to == Material.GLOW_LICHEN && (from == Material.AIR || from == Material.GLOW_LICHEN))
-            return; // BONE_MEAL_USAGE
-        else
+        else if (this.data.hasVersion(17)) {
+            if (to == Material.CAVE_VINES && (CustomTagModern.WORLD_AIR.isTagged(from) || from == Material.CAVE_VINES))
+                this.data.cancelIfDisabled(event, PControlTrigger.GLOW_BERRIES_GROWING);
+            else if (to == Material.POINTED_DRIPSTONE && (CustomTagModern.WORLD_AIR.isTagged(from) || from == Material.POINTED_DRIPSTONE))
+                this.data.cancelIfDisabled(event, PControlTrigger.POINTED_DRIPSTONES_GROWING);
+            else if (to == Material.HANGING_ROOTS && from == Material.AIR)
+                return; // BONE_MEAL_USAGE
+            else if (to == Material.GLOW_LICHEN && (from == Material.AIR || from == Material.GLOW_LICHEN))
+                return; // BONE_MEAL_USAGE
+            else
+                this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
+        } else {
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
+        }
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
