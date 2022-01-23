@@ -244,6 +244,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.CHORUSES_GROWING);
         else if (this.data.hasVersion(14) && to == Material.BAMBOO && from == Material.AIR)
             this.data.cancelIfDisabled(event, PControlTrigger.BAMBOO_GROWING);
+        else if (this.data.hasVersion(17) && (to == Material.GLOW_LICHEN || to == Material.HANGING_ROOTS) && from == Material.AIR)
+            return; // BONE_MEAL_USAGE
         else
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
     }
