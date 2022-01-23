@@ -93,6 +93,8 @@ public enum PControlTrigger {
             WORLD_DESTRUCTION, true, 2, 6, false, "OAK_LEAVES", "LEAVES"),
     CORALS_DRYING(
             WORLD_DESTRUCTION, true, 2, 7, false, 13, "FIRE_CORAL"),
+    GRASS_BLOCKS_FADING(
+            WORLD_DESTRUCTION, true, 2, 8, false, "GRASS_BLOCK", "GRASS"),
 
     SUGAR_CANE_GROWING(
             PLANTS, true, 1, 1, false, "SUGAR_CANE"),

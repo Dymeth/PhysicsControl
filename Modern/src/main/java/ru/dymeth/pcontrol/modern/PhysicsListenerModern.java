@@ -176,7 +176,7 @@ public final class PhysicsListenerModern extends PhysicsListener {
         Material to = event.getNewState().getType();
 
         if (CustomTagModern.GRASS_AND_PATH_BLOCKS.isTagged(from) && to == Material.DIRT)
-            this.data.cancelIfDisabled(event, PControlTrigger.GRASS_SPREADING);
+            this.data.cancelIfDisabled(event, PControlTrigger.GRASS_BLOCKS_FADING);
         else if (from == Material.MYCELIUM && to == Material.DIRT)
             this.data.cancelIfDisabled(event, PControlTrigger.MYCELIUM_SPREADING);
         else if (from == Material.FARMLAND && to == Material.DIRT)

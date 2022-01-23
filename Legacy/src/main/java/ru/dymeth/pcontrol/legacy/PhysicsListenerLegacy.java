@@ -159,7 +159,7 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
         Material to = event.getNewState().getType();
 
         if (CustomTagLegacy.GRASS_AND_PATH_BLOCKS.isTagged(from) && to == Material.DIRT)
-            this.data.cancelIfDisabled(event, PControlTrigger.GRASS_SPREADING);
+            this.data.cancelIfDisabled(event, PControlTrigger.GRASS_BLOCKS_FADING);
         else if (from == Material.MYCEL && to == Material.DIRT)
             this.data.cancelIfDisabled(event, PControlTrigger.MYCELIUM_SPREADING);
         else if (from == Material.SOIL && to == Material.DIRT)
