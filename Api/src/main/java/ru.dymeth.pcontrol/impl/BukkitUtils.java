@@ -6,6 +6,7 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -36,12 +37,11 @@ public class BukkitUtils {
         return result;
     }
 
-    @Nullable
+    @Nonnull
     public static ItemStack matchIcon(@Nonnull String... iconVariants) {
-        try {
-            Byte data = null;
-            Material iconMaterial = null;
-            for (String iconVariant : iconVariants) {
+        for (String iconVariant : iconVariants) {
+            try {
+                Byte data;
                 int damageSplitter = iconVariant.indexOf(':');
                 if (damageSplitter >= 0) {
                     data = Byte.parseByte(iconVariant.substring(damageSplitter + 1));
@@ -49,16 +49,22 @@ public class BukkitUtils {
                 } else {
                     data = null;
                 }
-                iconMaterial = Material.matchMaterial(iconVariant);
-                if (isValidMaterial(iconMaterial) && iconMaterial.isItem()) break;
+                Material iconMaterial = Material.matchMaterial(iconVariant);
+
+                if (!isValidMaterial(iconMaterial)) continue;
+                if (!iconMaterial.isItem()) continue;
+
+                if (data == null) {
+                    return new ItemStack(iconMaterial);
+                } else {
+                    return new ItemStack(iconMaterial, 1, (short) 0, data);
+                }
+            } catch (Throwable t) {
+                t.printStackTrace();
             }
-            if (iconMaterial == null) return null;
-            if (data == null) return new ItemStack(iconMaterial);
-            return new ItemStack(iconMaterial, 1, (short) 0, data);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
+        new IllegalArgumentException("Unable to load icon from variants: " + Arrays.toString(iconVariants)).printStackTrace();
+        return new ItemStack(Material.BARRIER);
     }
 
     @Nonnull
