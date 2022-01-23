@@ -197,4 +197,11 @@ public final class CustomTagModern {
             KELP_PLANT,
             TALL_SEAGRASS,
             SEAGRASS);
+
+    public static final CustomMaterialSet GRASS_AND_PATH_BLOCKS = new CustomMaterialSet(
+            GRASS_BLOCK)
+            .addBlocks(
+                    "DIRT_PATH",
+                    "GRASS_PATH"
+            );
 }

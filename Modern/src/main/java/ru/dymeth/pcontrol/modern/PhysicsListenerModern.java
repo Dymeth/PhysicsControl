@@ -99,6 +99,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.FARMLANDS_TRAMPLING);
             else if (to == Material.REDSTONE_ORE)
                 return; // Redstone ore activation
+            else if (this.data.hasVersion(17) && to == Material.DEEPSLATE_REDSTONE_ORE)
+                return; // Redstone ore activation
             else if (entityType == EntityType.BOAT)
                 return; // Boats destroys lilies. TODO It is necessary to implement a smart system of destruction and restoration of water lilies so that there are no problems with movement
             else if (entityType == EntityType.RABBIT)
@@ -169,7 +171,7 @@ public final class PhysicsListenerModern extends PhysicsListener {
         Material from = event.getBlock().getType();
         Material to = event.getNewState().getType();
 
-        if ((from == Material.GRASS_BLOCK || from == Material.GRASS_PATH) && to == Material.DIRT)
+        if (CustomTagModern.GRASS_AND_PATH_BLOCKS.isTagged(from) && to == Material.DIRT)
             this.data.cancelIfDisabled(event, PControlTrigger.GRASS_SPREADING);
         else if (from == Material.MYCELIUM && to == Material.DIRT)
             this.data.cancelIfDisabled(event, PControlTrigger.MYCELIUM_SPREADING);
@@ -188,6 +190,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
         else if (this.data.hasVersion(14) && from == Material.SCAFFOLDING && to == Material.AIR)
             this.data.cancelIfDisabled(event, PControlTrigger.SCAFFOLDING_FALLING);
         else if (from == Material.REDSTONE_ORE && to == Material.REDSTONE_ORE)
+            return; // Redstone ore deactivation
+        else if (this.data.hasVersion(17) && from == Material.DEEPSLATE_REDSTONE_ORE && to == Material.DEEPSLATE_REDSTONE_ORE)
             return; // Redstone ore deactivation
         else if (from == Material.AIR && to == Material.AIR)
             return; // Strange server action. Perhaps this is due to the fall of blocks without a base (torches for example) during generation (only in mineshafts?)
@@ -260,6 +264,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
         else if (CustomTagModern.REDSTONE_PASSIVE_INPUTS.isTagged(material))
             return; // Redstone activators
         else if (material == Material.REDSTONE_ORE)
+            return; // Redstone ore activation
+        else if (this.data.hasVersion(17) && material == Material.DEEPSLATE_REDSTONE_ORE)
             return; // Redstone ore activation
         else if (material == Material.TURTLE_EGG)
             this.data.cancelIfDisabled(event, world, PControlTrigger.TURTLE_EGGS_TRAMPLING);

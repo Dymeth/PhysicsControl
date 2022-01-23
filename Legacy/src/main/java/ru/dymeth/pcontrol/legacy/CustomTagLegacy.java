@@ -47,4 +47,10 @@ public final class CustomTagLegacy {
     public static final CustomMaterialSet LITTLE_MUSHROOMS = new CustomMaterialSet(
             RED_MUSHROOM,
             BROWN_MUSHROOM);
+
+    public static final CustomMaterialSet GRASS_AND_PATH_BLOCKS = new CustomMaterialSet(
+            GRASS)
+            .addBlocks(
+                    "GRASS_PATH"
+            );
 }
