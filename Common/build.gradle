@@ -10,6 +10,7 @@ repositories {
 
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
+    shade project(':Api')
     shade project(':Legacy')
     shade project(':Modern')
 }
@@ -19,7 +20,6 @@ task wrapper(type: Wrapper){
 }
 
 jar {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     destinationDirectory = file('..\\build')
     archiveName 'PhysicsControl.jar'
 }

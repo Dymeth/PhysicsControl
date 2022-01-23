@@ -18,9 +18,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Attachable;
 import org.bukkit.material.Dye;
 import org.bukkit.material.MaterialData;
-import ru.dymeth.pcontrol.impl.PControlData;
-import ru.dymeth.pcontrol.impl.PControlTrigger;
-import ru.dymeth.pcontrol.impl.PhysicsListener;
+import ru.dymeth.pcontrol.api.PControlData;
+import ru.dymeth.pcontrol.api.PControlTrigger;
+import ru.dymeth.pcontrol.api.PhysicsListener;
 
 import javax.annotation.Nonnull;
 

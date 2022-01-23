@@ -20,9 +20,9 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import ru.dymeth.pcontrol.impl.PControlData;
-import ru.dymeth.pcontrol.impl.PControlTrigger;
-import ru.dymeth.pcontrol.impl.PhysicsListener;
+import ru.dymeth.pcontrol.api.PControlData;
+import ru.dymeth.pcontrol.api.PControlTrigger;
+import ru.dymeth.pcontrol.api.PhysicsListener;
 
 import javax.annotation.Nonnull;
 

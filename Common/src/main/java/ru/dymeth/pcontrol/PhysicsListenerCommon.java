@@ -10,9 +10,9 @@ import org.bukkit.event.block.EntityBlockFormEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.world.StructureGrowEvent;
-import ru.dymeth.pcontrol.impl.PControlData;
-import ru.dymeth.pcontrol.impl.PControlTrigger;
-import ru.dymeth.pcontrol.impl.PhysicsListener;
+import ru.dymeth.pcontrol.api.PControlData;
+import ru.dymeth.pcontrol.api.PControlTrigger;
+import ru.dymeth.pcontrol.api.PhysicsListener;
 
 import javax.annotation.Nonnull;
 

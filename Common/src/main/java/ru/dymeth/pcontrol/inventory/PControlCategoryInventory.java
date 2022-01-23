@@ -1,7 +1,7 @@
 package ru.dymeth.pcontrol.inventory;
 
 import org.bukkit.World;
-import ru.dymeth.pcontrol.impl.PControlCategory;
+import ru.dymeth.pcontrol.api.PControlCategory;
 import ru.dymeth.pcontrol.PControlDataBukkit;
 
 import javax.annotation.Nonnull;

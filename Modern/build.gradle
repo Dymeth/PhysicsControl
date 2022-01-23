@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
     compileOnly "org.spigotmc:spigot-api:1.18-R0.1-SNAPSHOT"
-    shade project(':Api')
+    implementation project(':Api')
 }
 
 task wrapper(type: Wrapper){

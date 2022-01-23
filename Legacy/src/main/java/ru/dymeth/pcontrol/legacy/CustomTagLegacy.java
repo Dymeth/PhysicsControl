@@ -1,7 +1,7 @@
 package ru.dymeth.pcontrol.legacy;
 
 import org.bukkit.Material;
-import ru.dymeth.pcontrol.impl.CustomMaterialSet;
+import ru.dymeth.pcontrol.api.CustomMaterialSet;
 
 import static org.bukkit.Material.*;
 

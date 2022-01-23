@@ -6,10 +6,10 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import ru.dymeth.pcontrol.impl.BukkitUtils;
-import ru.dymeth.pcontrol.impl.PControlCategory;
+import ru.dymeth.pcontrol.api.BukkitUtils;
+import ru.dymeth.pcontrol.api.PControlCategory;
 import ru.dymeth.pcontrol.PControlDataBukkit;
-import ru.dymeth.pcontrol.impl.PControlTrigger;
+import ru.dymeth.pcontrol.api.PControlTrigger;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;

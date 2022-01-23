@@ -1,4 +1,4 @@
-package ru.dymeth.pcontrol.impl;
+package ru.dymeth.pcontrol.api;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;

@@ -1,7 +1,7 @@
 package ru.dymeth.pcontrol.modern;
 
 import org.bukkit.Tag;
-import ru.dymeth.pcontrol.impl.CustomMaterialSet;
+import ru.dymeth.pcontrol.api.CustomMaterialSet;
 
 import static org.bukkit.Material.*;
 import static org.bukkit.Tag.*;

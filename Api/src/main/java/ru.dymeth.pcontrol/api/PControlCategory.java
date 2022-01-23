@@ -1,4 +1,4 @@
-package ru.dymeth.pcontrol.impl;
+package ru.dymeth.pcontrol.api;
 
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
