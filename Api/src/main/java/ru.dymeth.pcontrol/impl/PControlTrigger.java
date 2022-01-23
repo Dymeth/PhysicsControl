@@ -140,6 +140,8 @@ public enum PControlTrigger {
             PLANTS, true, 3, 5, false, "RED_MUSHROOM_BLOCK", "HUGE_MUSHROOM_2"),
     POINTED_DRIPSTONES_GROWING(
             PLANTS, true, 3, 6, false,  17, "POINTED_DRIPSTONE"),
+    AMETHYST_CLUSTERS_GROWING(
+            PLANTS, true, 3, 7, false,  17, "AMETHYST_CLUSTER"),
 
     DEBUG_MESSAGES(
             SETTINGS, true, 2, 4, true, "COMMAND_BLOCK", "COMMAND"),

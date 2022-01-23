@@ -249,6 +249,14 @@ public final class PhysicsListenerModern extends PhysicsListener {
                 return; // BONE_MEAL_USAGE
             else if (to == Material.GLOW_LICHEN && (from == Material.AIR || from == Material.GLOW_LICHEN))
                 return; // BONE_MEAL_USAGE
+            else if (to == Material.SMALL_AMETHYST_BUD && from == Material.AIR)
+                this.data.cancelIfDisabled(event, PControlTrigger.AMETHYST_CLUSTERS_GROWING);
+            else if (to == Material.MEDIUM_AMETHYST_BUD && from == Material.SMALL_AMETHYST_BUD)
+                this.data.cancelIfDisabled(event, PControlTrigger.AMETHYST_CLUSTERS_GROWING);
+            else if (to == Material.LARGE_AMETHYST_BUD && from == Material.MEDIUM_AMETHYST_BUD)
+                this.data.cancelIfDisabled(event, PControlTrigger.AMETHYST_CLUSTERS_GROWING);
+            else if (to == Material.AMETHYST_CLUSTER && from == Material.LARGE_AMETHYST_BUD)
+                this.data.cancelIfDisabled(event, PControlTrigger.AMETHYST_CLUSTERS_GROWING);
             else
                 this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
         } else {
