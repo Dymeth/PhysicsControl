@@ -97,6 +97,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
 
             if (from == Material.FARMLAND && to == Material.DIRT)
                 this.data.cancelIfDisabled(event, world, PControlTrigger.FARMLANDS_TRAMPLING);
+            else if (this.data.hasVersion(17) && from == Material.BIG_DRIPLEAF && to == Material.BIG_DRIPLEAF)
+                this.data.cancelIfDisabled(event, world, PControlTrigger.DRIPLEAFS_LOWERING);
             else if (to == Material.REDSTONE_ORE)
                 return; // Redstone ore activation
             else if (this.data.hasVersion(17) && to == Material.DEEPSLATE_REDSTONE_ORE)
@@ -267,6 +269,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
             return; // Redstone ore activation
         else if (this.data.hasVersion(17) && material == Material.DEEPSLATE_REDSTONE_ORE)
             return; // Redstone ore activation
+        else if (this.data.hasVersion(17) && material == Material.BIG_DRIPLEAF)
+            return;
         else if (material == Material.TURTLE_EGG)
             this.data.cancelIfDisabled(event, world, PControlTrigger.TURTLE_EGGS_TRAMPLING);
         else

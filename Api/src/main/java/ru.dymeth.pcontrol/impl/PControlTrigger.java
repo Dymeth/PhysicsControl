@@ -58,6 +58,8 @@ public enum PControlTrigger {
             ENTITIES_INTERACTIONS, false, 2, 3, false, "STONE"),
     ZOMBIES_BREAK_DOORS(
             ENTITIES_INTERACTIONS, false, 2, 4, false, "ZOMBIE_HEAD", "SKULL_ITEM:2"),
+    DRIPLEAFS_LOWERING(
+            ENTITIES_INTERACTIONS, false, 2, 5, false, "BIG_DRIPLEAF"),
 
     VILLAGERS_FARMING(
             ENTITIES_INTERACTIONS, false, 2, 6, false, "WHEAT"),
