@@ -59,7 +59,7 @@ public enum PControlTrigger {
     ZOMBIES_BREAK_DOORS(
             ENTITIES_INTERACTIONS, false, 2, 4, false, "ZOMBIE_HEAD", "SKULL_ITEM:2"),
     DRIPLEAFS_LOWERING(
-            ENTITIES_INTERACTIONS, false, 2, 5, false, "BIG_DRIPLEAF"),
+            ENTITIES_INTERACTIONS, false, 2, 5, false, 17, "BIG_DRIPLEAF"),
 
     VILLAGERS_FARMING(
             ENTITIES_INTERACTIONS, false, 2, 6, false, "WHEAT"),
@@ -101,7 +101,7 @@ public enum PControlTrigger {
     VINES_GROWING(
             PLANTS, true, 1, 4, false,  "VINE"),
     GLOW_BERRIES_GROWING(
-            PLANTS, true, 1, 5, false,  "GLOW_BERRIES"),
+            PLANTS, true, 1, 5, false,  17, "GLOW_BERRIES"),
     CHORUSES_GROWING(
             PLANTS, true, 1, 6, false, 9, "CHORUS_FLOWER"),
     KELPS_GROWING(
