@@ -3,73 +3,97 @@ package ru.dymeth.pcontrol;
 import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Arrays;
 
 class PluginUpdater {
-    private static int getVersionNumberByVersionName(@Nonnull String name) {
-        switch (name) {
-            case "Beta-3":
-                return 3;
-            case "Beta-4":
-                return 4;
-            case "Beta-5":
-                return 5;
+    @SuppressWarnings("unused")
+    @Nullable
+    private String updateAndReturnNewVersion(@Nonnull String previousVersion) {
+        if (previousVersion.toLowerCase().contains("beta")) {
+            return "1.0.0";
         }
-        throw new RuntimeException("Unknown plugin version: " + name);
+        String currentVersion = this.getCurrentVersion();
+        int[] argsPrevious = parseVersion(previousVersion);
+        int[] argsCurrent = parseVersion(currentVersion);
+        for (int i = 0; i < argsPrevious.length; i++) {
+            if (argsPrevious[i] > argsCurrent[i]) return null;
+        }
+        int majorVersion = argsPrevious[0];
+        int minorVersion = argsPrevious[1];
+        int patchVersion = argsPrevious[2];
+        return currentVersion;
     }
 
-    private static void updateFrom(int version) {
+    private static int[] parseVersion(String versionName) {
+        String[] args = versionName.split("\\.");
+        if (args.length != 3) throw new IllegalArgumentException("Unable to parse version: " + versionName);
+        int majorVersion = Integer.parseInt(args[0]);
+        if (majorVersion != 1)
+            throw new IllegalArgumentException("Wrong major version of " + versionName + ": " + majorVersion);
+        int[] result = new int[args.length];
+        for (int i = 0; i < args.length; i++) {
+            result[i] = Integer.parseInt(args[i]);
+        }
+        return result;
     }
+
+    private final Plugin plugin;
 
     PluginUpdater(@Nonnull Plugin plugin) {
-        int currentVersion = getVersionNumberByVersionName(plugin.getDescription().getVersion());
-        File versionFile = getVersionFile(plugin);
-        int previousVersion;
-        if (versionFile.isFile()) {
-            try {
-                previousVersion = getVersionNumberByVersionName(Files.lines(versionFile.toPath(), StandardCharsets.UTF_8).iterator().next());
-            } catch (Exception e) {
-                throw new RuntimeException("Could not read plugin-version file", e);
-            }
-        } else {
-            this.writeVersionFile(plugin);
-            if (new File(plugin.getDataFolder(), "messages.yml").isFile()) {
-                previousVersion = 2; // Legacy version
-            } else {
-                previousVersion = currentVersion;
-            }
+        this.plugin = plugin;
+        String currentVersion = getCurrentVersion();
+        File versionFile = getVersionFile();
+        if (!versionFile.isFile()) {
+            this.writeVersionFile();
+            return;
         }
-        if (previousVersion > currentVersion)
-            throw new RuntimeException("Unknown plugin version number: " + previousVersion);
-        if (previousVersion == currentVersion) return;
-        while (previousVersion < currentVersion) {
-            updateFrom(previousVersion++);
+        String previousVersion;
+        try {
+            previousVersion = Files.lines(versionFile.toPath(), StandardCharsets.UTF_8).iterator().next();
+        } catch (Exception e) {
+            throw new RuntimeException("Could not read " + versionFile.getName() + " file", e);
         }
-        this.writeVersionFile(plugin);
+        if (currentVersion.equals(previousVersion)) return;
+        String sourceVersion = previousVersion;
+        while (true) {
+            String nextVersion = updateAndReturnNewVersion(previousVersion);
+            if (nextVersion == null) return; // config is newer than plugin
+            this.plugin.getLogger().info("Updated plugin from " + previousVersion + " to " + nextVersion);
+            if (nextVersion.equals(currentVersion)) break;
+            previousVersion = nextVersion;
+        }
+        this.writeVersionFile();
+        this.plugin.getLogger().info("Updated plugin from " + sourceVersion + " to " + currentVersion);
     }
 
-    private File getVersionFile(@Nonnull Plugin plugin) {
-        return new File(plugin.getDataFolder(), "plugin-version");
+    private String getCurrentVersion() {
+        return this.plugin.getDescription().getVersion();
     }
 
-    private void writeVersionFile(@Nonnull Plugin plugin) {
-        File f = getVersionFile(plugin);
+    private File getVersionFile() {
+        return new File(this.plugin.getDataFolder(), "plugin-version");
+    }
+
+    private void writeVersionFile() {
+        File f = getVersionFile();
         if (f.exists() && !f.delete()) {
-            throw new RuntimeException("Could not delete plugin-version file");
+            throw new RuntimeException("Could not delete " + f.getName() + " file");
         }
         try {
+            //noinspection ResultOfMethodCallIgnored
             f.getParentFile().mkdirs();
             if (f.createNewFile()) {
                 Files.write(f.toPath(), Arrays.asList(
-                        plugin.getDescription().getVersion(),
+                        getCurrentVersion(),
                         "^ Do NOT change this! This is necessary for the plugin to work correctly."
                 ), StandardCharsets.UTF_8);
             }
         } catch (Exception e) {
-            throw new RuntimeException("Could not create plugin-version file", e);
+            throw new RuntimeException("Could not create " + f.getName() + " file", e);
         }
     }
 }

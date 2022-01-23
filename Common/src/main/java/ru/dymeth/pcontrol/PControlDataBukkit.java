@@ -41,7 +41,12 @@ public final class PControlDataBukkit implements PControlData {
 
     PControlDataBukkit(@Nonnull Plugin plugin) {
         this.plugin = plugin;
-        new PluginUpdater(plugin);
+        try {
+            new PluginUpdater(plugin);
+        } catch (Throwable t) {
+            this.plugin.getLogger().warning("Unable to update config from previous plugin version: "
+                    + t.getClass().getName() + ": " + t.getMessage());
+        }
 
         try {
             this.serverVersion = Short.parseShort(Bukkit.getServer().getClass().getName().split("\\.")[3].split("_")[1]);
