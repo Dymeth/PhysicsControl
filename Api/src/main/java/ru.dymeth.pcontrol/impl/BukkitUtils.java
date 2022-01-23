@@ -75,8 +75,7 @@ public class BukkitUtils {
         return result;
     }
 
-    @SuppressWarnings("deprecation")
     private static boolean isValidMaterial(@Nullable Material material) {
-        return material != null && material != Material.AIR && !material.isLegacy();
+        return material != null && material != Material.AIR && !material.name().startsWith("LEGACY_");
     }
 }
