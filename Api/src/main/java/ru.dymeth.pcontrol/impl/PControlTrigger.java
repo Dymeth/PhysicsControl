@@ -131,11 +131,13 @@ public enum PControlTrigger {
             PLANTS, true, 2, 9, false, 9, "BEETROOT"),
 
     GRASS_SPREADING(
-            PLANTS, true, 3, 4, false, "GRASS_BLOCK", "GRASS"),
+            PLANTS, true, 3, 3, false, "GRASS_BLOCK", "GRASS"),
+    MYCELIUM_SPREADING(
+            PLANTS, true, 3, 4, false, "MYCELIUM", "MYCEL"),
     GIANT_MUSHROOMS_GROWING(
             PLANTS, true, 3, 5, false, "RED_MUSHROOM_BLOCK", "HUGE_MUSHROOM_2"),
-    MYCELIUM_SPREADING(
-            PLANTS, true, 3, 6, false, "MYCELIUM", "MYCEL"),
+    POINTED_DRIPSTONES_GROWING(
+            PLANTS, true, 3, 6, false,  17, "POINTED_DRIPSTONE"),
 
     DEBUG_MESSAGES(
             SETTINGS, true, 2, 4, true, "COMMAND_BLOCK", "COMMAND"),

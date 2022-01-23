@@ -230,6 +230,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.VINES_GROWING);
         else if (this.data.hasVersion(17) && to == Material.CAVE_VINES && (CustomTagModern.WORLD_AIR.isTagged(from) || from == Material.CAVE_VINES))
             this.data.cancelIfDisabled(event, PControlTrigger.GLOW_BERRIES_GROWING);
+        else if (this.data.hasVersion(17) && to == Material.POINTED_DRIPSTONE && (CustomTagModern.WORLD_AIR.isTagged(from) || from == Material.POINTED_DRIPSTONE))
+            this.data.cancelIfDisabled(event, PControlTrigger.POINTED_DRIPSTONES_GROWING);
         else if (CustomTagModern.LITTLE_MUSHROOMS.isTagged(to) && CustomTagModern.WORLD_AIR.isTagged(from))
             this.data.cancelIfDisabled(event, PControlTrigger.LITTLE_MUSHROOMS_SPREADING);
         else if (to == Material.KELP && from == Material.WATER)
