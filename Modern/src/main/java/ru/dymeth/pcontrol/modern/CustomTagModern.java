@@ -1,6 +1,6 @@
 package ru.dymeth.pcontrol.modern;
 
-import org.bukkit.Tag;
+import org.bukkit.Material;
 import ru.dymeth.pcontrol.api.CustomMaterialSet;
 
 import static org.bukkit.Material.*;
@@ -126,11 +126,8 @@ public final class CustomTagModern {
             YELLOW_CONCRETE_POWDER
     );
 
-    public static final CustomMaterialSet GRAVITY_BLOCKS = new CustomMaterialSet(
-            GRAVEL)
-            .add(Tag.SAND.getValues())
-            .add(Tag.ANVIL.getValues())
-            .add(CONCRETES.getValues())
+    public static final CustomMaterialSet GRAVITY_BLOCKS = new CustomMaterialSet()
+            .add(Material::hasGravity)
             .addBlocks("SCAFFOLDING");
 
     public static final CustomMaterialSet BONE_MEAL_HERBS = new CustomMaterialSet(

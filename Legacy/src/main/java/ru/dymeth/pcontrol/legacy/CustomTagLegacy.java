@@ -31,13 +31,9 @@ public final class CustomTagLegacy {
             TRIPWIRE)
             .add(PRESSURE_PLATES.getValues());
 
-    public static final CustomMaterialSet GRAVITY_BLOCKS = new CustomMaterialSet(
-            SAND,
-            GRAVEL,
-            ANVIL)
-            .addBlocks(
-                    "CONCRETE_POWDER"
-            );
+    public static final CustomMaterialSet GRAVITY_BLOCKS = new CustomMaterialSet()
+            .add(Material::hasGravity)
+            .add(DRAGON_EGG);
 
     public static final CustomMaterialSet BONE_MEAL_HERBS = new CustomMaterialSet(
             LONG_GRASS,
