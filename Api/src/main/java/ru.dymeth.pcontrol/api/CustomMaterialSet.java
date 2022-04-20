@@ -45,7 +45,7 @@ public final class CustomMaterialSet {
 
     @Nonnull
     public CustomMaterialSet addItems(@Nonnull String... materialNames) {
-        this.materials.addAll(BukkitUtils.matchBlockMaterials(null, materialNames));
+        this.materials.addAll(BukkitUtils.matchItemMaterials(null, materialNames));
         return this;
     }
 
