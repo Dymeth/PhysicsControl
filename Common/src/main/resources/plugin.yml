@@ -1,5 +1,5 @@
 name: PhysicsControl
-version: "1.0.0"
+version: "1.0.1"
 main: ru.dymeth.pcontrol.PhysicsControl
 description: 'Spigot server world physics controller plugin'
 api-version: "1.13"
