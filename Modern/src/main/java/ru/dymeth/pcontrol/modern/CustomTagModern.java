@@ -161,10 +161,10 @@ public final class CustomTagModern {
     public static final CustomMaterialSet ALL_ALIVE_CORALS = new CustomMaterialSet()
             .add(CORAL_BLOCKS.getValues())
             .add(WALL_CORALS.getValues())
-            .add(CORAL_PLANTS.getValues())
+            .add(CORAL_PLANTS.getValues()) // 1.13.2+
             .add(CORALS.getValues());
 
-    public static final CustomMaterialSet DEAD_CORAL_PLANTS = new CustomMaterialSet(
+    public static final CustomMaterialSet DEAD_CORAL_PLANTS = new CustomMaterialSet( // 1.13.1+
             DEAD_TUBE_CORAL,
             DEAD_BRAIN_CORAL,
             DEAD_BUBBLE_CORAL,

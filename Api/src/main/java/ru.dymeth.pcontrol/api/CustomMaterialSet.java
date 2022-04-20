@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import org.bukkit.Material;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -14,21 +15,25 @@ import java.util.stream.Stream;
 public final class CustomMaterialSet {
     private final Set<Material> materials;
 
-    public CustomMaterialSet(@Nonnull Predicate<Material> filter) {
-        this(Stream.of(Material.values()).filter(filter).collect(Collectors.toList()));
-    }
-
     public CustomMaterialSet(@Nonnull Material... materials) {
-        this(Lists.newArrayList(materials));
+        this.materials = Sets.newEnumSet(Lists.newArrayList(materials), Material.class);
     }
 
-    public CustomMaterialSet(@Nonnull Collection<Material> materials) {
-        this.materials = Sets.newEnumSet(materials, Material.class);
+    @Nonnull
+    public CustomMaterialSet add(@Nonnull Predicate<Material> filter) {
+        this.materials.addAll(Stream.of(Material.values()).filter(filter).collect(Collectors.toList()));
+        return this;
     }
 
     @Nonnull
     public CustomMaterialSet add(@Nonnull Collection<Material> materials) {
         this.materials.addAll(materials);
+        return this;
+    }
+
+    @Nonnull
+    public CustomMaterialSet add(@Nonnull Material... materials) {
+        this.materials.addAll(Arrays.asList(materials));
         return this;
     }
 

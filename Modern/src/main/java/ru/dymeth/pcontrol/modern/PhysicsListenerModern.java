@@ -36,7 +36,9 @@ public final class PhysicsListenerModern extends PhysicsListener {
     private void onBoneMeal(PlayerInteractEvent event) {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         Block targetBlock = event.getClickedBlock();
-        if (targetBlock == null) throw new IllegalArgumentException("Block absent on PlayerInteractEvent with Action.RIGHT_CLICK_BLOCK");
+        if (targetBlock == null) {
+            throw new IllegalArgumentException("Block absent on PlayerInteractEvent with Action.RIGHT_CLICK_BLOCK");
+        }
 
         ItemStack usedItem = event.getItem();
         if (usedItem == null) return;
@@ -309,14 +311,19 @@ public final class PhysicsListenerModern extends PhysicsListener {
 
     @EventHandler(ignoreCancelled = true)
     private void on(BlockPhysicsEvent event) {
-        Block fromBlock = event.getSourceBlock();
+        Block fromBlock = event.getSourceBlock(); // 1.13.2+
         if (fromBlock != event.getBlock()) {
             if (fromBlock.getType() == event.getChangedType()) return;
 
             if (Tag.RAILS.isTagged(event.getChangedType()))
                 this.data.cancelIfDisabled(event, PControlTrigger.RAILS_DESTROYING);
             else if (this.debugPhysicsEvent)
-                this.debugAction(event, event.getBlock().getLocation(), "face=" + "self" + ";source=" + fromBlock.getType() + ";changed=" + event.getChangedType() + ";block=" + event.getBlock().getType());
+                this.debugAction(event, event.getBlock().getLocation(), ""
+                        + "face=" + BlockFace.SELF.name() + ";"
+                        + "changed=" + event.getChangedType() + ";"
+                        + "block=" + event.getBlock().getType() + ";"
+                        + "source=" + fromBlock.getType() + ";"
+                );
 
             return;
         }
@@ -337,7 +344,12 @@ public final class PhysicsListenerModern extends PhysicsListener {
 
         else {
             if (this.debugPhysicsEvent)
-                this.debugAction(event, event.getBlock().getLocation(), "face=" + "up" + ";source=" + fromBlock.getType() + ";changed=" + event.getChangedType() + ";block=" + event.getBlock().getType());
+                this.debugAction(event, event.getBlock().getLocation(), ""
+                        + "face=" + BlockFace.UP.name() + ";"
+                        + "changed=" + event.getChangedType() + ";"
+                        + "block=" + event.getBlock().getType() + ";"
+                        + "source=" + fromBlock.getType() + ";"
+                );
             for (BlockFace face : this.nsweFaces) {
                 toBlock = fromBlock.getRelative(face);
                 toData = toBlock.getBlockData();
@@ -354,7 +366,12 @@ public final class PhysicsListenerModern extends PhysicsListener {
                 else if (to == Material.REDSTONE_WALL_TORCH)
                     this.data.cancelIfDisabled(event, PControlTrigger.REDSTONE_TORCHES_DESTROYING);
                 else if (this.debugPhysicsEvent)
-                    this.debugAction(event, event.getBlock().getLocation(), "face=" + face.name() + ";source=" + fromBlock.getType() + ";changed=" + event.getChangedType() + ";block=" + event.getBlock().getType());
+                    this.debugAction(event, event.getBlock().getLocation(), ""
+                            + "face=" + face.name() + ";"
+                            + "changed=" + event.getChangedType() + ";"
+                            + "block=" + event.getBlock().getType() + ";"
+                            + "source=" + fromBlock.getType() + ";"
+                    );
 
                 if (event.isCancelled()) return;
             }

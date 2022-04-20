@@ -34,7 +34,9 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
     private void onBoneMeal(PlayerInteractEvent event) {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         Block targetBlock = event.getClickedBlock();
-        if (targetBlock == null) throw new IllegalArgumentException("Block absent on PlayerInteractEvent with Action.RIGHT_CLICK_BLOCK");
+        if (targetBlock == null) {
+            throw new IllegalArgumentException("Block absent on PlayerInteractEvent with Action.RIGHT_CLICK_BLOCK");
+        }
 
         ItemStack usedItem = event.getItem();
         if (usedItem == null) return;
@@ -249,7 +251,11 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
 
         else {
             if (this.debugPhysicsEvent)
-                this.debugAction(event, fromBlock.getLocation(), "face=" + "up" + ";changed=" + event.getChangedType() + ";block=" + fromBlock.getType());
+                this.debugAction(event, fromBlock.getLocation(), ""
+                        + "face=" + BlockFace.UP.name() + ";"
+                        + "changed=" + event.getChangedType() + ";"
+                        + "block=" + fromBlock.getType() + ";"
+                );
             for (BlockFace face : this.nsweFaces) {
                 toBlock = fromBlock.getRelative(face);
                 toData = toBlock.getState().getData();
@@ -266,7 +272,11 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
                 else if (to == Material.REDSTONE_TORCH_ON || to == Material.REDSTONE_TORCH_OFF)
                     this.data.cancelIfDisabled(event, PControlTrigger.REDSTONE_TORCHES_DESTROYING);
                 else if (this.debugPhysicsEvent)
-                    this.debugAction(event, fromBlock.getLocation(), "face=" + face.name() + ";changed=" + event.getChangedType() + ";block=" + fromBlock.getType());
+                    this.debugAction(event, fromBlock.getLocation(), ""
+                            + "face=" + face.name() + ";"
+                            + "changed=" + event.getChangedType() + ";"
+                            + "block=" + fromBlock.getType() + ";"
+                    );
 
                 if (event.isCancelled()) return;
             }
