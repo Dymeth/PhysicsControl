@@ -4,8 +4,6 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
@@ -32,6 +30,7 @@ import java.util.logging.Logger;
 
 public final class PControlDataBukkit implements PControlData {
     private final Plugin plugin;
+    private final int resourceId;
     private final short serverVersion;
     private final Enchantment fakeEnchantment;
     private final Set<EntityType> removableProjectileTypes;
@@ -39,8 +38,17 @@ public final class PControlDataBukkit implements PControlData {
     private final Map<World, Map<PControlTrigger, Boolean>> triggers = new HashMap<>();
     private final Map<World, Map<PControlCategory, PControlTriggerInventory>> inventories = new HashMap<>();
 
-    PControlDataBukkit(@Nonnull Plugin plugin) {
+    PControlDataBukkit(@Nonnull Plugin plugin, @Nonnull String resourceIdString) {
         this.plugin = plugin;
+
+        int resourceId;
+        try {
+            resourceId = Integer.parseInt(resourceIdString);
+        } catch (NumberFormatException ex) {
+            resourceId = 72124;
+        }
+        this.resourceId = resourceId;
+
         try {
             new PluginUpdater(plugin);
         } catch (Throwable t) {
@@ -92,8 +100,28 @@ public final class PControlDataBukkit implements PControlData {
 
     void reloadConfigs() {
         this.unloadData();
+        this.reloadConfig();
         this.reloadMessages();
         this.reloadTriggers();
+    }
+
+    private void reloadConfig() {
+        File configFile = this.createConfigFileIfNotExist("config.yml", true);
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+        boolean checkForUpdates = config.getBoolean("check-for-updates");
+        if (checkForUpdates) {
+            this.plugin.getLogger().info("Checking for updates...");
+            new UpdateChecker(this.plugin, this.resourceId).getVersionAsync(newVersion -> {
+                if (newVersion == null) {
+                    this.plugin.getLogger().info("Unable to check for updates");
+                    return;
+                }
+                String oldVersion = this.plugin.getDescription().getVersion();
+                if (oldVersion.equals(newVersion)) return;
+                this.plugin.getLogger().info("There is a new update available: "
+                        + newVersion + " (current version is " + oldVersion + ")");
+            });
+        }
     }
 
     private void reloadMessages() {
@@ -125,7 +153,7 @@ public final class PControlDataBukkit implements PControlData {
             String key = defaultEntry.getKey();
             if (this.messages.containsKey(key)) continue;
             String value = defaultEntry.getValue();
-            this.messages.put(key, ChatColor.translateAlternateColorCodes('&',value ));
+            this.messages.put(key, ChatColor.translateAlternateColorCodes('&', value));
             unloadedKeys.put(key, value);
         }
 
@@ -141,14 +169,9 @@ public final class PControlDataBukkit implements PControlData {
     }
 
     private void reloadTriggers() {
-        this.createConfigFileIfNotExist("config.yml", false);
-        this.plugin.reloadConfig();
-        FileConfiguration baseConfig = this.plugin.getConfig();
-        boolean changed = false;
-        for (World world : Bukkit.getWorlds())
-            if (this.updateWorldData(world, baseConfig, true))
-                changed = true;
-        if (changed) this.plugin.saveConfig();
+        for (World world : Bukkit.getWorlds()) {
+            this.updateWorldData(world, true);
+        }
     }
 
     void unloadData() {
@@ -197,17 +220,9 @@ public final class PControlDataBukkit implements PControlData {
         return this.inventories.get(world).get(category);
     }
 
-    void updateWorldData(@Nonnull World world) {
-        if (this.updateWorldData(world, this.plugin.getConfig(), true)) this.plugin.saveConfig();
-    }
-
-    private boolean updateWorldData(@Nonnull World world, @Nonnull ConfigurationSection config, boolean configPriority) {
-        boolean changed = false;
-        ConfigurationSection worldConfig = config.getConfigurationSection(world.getName());
-        if (worldConfig == null) {
-            worldConfig = config.createSection(world.getName());
-            changed = true;
-        }
+    void updateWorldData(@Nonnull World world, boolean configPriority) {
+        File file = createConfigFileIfNotExist("triggers" + File.separator + world.getName() + ".yml", false);
+        YamlConfiguration worldConfig = YamlConfiguration.loadConfiguration(file);
 
         Map<PControlTrigger, Boolean> triggers = this.triggers.computeIfAbsent(world, k -> new HashMap<>());
         Map<PControlCategory, PControlTriggerInventory> inventories = this.inventories.computeIfAbsent(world, world1 -> {
@@ -217,6 +232,7 @@ public final class PControlDataBukkit implements PControlData {
             }
             return result;
         });
+        boolean changed = false;
         for (PControlTrigger trigger : PControlTrigger.values()) {
             Boolean memoryValue = triggers.get(trigger);
             Boolean configValue = worldConfig.contains(trigger.name()) ? worldConfig.getBoolean(trigger.name()) : null;
@@ -234,7 +250,12 @@ public final class PControlDataBukkit implements PControlData {
                 inventories.get(trigger.getCategory()).updateTriggerStack(trigger);
             }
         }
-        return changed;
+        if (!changed) return;
+        try {
+            worldConfig.save(file);
+        } catch (Exception e) {
+            this.plugin.getLogger().severe("Unable to save config file " + file);
+        }
     }
 
     void unloadWorldData(@Nonnull World world) {
@@ -272,7 +293,7 @@ public final class PControlDataBukkit implements PControlData {
     public void switchTrigger(@Nonnull World world, @Nonnull PControlTrigger trigger) {
         Map<PControlTrigger, Boolean> worldTriggers = this.getWorldTriggers(world);
         worldTriggers.put(trigger, !worldTriggers.get(trigger));
-        if (this.updateWorldData(world, this.plugin.getConfig(), false)) this.plugin.saveConfig();
+        this.updateWorldData(world, false);
     }
 
     @Nonnull

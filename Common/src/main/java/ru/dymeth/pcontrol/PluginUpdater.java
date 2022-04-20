@@ -1,5 +1,8 @@
 package ru.dymeth.pcontrol;
 
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nonnull;
@@ -20,12 +23,41 @@ class PluginUpdater {
         int[] argsPrevious = parseVersion(previousVersion);
         int[] argsCurrent = parseVersion(currentVersion);
         for (int i = 0; i < argsPrevious.length; i++) {
+            if (argsPrevious[i] < argsCurrent[i]) break;
             if (argsPrevious[i] > argsCurrent[i]) return null;
         }
         int majorVersion = argsPrevious[0];
         int minorVersion = argsPrevious[1];
         int patchVersion = argsPrevious[2];
+        if (majorVersion == 1 && minorVersion == 0) {
+            this.updateTo_1_1_0();
+            return "1.1.0";
+        }
         return currentVersion;
+    }
+
+    private void updateTo_1_1_0() {
+        File oldFile = new File(this.plugin.getDataFolder(), "config.yml");
+        if (oldFile.isFile()) {
+            ConfigurationSection oldConfig = YamlConfiguration.loadConfiguration(oldFile);
+            File newDir = new File(this.plugin.getDataFolder(), "triggers");
+            if (!newDir.isDirectory()) {
+                if (!newDir.mkdirs()) throw new IllegalStateException("Unable to create directory " + newDir);
+            }
+            for (String worldName : oldConfig.getKeys(false)) {
+                ConfigurationSection worldConfig = oldConfig.getConfigurationSection(worldName);
+                if (worldConfig == null) continue;
+                FileConfiguration newConfig = new YamlConfiguration();
+                File newFile = new File(newDir, worldName + ".yml");
+                try {
+                    newConfig.save(newFile);
+                } catch (Exception e) {
+                    throw new RuntimeException("Unable to save config file " + newFile);
+                }
+            }
+            //noinspection ResultOfMethodCallIgnored
+            oldFile.delete();
+        }
     }
 
     private static int[] parseVersion(String versionName) {
@@ -60,7 +92,7 @@ class PluginUpdater {
         if (currentVersion.equals(previousVersion)) return;
         String sourceVersion = previousVersion;
         while (true) {
-            String nextVersion = updateAndReturnNewVersion(previousVersion);
+            String nextVersion = this.updateAndReturnNewVersion(previousVersion);
             if (nextVersion == null) return; // config is newer than plugin
             if (nextVersion.equals(currentVersion)) break;
             previousVersion = nextVersion;

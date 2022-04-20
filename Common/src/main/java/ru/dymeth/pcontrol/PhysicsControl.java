@@ -25,11 +25,13 @@ import javax.annotation.Nonnull;
 import java.util.StringJoiner;
 
 public final class PhysicsControl extends JavaPlugin implements Listener {
+    @SuppressWarnings("FieldCanBeLocal")
+    private final String resourceId = "%%__RESOURCE__%%";
     private PControlDataBukkit data;
 
     @Override
     public void onEnable() {
-        this.data = new PControlDataBukkit(this);
+        this.data = new PControlDataBukkit(this, resourceId);
         PhysicsListener listener;
 
         if (this.data.getServerVersion() >= 13)
@@ -122,7 +124,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     private void on(WorldLoadEvent event) {
-        this.data.updateWorldData(event.getWorld());
+        this.data.updateWorldData(event.getWorld(), true);
     }
 
     @EventHandler(ignoreCancelled = true)
