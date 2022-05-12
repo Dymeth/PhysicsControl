@@ -54,7 +54,8 @@ public final class CustomTagModern {
             STONE_PRESSURE_PLATE,
             LIGHT_WEIGHTED_PRESSURE_PLATE,
             HEAVY_WEIGHTED_PRESSURE_PLATE)
-            .add(WOODEN_PRESSURE_PLATES.getValues());
+            .add(WOODEN_PRESSURE_PLATES.getValues())
+            .addBlocks("POLISHED_BLACKSTONE_PRESSURE_PLATE");
 
     public static final CustomMaterialSet REDSTONE_ACTIVE_INPUTS = new CustomMaterialSet(
             LEVER,
