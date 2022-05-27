@@ -48,6 +48,10 @@ class PluginUpdater {
                 ConfigurationSection worldConfig = oldConfig.getConfigurationSection(worldName);
                 if (worldConfig == null) continue;
                 FileConfiguration newConfig = new YamlConfiguration();
+                for (String key : worldConfig.getKeys(false)) {
+                    if (!worldConfig.isBoolean(key)) continue;
+                    newConfig.set(key, worldConfig.getBoolean(key));
+                }
                 File newFile = new File(newDir, worldName + ".yml");
                 try {
                     newConfig.save(newFile);
