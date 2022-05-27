@@ -168,7 +168,7 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.WATER_FLOWING);
         else if (from == Material.DRAGON_EGG)
             this.data.cancelIfDisabled(event, PControlTrigger.DRAGON_EGGS_TELEPORTING);
-        if (from == Material.KELP && to == Material.AIR)
+        else if (from == Material.KELP && to == Material.AIR)
             return; // Seems bug while chunks generation (kelp near caves?): "Action BlockFromTo (KELP > AIR) was detected"
         else if (CustomTagModern.GRAVITY_BLOCKS.isTagged(from))
             return; // Seems bug while chunks generation (water near gravity blocks?): "Action BlockFromTo (GRAVEL > GRAVEL) was detected"
