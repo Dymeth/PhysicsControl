@@ -12,153 +12,153 @@ import static ru.dymeth.pcontrol.api.PControlCategory.*;
 
 public enum PControlTrigger {
     GRAVEL_FALLING(
-            GRAVITY_BLOCKS, false, 2, 2, false, "GRAVEL"),
+            GRAVITY_BLOCKS, false, 2, 2, true, "GRAVEL"),
     SAND_FALLING(
-            GRAVITY_BLOCKS, false, 2, 3, false, "SAND"),
+            GRAVITY_BLOCKS, false, 2, 3, true, "SAND"),
     ANVILS_FALLING(
-            GRAVITY_BLOCKS, false, 2, 4, false, "ANVIL"),
+            GRAVITY_BLOCKS, false, 2, 4, true, "ANVIL"),
     DRAGON_EGGS_FALLING(
-            GRAVITY_BLOCKS, false, 2, 5, false, "DRAGON_EGG"),
+            GRAVITY_BLOCKS, false, 2, 5, true, "DRAGON_EGG"),
     CONCRETE_POWDERS_FALLING(
-            GRAVITY_BLOCKS, false, 2, 6, false, 12, "LIME_CONCRETE_POWDER", "CONCRETE_POWDER:5"),
+            GRAVITY_BLOCKS, false, 2, 6, true, 12, "LIME_CONCRETE_POWDER", "CONCRETE_POWDER:5"),
     SCAFFOLDING_FALLING(
-            GRAVITY_BLOCKS, false, 2, 7, false, 14, "SCAFFOLDING"),
+            GRAVITY_BLOCKS, false, 2, 7, true, 14, "SCAFFOLDING"),
     POINTED_DRIPSTONES_FALLING(
-            GRAVITY_BLOCKS, false, 2, 8, false, 17, "POINTED_DRIPSTONE"),
+            GRAVITY_BLOCKS, false, 2, 8, true, 17, "POINTED_DRIPSTONE"),
 
     WATER_FLOWING(
-            LIQUIDS, false, 2, 4, false, "WATER_BUCKET"),
+            LIQUIDS, false, 2, 4, true, "WATER_BUCKET"),
     LAVA_FLOWING(
-            LIQUIDS, false, 2, 6, false, "LAVA_BUCKET"),
+            LIQUIDS, false, 2, 6, true, "LAVA_BUCKET"),
 
     LADDERS_DESTROYING(
-            BUILDING, false, 2, 3, false, 13, "LADDER"),
+            BUILDING, false, 2, 3, true, 13, "LADDER"),
     SIGNS_DESTROYING(
-            BUILDING, false, 2, 4, false, 13, "OAK_SIGN", "SIGN"),
+            BUILDING, false, 2, 4, true, 13, "OAK_SIGN", "SIGN"),
     TORCHES_DESTROYING(
-            BUILDING, false, 2, 5, false, 13, "TORCH"),
+            BUILDING, false, 2, 5, true, 13, "TORCH"),
     REDSTONE_TORCHES_DESTROYING(
-            BUILDING, false, 2, 6, false, 13, "REDSTONE_TORCH", "REDSTONE_TORCH_ON"),
+            BUILDING, false, 2, 6, true, 13, "REDSTONE_TORCH", "REDSTONE_TORCH_ON"),
     RAILS_DESTROYING(
-            BUILDING, false, 2, 7, false, 13, "RAIL", "RAILS"),
+            BUILDING, false, 2, 7, true, 13, "RAIL", "RAILS"),
 
     BLOCK_HIT_PROJECTILES_REMOVING(
             ENTITIES_INTERACTIONS, false, 1, 1, false, "ARROW"),
     BURNING_ARROWS_ACTIVATE_TNT(
             ENTITIES_INTERACTIONS, false, 1, 2, true, "ARROW"),
     FARMLANDS_TRAMPLING(
-            ENTITIES_INTERACTIONS, false, 1, 3, false, "FARMLAND", "SOIL"),
+            ENTITIES_INTERACTIONS, false, 1, 3, true, "FARMLAND", "SOIL"),
     TURTLE_EGGS_TRAMPLING(
-            ENTITIES_INTERACTIONS, false, 1, 4, false, 13, "TURTLE_EGG"),
+            ENTITIES_INTERACTIONS, false, 1, 4, true, 13, "TURTLE_EGG"),
     WITHERS_GRIEFING(
-            ENTITIES_INTERACTIONS, false, 1, 5, false, "WITHER_SKELETON_SKULL", "SKULL_ITEM:1"),
+            ENTITIES_INTERACTIONS, false, 1, 5, true, "WITHER_SKELETON_SKULL", "SKULL_ITEM:1"),
     ENDERMANS_GRIEFING(
-            ENTITIES_INTERACTIONS, false, 1, 6, false, "ENDER_PEARL"),
+            ENTITIES_INTERACTIONS, false, 1, 6, true, "ENDER_PEARL"),
     SILVERFISHES_HIDING_IN_BLOCKS(
-            ENTITIES_INTERACTIONS, false, 1, 7, false, "STONE"),
+            ENTITIES_INTERACTIONS, false, 1, 7, true, "STONE"),
     ZOMBIES_BREAK_DOORS(
-            ENTITIES_INTERACTIONS, false, 1, 8, false, "ZOMBIE_HEAD", "SKULL_ITEM:2"),
+            ENTITIES_INTERACTIONS, false, 1, 8, true, "ZOMBIE_HEAD", "SKULL_ITEM:2"),
     DRIPLEAFS_LOWERING(
-            ENTITIES_INTERACTIONS, false, 1, 9, false, 17, "BIG_DRIPLEAF"),
+            ENTITIES_INTERACTIONS, false, 1, 9, true, 17, "BIG_DRIPLEAF"),
     VILLAGERS_FARMING(
-            ENTITIES_INTERACTIONS, false, 2, 1, false, "WHEAT"),
+            ENTITIES_INTERACTIONS, false, 2, 1, true, "WHEAT"),
     RABBITS_EATING_CARROTS(
-            ENTITIES_INTERACTIONS, false, 2, 2, false, "CARROT_ITEM", "CARROT"),
+            ENTITIES_INTERACTIONS, false, 2, 2, true, "CARROT_ITEM", "CARROT"),
     SHEEPS_EATING_GRASS(
-            ENTITIES_INTERACTIONS, false, 2, 3, false, "WHITE_WOOL", "WOOL"),
+            ENTITIES_INTERACTIONS, false, 2, 3, true, "WHITE_WOOL", "WOOL"),
     FOXES_EATS_FROM_SWEET_BERRY_BUSHES(
-            ENTITIES_INTERACTIONS, false, 2, 4, false, 14, "SWEET_BERRIES"),
+            ENTITIES_INTERACTIONS, false, 2, 4, true, 14, "SWEET_BERRIES"),
     TURTLES_LAYING_EGGS(
-            ENTITIES_INTERACTIONS, false, 2, 5, false, 13, "TURTLE_EGG"),
+            ENTITIES_INTERACTIONS, false, 2, 5, true, 13, "TURTLE_EGG"),
     PLAYERS_FLINT_USAGE(
             ENTITIES_INTERACTIONS, false, 2, 6, true, "FLINT_AND_STEEL"),
     BONE_MEAL_USAGE(
             ENTITIES_INTERACTIONS, false, 2, 7, true, "BONE_MEAL", "INK_SACK:15"),
     DRAGON_EGGS_TELEPORTING(
-            ENTITIES_INTERACTIONS, false, 2, 8, false, "DRAGON_EGG"),
+            ENTITIES_INTERACTIONS, false, 2, 8, true, "DRAGON_EGG"),
     FROSTED_ICE_PHYSICS(
             ENTITIES_INTERACTIONS, false, 2, 9, true, 9, "ICE"),
 
     FIRE_SPREADING(
-            WORLD_DESTRUCTION, true, 1, 4, false, "FLINT_AND_STEEL"),
+            WORLD_DESTRUCTION, true, 1, 4, true, "FLINT_AND_STEEL"),
     SNOW_MELTING(
-            WORLD_DESTRUCTION, true, 1, 5, false, "SNOW_BLOCK"),
+            WORLD_DESTRUCTION, true, 1, 5, true, "SNOW_BLOCK"),
     FARMLANDS_DRYING(
-            WORLD_DESTRUCTION, true, 1, 6, false, "FARMLAND", "SOIL"),
+            WORLD_DESTRUCTION, true, 1, 6, true, "FARMLAND", "SOIL"),
 
     ICE_MELTING(
-            WORLD_DESTRUCTION, true, 2, 4, false, "ICE"),
+            WORLD_DESTRUCTION, true, 2, 4, true, "ICE"),
     LEAVES_DECAY(
-            WORLD_DESTRUCTION, true, 2, 5, false, "OAK_LEAVES", "LEAVES"),
+            WORLD_DESTRUCTION, true, 2, 5, true, "OAK_LEAVES", "LEAVES"),
     CORALS_DRYING(
-            WORLD_DESTRUCTION, true, 2, 6, false, 13, "FIRE_CORAL"),
+            WORLD_DESTRUCTION, true, 2, 6, true, 13, "FIRE_CORAL"),
 
     GRASS_BLOCKS_FADING(
-            WORLD_DESTRUCTION, true, 3, 4, false, "GRASS_BLOCK", "GRASS"),
+            WORLD_DESTRUCTION, true, 3, 4, true, "GRASS_BLOCK", "GRASS"),
     CRIMSON_NYLIUM_FADING(
-            WORLD_DESTRUCTION, true, 3, 5, false, 16, "CRIMSON_NYLIUM"),
+            WORLD_DESTRUCTION, true, 3, 5, true, 16, "CRIMSON_NYLIUM"),
     WARPED_NYLIUM_FADING(
-            WORLD_DESTRUCTION, true, 3, 6, false, 16, "WARPED_NYLIUM"),
+            WORLD_DESTRUCTION, true, 3, 6, true, 16, "WARPED_NYLIUM"),
 
     SWEET_BERRIES_GROWING(
-            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 1, 3, false, 14, "SWEET_BERRIES"),
+            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 1, 3, true, 14, "SWEET_BERRIES"),
     LITTLE_MUSHROOMS_SPREADING(
-            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 1, 4, false, "RED_MUSHROOM"),
+            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 1, 4, true, "RED_MUSHROOM"),
     PUMPKINS_GROWING(
-            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 1, 5, false, "PUMPKIN"),
+            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 1, 5, true, "PUMPKIN"),
     MELONS_GROWING(
-            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 1, 6, false, "MELON_BLOCK", "MELON"),
+            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 1, 6, true, "MELON_BLOCK", "MELON"),
     NETHER_WARTS_GROWING(
-            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 1, 7, false, "NETHER_WART", "NETHER_STALK"),
+            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 1, 7, true, "NETHER_WART", "NETHER_STALK"),
 
     COCOAS_GROWING(
-            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 2, 3, false, "COCOA_BEANS", "INK_SACK:3"),
+            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 2, 3, true, "COCOA_BEANS", "INK_SACK:3"),
     WHEAT_GROWING(
-            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 2, 4, false, "WHEAT"),
+            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 2, 4, true, "WHEAT"),
     POTATOES_GROWING(
-            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 2, 5, false, "POTATO_ITEM", "POTATO"),
+            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 2, 5, true, "POTATO_ITEM", "POTATO"),
     CARROTS_GROWING(
-            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 2, 6, false, "CARROT_ITEM", "CARROT"),
+            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 2, 6, true, "CARROT_ITEM", "CARROT"),
     BEETROOTS_GROWING(
-            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 2, 7, false, 9, "BEETROOT"),
+            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 2, 7, true, 9, "BEETROOT"),
 
     GRASS_SPREADING(
-            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 3, 4, false, "GRASS_BLOCK", "GRASS"),
+            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 3, 4, true, "GRASS_BLOCK", "GRASS"),
     MYCELIUM_SPREADING(
-            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 3, 5, false, "MYCELIUM", "MYCEL"),
+            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 3, 5, true, "MYCELIUM", "MYCEL"),
     AMETHYST_CLUSTERS_GROWING(
-            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 3, 6, false, 17, "AMETHYST_CLUSTER"),
+            GROWING_BLOCKS_AND_SMALL_PLANTS, true, 3, 6, true, 17, "AMETHYST_CLUSTER"),
 
     SUGAR_CANE_GROWING(
-            VINES_AND_TALL_STRUCTURES, true, 1, 3, false, "SUGAR_CANE"),
+            VINES_AND_TALL_STRUCTURES, true, 1, 3, true, "SUGAR_CANE"),
     CACTUS_GROWING(
-            VINES_AND_TALL_STRUCTURES, true, 1, 4, false, "CACTUS"),
+            VINES_AND_TALL_STRUCTURES, true, 1, 4, true, "CACTUS"),
     TREES_GROWING(
-            VINES_AND_TALL_STRUCTURES, true, 1, 5, false, "BIRCH_SAPLING", "SAPLING:2"),
+            VINES_AND_TALL_STRUCTURES, true, 1, 5, true, "BIRCH_SAPLING", "SAPLING:2"),
     VINES_GROWING(
-            VINES_AND_TALL_STRUCTURES, true, 1, 6, false, "VINE"),
+            VINES_AND_TALL_STRUCTURES, true, 1, 6, true, "VINE"),
     GLOW_BERRIES_GROWING(
-            VINES_AND_TALL_STRUCTURES, true, 1, 7, false, 17, "GLOW_BERRIES"),
+            VINES_AND_TALL_STRUCTURES, true, 1, 7, true, 17, "GLOW_BERRIES"),
 
     CHORUSES_GROWING(
-            VINES_AND_TALL_STRUCTURES, true, 2, 2, false, 9, "CHORUS_FLOWER"),
+            VINES_AND_TALL_STRUCTURES, true, 2, 2, true, 9, "CHORUS_FLOWER"),
     KELPS_GROWING(
-            VINES_AND_TALL_STRUCTURES, true, 2, 3, false, 13, "KELP"),
+            VINES_AND_TALL_STRUCTURES, true, 2, 3, true, 13, "KELP"),
     BAMBOO_GROWING(
-            VINES_AND_TALL_STRUCTURES, true, 2, 4, false, 14, "BAMBOO"),
+            VINES_AND_TALL_STRUCTURES, true, 2, 4, true, 14, "BAMBOO"),
     GIANT_MUSHROOMS_GROWING(
-            VINES_AND_TALL_STRUCTURES, true, 2, 5, false, "RED_MUSHROOM_BLOCK", "HUGE_MUSHROOM_2"),
+            VINES_AND_TALL_STRUCTURES, true, 2, 5, true, "RED_MUSHROOM_BLOCK", "HUGE_MUSHROOM_2"),
     POINTED_DRIPSTONES_GROWING(
-            VINES_AND_TALL_STRUCTURES, true, 2, 6, false, 17, "POINTED_DRIPSTONE"),
+            VINES_AND_TALL_STRUCTURES, true, 2, 6, true, 17, "POINTED_DRIPSTONE"),
     WEEPING_VINES_GROWING(
-            VINES_AND_TALL_STRUCTURES, true, 2, 7, false, 16, "WEEPING_VINES"),
+            VINES_AND_TALL_STRUCTURES, true, 2, 7, true, 16, "WEEPING_VINES"),
     TWISTING_VINES_GROWING(
-            VINES_AND_TALL_STRUCTURES, true, 2, 8, false, 16, "TWISTING_VINES"),
+            VINES_AND_TALL_STRUCTURES, true, 2, 8, true, 16, "TWISTING_VINES"),
 
     DEBUG_MESSAGES(
             SETTINGS, true, 2, 4, true, "COMMAND_BLOCK", "COMMAND"),
     ALLOW_UNRECOGNIZED_ACTIONS(
-            SETTINGS, true, 2, 6, false, "COMMAND_BLOCK", "COMMAND");
+            SETTINGS, true, 2, 6, true, "COMMAND_BLOCK", "COMMAND");
 
     private final PControlCategory category;
     private final short minVersion;
