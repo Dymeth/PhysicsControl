@@ -111,6 +111,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.RABBITS_EATING_CARROTS);
             else if (entityType == EntityType.SHEEP)
                 this.data.cancelIfDisabled(event, world, PControlTrigger.SHEEPS_EATING_GRASS);
+            else if (this.data.hasVersion(14) && entityType == EntityType.FOX)
+                this.data.cancelIfDisabled(event, world, PControlTrigger.FOXES_EATS_FROM_SWEET_BERRY_BUSHES);
             else if (entityType == EntityType.TURTLE)
                 this.data.cancelIfDisabled(event, world, PControlTrigger.TURTLES_LAYING_EGGS);
             else if (entityType == EntityType.ENDERMAN)
@@ -166,6 +168,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.WATER_FLOWING);
         else if (from == Material.DRAGON_EGG)
             this.data.cancelIfDisabled(event, PControlTrigger.DRAGON_EGGS_TELEPORTING);
+        if (from == Material.KELP && to == Material.AIR)
+            return; // Seems bug while chunks generation (kelp near caves?): "Action BlockFromTo (KELP > AIR) was detected"
         else if (CustomTagModern.GRAVITY_BLOCKS.isTagged(from))
             return; // Seems bug while chunks generation (water near gravity blocks?): "Action BlockFromTo (GRAVEL > GRAVEL) was detected"
         else
@@ -259,7 +263,7 @@ public final class PhysicsListenerModern extends PhysicsListener {
                 return; // BONE_MEAL_USAGE
             else if (to == Material.GLOW_LICHEN && (from == Material.AIR || from == Material.GLOW_LICHEN))
                 return; // BONE_MEAL_USAGE
-            else if (to == Material.SMALL_AMETHYST_BUD && from == Material.AIR)
+            else if (to == Material.SMALL_AMETHYST_BUD) // from = AIR, CAVE_AIR, WATER, etc
                 this.data.cancelIfDisabled(event, PControlTrigger.AMETHYST_CLUSTERS_GROWING);
             else if (to == Material.MEDIUM_AMETHYST_BUD && from == Material.SMALL_AMETHYST_BUD)
                 this.data.cancelIfDisabled(event, PControlTrigger.AMETHYST_CLUSTERS_GROWING);

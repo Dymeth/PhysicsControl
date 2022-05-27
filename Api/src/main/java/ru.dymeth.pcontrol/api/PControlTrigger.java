@@ -5,7 +5,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,39 +43,41 @@ public enum PControlTrigger {
             BUILDING, false, 2, 7, false, 13, "RAIL", "RAILS"),
 
     BLOCK_HIT_PROJECTILES_REMOVING(
-            ENTITIES_INTERACTIONS, false, 1, 3, false, "ARROW"),
+            ENTITIES_INTERACTIONS, false, 1, 1, false, "ARROW"),
     BURNING_ARROWS_ACTIVATE_TNT(
-            ENTITIES_INTERACTIONS, false, 1, 4, true, "ARROW"),
+            ENTITIES_INTERACTIONS, false, 1, 2, true, "ARROW"),
     FARMLANDS_TRAMPLING(
-            ENTITIES_INTERACTIONS, false, 1, 5, false, "FARMLAND", "SOIL"),
+            ENTITIES_INTERACTIONS, false, 1, 3, false, "FARMLAND", "SOIL"),
     TURTLE_EGGS_TRAMPLING(
-            ENTITIES_INTERACTIONS, false, 1, 6, false, 13, "TURTLE_EGG"),
+            ENTITIES_INTERACTIONS, false, 1, 4, false, 13, "TURTLE_EGG"),
     WITHERS_GRIEFING(
-            ENTITIES_INTERACTIONS, false, 1, 7, false, "WITHER_SKELETON_SKULL", "SKULL_ITEM:1"),
+            ENTITIES_INTERACTIONS, false, 1, 5, false, "WITHER_SKELETON_SKULL", "SKULL_ITEM:1"),
     ENDERMANS_GRIEFING(
-            ENTITIES_INTERACTIONS, false, 2, 2, false, "ENDER_PEARL"),
+            ENTITIES_INTERACTIONS, false, 1, 6, false, "ENDER_PEARL"),
     SILVERFISHES_HIDING_IN_BLOCKS(
-            ENTITIES_INTERACTIONS, false, 2, 3, false, "STONE"),
+            ENTITIES_INTERACTIONS, false, 1, 7, false, "STONE"),
     ZOMBIES_BREAK_DOORS(
-            ENTITIES_INTERACTIONS, false, 2, 4, false, "ZOMBIE_HEAD", "SKULL_ITEM:2"),
+            ENTITIES_INTERACTIONS, false, 1, 8, false, "ZOMBIE_HEAD", "SKULL_ITEM:2"),
     DRIPLEAFS_LOWERING(
-            ENTITIES_INTERACTIONS, false, 2, 5, false, 17, "BIG_DRIPLEAF"),
+            ENTITIES_INTERACTIONS, false, 1, 9, false, 17, "BIG_DRIPLEAF"),
     VILLAGERS_FARMING(
-            ENTITIES_INTERACTIONS, false, 2, 6, false, "WHEAT"),
+            ENTITIES_INTERACTIONS, false, 2, 1, false, "WHEAT"),
     RABBITS_EATING_CARROTS(
-            ENTITIES_INTERACTIONS, false, 2, 7, false, "CARROT_ITEM", "CARROT"),
+            ENTITIES_INTERACTIONS, false, 2, 2, false, "CARROT_ITEM", "CARROT"),
     SHEEPS_EATING_GRASS(
-            ENTITIES_INTERACTIONS, false, 2, 8, false, "WHITE_WOOL", "WOOL"),
+            ENTITIES_INTERACTIONS, false, 2, 3, false, "WHITE_WOOL", "WOOL"),
+    FOXES_EATS_FROM_SWEET_BERRY_BUSHES(
+            ENTITIES_INTERACTIONS, false, 2, 4, false, 14, "SWEET_BERRIES"),
     TURTLES_LAYING_EGGS(
-            ENTITIES_INTERACTIONS, false, 3, 3, false, 13, "TURTLE_EGG"),
+            ENTITIES_INTERACTIONS, false, 2, 5, false, 13, "TURTLE_EGG"),
     PLAYERS_FLINT_USAGE(
-            ENTITIES_INTERACTIONS, false, 3, 4, true, "FLINT_AND_STEEL"),
+            ENTITIES_INTERACTIONS, false, 2, 6, true, "FLINT_AND_STEEL"),
     BONE_MEAL_USAGE(
-            ENTITIES_INTERACTIONS, false, 3, 5, true, "BONE_MEAL", "INK_SACK:15"),
+            ENTITIES_INTERACTIONS, false, 2, 7, true, "BONE_MEAL", "INK_SACK:15"),
     DRAGON_EGGS_TELEPORTING(
-            ENTITIES_INTERACTIONS, false, 3, 6, false, "DRAGON_EGG"),
+            ENTITIES_INTERACTIONS, false, 2, 8, false, "DRAGON_EGG"),
     FROSTED_ICE_PHYSICS(
-            ENTITIES_INTERACTIONS, false, 3, 7, true, 9, "ICE"),
+            ENTITIES_INTERACTIONS, false, 2, 9, true, 9, "ICE"),
 
     FIRE_SPREADING(
             WORLD_DESTRUCTION, true, 1, 4, false, "FLINT_AND_STEEL"),
