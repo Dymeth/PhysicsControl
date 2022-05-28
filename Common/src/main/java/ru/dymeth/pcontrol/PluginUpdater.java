@@ -123,8 +123,8 @@ class PluginUpdater {
             f.getParentFile().mkdirs();
             if (f.createNewFile()) {
                 Files.write(f.toPath(), Arrays.asList(
-                        getCurrentVersion(),
-                        "^ Do NOT change this! This is necessary for the plugin to work correctly."
+                    getCurrentVersion(),
+                    "^ Do NOT change this! This is necessary for the plugin to work correctly."
                 ), StandardCharsets.UTF_8);
             }
         } catch (Exception e) {

@@ -8,21 +8,21 @@ import javax.annotation.Nonnull;
 
 public enum PControlCategory {
     GRAVITY_BLOCKS(
-            2, 2, "SAND"),
+        2, 2, "SAND"),
     LIQUIDS(
-            2, 3, "WATER_BUCKET"),
+        2, 3, "WATER_BUCKET"),
     BUILDING(
-            2, 4, "LADDER"),
+        2, 4, "LADDER"),
     ENTITIES_INTERACTIONS(
-            2, 5, "PLAYER_HEAD", "SKULL_ITEM:3"),
+        2, 5, "PLAYER_HEAD", "SKULL_ITEM:3"),
     WORLD_DESTRUCTION(
-            2, 6, "OAK_LEAVES", "LEAVES"),
+        2, 6, "OAK_LEAVES", "LEAVES"),
     GROWING_BLOCKS_AND_SMALL_PLANTS(
-            2, 7, "MELON"),
+        2, 7, "MELON"),
     VINES_AND_TALL_STRUCTURES(
-            2, 8, "BIRCH_SAPLING", "SAPLING:2"),
+        2, 8, "BIRCH_SAPLING", "SAPLING:2"),
     SETTINGS(
-            3, 5, "COMMAND_BLOCK", "COMMAND");
+        3, 5, "COMMAND_BLOCK", "COMMAND");
 
     private final short slot;
     private final ItemStack icon;

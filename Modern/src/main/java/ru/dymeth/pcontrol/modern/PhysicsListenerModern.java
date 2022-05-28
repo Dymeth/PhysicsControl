@@ -165,8 +165,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
         if (from == Material.LAVA)
             this.data.cancelIfDisabled(event, PControlTrigger.LAVA_FLOWING);
         else if (CustomTagModern.UNDERWATER_BLOCKS_ONLY.isTagged(from)
-                || (event.getBlock().getBlockData() instanceof Waterlogged
-                && ((Waterlogged) event.getBlock().getBlockData()).isWaterlogged()))
+            || (event.getBlock().getBlockData() instanceof Waterlogged
+            && ((Waterlogged) event.getBlock().getBlockData()).isWaterlogged()))
             this.data.cancelIfDisabled(event, PControlTrigger.WATER_FLOWING);
         else if (from == Material.DRAGON_EGG)
             this.data.cancelIfDisabled(event, PControlTrigger.DRAGON_EGGS_TELEPORTING);
@@ -325,10 +325,10 @@ public final class PhysicsListenerModern extends PhysicsListener {
                 this.data.cancelIfDisabled(event, PControlTrigger.RAILS_DESTROYING);
             else if (this.debugPhysicsEvent)
                 this.debugAction(event, event.getBlock().getLocation(), ""
-                        + "face=" + BlockFace.SELF.name() + ";"
-                        + "changed=" + event.getChangedType() + ";"
-                        + "block=" + event.getBlock().getType() + ";"
-                        + "source=" + fromBlock.getType() + ";"
+                    + "face=" + BlockFace.SELF.name() + ";"
+                    + "changed=" + event.getChangedType() + ";"
+                    + "block=" + event.getBlock().getType() + ";"
+                    + "source=" + fromBlock.getType() + ";"
                 );
 
             return;
@@ -351,10 +351,10 @@ public final class PhysicsListenerModern extends PhysicsListener {
         else {
             if (this.debugPhysicsEvent)
                 this.debugAction(event, event.getBlock().getLocation(), ""
-                        + "face=" + BlockFace.UP.name() + ";"
-                        + "changed=" + event.getChangedType() + ";"
-                        + "block=" + event.getBlock().getType() + ";"
-                        + "source=" + fromBlock.getType() + ";"
+                    + "face=" + BlockFace.UP.name() + ";"
+                    + "changed=" + event.getChangedType() + ";"
+                    + "block=" + event.getBlock().getType() + ";"
+                    + "source=" + fromBlock.getType() + ";"
                 );
             for (BlockFace face : this.nsweFaces) {
                 toBlock = fromBlock.getRelative(face);
@@ -373,10 +373,10 @@ public final class PhysicsListenerModern extends PhysicsListener {
                     this.data.cancelIfDisabled(event, PControlTrigger.REDSTONE_TORCHES_DESTROYING);
                 else if (this.debugPhysicsEvent)
                     this.debugAction(event, event.getBlock().getLocation(), ""
-                            + "face=" + face.name() + ";"
-                            + "changed=" + event.getChangedType() + ";"
-                            + "block=" + event.getBlock().getType() + ";"
-                            + "source=" + fromBlock.getType() + ";"
+                        + "face=" + face.name() + ";"
+                        + "changed=" + event.getChangedType() + ";"
+                        + "block=" + event.getBlock().getType() + ";"
+                        + "source=" + fromBlock.getType() + ";"
                     );
 
                 if (event.isCancelled()) return;

@@ -17,10 +17,10 @@ import java.util.Set;
 
 public abstract class PhysicsListener implements Listener {
     protected final BlockFace[] nsweFaces = new BlockFace[]{
-            BlockFace.NORTH,
-            BlockFace.SOUTH,
-            BlockFace.WEST,
-            BlockFace.EAST
+        BlockFace.NORTH,
+        BlockFace.SOUTH,
+        BlockFace.WEST,
+        BlockFace.EAST
     };
     protected final boolean debugPhysicsEvent = false;
 
@@ -53,9 +53,9 @@ public abstract class PhysicsListener implements Listener {
 
     protected String genOffsetMsg(Block first, Block second) {
         return genOffsetMsg(
-                first.getX() - second.getX(),
-                first.getY() - second.getY(),
-                first.getZ() - second.getZ());
+            first.getX() - second.getX(),
+            first.getY() - second.getY(),
+            first.getZ() - second.getZ());
     }
 
     private String genOffsetMsg(int oX, int oY, int oZ) {

@@ -1,8 +1,8 @@
 package ru.dymeth.pcontrol.inventory;
 
 import org.bukkit.World;
-import ru.dymeth.pcontrol.api.PControlCategory;
 import ru.dymeth.pcontrol.PControlDataBukkit;
+import ru.dymeth.pcontrol.api.PControlCategory;
 
 import javax.annotation.Nonnull;
 
@@ -11,7 +11,7 @@ public class PControlCategoryInventory extends PControlInventory {
         super(world, 3, data.getMessage("category-inventory-title", "%world%", world.getName()));
         for (PControlCategory category : PControlCategory.values()) {
             this.setItem(category.getSlot(), category.getIcon(), player ->
-                    player.openInventory(data.getInventory(category, world).getInventory()));
+                player.openInventory(data.getInventory(category, world).getInventory()));
         }
     }
 }

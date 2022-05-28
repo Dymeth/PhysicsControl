@@ -6,9 +6,9 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import ru.dymeth.pcontrol.PControlDataBukkit;
 import ru.dymeth.pcontrol.api.BukkitUtils;
 import ru.dymeth.pcontrol.api.PControlCategory;
-import ru.dymeth.pcontrol.PControlDataBukkit;
 import ru.dymeth.pcontrol.api.PControlTrigger;
 
 import javax.annotation.Nonnull;
@@ -38,7 +38,7 @@ public final class PControlTriggerInventory extends PControlInventory {
         meta.setDisplayName(data.getMessage("select-another-category-item"));
         back.setItemMeta(meta);
         this.setItem((short) (3 * 9 - 1), back, player ->
-                player.openInventory(new PControlCategoryInventory(data, world).getInventory()));
+            player.openInventory(new PControlCategoryInventory(data, world).getInventory()));
     }
 
     public void updateTriggerStack(@Nonnull PControlTrigger trigger) {
@@ -74,8 +74,8 @@ public final class PControlTriggerInventory extends PControlInventory {
         if (this.data.getServerVersion() < trigger.getMinVersion())
             return;
         if (!sender.isOp()
-                && !sender.hasPermission("physicscontrol.trigger.*")
-                && !sender.hasPermission("physicscontrol.trigger." + trigger.name().toLowerCase())) {
+            && !sender.hasPermission("physicscontrol.trigger.*")
+            && !sender.hasPermission("physicscontrol.trigger." + trigger.name().toLowerCase())) {
             sender.sendMessage(this.data.getMessage("bad-perms-trigger", "%trigger%", trigger.getDisplayName()));
             return;
         }
@@ -83,10 +83,10 @@ public final class PControlTriggerInventory extends PControlInventory {
         this.updateTriggerStack(trigger);
 
         String msg = this.data.getMessage(
-                this.data.isActionAllowed(this.world, trigger) ? "trigger-enabled" : "trigger-disabled",
-                "%player%", sender.getName(),
-                "%trigger%", trigger.getDisplayName(),
-                "%world%", this.world.getName());
+            this.data.isActionAllowed(this.world, trigger) ? "trigger-enabled" : "trigger-disabled",
+            "%player%", sender.getName(),
+            "%trigger%", trigger.getDisplayName(),
+            "%world%", this.world.getName());
 
         if (msg.isEmpty()) return;
         this.data.announce(this.world, msg, null);

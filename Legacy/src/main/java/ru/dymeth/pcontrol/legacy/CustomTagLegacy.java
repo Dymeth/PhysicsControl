@@ -7,46 +7,46 @@ import static org.bukkit.Material.*;
 
 public final class CustomTagLegacy {
     public static final CustomMaterialSet RAILS = new CustomMaterialSet(
-            Material.RAILS,
-            ACTIVATOR_RAIL,
-            DETECTOR_RAIL,
-            POWERED_RAIL);
+        Material.RAILS,
+        ACTIVATOR_RAIL,
+        DETECTOR_RAIL,
+        POWERED_RAIL);
 
     public static final CustomMaterialSet WOODEN_DOORS = new CustomMaterialSet(
-            ACACIA_DOOR,
-            BIRCH_DOOR,
-            DARK_OAK_DOOR,
-            JUNGLE_DOOR,
-            WOODEN_DOOR,
-            SPRUCE_FENCE);
+        ACACIA_DOOR,
+        BIRCH_DOOR,
+        DARK_OAK_DOOR,
+        JUNGLE_DOOR,
+        WOODEN_DOOR,
+        SPRUCE_FENCE);
 
     public static final CustomMaterialSet PRESSURE_PLATES = new CustomMaterialSet(
-            STONE_PLATE,
-            GOLD_PLATE,
-            IRON_PLATE,
-            WOOD_PLATE);
+        STONE_PLATE,
+        GOLD_PLATE,
+        IRON_PLATE,
+        WOOD_PLATE);
 
     public static final CustomMaterialSet REDSTONE_PASSIVE_INPUTS = new CustomMaterialSet(
-            TRIPWIRE_HOOK,
-            TRIPWIRE)
-            .add(PRESSURE_PLATES.getValues());
+        TRIPWIRE_HOOK,
+        TRIPWIRE)
+        .add(PRESSURE_PLATES.getValues());
 
     public static final CustomMaterialSet GRAVITY_BLOCKS = new CustomMaterialSet()
-            .add(Material::hasGravity)
-            .add(DRAGON_EGG);
+        .add(Material::hasGravity)
+        .add(DRAGON_EGG);
 
     public static final CustomMaterialSet BONE_MEAL_HERBS = new CustomMaterialSet(
-            LONG_GRASS,
-            YELLOW_FLOWER,
-            RED_ROSE);
+        LONG_GRASS,
+        YELLOW_FLOWER,
+        RED_ROSE);
 
     public static final CustomMaterialSet LITTLE_MUSHROOMS = new CustomMaterialSet(
-            RED_MUSHROOM,
-            BROWN_MUSHROOM);
+        RED_MUSHROOM,
+        BROWN_MUSHROOM);
 
     public static final CustomMaterialSet GRASS_AND_PATH_BLOCKS = new CustomMaterialSet(
-            GRASS)
-            .addBlocks(
-                    "GRASS_PATH"
-            );
+        GRASS)
+        .addBlocks(
+            "GRASS_PATH"
+        );
 }

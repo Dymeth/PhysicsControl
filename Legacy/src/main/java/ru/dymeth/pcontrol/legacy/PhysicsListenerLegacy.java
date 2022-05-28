@@ -252,9 +252,9 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
         else {
             if (this.debugPhysicsEvent)
                 this.debugAction(event, fromBlock.getLocation(), ""
-                        + "face=" + BlockFace.UP.name() + ";"
-                        + "changed=" + event.getChangedType() + ";"
-                        + "block=" + fromBlock.getType() + ";"
+                    + "face=" + BlockFace.UP.name() + ";"
+                    + "changed=" + event.getChangedType() + ";"
+                    + "block=" + fromBlock.getType() + ";"
                 );
             for (BlockFace face : this.nsweFaces) {
                 toBlock = fromBlock.getRelative(face);
@@ -273,9 +273,9 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
                     this.data.cancelIfDisabled(event, PControlTrigger.REDSTONE_TORCHES_DESTROYING);
                 else if (this.debugPhysicsEvent)
                     this.debugAction(event, fromBlock.getLocation(), ""
-                            + "face=" + face.name() + ";"
-                            + "changed=" + event.getChangedType() + ";"
-                            + "block=" + fromBlock.getType() + ";"
+                        + "face=" + face.name() + ";"
+                        + "changed=" + event.getChangedType() + ";"
+                        + "block=" + fromBlock.getType() + ";"
                     );
 
                 if (event.isCancelled()) return;

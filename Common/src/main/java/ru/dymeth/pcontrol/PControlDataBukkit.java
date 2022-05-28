@@ -54,7 +54,7 @@ public final class PControlDataBukkit implements PControlData {
             new PluginUpdater(plugin);
         } catch (Throwable t) {
             this.plugin.getLogger().warning("Unable to update config from previous plugin version: "
-                    + t.getClass().getName() + ": " + t.getMessage());
+                + t.getClass().getName() + ": " + t.getMessage());
         }
 
         try {
@@ -70,10 +70,10 @@ public final class PControlDataBukkit implements PControlData {
             this.fakeEnchantment = FakeEnchantmentLegacy.getInstance();
 
         this.removableProjectileTypes = BukkitUtils.matchEntityTypes(null,
-                "ARROW",
-                "SPECTRAL_ARROW",
-                "TIPPED_ARROW",
-                "TRIDENT");
+            "ARROW",
+            "SPECTRAL_ARROW",
+            "TIPPED_ARROW",
+            "TRIDENT");
 
         this.reloadConfigs();
     }
@@ -119,7 +119,7 @@ public final class PControlDataBukkit implements PControlData {
                 String oldVersion = this.plugin.getDescription().getVersion();
                 if (oldVersion.equals(newVersion)) return;
                 this.plugin.getLogger().info("There is a new update available: "
-                        + newVersion + " (current version is " + oldVersion + ")");
+                    + newVersion + " (current version is " + oldVersion + ")");
             });
         }
         if (config.getBoolean("metrics", true)) {
@@ -138,7 +138,7 @@ public final class PControlDataBukkit implements PControlData {
         File messagesFile = this.createConfigFileIfNotExist("messages.yml", true);
         YamlConfiguration messagesConfig = YamlConfiguration.loadConfiguration(messagesFile);
         YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(
-                new InputStreamReader(Objects.requireNonNull(this.plugin.getResource("messages.yml"))));
+            new InputStreamReader(Objects.requireNonNull(this.plugin.getResource("messages.yml"))));
         Map<String, String> defaultValues = new HashMap<>();
         Map<String, String> deprecatedKeys = new HashMap<>();
         Map<String, String> unloadedKeys = new HashMap<>();
@@ -318,10 +318,10 @@ public final class PControlDataBukkit implements PControlData {
     public void announce(@Nullable World world, @Nonnull String plain, @Nullable BaseComponent component) {
         Bukkit.getConsoleSender().sendMessage(plain);
         Bukkit.getOnlinePlayers().stream()
-                .filter(player -> player.isOp() || player.hasPermission("physicscontrol.announce"))
-                .filter(player -> world == null || player.getWorld() == world)
-                .forEach(component == null
-                        ? player -> player.sendMessage(plain)
-                        : player -> player.spigot().sendMessage(component));
+            .filter(player -> player.isOp() || player.hasPermission("physicscontrol.announce"))
+            .filter(player -> world == null || player.getWorld() == world)
+            .forEach(component == null
+                ? player -> player.sendMessage(plain)
+                : player -> player.spigot().sendMessage(component));
     }
 }
