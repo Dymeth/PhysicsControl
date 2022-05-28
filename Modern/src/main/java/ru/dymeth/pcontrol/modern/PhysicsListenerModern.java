@@ -95,19 +95,21 @@ public final class PhysicsListenerModern extends PhysicsListener {
         Material from = event.getBlock().getType();
         Material to = event.getTo();
         World world = event.getEntity().getWorld();
+
+        if (to == Material.REDSTONE_ORE || (this.data.hasVersion(17) && to == Material.DEEPSLATE_REDSTONE_ORE)) {
+            return; // Redstone ore activation
+        } else if (this.data.isTriggerSupported(PControlTrigger.DRIPLEAFS_LOWERING) && from == Material.BIG_DRIPLEAF && to == Material.BIG_DRIPLEAF) {
+            this.data.cancelIfDisabled(event, world, PControlTrigger.DRIPLEAFS_LOWERING);
+            return;
+        }
+
         if (!(event.getEntity() instanceof FallingBlock)) {
             EntityType entityType = event.getEntity().getType();
 
             if (from == Material.FARMLAND && to == Material.DIRT) {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.FARMLANDS_TRAMPLING);
-            } else if (this.data.isTriggerSupported(PControlTrigger.DRIPLEAFS_LOWERING) && from == Material.BIG_DRIPLEAF && to == Material.BIG_DRIPLEAF) {
-                this.data.cancelIfDisabled(event, world, PControlTrigger.DRIPLEAFS_LOWERING);
-            } else if (to == Material.REDSTONE_ORE) {
-                return; // Redstone ore activation
             } else if (this.data.isTriggerSupported(PControlTrigger.POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES) && from == Material.POWDER_SNOW && to == Material.AIR) {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES);
-            } else if (this.data.hasVersion(17) && to == Material.DEEPSLATE_REDSTONE_ORE) {
-                return; // Redstone ore activation
             } else if (entityType == EntityType.BOAT) {
                 return; // Boats destroys lilies. TODO It is necessary to implement a smart system of destruction and restoration of water lilies so that there are no problems with movement
             } else if (entityType == EntityType.RABBIT) {

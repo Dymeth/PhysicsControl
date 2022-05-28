@@ -90,13 +90,16 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
         Material from = event.getBlock().getType();
         Material to = event.getTo();
         World world = event.getEntity().getWorld();
+
+        if (to == Material.GLOWING_REDSTONE_ORE) {
+            return; // Redstone ore activation
+        }
+
         if (!(event.getEntity() instanceof FallingBlock)) {
             EntityType entityType = event.getEntity().getType();
 
             if (from == Material.SOIL && to == Material.DIRT) {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.FARMLANDS_TRAMPLING);
-            } else if (to == Material.GLOWING_REDSTONE_ORE) {
-                return; // Redstone ore activation
             } else if (entityType == EntityType.BOAT) {
                 return; // Boats destroys lilies. TODO It is necessary to implement a smart system of destruction and restoration of water lilies so that there are no problems with movement
             } else if (entityType == EntityType.RABBIT) {
