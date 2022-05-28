@@ -31,13 +31,14 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        this.data = new PControlDataBukkit(this, resourceId);
+        this.data = new PControlDataBukkit(this, this.resourceId);
         PhysicsListener listener;
 
-        if (this.data.getServerVersion() >= 13)
+        if (this.data.getServerVersion() >= 13) {
             listener = new PhysicsListenerModern(this.data);
-        else
+        } else {
             listener = new PhysicsListenerLegacy(this.data);
+        }
 
         Bukkit.getPluginManager().registerEvents(listener, this);
         Bukkit.getPluginManager().registerEvents(new PhysicsListenerCommon(this.data), this);
@@ -103,23 +104,27 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         return true;
     }
 
+    @SuppressWarnings("SameParameterValue")
     private static String join(@Nonnull CharSequence delimiter, int firstElementIndex, @Nonnull String[] elements) {
         StringJoiner joiner = new StringJoiner(delimiter);
-        while (firstElementIndex < elements.length)
+        while (firstElementIndex < elements.length) {
             joiner.add(elements[firstElementIndex++]);
+        }
         return joiner.toString();
     }
 
     @EventHandler(ignoreCancelled = true)
     private void on(InventoryClickEvent event) {
-        if (event.getClickedInventory() != null && event.getClickedInventory().getHolder() instanceof PControlInventory)
+        if (event.getClickedInventory() != null && event.getClickedInventory().getHolder() instanceof PControlInventory) {
             ((PControlInventory) event.getClickedInventory().getHolder()).handle(event);
+        }
     }
 
     @EventHandler(ignoreCancelled = true)
     private void on(InventoryDragEvent event) {
-        if (event.getInventory().getHolder() instanceof PControlInventory)
+        if (event.getInventory().getHolder() instanceof PControlInventory) {
             ((PControlInventory) event.getInventory().getHolder()).handle(event);
+        }
     }
 
     @EventHandler(ignoreCancelled = true)

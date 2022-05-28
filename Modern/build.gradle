@@ -9,7 +9,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly "org.spigotmc:spigot-api:1.18-R0.1-SNAPSHOT"
+    // compileOnly "org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT" // Minimal (1.13-1.13.1 is unsupported)
+    compileOnly "org.spigotmc:spigot-api:1.18-R0.1-SNAPSHOT" // Latest
     implementation project(':Api')
 }
 

@@ -68,8 +68,9 @@ class PluginUpdater {
         String[] args = versionName.split("\\.");
         if (args.length != 3) throw new IllegalArgumentException("Unable to parse version: " + versionName);
         int majorVersion = Integer.parseInt(args[0]);
-        if (majorVersion != 1)
+        if (majorVersion != 1) {
             throw new IllegalArgumentException("Wrong major version of " + versionName + ": " + majorVersion);
+        }
         int[] result = new int[args.length];
         for (int i = 0; i < args.length; i++) {
             result[i] = Integer.parseInt(args[i]);
@@ -81,8 +82,8 @@ class PluginUpdater {
 
     PluginUpdater(@Nonnull Plugin plugin) {
         this.plugin = plugin;
-        String currentVersion = getCurrentVersion();
-        File versionFile = getVersionFile();
+        String currentVersion = this.getCurrentVersion();
+        File versionFile = this.getVersionFile();
         if (!versionFile.isFile()) {
             this.writeVersionFile();
             return;

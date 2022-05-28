@@ -56,32 +56,33 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
         Material from = event.getBlock().getType();
         Material to = event.getNewState().getType();
 
-        if (to == Material.SUGAR_CANE_BLOCK)
+        if (to == Material.SUGAR_CANE_BLOCK) {
             this.data.cancelIfDisabled(event, PControlTrigger.SUGAR_CANE_GROWING);
-        else if (to == Material.CACTUS)
+        } else if (to == Material.CACTUS) {
             this.data.cancelIfDisabled(event, PControlTrigger.CACTUS_GROWING);
-        else if (to == Material.CROPS)
+        } else if (to == Material.CROPS) {
             this.data.cancelIfDisabled(event, PControlTrigger.WHEAT_GROWING);
-        else if (to == Material.POTATO)
+        } else if (to == Material.POTATO) {
             this.data.cancelIfDisabled(event, PControlTrigger.POTATOES_GROWING);
-        else if (to == Material.CARROT)
+        } else if (to == Material.CARROT) {
             this.data.cancelIfDisabled(event, PControlTrigger.CARROTS_GROWING);
-        else if (this.data.isTriggerSupported(PControlTrigger.BEETROOTS_GROWING) && to == Material.BEETROOT_BLOCK)
+        } else if (this.data.isTriggerSupported(PControlTrigger.BEETROOTS_GROWING) && to == Material.BEETROOT_BLOCK) {
             this.data.cancelIfDisabled(event, PControlTrigger.BEETROOTS_GROWING);
-        else if (to == Material.PUMPKIN_STEM || to == Material.PUMPKIN)
+        } else if (to == Material.PUMPKIN_STEM || to == Material.PUMPKIN) {
             this.data.cancelIfDisabled(event, PControlTrigger.PUMPKINS_GROWING);
-        else if (to == Material.MELON_STEM || to == Material.MELON_BLOCK)
+        } else if (to == Material.MELON_STEM || to == Material.MELON_BLOCK) {
             this.data.cancelIfDisabled(event, PControlTrigger.MELONS_GROWING);
-        else if (to == Material.COCOA && from == Material.COCOA)
+        } else if (to == Material.COCOA && from == Material.COCOA) {
             this.data.cancelIfDisabled(event, PControlTrigger.COCOAS_GROWING);
-        else if (to == Material.NETHER_WARTS)
+        } else if (to == Material.NETHER_WARTS) {
             this.data.cancelIfDisabled(event, PControlTrigger.NETHER_WARTS_GROWING);
-        else if (CustomTagLegacy.BONE_MEAL_HERBS.isTagged(to))
+        } else if (CustomTagLegacy.BONE_MEAL_HERBS.isTagged(to)) {
             this.data.cancelIfDisabled(event, PControlTrigger.BONE_MEAL_USAGE);
-        else if (this.data.isTriggerSupported(PControlTrigger.CHORUSES_GROWING) && to == Material.CHORUS_FLOWER)
+        } else if (this.data.isTriggerSupported(PControlTrigger.CHORUSES_GROWING) && to == Material.CHORUS_FLOWER) {
             this.data.cancelIfDisabled(event, PControlTrigger.CHORUSES_GROWING);
-        else
+        } else {
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
+        }
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -92,48 +93,50 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
         if (!(event.getEntity() instanceof FallingBlock)) {
             EntityType entityType = event.getEntity().getType();
 
-            if (from == Material.SOIL && to == Material.DIRT)
+            if (from == Material.SOIL && to == Material.DIRT) {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.FARMLANDS_TRAMPLING);
-            else if (to == Material.GLOWING_REDSTONE_ORE)
+            } else if (to == Material.GLOWING_REDSTONE_ORE) {
                 return; // Redstone ore activation
-            else if (entityType == EntityType.BOAT)
+            } else if (entityType == EntityType.BOAT) {
                 return; // Boats destroys lilies. TODO It is necessary to implement a smart system of destruction and restoration of water lilies so that there are no problems with movement
-            else if (entityType == EntityType.RABBIT)
+            } else if (entityType == EntityType.RABBIT) {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.RABBITS_EATING_CARROTS);
-            else if (entityType == EntityType.SHEEP)
+            } else if (entityType == EntityType.SHEEP) {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.SHEEPS_EATING_GRASS);
-            else if (entityType == EntityType.ENDERMAN)
+            } else if (entityType == EntityType.ENDERMAN) {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.ENDERMANS_GRIEFING);
-            else if (entityType == EntityType.WITHER)
+            } else if (entityType == EntityType.WITHER) {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.WITHERS_GRIEFING);
-            else if (entityType == EntityType.SILVERFISH)
+            } else if (entityType == EntityType.SILVERFISH) {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.SILVERFISHES_HIDING_IN_BLOCKS);
-            else if (entityType == EntityType.ARROW && from == Material.TNT)
+            } else if (entityType == EntityType.ARROW && from == Material.TNT) {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.BURNING_ARROWS_ACTIVATE_TNT);
-            else if (entityType == EntityType.VILLAGER)
+            } else if (entityType == EntityType.VILLAGER) {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.VILLAGERS_FARMING);
-            else if ((entityType == EntityType.ZOMBIE || (this.data.hasVersion(11) && entityType == EntityType.ZOMBIE_VILLAGER)) && CustomTagLegacy.WOODEN_DOORS.isTagged(from))
+            } else if ((entityType == EntityType.ZOMBIE || (this.data.hasVersion(11) && entityType == EntityType.ZOMBIE_VILLAGER)) && CustomTagLegacy.WOODEN_DOORS.isTagged(from)) {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.ZOMBIES_BREAK_DOORS);
-            else
+            } else {
                 this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to + " (" + event.getEntityType() + ")");
+            }
 
             return;
         }
 
-        if (from == Material.SAND)
+        if (from == Material.SAND) {
             this.data.cancelIfDisabled(event, world, PControlTrigger.SAND_FALLING);
-        else if (from == Material.GRAVEL)
+        } else if (from == Material.GRAVEL) {
             this.data.cancelIfDisabled(event, world, PControlTrigger.GRAVEL_FALLING);
-        else if (from == Material.ANVIL)
+        } else if (from == Material.ANVIL) {
             this.data.cancelIfDisabled(event, world, PControlTrigger.ANVILS_FALLING);
-        else if (from == Material.DRAGON_EGG)
+        } else if (from == Material.DRAGON_EGG) {
             this.data.cancelIfDisabled(event, world, PControlTrigger.DRAGON_EGGS_FALLING);
-        else if (this.data.isTriggerSupported(PControlTrigger.CONCRETE_POWDERS_FALLING) && from == Material.CONCRETE_POWDER)
+        } else if (this.data.isTriggerSupported(PControlTrigger.CONCRETE_POWDERS_FALLING) && from == Material.CONCRETE_POWDER) {
             this.data.cancelIfDisabled(event, world, PControlTrigger.CONCRETE_POWDERS_FALLING);
-        else if (CustomTagLegacy.GRAVITY_BLOCKS.isTagged(to))
+        } else if (CustomTagLegacy.GRAVITY_BLOCKS.isTagged(to)) {
             return; // Already existing falling blocks
-        else
+        } else {
             this.unrecognizedAction(event, event.getBlock().getLocation(), "falling block " + from + " > " + to);
+        }
 
         if (event.isCancelled()) event.getBlock().getState().update(false, false);
     }
@@ -143,16 +146,17 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
         Material from = event.getBlock().getType();
         Material to = event.getToBlock().getType();
 
-        if (from == Material.LAVA || from == Material.STATIONARY_LAVA)
+        if (from == Material.LAVA || from == Material.STATIONARY_LAVA) {
             this.data.cancelIfDisabled(event, PControlTrigger.LAVA_FLOWING);
-        else if (from == Material.WATER || from == Material.STATIONARY_WATER)
+        } else if (from == Material.WATER || from == Material.STATIONARY_WATER) {
             this.data.cancelIfDisabled(event, PControlTrigger.WATER_FLOWING);
-        else if (from == Material.DRAGON_EGG)
+        } else if (from == Material.DRAGON_EGG) {
             this.data.cancelIfDisabled(event, PControlTrigger.DRAGON_EGGS_TELEPORTING);
-        else if (CustomTagLegacy.GRAVITY_BLOCKS.isTagged(from))
+        } else if (CustomTagLegacy.GRAVITY_BLOCKS.isTagged(from)) {
             return; // Seems bug while chunks generation (water near gravity blocks?): "Action BlockFromTo (GRAVEL > GRAVEL) was detected"
-        else
+        } else {
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
+        }
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -160,26 +164,27 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
         Material from = event.getBlock().getType();
         Material to = event.getNewState().getType();
 
-        if (CustomTagLegacy.GRASS_AND_PATH_BLOCKS.isTagged(from) && to == Material.DIRT)
+        if (CustomTagLegacy.GRASS_AND_PATH_BLOCKS.isTagged(from) && to == Material.DIRT) {
             this.data.cancelIfDisabled(event, PControlTrigger.GRASS_BLOCKS_FADING);
-        else if (from == Material.MYCEL && to == Material.DIRT)
+        } else if (from == Material.MYCEL && to == Material.DIRT) {
             this.data.cancelIfDisabled(event, PControlTrigger.MYCELIUM_SPREADING);
-        else if (from == Material.SOIL && to == Material.DIRT)
+        } else if (from == Material.SOIL && to == Material.DIRT) {
             this.data.cancelIfDisabled(event, PControlTrigger.FARMLANDS_DRYING);
-        else if (from == Material.SNOW && to == Material.AIR)
+        } else if (from == Material.SNOW && to == Material.AIR) {
             this.data.cancelIfDisabled(event, PControlTrigger.SNOW_MELTING);
-        else if (from == Material.ICE && to == Material.WATER)
+        } else if (from == Material.ICE && to == Material.WATER) {
             this.data.cancelIfDisabled(event, PControlTrigger.ICE_MELTING);
-        else if (this.data.isTriggerSupported(PControlTrigger.FROSTED_ICE_PHYSICS) && from == Material.FROSTED_ICE && to == Material.WATER)
+        } else if (this.data.isTriggerSupported(PControlTrigger.FROSTED_ICE_PHYSICS) && from == Material.FROSTED_ICE && to == Material.WATER) {
             this.data.cancelIfDisabled(event, PControlTrigger.FROSTED_ICE_PHYSICS);
-        else if (from == Material.FIRE && to == Material.AIR)
+        } else if (from == Material.FIRE && to == Material.AIR) {
             this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
-        else if (from == Material.GLOWING_REDSTONE_ORE && to == Material.REDSTONE_ORE)
+        } else if (from == Material.GLOWING_REDSTONE_ORE && to == Material.REDSTONE_ORE) {
             return; // Redstone ore deactivation
-        else if (from == Material.AIR && to == Material.AIR)
+        } else if (from == Material.AIR && to == Material.AIR) {
             return; // Strange server action. Perhaps this is due to the fall of blocks without a base (torches for example) during generation (only in mineshafts?)
-        else
+        } else {
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
+        }
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -187,20 +192,21 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
         Material from = event.getBlock().getType();
         Material to = event.getNewState().getType();
 
-        if (to == Material.GRASS && from == Material.DIRT)
+        if (to == Material.GRASS && from == Material.DIRT) {
             this.data.cancelIfDisabled(event, PControlTrigger.GRASS_SPREADING);
-        else if (to == Material.MYCEL && from == Material.DIRT)
+        } else if (to == Material.MYCEL && from == Material.DIRT) {
             this.data.cancelIfDisabled(event, PControlTrigger.MYCELIUM_SPREADING);
-        else if (to == Material.VINE && (from == Material.AIR || from == Material.VINE))
+        } else if (to == Material.VINE && (from == Material.AIR || from == Material.VINE)) {
             this.data.cancelIfDisabled(event, PControlTrigger.VINES_GROWING);
-        else if (CustomTagLegacy.LITTLE_MUSHROOMS.isTagged(to) && from == Material.AIR)
+        } else if (CustomTagLegacy.LITTLE_MUSHROOMS.isTagged(to) && from == Material.AIR) {
             this.data.cancelIfDisabled(event, PControlTrigger.LITTLE_MUSHROOMS_SPREADING);
-        else if (to == Material.FIRE && from == Material.AIR)
+        } else if (to == Material.FIRE && from == Material.AIR) {
             this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
-        else if (this.data.isTriggerSupported(PControlTrigger.CHORUSES_GROWING) && to == Material.CHORUS_FLOWER)
+        } else if (this.data.isTriggerSupported(PControlTrigger.CHORUSES_GROWING) && to == Material.CHORUS_FLOWER) {
             this.data.cancelIfDisabled(event, PControlTrigger.CHORUSES_GROWING);
-        else
+        } else {
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
+        }
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
@@ -213,8 +219,9 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
 
     @EventHandler(ignoreCancelled = true)
     private void on(EntityInteractEvent event) {
-        if (event.getEntityType() == EntityType.VILLAGER && CustomTagLegacy.WOODEN_DOORS.isTagged(event.getBlock().getType()))
+        if (event.getEntityType() == EntityType.VILLAGER && CustomTagLegacy.WOODEN_DOORS.isTagged(event.getBlock().getType())) {
             return;
+        }
         this.handleInteraction(event, event.getBlock());
     }
 
@@ -222,14 +229,15 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
         World world = source.getWorld();
         Material material = source.getType();
 
-        if (material == Material.SOIL)
+        if (material == Material.SOIL) {
             this.data.cancelIfDisabled(event, world, PControlTrigger.FARMLANDS_TRAMPLING);
-        else if (CustomTagLegacy.REDSTONE_PASSIVE_INPUTS.isTagged(material))
+        } else if (CustomTagLegacy.REDSTONE_PASSIVE_INPUTS.isTagged(material)) {
             return; // Redstone activators
-        else if (material == Material.REDSTONE_ORE || material == Material.GLOWING_REDSTONE_ORE)
+        } else if (material == Material.REDSTONE_ORE || material == Material.GLOWING_REDSTONE_ORE) {
             return; // Redstone ore activation
-        else
+        } else {
             this.unrecognizedAction(event, source.getLocation(), material);
+        }
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -242,20 +250,20 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
         toBlock = fromBlock.getRelative(BlockFace.UP);
         to = toBlock.getType();
 
-        if (to == Material.SIGN)
+        if (to == Material.SIGN) {
             this.data.cancelIfDisabled(event, PControlTrigger.SIGNS_DESTROYING);
-        else if (to == Material.TORCH)
+        } else if (to == Material.TORCH) {
             this.data.cancelIfDisabled(event, PControlTrigger.TORCHES_DESTROYING);
-        else if (to == Material.REDSTONE_TORCH_ON || to == Material.REDSTONE_TORCH_OFF)
+        } else if (to == Material.REDSTONE_TORCH_ON || to == Material.REDSTONE_TORCH_OFF) {
             this.data.cancelIfDisabled(event, PControlTrigger.REDSTONE_TORCHES_DESTROYING);
-
-        else {
-            if (this.debugPhysicsEvent)
+        } else {
+            if (this.debugPhysicsEvent) {
                 this.debugAction(event, fromBlock.getLocation(), ""
                     + "face=" + BlockFace.UP.name() + ";"
                     + "changed=" + event.getChangedType() + ";"
                     + "block=" + fromBlock.getType() + ";"
                 );
+            }
             for (BlockFace face : this.nsweFaces) {
                 toBlock = fromBlock.getRelative(face);
                 toData = toBlock.getState().getData();
@@ -263,20 +271,21 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
                 if (((Attachable) toData).getFacing() != face) continue;
                 to = toBlock.getType();
 
-                if (to == Material.LADDER)
+                if (to == Material.LADDER) {
                     this.data.cancelIfDisabled(event, PControlTrigger.LADDERS_DESTROYING);
-                else if (to == Material.WALL_SIGN)
+                } else if (to == Material.WALL_SIGN) {
                     this.data.cancelIfDisabled(event, PControlTrigger.SIGNS_DESTROYING);
-                else if (to == Material.TORCH)
+                } else if (to == Material.TORCH) {
                     this.data.cancelIfDisabled(event, PControlTrigger.TORCHES_DESTROYING);
-                else if (to == Material.REDSTONE_TORCH_ON || to == Material.REDSTONE_TORCH_OFF)
+                } else if (to == Material.REDSTONE_TORCH_ON || to == Material.REDSTONE_TORCH_OFF) {
                     this.data.cancelIfDisabled(event, PControlTrigger.REDSTONE_TORCHES_DESTROYING);
-                else if (this.debugPhysicsEvent)
+                } else if (this.debugPhysicsEvent) {
                     this.debugAction(event, fromBlock.getLocation(), ""
                         + "face=" + face.name() + ";"
                         + "changed=" + event.getChangedType() + ";"
                         + "block=" + fromBlock.getType() + ";"
                     );
+                }
 
                 if (event.isCancelled()) return;
             }

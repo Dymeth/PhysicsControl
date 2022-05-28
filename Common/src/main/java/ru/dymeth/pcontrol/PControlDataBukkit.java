@@ -71,10 +71,11 @@ public final class PControlDataBukkit implements PControlData {
                 + "It must be Spigot 1.8-1.12.2 or 1.13.2 and newer");
         }
 
-        if (this.serverVersion >= 13)
+        if (this.serverVersion >= 13) {
             this.fakeEnchantment = FakeEnchantmentModern.getInstance();
-        else
+        } else {
             this.fakeEnchantment = FakeEnchantmentLegacy.getInstance();
+        }
 
         this.removableProjectileTypes = BukkitUtils.matchEntityTypes(null,
             "ARROW",
@@ -210,11 +211,13 @@ public final class PControlDataBukkit implements PControlData {
             this.plugin.saveResource(name, false);
             return configFile;
         }
-        if (!configFile.getParentFile().isDirectory() && !configFile.getParentFile().mkdirs())
+        if (!configFile.getParentFile().isDirectory() && !configFile.getParentFile().mkdirs()) {
             throw new RuntimeException("Could not create plugin config directory");
+        }
         try {
-            if (!configFile.createNewFile())
+            if (!configFile.createNewFile()) {
                 throw new RuntimeException("Unable to create config file");
+            }
         } catch (IOException e) {
             throw new RuntimeException("Error creating config file " + name, e);
         }
@@ -225,10 +228,12 @@ public final class PControlDataBukkit implements PControlData {
     @Nonnull
     public String getMessage(@Nonnull String key, @Nonnull String... placeholders) {
         String result = this.messages.get(key);
-        if (result == null)
+        if (result == null) {
             return ChatColor.RED + key + " " + Arrays.toString(placeholders);
-        for (int i = 0; i < placeholders.length; i++)
+        }
+        for (int i = 0; i < placeholders.length; i++) {
             result = result.replace(placeholders[i], placeholders[++i]);
+        }
         return result;
     }
 
@@ -254,10 +259,11 @@ public final class PControlDataBukkit implements PControlData {
             Boolean memoryValue = triggers.get(trigger);
             Boolean configValue = worldConfig.contains(trigger.name()) ? worldConfig.getBoolean(trigger.name()) : null;
             boolean currentValue;
-            if (configPriority)
+            if (configPriority) {
                 currentValue = configValue == null ? trigger.getDefaultValue() : configValue;
-            else
+            } else {
                 currentValue = memoryValue == null ? trigger.getDefaultValue() : memoryValue;
+            }
             if (configValue == null || configValue != currentValue) {
                 worldConfig.set(trigger.name(), currentValue);
                 changed = true;
@@ -292,14 +298,16 @@ public final class PControlDataBukkit implements PControlData {
 
     @Override
     public void cancelIfDisabled(@Nonnull BlockEvent event, @Nonnull PControlTrigger trigger) {
-        if (!this.getWorldTriggers(event.getBlock().getWorld()).getOrDefault(trigger, false))
+        if (!this.getWorldTriggers(event.getBlock().getWorld()).getOrDefault(trigger, false)) {
             ((Cancellable) event).setCancelled(true);
+        }
     }
 
     @Override
     public void cancelIfDisabled(@Nonnull Cancellable event, @Nonnull World world, @Nonnull PControlTrigger trigger) {
-        if (!this.getWorldTriggers(world).getOrDefault(trigger, false))
+        if (!this.getWorldTriggers(world).getOrDefault(trigger, false)) {
             event.setCancelled(true);
+        }
     }
 
     @Override
@@ -316,8 +324,9 @@ public final class PControlDataBukkit implements PControlData {
     @Nonnull
     private Map<PControlTrigger, Boolean> getWorldTriggers(@Nonnull World world) {
         Map<PControlTrigger, Boolean> worldTriggers = this.triggers.get(world);
-        if (worldTriggers == null)
+        if (worldTriggers == null) {
             throw new IllegalArgumentException("Synchronisation error. World " + world.getName() + " not found in cache");
+        }
         return worldTriggers;
     }
 

@@ -35,10 +35,12 @@ public abstract class PhysicsListener implements Listener {
 
     protected void unrecognizedAction(@Nonnull Cancellable event, @Nonnull Location l, @Nonnull Object content) {
         if (l.getWorld() == null) throw new IllegalArgumentException("World cannot be null");
-        if (!this.data.isActionAllowed(l.getWorld(), PControlTrigger.ALLOW_UNRECOGNIZED_ACTIONS))
+        if (!this.data.isActionAllowed(l.getWorld(), PControlTrigger.ALLOW_UNRECOGNIZED_ACTIONS)) {
             event.setCancelled(true);
-        if (this.data.isActionAllowed(l.getWorld(), PControlTrigger.DEBUG_MESSAGES))
+        }
+        if (this.data.isActionAllowed(l.getWorld(), PControlTrigger.DEBUG_MESSAGES)) {
             this.debugAction((Event) event, l, content);
+        }
     }
 
     protected void debugAction(@Nonnull Event event, @Nonnull Location l, @Nonnull Object content) {

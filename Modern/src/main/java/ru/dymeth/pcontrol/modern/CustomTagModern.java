@@ -89,25 +89,6 @@ public final class CustomTagModern {
         .add(FENCES.getValues())
         .add(DOORS.getValues());
 
-    public static final CustomMaterialSet CONCRETES = new CustomMaterialSet(
-        BLACK_CONCRETE,
-        BLUE_CONCRETE,
-        BROWN_CONCRETE,
-        CYAN_CONCRETE,
-        GRAY_CONCRETE,
-        GREEN_CONCRETE,
-        LIGHT_BLUE_CONCRETE,
-        LIGHT_GRAY_CONCRETE,
-        LIME_CONCRETE,
-        MAGENTA_CONCRETE,
-        ORANGE_CONCRETE,
-        PINK_CONCRETE,
-        PURPLE_CONCRETE,
-        RED_CONCRETE,
-        WHITE_CONCRETE,
-        YELLOW_CONCRETE
-    );
-
     public static final CustomMaterialSet CONCRETE_POWDERS = new CustomMaterialSet(
         BLACK_CONCRETE_POWDER,
         BLUE_CONCRETE_POWDER,
@@ -159,10 +140,10 @@ public final class CustomTagModern {
     public static final CustomMaterialSet ALL_ALIVE_CORALS = new CustomMaterialSet()
         .add(CORAL_BLOCKS.getValues())
         .add(WALL_CORALS.getValues())
-        .add(CORAL_PLANTS.getValues()) // 1.13.2+
+        .add(CORAL_PLANTS.getValues())
         .add(CORALS.getValues());
 
-    public static final CustomMaterialSet DEAD_CORAL_PLANTS = new CustomMaterialSet( // 1.13.1+
+    public static final CustomMaterialSet DEAD_CORAL_PLANTS = new CustomMaterialSet(
         DEAD_TUBE_CORAL,
         DEAD_BRAIN_CORAL,
         DEAD_BUBBLE_CORAL,

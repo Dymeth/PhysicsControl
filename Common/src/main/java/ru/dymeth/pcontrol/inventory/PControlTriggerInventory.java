@@ -49,12 +49,14 @@ public final class PControlTriggerInventory extends PControlInventory {
         icon = icon.clone();
 
         ItemMeta meta = icon.getItemMeta();
-        if (meta == null)
+        if (meta == null) {
             throw new IllegalArgumentException("Item meta could not be null");
-        if (allowed)
+        }
+        if (allowed) {
             meta.setDisplayName((enabled ? ChatColor.GREEN : ChatColor.RED) + trigger.getDisplayName());
-        else
+        } else {
             meta.setDisplayName(ChatColor.GRAY + "" + ChatColor.STRIKETHROUGH + trigger.getDisplayName());
+        }
         List<String> lore = new ArrayList<>();
         if (allowed) {
             lore.add(enabled ? this.data.getMessage("trigger-enabled-state") : this.data.getMessage("trigger-disabled-state"));
@@ -63,16 +65,18 @@ public final class PControlTriggerInventory extends PControlInventory {
             lore.add(this.data.getMessage("trigger-unsupported-state", "%min_version%", "1." + trigger.getMinVersion()));
         }
         meta.setLore(lore);
-        if (allowed && enabled)
+        if (allowed && enabled) {
             meta.addEnchant(this.data.getFakeEnchantment(), 1, true);
+        }
         icon.setItemMeta(meta);
         short slot = this.slotByTrigger.get(trigger);
         this.setItem(slot, icon, player -> this.switchTrigger(player, trigger));
     }
 
     public void switchTrigger(@Nonnull CommandSender sender, @Nonnull PControlTrigger trigger) {
-        if (this.data.getServerVersion() < trigger.getMinVersion())
+        if (this.data.getServerVersion() < trigger.getMinVersion()) {
             return;
+        }
         if (!sender.isOp()
             && !sender.hasPermission("physicscontrol.trigger.*")
             && !sender.hasPermission("physicscontrol.trigger." + trigger.name().toLowerCase())) {

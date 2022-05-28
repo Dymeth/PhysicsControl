@@ -43,27 +43,32 @@ class PhysicsListenerCommon extends PhysicsListener {
             case ACACIA:
             case DARK_OAK:
             case MEGA_REDWOOD:
-            case TALL_BIRCH:
+            case TALL_BIRCH: {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.TREES_GROWING);
                 break;
+            }
             case RED_MUSHROOM:
-            case BROWN_MUSHROOM:
+            case BROWN_MUSHROOM: {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.GIANT_MUSHROOMS_GROWING);
                 break;
-            case CHORUS_PLANT:
+            }
+            case CHORUS_PLANT: {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.CHORUSES_GROWING);
                 break;
-            default:
+            }
+            default: {
                 this.unrecognizedAction(event, event.getLocation(), from + " > " + event.getSpecies());
+            }
         }
     }
 
     @EventHandler(ignoreCancelled = true)
     private void on(BlockIgniteEvent event) {
-        if (event.getCause() == BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL)
+        if (event.getCause() == BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL) {
             this.data.cancelIfDisabled(event, PControlTrigger.PLAYERS_FLINT_USAGE);
-        else
+        } else {
             this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
+        }
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -90,9 +95,10 @@ class PhysicsListenerCommon extends PhysicsListener {
         Material from = event.getBlock().getType();
         Material to = event.getNewState().getType();
 
-        if (from == Material.WATER && to == Material.FROSTED_ICE)
+        if (from == Material.WATER && to == Material.FROSTED_ICE) {
             this.data.cancelIfDisabled(event, PControlTrigger.FROSTED_ICE_PHYSICS);
-        else
+        } else {
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
+        }
     }
 }
