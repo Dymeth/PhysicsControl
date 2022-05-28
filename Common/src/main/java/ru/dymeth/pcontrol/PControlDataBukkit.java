@@ -57,11 +57,18 @@ public final class PControlDataBukkit implements PControlData {
                 + t.getClass().getName() + ": " + t.getMessage());
         }
 
+        String serverVersion = "unknown";
         try {
-            this.serverVersion = Short.parseShort(Bukkit.getServer().getClass().getName().split("\\.")[3].split("_")[1]);
+            serverVersion = Bukkit.getServer().getClass().getName().split("\\.")[3];
+            String[] versionArgs = serverVersion.split("_");
+            if (versionArgs.length != 3) throw new IllegalArgumentException();
+            if (!versionArgs[0].equals("v1")) throw new IllegalArgumentException();
+            this.serverVersion = Short.parseShort(versionArgs[1]);
             if (this.serverVersion < 8) throw new IllegalArgumentException();
+            if (this.serverVersion == 13 && !versionArgs[2].equals("R2")) throw new IllegalArgumentException();
         } catch (Exception e) {
-            throw new RuntimeException("Unsupported server version. It must be Spigot 1.8 or higher");
+            throw new RuntimeException("Unsupported server version (" + serverVersion + "). "
+                + "It must be Spigot 1.8-1.12.2 or 1.13.2 and newer");
         }
 
         if (this.serverVersion >= 13)
