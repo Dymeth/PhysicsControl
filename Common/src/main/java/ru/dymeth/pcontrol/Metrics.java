@@ -141,7 +141,7 @@ public class Metrics {
     }
 
     public void shutdown() {
-        // TODO Request metrics shutdown method to disable sending without plugin disabling
+        // TODO Request metrics shutdown method to disable data sending without plugin disabling
     }
 
     public static class MetricsBase {
