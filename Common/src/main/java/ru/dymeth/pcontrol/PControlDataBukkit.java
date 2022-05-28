@@ -37,6 +37,7 @@ public final class PControlDataBukkit implements PControlData {
     private final Map<String, String> messages = new HashMap<>();
     private final Map<World, Map<PControlTrigger, Boolean>> triggers = new HashMap<>();
     private final Map<World, Map<PControlCategory, PControlTriggerInventory>> inventories = new HashMap<>();
+    private Metrics metrics = null;
 
     PControlDataBukkit(@Nonnull Plugin plugin, @Nonnull String resourceIdString) {
         this.plugin = plugin;
@@ -122,7 +123,14 @@ public final class PControlDataBukkit implements PControlData {
             });
         }
         if (config.getBoolean("metrics", true)) {
-            new Metrics(this.plugin, 15320);
+            if (this.metrics == null) {
+                this.metrics = new Metrics(this.plugin, 15320);
+            }
+        } else {
+            if (this.metrics != null) {
+                this.metrics.shutdown();
+                this.metrics = null;
+            }
         }
     }
 
