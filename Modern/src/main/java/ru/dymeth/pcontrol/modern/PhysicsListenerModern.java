@@ -103,6 +103,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.DRIPLEAFS_LOWERING);
             else if (to == Material.REDSTONE_ORE)
                 return; // Redstone ore activation
+            else if (this.data.hasVersion(17) && from == Material.POWDER_SNOW && to == Material.AIR)
+                this.data.cancelIfDisabled(event, world, PControlTrigger.POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES);
             else if (this.data.hasVersion(17) && to == Material.DEEPSLATE_REDSTONE_ORE)
                 return; // Redstone ore activation
             else if (entityType == EntityType.BOAT)

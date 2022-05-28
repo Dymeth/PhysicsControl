@@ -43,41 +43,43 @@ public enum PControlTrigger {
             BUILDING, false, 2, 7, true, 13, "RAIL", "RAILS"),
 
     BLOCK_HIT_PROJECTILES_REMOVING(
-            ENTITIES_INTERACTIONS, false, 1, 1, false, "ARROW"),
+            ENTITIES_INTERACTIONS, false, 1, 2, false, "ARROW"),
     BURNING_ARROWS_ACTIVATE_TNT(
-            ENTITIES_INTERACTIONS, false, 1, 2, true, "ARROW"),
+            ENTITIES_INTERACTIONS, false, 1, 3, true, "ARROW"),
     FARMLANDS_TRAMPLING(
-            ENTITIES_INTERACTIONS, false, 1, 3, true, "FARMLAND", "SOIL"),
+            ENTITIES_INTERACTIONS, false, 1, 4, true, "FARMLAND", "SOIL"),
     TURTLE_EGGS_TRAMPLING(
-            ENTITIES_INTERACTIONS, false, 1, 4, true, 13, "TURTLE_EGG"),
+            ENTITIES_INTERACTIONS, false, 1, 5, true, 13, "TURTLE_EGG"),
     WITHERS_GRIEFING(
-            ENTITIES_INTERACTIONS, false, 1, 5, true, "WITHER_SKELETON_SKULL", "SKULL_ITEM:1"),
+            ENTITIES_INTERACTIONS, false, 1, 6, true, "WITHER_SKELETON_SKULL", "SKULL_ITEM:1"),
     ENDERMANS_GRIEFING(
-            ENTITIES_INTERACTIONS, false, 1, 6, true, "ENDER_PEARL"),
+            ENTITIES_INTERACTIONS, false, 1, 7, true, "ENDER_PEARL"),
     SILVERFISHES_HIDING_IN_BLOCKS(
-            ENTITIES_INTERACTIONS, false, 1, 7, true, "STONE"),
+            ENTITIES_INTERACTIONS, false, 1, 8, true, "STONE"),
     ZOMBIES_BREAK_DOORS(
-            ENTITIES_INTERACTIONS, false, 1, 8, true, "ZOMBIE_HEAD", "SKULL_ITEM:2"),
+            ENTITIES_INTERACTIONS, false, 2, 2, true, "ZOMBIE_HEAD", "SKULL_ITEM:2"),
     DRIPLEAFS_LOWERING(
-            ENTITIES_INTERACTIONS, false, 1, 9, true, 17, "BIG_DRIPLEAF"),
+            ENTITIES_INTERACTIONS, false, 2, 3, true, 17, "BIG_DRIPLEAF"),
     VILLAGERS_FARMING(
-            ENTITIES_INTERACTIONS, false, 2, 1, true, "WHEAT"),
+            ENTITIES_INTERACTIONS, false, 2, 4, true, "WHEAT"),
+    POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES(
+            ENTITIES_INTERACTIONS, false, 2, 5, true, 17, "POWDER_SNOW_BUCKET"),
     RABBITS_EATING_CARROTS(
-            ENTITIES_INTERACTIONS, false, 2, 2, true, "CARROT_ITEM", "CARROT"),
+            ENTITIES_INTERACTIONS, false, 2, 6, true, "CARROT_ITEM", "CARROT"),
     SHEEPS_EATING_GRASS(
-            ENTITIES_INTERACTIONS, false, 2, 3, true, "WHITE_WOOL", "WOOL"),
+            ENTITIES_INTERACTIONS, false, 2, 7, true, "WHITE_WOOL", "WOOL"),
     FOXES_EATS_FROM_SWEET_BERRY_BUSHES(
-            ENTITIES_INTERACTIONS, false, 2, 4, true, 14, "SWEET_BERRIES"),
+            ENTITIES_INTERACTIONS, false, 2, 8, true, 14, "SWEET_BERRIES"),
     TURTLES_LAYING_EGGS(
-            ENTITIES_INTERACTIONS, false, 2, 5, true, 13, "TURTLE_EGG"),
+            ENTITIES_INTERACTIONS, false, 3, 3, true, 13, "TURTLE_EGG"),
     PLAYERS_FLINT_USAGE(
-            ENTITIES_INTERACTIONS, false, 2, 6, true, "FLINT_AND_STEEL"),
+            ENTITIES_INTERACTIONS, false, 3, 4, true, "FLINT_AND_STEEL"),
     BONE_MEAL_USAGE(
-            ENTITIES_INTERACTIONS, false, 2, 7, true, "BONE_MEAL", "INK_SACK:15"),
+            ENTITIES_INTERACTIONS, false, 3, 5, true, "BONE_MEAL", "INK_SACK:15"),
     DRAGON_EGGS_TELEPORTING(
-            ENTITIES_INTERACTIONS, false, 2, 8, true, "DRAGON_EGG"),
+            ENTITIES_INTERACTIONS, false, 3, 6, true, "DRAGON_EGG"),
     FROSTED_ICE_PHYSICS(
-            ENTITIES_INTERACTIONS, false, 2, 9, true, 9, "ICE"),
+            ENTITIES_INTERACTIONS, false, 3, 7, true, 9, "ICE"),
 
     FIRE_SPREADING(
             WORLD_DESTRUCTION, true, 1, 4, true, "FLINT_AND_STEEL"),
