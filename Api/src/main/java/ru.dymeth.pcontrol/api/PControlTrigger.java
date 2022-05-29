@@ -43,7 +43,7 @@ public enum PControlTrigger {
         BUILDING, false, 2, 7, true, 13, "RAIL", "RAILS"),
 
     BLOCK_HIT_PROJECTILES_REMOVING(
-        ENTITIES_INTERACTIONS, false, 1, 2, false, "ARROW"),
+        ENTITIES_INTERACTIONS, false, 1, 2, false, 11, "ARROW"),
     BURNING_ARROWS_ACTIVATE_TNT(
         ENTITIES_INTERACTIONS, false, 1, 3, true, "ARROW"),
     FARMLANDS_TRAMPLING(

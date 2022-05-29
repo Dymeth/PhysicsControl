@@ -73,7 +73,8 @@ class PhysicsListenerCommon extends PhysicsListener {
 
     @EventHandler(ignoreCancelled = true)
     private void on(ProjectileHitEvent event) {
-        if (event.getHitBlock() == null) return;
+        if (!this.data.isTriggerSupported(PControlTrigger.BLOCK_HIT_PROJECTILES_REMOVING)) return;
+        if (event.getHitBlock() == null) return; // Since 1.11
         Entity entity = event.getEntity();
         if (!this.data.getRemovableProjectileTypes().contains(entity.getType())) return;
         if (!this.data.isActionAllowed(entity.getWorld(), PControlTrigger.BLOCK_HIT_PROJECTILES_REMOVING)) return;
