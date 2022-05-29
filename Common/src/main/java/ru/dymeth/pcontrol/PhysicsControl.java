@@ -77,10 +77,6 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
             sender.sendMessage(this.data.getMessage("config-reloaded"));
             return true;
         }
-        if (args.length == 1 && args[0].equalsIgnoreCase("id")) {
-            sender.sendMessage(((Player) sender).getInventory().getItemInMainHand().getType().name());
-            return true;
-        }
         World world;
         if (sender instanceof Player && args.length < 2) {
             world = ((Player) sender).getWorld();
