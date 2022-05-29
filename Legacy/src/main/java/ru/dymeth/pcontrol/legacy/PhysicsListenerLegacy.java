@@ -175,9 +175,9 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.FARMLANDS_DRYING);
         } else if (from == Material.SNOW && to == Material.AIR) {
             this.data.cancelIfDisabled(event, PControlTrigger.SNOW_MELTING);
-        } else if (from == Material.ICE && to == Material.WATER) {
+        } else if (from == Material.ICE && (to == Material.WATER || to == Material.STATIONARY_WATER)) {
             this.data.cancelIfDisabled(event, PControlTrigger.ICE_MELTING);
-        } else if (this.data.isTriggerSupported(PControlTrigger.FROSTED_ICE_PHYSICS) && from == Material.FROSTED_ICE && to == Material.WATER) {
+        } else if (this.data.isTriggerSupported(PControlTrigger.FROSTED_ICE_PHYSICS) && from == Material.FROSTED_ICE && (to == Material.WATER || to == Material.STATIONARY_WATER)) {
             this.data.cancelIfDisabled(event, PControlTrigger.FROSTED_ICE_PHYSICS);
         } else if (from == Material.FIRE && to == Material.AIR) {
             this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
@@ -300,7 +300,7 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
         Material from = event.getBlock().getType();
         Material to = event.getNewState().getType();
 
-        if (from == Material.WATER && to == Material.FROSTED_ICE) {
+        if ((from == Material.WATER || from == Material.STATIONARY_WATER) && to == Material.FROSTED_ICE) {
             this.data.cancelIfDisabled(event, PControlTrigger.FROSTED_ICE_PHYSICS);
         } else if (from == Material.AIR && to == Material.SNOW) {
             this.data.cancelIfDisabled(event, PControlTrigger.SNOW_GOLEMS_CREATE_SNOW);
