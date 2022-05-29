@@ -294,4 +294,18 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
             }
         }
     }
+
+    @EventHandler(ignoreCancelled = true)
+    private void on(EntityBlockFormEvent event) {
+        Material from = event.getBlock().getType();
+        Material to = event.getNewState().getType();
+
+        if (from == Material.WATER && to == Material.FROSTED_ICE) {
+            this.data.cancelIfDisabled(event, PControlTrigger.FROSTED_ICE_PHYSICS);
+        } else if (from == Material.AIR && to == Material.SNOW) {
+            this.data.cancelIfDisabled(event, PControlTrigger.SNOW_GOLEMS_CREATE_SNOW);
+        } else {
+            this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
+        }
+    }
 }

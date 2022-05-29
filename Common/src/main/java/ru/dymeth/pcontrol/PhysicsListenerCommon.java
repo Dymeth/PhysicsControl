@@ -6,7 +6,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
-import org.bukkit.event.block.EntityBlockFormEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.world.StructureGrowEvent;
@@ -89,17 +88,5 @@ class PhysicsListenerCommon extends PhysicsListener {
     @EventHandler(ignoreCancelled = true)
     private void on(LeavesDecayEvent event) {
         this.data.cancelIfDisabled(event, PControlTrigger.LEAVES_DECAY);
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    private void on(EntityBlockFormEvent event) {
-        Material from = event.getBlock().getType();
-        Material to = event.getNewState().getType();
-
-        if (from == Material.WATER && to == Material.FROSTED_ICE) {
-            this.data.cancelIfDisabled(event, PControlTrigger.FROSTED_ICE_PHYSICS);
-        } else {
-            this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
-        }
     }
 }
