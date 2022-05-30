@@ -7,20 +7,24 @@ import org.bukkit.inventory.meta.ItemMeta;
 import javax.annotation.Nonnull;
 
 public enum PControlCategory {
-    GRAVITY_BLOCKS(
-        2, 2, "SAND"),
+    MOBS_INTERACTIONS(
+        1, 4, "ZOMBIE_HEAD", "SKULL_ITEM:2"),
+    ENTITIES_INTERACTIONS(
+        1, 5, "PLAYER_HEAD", "SKULL_ITEM:3"),
+    BUILDING(
+        1, 6, "LADDER"),
+
     LIQUIDS(
         2, 3, "WATER_BUCKET"),
-    BUILDING(
-        2, 4, "LADDER"),
-    ENTITIES_INTERACTIONS(
-        2, 5, "PLAYER_HEAD", "SKULL_ITEM:3"),
+    GRAVITY_BLOCKS(
+        2, 4, "SAND"),
     WORLD_DESTRUCTION(
-        2, 6, "OAK_LEAVES", "LEAVES"),
+        2, 5, "OAK_LEAVES", "LEAVES"),
     GROWING_BLOCKS_AND_SMALL_PLANTS(
-        2, 7, "MELON"),
+        2, 6, "MELON"),
     VINES_AND_TALL_STRUCTURES(
-        2, 8, "BIRCH_SAPLING", "SAPLING:2"),
+        2, 7, "BIRCH_SAPLING", "SAPLING:2"),
+
     SETTINGS(
         3, 5, "COMMAND_BLOCK", "COMMAND");
 

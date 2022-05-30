@@ -42,46 +42,47 @@ public enum PControlTrigger {
     RAILS_DESTROYING(
         BUILDING, false, 2, 7, true, 13, "RAIL", "RAILS"),
 
-    BLOCK_HIT_PROJECTILES_REMOVING(
-        ENTITIES_INTERACTIONS, false, 1, 2, false, 11, "ARROW"),
+    WITHERS_GRIEFING(
+        MOBS_INTERACTIONS, false, 1, 3, true, "WITHER_SKELETON_SKULL", "SKULL_ITEM:1"),
+    ENDERMANS_GRIEFING(
+        MOBS_INTERACTIONS, false, 1, 4, true, "ENDER_PEARL"),
+    SILVERFISHES_HIDING_IN_BLOCKS(
+        MOBS_INTERACTIONS, false, 1, 5, true, "INFESTED_CRACKED_STONE_BRICKS", "MONSTER_EGGS:4"),
+    ZOMBIES_BREAK_DOORS(
+        MOBS_INTERACTIONS, false, 1, 6, true, "ZOMBIE_HEAD", "SKULL_ITEM:2"),
+    VILLAGERS_FARMING(
+        MOBS_INTERACTIONS, false, 1, 7, true, "WHEAT"),
+    RABBITS_EATING_CARROTS(
+        MOBS_INTERACTIONS, false, 2, 3, true, "CARROT_ITEM", "CARROT"),
+    SHEEPS_EATING_GRASS(
+        MOBS_INTERACTIONS, false, 2, 4, true, "WHITE_WOOL", "WOOL"),
+    SNOW_GOLEMS_CREATE_SNOW(
+        MOBS_INTERACTIONS, false, 2, 5, true, "SNOW_BLOCK"),
+    TURTLES_LAYING_EGGS(
+        MOBS_INTERACTIONS, false, 3, 6, true, 13, "TURTLE_EGG"),
+    FOXES_EATS_FROM_SWEET_BERRY_BUSHES(
+        MOBS_INTERACTIONS, false, 2, 7, true, 14, "SWEET_BERRIES"),
+
     BURNING_ARROWS_ACTIVATE_TNT(
-        ENTITIES_INTERACTIONS, false, 1, 3, true, "ARROW"),
+        ENTITIES_INTERACTIONS, false, 1, 3, true, "TNT"),
     FARMLANDS_TRAMPLING(
         ENTITIES_INTERACTIONS, false, 1, 4, true, "FARMLAND", "SOIL"),
-    TURTLE_EGGS_TRAMPLING(
-        ENTITIES_INTERACTIONS, false, 1, 5, true, 13, "TURTLE_EGG"),
-    WITHERS_GRIEFING(
-        ENTITIES_INTERACTIONS, false, 1, 6, true, "WITHER_SKELETON_SKULL", "SKULL_ITEM:1"),
-    ENDERMANS_GRIEFING(
-        ENTITIES_INTERACTIONS, false, 1, 7, true, "ENDER_PEARL"),
-    SILVERFISHES_HIDING_IN_BLOCKS(
-        ENTITIES_INTERACTIONS, false, 1, 8, true, "INFESTED_CRACKED_STONE_BRICKS", "MONSTER_EGGS:4"),
-    ZOMBIES_BREAK_DOORS(
-        ENTITIES_INTERACTIONS, false, 2, 2, true, "ZOMBIE_HEAD", "SKULL_ITEM:2"),
-    DRIPLEAFS_LOWERING(
-        ENTITIES_INTERACTIONS, false, 2, 3, true, 17, "BIG_DRIPLEAF"),
-    VILLAGERS_FARMING(
-        ENTITIES_INTERACTIONS, false, 2, 4, true, "WHEAT"),
-    RABBITS_EATING_CARROTS(
-        ENTITIES_INTERACTIONS, false, 2, 6, true, "CARROT_ITEM", "CARROT"),
-    SHEEPS_EATING_GRASS(
-        ENTITIES_INTERACTIONS, false, 2, 7, true, "WHITE_WOOL", "WOOL"),
-    FOXES_EATS_FROM_SWEET_BERRY_BUSHES(
-        ENTITIES_INTERACTIONS, false, 2, 8, true, 14, "SWEET_BERRIES"),
-    POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES(
-        ENTITIES_INTERACTIONS, false, 3, 2, true, 17, "POWDER_SNOW_BUCKET"),
-    TURTLES_LAYING_EGGS(
-        ENTITIES_INTERACTIONS, false, 3, 3, true, 13, "TURTLE_EGG"),
     PLAYERS_FLINT_USAGE(
-        ENTITIES_INTERACTIONS, false, 3, 4, true, "FLINT_AND_STEEL"),
+        ENTITIES_INTERACTIONS, false, 1, 5, true, "FLINT_AND_STEEL"),
     BONE_MEAL_USAGE(
-        ENTITIES_INTERACTIONS, false, 3, 5, true, "BONE_MEAL", "INK_SACK:15"),
+        ENTITIES_INTERACTIONS, false, 1, 6, true, "BONE_MEAL", "INK_SACK:15"),
     DRAGON_EGGS_TELEPORTING(
-        ENTITIES_INTERACTIONS, false, 3, 6, true, "DRAGON_EGG"),
+        ENTITIES_INTERACTIONS, false, 1, 7, true, "DRAGON_EGG"),
     FROSTED_ICE_PHYSICS(
-        ENTITIES_INTERACTIONS, false, 3, 7, true, 9, "ICE"),
-    SNOW_GOLEMS_CREATE_SNOW(
-        ENTITIES_INTERACTIONS, false, 3, 8, true, "SNOW_BLOCK"),
+        ENTITIES_INTERACTIONS, false, 2, 3, true, 9, "ICE"),
+    BLOCK_HIT_PROJECTILES_REMOVING(
+        ENTITIES_INTERACTIONS, false, 2, 4, false, 11, "ARROW"),
+    TURTLE_EGGS_TRAMPLING(
+        ENTITIES_INTERACTIONS, false, 2, 5, true, 13, "TURTLE_EGG"),
+    DRIPLEAFS_LOWERING(
+        ENTITIES_INTERACTIONS, false, 2, 6, true, 17, "BIG_DRIPLEAF"),
+    POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES(
+        ENTITIES_INTERACTIONS, false, 2, 7, true, 17, "POWDER_SNOW_BUCKET"),
 
     FIRE_SPREADING(
         WORLD_DESTRUCTION, true, 1, 4, true, "FLINT_AND_STEEL"),
@@ -104,16 +105,16 @@ public enum PControlTrigger {
     WARPED_NYLIUM_FADING(
         WORLD_DESTRUCTION, true, 3, 6, true, 16, "WARPED_NYLIUM"),
 
-    SWEET_BERRIES_GROWING(
-        GROWING_BLOCKS_AND_SMALL_PLANTS, true, 1, 3, true, 14, "SWEET_BERRIES"),
     LITTLE_MUSHROOMS_SPREADING(
-        GROWING_BLOCKS_AND_SMALL_PLANTS, true, 1, 4, true, "RED_MUSHROOM"),
+        GROWING_BLOCKS_AND_SMALL_PLANTS, true, 1, 3, true, "RED_MUSHROOM"),
     PUMPKINS_GROWING(
-        GROWING_BLOCKS_AND_SMALL_PLANTS, true, 1, 5, true, "PUMPKIN"),
+        GROWING_BLOCKS_AND_SMALL_PLANTS, true, 1, 4, true, "PUMPKIN"),
     MELONS_GROWING(
-        GROWING_BLOCKS_AND_SMALL_PLANTS, true, 1, 6, true, "MELON_BLOCK", "MELON"),
+        GROWING_BLOCKS_AND_SMALL_PLANTS, true, 1, 5, true, "MELON_BLOCK", "MELON"),
     NETHER_WARTS_GROWING(
-        GROWING_BLOCKS_AND_SMALL_PLANTS, true, 1, 7, true, "NETHER_WART", "NETHER_STALK"),
+        GROWING_BLOCKS_AND_SMALL_PLANTS, true, 1, 6, true, "NETHER_WART", "NETHER_STALK"),
+    SWEET_BERRIES_GROWING(
+        GROWING_BLOCKS_AND_SMALL_PLANTS, true, 1, 7, true, 14, "SWEET_BERRIES"),
 
     COCOAS_GROWING(
         GROWING_BLOCKS_AND_SMALL_PLANTS, true, 2, 3, true, "COCOA_BEANS", "INK_SACK:3"),
@@ -144,20 +145,20 @@ public enum PControlTrigger {
     GLOW_BERRIES_GROWING(
         VINES_AND_TALL_STRUCTURES, true, 1, 7, true, 17, "GLOW_BERRIES"),
 
-    CHORUSES_GROWING(
-        VINES_AND_TALL_STRUCTURES, true, 2, 2, true, 9, "CHORUS_FLOWER"),
-    KELPS_GROWING(
-        VINES_AND_TALL_STRUCTURES, true, 2, 3, true, 13, "KELP"),
-    BAMBOO_GROWING(
-        VINES_AND_TALL_STRUCTURES, true, 2, 4, true, 14, "BAMBOO"),
     GIANT_MUSHROOMS_GROWING(
-        VINES_AND_TALL_STRUCTURES, true, 2, 5, true, "RED_MUSHROOM_BLOCK", "HUGE_MUSHROOM_2"),
-    POINTED_DRIPSTONES_GROWING(
-        VINES_AND_TALL_STRUCTURES, true, 2, 6, true, 17, "POINTED_DRIPSTONE"),
+        VINES_AND_TALL_STRUCTURES, true, 2, 2, true, "RED_MUSHROOM_BLOCK", "HUGE_MUSHROOM_2"),
+    CHORUSES_GROWING(
+        VINES_AND_TALL_STRUCTURES, true, 2, 3, true, 9, "CHORUS_FLOWER"),
+    KELPS_GROWING(
+        VINES_AND_TALL_STRUCTURES, true, 2, 4, true, 13, "KELP"),
+    BAMBOO_GROWING(
+        VINES_AND_TALL_STRUCTURES, true, 2, 5, true, 14, "BAMBOO"),
     WEEPING_VINES_GROWING(
-        VINES_AND_TALL_STRUCTURES, true, 2, 7, true, 16, "WEEPING_VINES"),
+        VINES_AND_TALL_STRUCTURES, true, 2, 6, true, 16, "WEEPING_VINES"),
     TWISTING_VINES_GROWING(
-        VINES_AND_TALL_STRUCTURES, true, 2, 8, true, 16, "TWISTING_VINES"),
+        VINES_AND_TALL_STRUCTURES, true, 2, 7, true, 16, "TWISTING_VINES"),
+    POINTED_DRIPSTONES_GROWING(
+        VINES_AND_TALL_STRUCTURES, true, 2, 8, true, 17, "POINTED_DRIPSTONE"),
 
     DEBUG_MESSAGES(
         SETTINGS, true, 2, 4, true, "COMMAND_BLOCK", "COMMAND"),
@@ -180,8 +181,9 @@ public enum PControlTrigger {
         this.minVersion = (short) minVersion;
         this.realtime = realtime;
         this.slot = (short) ((row - 1) * 9 + column - 1);
-        if (this.slot < 0 || this.slot >= 3 * 9)
+        if (this.slot < 0 || this.slot >= 3 * 9) {
             throw new IllegalArgumentException("Invalid slot of trigger " + this);
+        }
         this.defaults = defaults;
         this.icon = BukkitUtils.matchIcon(iconVariants);
         ItemMeta meta = category.getIcon().getItemMeta();

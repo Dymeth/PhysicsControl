@@ -12,18 +12,15 @@ import ru.dymeth.pcontrol.api.PControlCategory;
 import ru.dymeth.pcontrol.api.PControlTrigger;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public final class PControlTriggerInventory extends PControlInventory {
     private static final ItemStack DISALLOWED_TRIGGER = new ItemStack(Material.BARRIER);
     private final PControlDataBukkit data;
-    private final HashMap<PControlTrigger, Short> slotByTrigger;
+    private final Map<PControlTrigger, Short> slotByTrigger;
 
     public PControlTriggerInventory(@Nonnull PControlDataBukkit data, @Nonnull PControlCategory category, @Nonnull World world) {
-        super(world, 3, data.getMessage("inventory-title", "%category%", category.getDisplayName(), "%world%", world.getName()));
+        super(world, 4, data.getMessage("inventory-title", "%category%", category.getDisplayName(), "%world%", world.getName()));
         this.data = data;
         this.slotByTrigger = new HashMap<>();
         for (PControlTrigger trigger : PControlTrigger.values()) {
@@ -37,7 +34,7 @@ public final class PControlTriggerInventory extends PControlInventory {
         if (meta == null) throw new IllegalArgumentException();
         meta.setDisplayName(data.getMessage("select-another-category-item"));
         back.setItemMeta(meta);
-        this.setItem((short) (3 * 9 - 1), back, player ->
+        this.setItem((short) (3 * 9 + 4), back, player ->
             player.openInventory(new PControlCategoryInventory(data, world).getInventory()));
     }
 
