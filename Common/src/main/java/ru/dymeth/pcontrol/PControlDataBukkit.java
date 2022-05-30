@@ -136,8 +136,15 @@ public final class PControlDataBukkit implements PControlData {
             }
         } else {
             if (this.metrics != null) {
-                this.metrics.shutdown();
                 this.metrics = null;
+                // Unable to shutdown metrics to disable data sending:
+
+                // [Dymeth#0909] — 28/05/2022
+                // Can I suggest PR with metrics shutdown feature?
+
+                // [Bastian#0310] — 29/05/2022
+                // I don't think it's worth it. Especially since it wouldn't work with plugins that use an older bStats version.
+                // So you then have some plugins that respond to config changes and some plugins that ignore it.
             }
         }
     }
