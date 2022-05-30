@@ -402,10 +402,12 @@ public final class PhysicsListenerModern extends PhysicsListener {
         Material from = event.getBlock().getType();
         Material to = event.getNewState().getType();
 
-        if (from == Material.WATER && to == Material.FROSTED_ICE) {
+        if (to == Material.FROSTED_ICE && from == Material.WATER) {
             this.data.cancelIfDisabled(event, PControlTrigger.FROSTED_ICE_PHYSICS);
-        } else if (CustomTagModern.WORLD_AIR.isTagged(from) && to == Material.SNOW) {
+        } else if (to == Material.SNOW && CustomTagModern.WORLD_AIR.isTagged(from)) {
             this.data.cancelIfDisabled(event, PControlTrigger.SNOW_GOLEMS_CREATE_SNOW);
+        } else if (to == Material.WITHER_ROSE && CustomTagModern.WORLD_AIR.isTagged(from)) {
+            this.data.cancelIfDisabled(event, PControlTrigger.WITHER_CREATE_WITHER_ROSE_BLOCKS);
         } else {
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
         }
