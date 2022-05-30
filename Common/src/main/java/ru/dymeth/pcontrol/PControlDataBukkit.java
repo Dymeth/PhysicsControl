@@ -246,7 +246,30 @@ public final class PControlDataBukkit implements PControlData {
         File file = createConfigFileIfNotExist("triggers" + File.separator + world.getName() + ".yml", false);
         YamlConfiguration worldConfig = YamlConfiguration.loadConfiguration(file);
 
-        Map<PControlTrigger, Boolean> triggers = this.triggers.computeIfAbsent(world, k -> new HashMap<>());
+        Map<PControlTrigger, Boolean> configTriggers = new HashMap<>();
+        for (String key : worldConfig.getKeys(false)) {
+            try {
+                PControlTrigger trigger;
+                try {
+                    trigger = PControlTrigger.valueOf(key.toUpperCase().replace(" ", "_"));
+                } catch (IllegalArgumentException e) {
+                    throw new IllegalArgumentException("Unknown trigger type");
+                }
+                if (!worldConfig.isBoolean(key)) {
+                    throw new IllegalArgumentException("Is not a boolean value, "
+                        + "but \"" + worldConfig.get(key).getClass().getSimpleName() + "\"");
+                }
+                boolean value = worldConfig.getBoolean(key);
+                configTriggers.put(trigger, value);
+            } catch (Exception ex) {
+                if (configPriority) {
+                    this.plugin.getLogger().warning("Unable to load trigger \"" + key + "\" "
+                        + "of world \"" + world.getName() + "\": " + ex.getMessage());
+                }
+            }
+        }
+
+        Map<PControlTrigger, Boolean> memoryTriggers = this.triggers.computeIfAbsent(world, k -> new HashMap<>());
         Map<PControlCategory, PControlTriggerInventory> inventories = this.inventories.computeIfAbsent(world, world1 -> {
             Map<PControlCategory, PControlTriggerInventory> result = new HashMap<>();
             for (PControlCategory category : PControlCategory.values()) {
@@ -254,10 +277,12 @@ public final class PControlDataBukkit implements PControlData {
             }
             return result;
         });
+
+        boolean firstInit = configTriggers.isEmpty();
         boolean changed = false;
         for (PControlTrigger trigger : PControlTrigger.values()) {
-            Boolean memoryValue = triggers.get(trigger);
-            Boolean configValue = worldConfig.contains(trigger.name()) ? worldConfig.getBoolean(trigger.name()) : null;
+            Boolean memoryValue = memoryTriggers.get(trigger);
+            Boolean configValue = configTriggers.get(trigger);
             boolean currentValue;
             if (configPriority) {
                 currentValue = configValue == null ? trigger.getDefaultValue() : configValue;
@@ -267,9 +292,13 @@ public final class PControlDataBukkit implements PControlData {
             if (configValue == null || configValue != currentValue) {
                 worldConfig.set(trigger.name(), currentValue);
                 changed = true;
+                if (!firstInit) {
+                    this.plugin.getLogger().info("Added trigger \"" + trigger.getDisplayName() + "\" "
+                        + "(" + currentValue + ") for world \"" + world.getName() + "\"");
+                }
             }
             if (memoryValue == null || memoryValue != currentValue) {
-                triggers.put(trigger, currentValue);
+                memoryTriggers.put(trigger, currentValue);
                 inventories.get(trigger.getCategory()).updateTriggerStack(trigger);
             }
         }
