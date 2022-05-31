@@ -29,7 +29,9 @@ public final class CustomTagLegacy {
     public static final CustomMaterialSet REDSTONE_PASSIVE_INPUTS = new CustomMaterialSet(
         TRIPWIRE_HOOK,
         TRIPWIRE)
-        .add(PRESSURE_PLATES.getValues());
+        .add(PRESSURE_PLATES.getValues())
+        .add(STONE_BUTTON)
+        .add(WOOD_BUTTON);
 
     public static final CustomMaterialSet GRAVITY_BLOCKS = new CustomMaterialSet()
         .add(Material::hasGravity)

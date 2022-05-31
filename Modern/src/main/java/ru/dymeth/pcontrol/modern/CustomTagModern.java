@@ -67,7 +67,8 @@ public final class CustomTagModern {
     public static final CustomMaterialSet REDSTONE_PASSIVE_INPUTS = new CustomMaterialSet(
         TRIPWIRE_HOOK,
         TRIPWIRE)
-        .add(PRESSURE_PLATES.getValues());
+        .add(PRESSURE_PLATES.getValues())
+        .add(BUTTONS.getValues());
 
     public static final CustomMaterialSet REDSTONE_TRANSMITTERS_AND_OUTPUTS = new CustomMaterialSet(
         DISPENSER,

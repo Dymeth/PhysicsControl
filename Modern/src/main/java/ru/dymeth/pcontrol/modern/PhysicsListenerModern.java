@@ -9,6 +9,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Waterlogged;
 import org.bukkit.block.data.type.Farmland;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.event.Cancellable;
@@ -90,7 +91,7 @@ public final class PhysicsListenerModern extends PhysicsListener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     private void on(EntityChangeBlockEvent event) {
         Material from = event.getBlock().getType();
         Material to = event.getTo();
@@ -133,7 +134,7 @@ public final class PhysicsListenerModern extends PhysicsListener {
             } else if ((entityType == EntityType.ZOMBIE || entityType == EntityType.ZOMBIE_VILLAGER) && Tag.WOODEN_DOORS.isTagged(from)) {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.ZOMBIES_BREAK_DOORS);
             } else {
-                this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to + " (" + event.getEntityType() + ")");
+                this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to + " (by " + event.getEntity() + ")");
             }
 
             return;
@@ -155,8 +156,10 @@ public final class PhysicsListenerModern extends PhysicsListener {
             return; // Already existing falling blocks
         } else if (this.data.isTriggerSupported(PControlTrigger.POINTED_DRIPSTONES_FALLING) && from == Material.POINTED_DRIPSTONE) {
             this.data.cancelIfDisabled(event, world, PControlTrigger.POINTED_DRIPSTONES_FALLING);
+        } else if (CustomTagModern.WORLD_AIR.isTagged(from)) {
+            return; // On custom falling blocks fall (created by third-party plugins like WoodCutter)
         } else {
-            this.unrecognizedAction(event, event.getBlock().getLocation(), "falling block from " + from + " to " + to);
+            this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to + " (by falling " + event.getEntity() + ")");
         }
 
         if (event.isCancelled()) event.getBlock().getState().update(false, false);
@@ -201,7 +204,7 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.FARMLANDS_DRYING);
         } else if (from == Material.SNOW && CustomTagModern.WORLD_AIR.isTagged(to)) {
             this.data.cancelIfDisabled(event, PControlTrigger.SNOW_MELTING);
-        } else if (from == Material.ICE && to == Material.WATER) {
+        } else if (from == Material.ICE && (to == Material.WATER || CustomTagModern.WORLD_AIR.isTagged(to))) { // Turns to air in Nether
             this.data.cancelIfDisabled(event, PControlTrigger.ICE_MELTING);
         } else if (from == Material.FROSTED_ICE && to == Material.WATER) {
             this.data.cancelIfDisabled(event, PControlTrigger.FROSTED_ICE_PHYSICS);
@@ -294,7 +297,7 @@ public final class PhysicsListenerModern extends PhysicsListener {
         if (event.getAction() != Action.PHYSICAL) return;
         if (event.getBlockFace() != BlockFace.SELF) return;
         if (event.getClickedBlock() == null) return;
-        this.handleInteraction(event, event.getClickedBlock());
+        this.handleInteraction(event, event.getClickedBlock(), event.getPlayer());
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -302,10 +305,10 @@ public final class PhysicsListenerModern extends PhysicsListener {
         if (event.getEntityType() == EntityType.VILLAGER && Tag.WOODEN_DOORS.isTagged(event.getBlock().getType())) {
             return;
         }
-        this.handleInteraction(event, event.getBlock());
+        this.handleInteraction(event, event.getBlock(), event.getEntity());
     }
 
-    private void handleInteraction(@Nonnull Cancellable event, @Nonnull Block source) {
+    private void handleInteraction(@Nonnull Cancellable event, @Nonnull Block source, @Nonnull Entity entity) {
         World world = source.getWorld();
         Material material = source.getType();
 
@@ -313,16 +316,14 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, world, PControlTrigger.FARMLANDS_TRAMPLING);
         } else if (CustomTagModern.REDSTONE_PASSIVE_INPUTS.isTagged(material)) {
             return; // Redstone activators
-        } else if (material == Material.REDSTONE_ORE) {
-            return; // Redstone ore activation
-        } else if (this.data.hasVersion(17) && material == Material.DEEPSLATE_REDSTONE_ORE) {
+        } else if (material == Material.REDSTONE_ORE || (this.data.hasVersion(17) && material == Material.DEEPSLATE_REDSTONE_ORE)) {
             return; // Redstone ore activation
         } else if (this.data.hasVersion(17) && material == Material.BIG_DRIPLEAF) {
             return;
         } else if (material == Material.TURTLE_EGG) {
             this.data.cancelIfDisabled(event, world, PControlTrigger.TURTLE_EGGS_TRAMPLING);
         } else {
-            this.unrecognizedAction(event, source.getLocation(), material);
+            this.unrecognizedAction(event, source.getLocation(), material + " (by " + entity + ")");
         }
     }
 
