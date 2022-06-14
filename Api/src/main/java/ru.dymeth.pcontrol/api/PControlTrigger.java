@@ -99,25 +99,26 @@ public enum PControlTrigger {
 
 
     FIRE_SPREADING(
-        WORLD_DESTRUCTION, true, 1, 4, true, "FLINT_AND_STEEL"),
+        WORLD_DESTRUCTION, true, 1, 3, true, "FLINT_AND_STEEL"),
     SNOW_MELTING(
-        WORLD_DESTRUCTION, true, 1, 5, true, "SNOW_BLOCK"),
+        WORLD_DESTRUCTION, true, 1, 4, true, "SNOW_BLOCK"),
     FARMLANDS_DRYING(
-        WORLD_DESTRUCTION, true, 1, 6, true, "FARMLAND", "SOIL"),
-
+        WORLD_DESTRUCTION, true, 1, 5, true, "FARMLAND", "SOIL"),
     ICE_MELTING(
-        WORLD_DESTRUCTION, true, 2, 4, true, "ICE"),
+        WORLD_DESTRUCTION, true, 1, 6, true, "ICE"),
     LEAVES_DECAY(
-        WORLD_DESTRUCTION, true, 2, 5, true, "OAK_LEAVES", "LEAVES"),
-    CORALS_DRYING(
-        WORLD_DESTRUCTION, true, 2, 6, true, 13, "FIRE_CORAL"),
+        WORLD_DESTRUCTION, true, 1, 7, true, "OAK_LEAVES", "LEAVES"),
 
     GRASS_BLOCKS_FADING(
-        WORLD_DESTRUCTION, true, 3, 4, true, "GRASS_BLOCK", "GRASS"),
+        WORLD_DESTRUCTION, true, 2, 3, true, "GRASS_BLOCK", "GRASS"),
+    CORALS_DRYING(
+        WORLD_DESTRUCTION, true, 2, 4, true, 13, "FIRE_CORAL"),
     CRIMSON_NYLIUM_FADING(
-        WORLD_DESTRUCTION, true, 3, 5, true, 16, "CRIMSON_NYLIUM"),
+        WORLD_DESTRUCTION, true, 2, 5, true, 16, "CRIMSON_NYLIUM"),
     WARPED_NYLIUM_FADING(
-        WORLD_DESTRUCTION, true, 3, 6, true, 16, "WARPED_NYLIUM"),
+        WORLD_DESTRUCTION, true, 2, 6, true, 16, "WARPED_NYLIUM"),
+    SCULKS_SPREADING(
+        WORLD_DESTRUCTION, true, 2, 7, true, 19, "SCULK"),
 
 
     LITTLE_MUSHROOMS_SPREADING(
@@ -148,6 +149,7 @@ public enum PControlTrigger {
         GROWING_BLOCKS_AND_SMALL_PLANTS, true, 3, 5, true, "MYCELIUM", "MYCEL"),
     AMETHYST_CLUSTERS_GROWING(
         GROWING_BLOCKS_AND_SMALL_PLANTS, true, 3, 6, true, 17, "AMETHYST_CLUSTER"),
+
 
     SUGAR_CANE_GROWING(
         VINES_AND_TALL_STRUCTURES, true, 1, 3, true, "SUGAR_CANE"),

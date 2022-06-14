@@ -288,6 +288,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
                 this.data.cancelIfDisabled(event, PControlTrigger.AMETHYST_CLUSTERS_GROWING);
             } else if (to == Material.AMETHYST_CLUSTER && from == Material.LARGE_AMETHYST_BUD) {
                 this.data.cancelIfDisabled(event, PControlTrigger.AMETHYST_CLUSTERS_GROWING);
+            } else if (this.data.isTriggerSupported(PControlTrigger.SCULKS_SPREADING) && to == Material.SCULK || to == Material.SCULK_VEIN) {
+                this.data.cancelIfDisabled(event, PControlTrigger.SCULKS_SPREADING);
             } else {
                 this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
             }
