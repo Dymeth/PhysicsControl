@@ -117,6 +117,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.RABBITS_EATING_CARROTS);
             } else if (entityType == EntityType.SHEEP) {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.SHEEPS_EATING_GRASS);
+            } else if (this.data.isTriggerSupported(PControlTrigger.RAVAGERS_DESTROY_BLOCKS) && entityType == EntityType.RAVAGER) {
+                this.data.cancelIfDisabled(event, world, PControlTrigger.RAVAGERS_DESTROY_BLOCKS);
             } else if (this.data.isTriggerSupported(PControlTrigger.FOXES_EATS_FROM_SWEET_BERRY_BUSHES) && entityType == EntityType.FOX) {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.FOXES_EATS_FROM_SWEET_BERRY_BUSHES);
             } else if (entityType == EntityType.TURTLE) {

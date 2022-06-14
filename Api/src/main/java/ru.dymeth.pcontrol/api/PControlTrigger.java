@@ -26,10 +26,12 @@ public enum PControlTrigger {
     POINTED_DRIPSTONES_FALLING(
         GRAVITY_BLOCKS, false, 2, 8, true, 17, "POINTED_DRIPSTONE"),
 
+
     WATER_FLOWING(
         LIQUIDS, false, 2, 4, true, "WATER_BUCKET"),
     LAVA_FLOWING(
         LIQUIDS, false, 2, 6, true, "LAVA_BUCKET"),
+
 
     LADDERS_DESTROYING(
         BUILDING, false, 2, 3, true, 13, "LADDER"),
@@ -42,28 +44,33 @@ public enum PControlTrigger {
     RAILS_DESTROYING(
         BUILDING, false, 2, 7, true, 13, "RAIL", "RAILS"),
 
+
     RABBITS_EATING_CARROTS(
-        MOBS_INTERACTIONS, false, 1, 4, true, "CARROT_ITEM", "CARROT"),
+        MOBS_INTERACTIONS, false, 1, 2, true, "CARROT_ITEM", "CARROT"),
     VILLAGERS_FARMING(
-        MOBS_INTERACTIONS, false, 1, 5, true, "WHEAT"),
+        MOBS_INTERACTIONS, false, 1, 3, true, "WHEAT"),
     SHEEPS_EATING_GRASS(
-        MOBS_INTERACTIONS, false, 1, 6, true, "WHITE_WOOL", "WOOL"),
+        MOBS_INTERACTIONS, false, 1, 4, true, "WHITE_WOOL", "WOOL"),
     SNOW_GOLEMS_CREATE_SNOW(
-        MOBS_INTERACTIONS, false, 2, 3, true, "SNOW_BLOCK"),
+        MOBS_INTERACTIONS, false, 1, 5, true, "SNOW_BLOCK"),
     SILVERFISHES_HIDING_IN_BLOCKS(
-        MOBS_INTERACTIONS, false, 2, 4, true, "INFESTED_CRACKED_STONE_BRICKS", "MONSTER_EGGS:4"),
+        MOBS_INTERACTIONS, false, 1, 6, true, "INFESTED_CRACKED_STONE_BRICKS", "MONSTER_EGGS:4"),
     ZOMBIES_BREAK_DOORS(
-        MOBS_INTERACTIONS, false, 2, 5, true, "ZOMBIE_HEAD", "SKULL_ITEM:2"),
+        MOBS_INTERACTIONS, false, 1, 7, true, "ZOMBIE_HEAD", "SKULL_ITEM:2"),
     ENDERMANS_GRIEFING(
-        MOBS_INTERACTIONS, false, 2, 6, true, "ENDER_PEARL"),
+        MOBS_INTERACTIONS, false, 1, 8, true, "ENDER_PEARL"),
+
     WITHERS_GRIEFING(
-        MOBS_INTERACTIONS, false, 2, 7, true, "WITHER_SKELETON_SKULL", "SKULL_ITEM:1"),
+        MOBS_INTERACTIONS, false, 2, 3, true, "WITHER_SKELETON_SKULL", "SKULL_ITEM:1"),
     WITHER_CREATE_WITHER_ROSE_BLOCKS(
-        MOBS_INTERACTIONS, false, 3, 4, true, 13, "WITHER_ROSE"),
+        MOBS_INTERACTIONS, false, 2, 4, true, 13, "WITHER_ROSE"),
     TURTLES_LAYING_EGGS(
-        MOBS_INTERACTIONS, false, 3, 5, true, 13, "TURTLE_EGG"),
+        MOBS_INTERACTIONS, false, 2, 5, true, 13, "TURTLE_EGG"),
     FOXES_EATS_FROM_SWEET_BERRY_BUSHES(
-        MOBS_INTERACTIONS, false, 3, 6, true, 14, "SWEET_BERRIES"),
+        MOBS_INTERACTIONS, false, 2, 6, true, 14, "SWEET_BERRIES"),
+    RAVAGERS_DESTROY_BLOCKS(
+        MOBS_INTERACTIONS, false, 2, 7, true, 14, "RAVAGER_SPAWN_EGG"),
+
 
     BURNING_ARROWS_ACTIVATE_TNT(
         ENTITIES_INTERACTIONS, false, 1, 3, true, "TNT"),
@@ -106,6 +113,7 @@ public enum PControlTrigger {
         WORLD_DESTRUCTION, true, 3, 5, true, 16, "CRIMSON_NYLIUM"),
     WARPED_NYLIUM_FADING(
         WORLD_DESTRUCTION, true, 3, 6, true, 16, "WARPED_NYLIUM"),
+
 
     LITTLE_MUSHROOMS_SPREADING(
         GROWING_BLOCKS_AND_SMALL_PLANTS, true, 1, 3, true, "RED_MUSHROOM"),
@@ -161,6 +169,7 @@ public enum PControlTrigger {
         VINES_AND_TALL_STRUCTURES, true, 2, 7, true, 16, "TWISTING_VINES"),
     POINTED_DRIPSTONES_GROWING(
         VINES_AND_TALL_STRUCTURES, true, 2, 8, true, 17, "POINTED_DRIPSTONE"),
+
 
     DEBUG_MESSAGES(
         SETTINGS, true, 2, 4, true, "COMMAND_BLOCK", "COMMAND"),
