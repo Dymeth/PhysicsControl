@@ -179,9 +179,9 @@ public enum PControlTrigger {
 
 
     DEBUG_MESSAGES(
-        SETTINGS, true, 2, 4, true, "COMMAND_BLOCK", "COMMAND"),
+        SETTINGS, true, 2, 4, true, "PAPER"),
     ALLOW_UNRECOGNIZED_ACTIONS(
-        SETTINGS, true, 2, 6, true, "COMMAND_BLOCK", "COMMAND");
+        SETTINGS, true, 2, 6, true, "BARRIER");
 
     private final PControlCategory category;
     private final short minVersion;
