@@ -186,6 +186,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
             return; // Seems bug while chunks generation (kelp near caves?): "Action BlockFromTo (KELP > AIR) was detected"
         } else if (CustomTagModern.GRAVITY_BLOCKS.isTagged(from)) {
             return; // Seems bug while chunks generation (water near gravity blocks?): "Action BlockFromTo (GRAVEL > GRAVEL) was detected"
+        } else if (from == Material.AIR && to == Material.AIR) { // Strange thing from FluidTypeFlowing
+            return;
         } else {
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
         }
