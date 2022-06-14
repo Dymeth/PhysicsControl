@@ -73,25 +73,30 @@ public enum PControlTrigger {
 
 
     BURNING_ARROWS_ACTIVATE_TNT(
-        ENTITIES_INTERACTIONS, false, 1, 3, true, "TNT"),
+        ENTITIES_INTERACTIONS, false, 1, 4, true, "TNT"),
     FARMLANDS_TRAMPLING(
-        ENTITIES_INTERACTIONS, false, 1, 4, true, "FARMLAND", "SOIL"),
+        ENTITIES_INTERACTIONS, false, 1, 5, true, "FARMLAND", "SOIL"),
     PLAYERS_FLINT_USAGE(
-        ENTITIES_INTERACTIONS, false, 1, 5, true, "FLINT_AND_STEEL"),
+        ENTITIES_INTERACTIONS, false, 1, 6, true, "FLINT_AND_STEEL"),
+
     BONE_MEAL_USAGE(
-        ENTITIES_INTERACTIONS, false, 1, 6, true, "BONE_MEAL", "INK_SACK:15"),
+        ENTITIES_INTERACTIONS, false, 2, 3, true, "BONE_MEAL", "INK_SACK:15"),
     DRAGON_EGGS_TELEPORTING(
-        ENTITIES_INTERACTIONS, false, 1, 7, true, "DRAGON_EGG"),
+        ENTITIES_INTERACTIONS, false, 2, 4, true, "DRAGON_EGG"),
     FROSTED_ICE_PHYSICS(
-        ENTITIES_INTERACTIONS, false, 2, 3, true, 9, "ICE"),
+        ENTITIES_INTERACTIONS, false, 2, 5, true, 9, "ICE"),
     BLOCK_HIT_PROJECTILES_REMOVING(
-        ENTITIES_INTERACTIONS, false, 2, 4, false, 11, "ARROW"),
+        ENTITIES_INTERACTIONS, false, 2, 6, false, 11, "ARROW"),
     TURTLE_EGGS_TRAMPLING(
-        ENTITIES_INTERACTIONS, false, 2, 5, true, 13, "TURTLE_EGG"),
+        ENTITIES_INTERACTIONS, false, 2, 7, true, 13, "TURTLE_EGG"),
+
     DRIPLEAFS_LOWERING(
-        ENTITIES_INTERACTIONS, false, 2, 6, true, 17, "BIG_DRIPLEAF"),
+        ENTITIES_INTERACTIONS, false, 3, 4, true, 17, "BIG_DRIPLEAF"),
     POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES(
-        ENTITIES_INTERACTIONS, false, 2, 7, true, 17, "POWDER_SNOW_BUCKET"),
+        ENTITIES_INTERACTIONS, false, 3, 5, true, 17, "POWDER_SNOW_BUCKET"),
+    GLOW_BERRIES_PICKING(
+        ENTITIES_INTERACTIONS, false, 3, 6, true, 17, "GLOW_BERRIES"),
+
 
     FIRE_SPREADING(
         WORLD_DESTRUCTION, true, 1, 4, true, "FLINT_AND_STEEL"),

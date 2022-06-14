@@ -111,6 +111,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.FARMLANDS_TRAMPLING);
             } else if (this.data.isTriggerSupported(PControlTrigger.POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES) && from == Material.POWDER_SNOW && to == Material.AIR) {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES);
+            } else if (this.data.isTriggerSupported(PControlTrigger.GLOW_BERRIES_PICKING) && (from == Material.CAVE_VINES && to == Material.CAVE_VINES) || (from == Material.CAVE_VINES_PLANT && to == Material.CAVE_VINES_PLANT)) {
+                this.data.cancelIfDisabled(event, world, PControlTrigger.GLOW_BERRIES_PICKING);
             } else if (entityType == EntityType.BOAT) {
                 return; // Boats destroys lilies. TODO It is necessary to implement a smart system of destruction and restoration of water lilies so that there are no problems with movement
             } else if (entityType == EntityType.RABBIT) {
