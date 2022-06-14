@@ -305,10 +305,10 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
         Material from = event.getBlock().getType();
         Material to = event.getNewState().getType();
 
-        if (to == Material.FROSTED_ICE && (from == Material.WATER || from == Material.STATIONARY_WATER)) {
-            this.data.cancelIfDisabled(event, PControlTrigger.FROSTED_ICE_PHYSICS);
-        } else if (to == Material.SNOW && from == Material.AIR) {
+        if (to == Material.SNOW && from == Material.AIR) {
             this.data.cancelIfDisabled(event, PControlTrigger.SNOW_GOLEMS_CREATE_SNOW);
+        } else if (this.data.isTriggerSupported(PControlTrigger.FROSTED_ICE_PHYSICS) && to == Material.FROSTED_ICE && (from == Material.WATER || from == Material.STATIONARY_WATER)) {
+            this.data.cancelIfDisabled(event, PControlTrigger.FROSTED_ICE_PHYSICS);
         } else {
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
         }

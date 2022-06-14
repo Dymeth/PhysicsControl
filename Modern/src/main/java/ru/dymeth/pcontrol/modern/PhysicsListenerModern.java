@@ -111,7 +111,7 @@ public final class PhysicsListenerModern extends PhysicsListener {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.FARMLANDS_TRAMPLING);
             } else if (this.data.isTriggerSupported(PControlTrigger.POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES) && from == Material.POWDER_SNOW && to == Material.AIR) {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES);
-            } else if (this.data.isTriggerSupported(PControlTrigger.GLOW_BERRIES_PICKING) && (from == Material.CAVE_VINES && to == Material.CAVE_VINES) || (from == Material.CAVE_VINES_PLANT && to == Material.CAVE_VINES_PLANT)) {
+            } else if (this.data.isTriggerSupported(PControlTrigger.GLOW_BERRIES_PICKING) && ((from == Material.CAVE_VINES && to == Material.CAVE_VINES) || (from == Material.CAVE_VINES_PLANT && to == Material.CAVE_VINES_PLANT))) {
                 this.data.cancelIfDisabled(event, world, PControlTrigger.GLOW_BERRIES_PICKING);
             } else if (entityType == EntityType.BOAT) {
                 return; // Boats destroys lilies. TODO It is necessary to implement a smart system of destruction and restoration of water lilies so that there are no problems with movement
@@ -290,7 +290,7 @@ public final class PhysicsListenerModern extends PhysicsListener {
                 this.data.cancelIfDisabled(event, PControlTrigger.AMETHYST_CLUSTERS_GROWING);
             } else if (to == Material.AMETHYST_CLUSTER && from == Material.LARGE_AMETHYST_BUD) {
                 this.data.cancelIfDisabled(event, PControlTrigger.AMETHYST_CLUSTERS_GROWING);
-            } else if (this.data.isTriggerSupported(PControlTrigger.SCULKS_SPREADING) && to == Material.SCULK || to == Material.SCULK_VEIN) {
+            } else if (this.data.isTriggerSupported(PControlTrigger.SCULKS_SPREADING) && (to == Material.SCULK || to == Material.SCULK_VEIN)) {
                 this.data.cancelIfDisabled(event, PControlTrigger.SCULKS_SPREADING);
             } else {
                 this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
@@ -367,7 +367,6 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.TORCHES_DESTROYING);
         } else if (to == Material.REDSTONE_TORCH) {
             this.data.cancelIfDisabled(event, PControlTrigger.REDSTONE_TORCHES_DESTROYING);
-
         } else {
             if (this.debugPhysicsEvent) {
                 this.debugAction(event, event.getBlock().getLocation(), ""
@@ -411,11 +410,11 @@ public final class PhysicsListenerModern extends PhysicsListener {
         Material from = event.getBlock().getType();
         Material to = event.getNewState().getType();
 
-        if (to == Material.FROSTED_ICE && from == Material.WATER) {
-            this.data.cancelIfDisabled(event, PControlTrigger.FROSTED_ICE_PHYSICS);
-        } else if (to == Material.SNOW && CustomTagModern.WORLD_AIR.isTagged(from)) {
+        if (to == Material.SNOW && CustomTagModern.WORLD_AIR.isTagged(from)) {
             this.data.cancelIfDisabled(event, PControlTrigger.SNOW_GOLEMS_CREATE_SNOW);
-        } else if (to == Material.WITHER_ROSE && CustomTagModern.WORLD_AIR.isTagged(from)) {
+        }  else if (to == Material.FROSTED_ICE && from == Material.WATER) {
+            this.data.cancelIfDisabled(event, PControlTrigger.FROSTED_ICE_PHYSICS);
+        } else if (this.data.isTriggerSupported(PControlTrigger.WITHER_CREATE_WITHER_ROSE_BLOCKS) && to == Material.WITHER_ROSE && CustomTagModern.WORLD_AIR.isTagged(from)) {
             this.data.cancelIfDisabled(event, PControlTrigger.WITHER_CREATE_WITHER_ROSE_BLOCKS);
         } else {
             this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
