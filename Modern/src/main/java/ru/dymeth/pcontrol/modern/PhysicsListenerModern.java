@@ -367,6 +367,8 @@ public final class PhysicsListenerModern extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.TORCHES_DESTROYING);
         } else if (to == Material.REDSTONE_TORCH) {
             this.data.cancelIfDisabled(event, PControlTrigger.REDSTONE_TORCHES_DESTROYING);
+        } else if (this.data.hasVersion(16) && to == Material.SOUL_TORCH) {
+            this.data.cancelIfDisabled(event, PControlTrigger.SOUL_TORCHES_DESTROYING);
         } else {
             if (this.debugPhysicsEvent) {
                 this.debugAction(event, event.getBlock().getLocation(), ""
