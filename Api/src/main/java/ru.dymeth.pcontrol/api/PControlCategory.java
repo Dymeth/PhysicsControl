@@ -26,7 +26,9 @@ public enum PControlCategory {
         2, 7, "BIRCH_SAPLING", "SAPLING:2"),
 
     SETTINGS(
-        3, 5, "COMMAND_BLOCK", "COMMAND");
+        3, 5, "COMMAND_BLOCK", "COMMAND"),
+    TEST(
+        3, 9, "OAK_SIGN", "SIGN");
 
     private final short slot;
     private final ItemStack icon;
