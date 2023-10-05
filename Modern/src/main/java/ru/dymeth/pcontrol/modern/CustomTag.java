@@ -7,7 +7,7 @@ import ru.dymeth.pcontrol.api.set.MaterialKeysSet;
 import static org.bukkit.Material.*;
 import static org.bukkit.Tag.*;
 
-public final class CustomTagModern {
+public final class CustomTag {
     public static final KeysSet<Material> WORLD_AIR = new MaterialKeysSet(
         AIR,
         CAVE_AIR);
