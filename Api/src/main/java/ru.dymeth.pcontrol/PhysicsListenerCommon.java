@@ -100,7 +100,8 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
         if (trigger != null) {
             this.data.cancelIfDisabled(event, world, trigger);
         }
-        if (event.isCancelled() && updateBlockOnCancel) {
+        // Prevent client bug with disappearing blocks on start falling (fixed on paper 1.16.5, spigot 1.19.4 and client 1.18.2)
+        if (event.isCancelled() && updateBlockOnCancel && !this.data.hasVersion(19)) {
             event.getBlock().getState().update(false, false);
         }
     }
