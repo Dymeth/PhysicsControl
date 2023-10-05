@@ -7,9 +7,9 @@ import javax.annotation.Nonnull;
 
 public abstract class TriggerRules<T> {
 
-    private static final boolean LOG_SUPPORTED_TRIGGERS = true;
-    private static final boolean LOG_UNSUPPORTED_TRIGGERS = true;
-    protected static final boolean LOG_TRIGGER_OVERRIDES = true;
+    private static final boolean LOG_SUPPORTED_TRIGGERS = false;
+    private static final boolean LOG_UNSUPPORTED_TRIGGERS = false;
+    protected static final boolean LOG_TRIGGER_OVERRIDES = false;
 
     protected final PControlData data;
 
@@ -33,7 +33,7 @@ public abstract class TriggerRules<T> {
             }
         } else {
             if (LOG_UNSUPPORTED_TRIGGERS) {
-                this.data.getPlugin().getLogger().info("Trigger " + trigger.name()
+                this.data.getPlugin().getLogger().warning("Trigger " + trigger.name()
                     + " is unavailable at current server version");
             }
         }
