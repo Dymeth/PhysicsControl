@@ -79,7 +79,7 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
             } else {
                 EntityType entityType = event.getEntity().getType();
                 trigger = this.rulesFallingEntityChangeBlockEventByFrom.findTrigger(entityType, from);
-                if (trigger == null) this.rulesFallingEntityChangeBlockEventBy.findTrigger(entityType);
+                if (trigger == null) trigger = this.rulesFallingEntityChangeBlockEventBy.findTrigger(entityType);
                 if (trigger == null) {
                     this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to + " (by " + event.getEntity() + ")");
                 }

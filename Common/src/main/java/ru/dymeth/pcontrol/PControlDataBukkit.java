@@ -141,7 +141,12 @@ public final class PControlDataBukkit implements PControlData {
         }
         if (config.getBoolean("metrics", true)) {
             if (this.metrics == null) {
-                this.metrics = new Metrics(this.plugin, 15320);
+                try {
+                    this.metrics = new Metrics(this.plugin, 15320);
+                } catch (Throwable t) {
+                    this.plugin.getLogger().warning("Unable to init metrics:");
+                    t.printStackTrace();
+                }
             }
         } else {
             if (this.metrics != null) {
