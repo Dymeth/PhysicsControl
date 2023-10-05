@@ -49,7 +49,7 @@ public enum PControlTrigger {
 
 
     RABBITS_EATING_CARROTS(
-        MOBS_INTERACTIONS, false, 1, 2, true, "CARROT_ITEM", "CARROT"),
+        MOBS_INTERACTIONS, false, 1, 2, true, 8, "CARROT_ITEM", "CARROT"),
     VILLAGERS_FARMING(
         MOBS_INTERACTIONS, false, 1, 3, true, "WHEAT"),
     SHEEPS_EATING_GRASS(
