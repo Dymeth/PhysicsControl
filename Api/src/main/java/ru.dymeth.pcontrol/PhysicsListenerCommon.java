@@ -2,22 +2,197 @@ package ru.dymeth.pcontrol;
 
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.FallingBlock;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.BlockBurnEvent;
-import org.bukkit.event.block.BlockIgniteEvent;
-import org.bukkit.event.block.LeavesDecayEvent;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.block.*;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 import ru.dymeth.pcontrol.api.PControlData;
 import ru.dymeth.pcontrol.api.PControlTrigger;
 import ru.dymeth.pcontrol.api.PhysicsListener;
+import ru.dymeth.pcontrol.rules.pair.EntityMaterialRules;
+import ru.dymeth.pcontrol.rules.pair.MaterialMaterialRules;
+import ru.dymeth.pcontrol.rules.single.EntityRules;
+import ru.dymeth.pcontrol.rules.single.MaterialRules;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public abstract class PhysicsListenerCommon extends PhysicsListener {
     protected PhysicsListenerCommon(@Nonnull PControlData data) {
         super(data);
+    }
+
+    protected final MaterialMaterialRules rulesBlockGrowEventFromTo = new MaterialMaterialRules(this.data);
+    protected final MaterialRules rulesBlockGrowEventTo = new MaterialRules(this.data);
+
+    @EventHandler(ignoreCancelled = true)
+    public void on(BlockGrowEvent event) {
+        if (this.fertilizedBlocks.remove(event.getBlock().getLocation().toVector())) {
+            this.data.cancelIfDisabled(event, PControlTrigger.BONE_MEAL_USAGE);
+            return;
+        }
+        Material from = event.getBlock().getType();
+        Material to = event.getNewState().getType();
+
+        PControlTrigger trigger = this.rulesBlockGrowEventFromTo.findTrigger(from, to);
+        if (trigger == null) trigger = this.rulesBlockGrowEventTo.findTrigger(to);
+
+        if (trigger != null) {
+            this.data.cancelIfDisabled(event, trigger);
+        } else {
+            this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
+        }
+    }
+
+    protected final MaterialMaterialRules rulesEntityChangeBlockEventFromTo = new MaterialMaterialRules(this.data);
+    protected final MaterialRules rulesEntityChangeBlockEventTo = new MaterialRules(this.data);
+    protected final MaterialRules rulesFallingEntityChangeBlockEventFrom = new MaterialRules(this.data);
+    protected final EntityMaterialRules rulesFallingEntityChangeBlockEventByFrom = new EntityMaterialRules(this.data);
+    protected final EntityRules rulesFallingEntityChangeBlockEventBy = new EntityRules(this.data);
+
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
+    public void on(EntityChangeBlockEvent event) {
+        Material from = event.getBlock().getType();
+        Material to = event.getTo();
+        World world = event.getEntity().getWorld();
+
+        boolean updateBlockOnCancel = false;
+        PControlTrigger trigger = this.rulesEntityChangeBlockEventFromTo.findTrigger(from, to);
+        if (trigger == null) trigger = this.rulesEntityChangeBlockEventTo.findTrigger(to);
+        if (trigger == null) {
+            if (event.getEntity() instanceof FallingBlock) {
+                trigger = this.rulesFallingEntityChangeBlockEventFrom.findTrigger(from);
+                if (trigger == null) {
+                    this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to + " (by falling " + event.getEntity() + ")");
+                    return;
+                }
+                updateBlockOnCancel = true;
+            } else {
+                EntityType entityType = event.getEntity().getType();
+                trigger = this.rulesFallingEntityChangeBlockEventByFrom.findTrigger(entityType, from);
+                if (trigger == null) this.rulesFallingEntityChangeBlockEventBy.findTrigger(entityType);
+                if (trigger == null) {
+                    this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to + " (by " + event.getEntity() + ")");
+                }
+            }
+        }
+
+        if (trigger != null) {
+            this.data.cancelIfDisabled(event, world, trigger);
+        }
+        if (event.isCancelled() && updateBlockOnCancel) {
+            event.getBlock().getState().update(false, false);
+        }
+    }
+
+    protected final MaterialMaterialRules rulesBlockFromToEventFromTo = new MaterialMaterialRules(this.data);
+    protected final MaterialRules rulesBlockFromToEventFrom = new MaterialRules(this.data);
+
+    @EventHandler(ignoreCancelled = true)
+    public void on(BlockFromToEvent event) {
+        Material from = event.getBlock().getType();
+        Material to = event.getToBlock().getType();
+
+        PControlTrigger trigger = this.getBlockFromToEventTrigger(event.getBlock(), from, to);
+
+        if (trigger != null) {
+            this.data.cancelIfDisabled(event, trigger);
+        } else {
+            this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
+        }
+    }
+
+    @Nullable
+    protected PControlTrigger getBlockFromToEventTrigger(@Nonnull Block block, @Nonnull Material from, @Nonnull Material to) {
+        PControlTrigger trigger = this.rulesBlockFromToEventFromTo.findTrigger(from, to);
+        if (trigger == null) trigger = this.rulesBlockFromToEventFrom.findTrigger(from);
+        return trigger;
+    }
+
+    protected final MaterialMaterialRules rulesBlockFadeEventFromTo = new MaterialMaterialRules(this.data);
+    protected final MaterialRules rulesBlockFadeEventTo = new MaterialRules(this.data);
+
+    @EventHandler(ignoreCancelled = true)
+    public void on(BlockFadeEvent event) {
+        Material from = event.getBlock().getType();
+        Material to = event.getNewState().getType();
+
+        PControlTrigger trigger = this.rulesBlockFadeEventFromTo.findTrigger(from, to);
+        if (trigger == null) trigger = this.rulesBlockFadeEventTo.findTrigger(to);
+
+        if (trigger != null) {
+            this.data.cancelIfDisabled(event, trigger);
+        } else {
+            this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
+        }
+    }
+
+    protected final MaterialMaterialRules rulesBlockSpreadEventFromTo = new MaterialMaterialRules(this.data);
+    protected final MaterialRules rulesBlockSpreadEventTo = new MaterialRules(this.data);
+
+    @EventHandler(ignoreCancelled = true)
+    public void on(BlockSpreadEvent event) {
+        Material from = event.getBlock().getType();
+        Material to = event.getNewState().getType();
+
+        PControlTrigger trigger = this.rulesBlockSpreadEventFromTo.findTrigger(from, to);
+        if (trigger == null) trigger = this.rulesBlockSpreadEventTo.findTrigger(to);
+
+        if (trigger != null) {
+            this.data.cancelIfDisabled(event, trigger);
+        } else {
+            this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
+    public void on(PlayerInteractEvent event) {
+        if (event.getAction() != Action.PHYSICAL) return;
+        if (event.getBlockFace() != BlockFace.SELF) return;
+        if (event.getClickedBlock() == null) return;
+        this.handleInteraction(event, event.getClickedBlock(), event.getPlayer());
+    }
+
+    protected final MaterialRules rulesEntityInteractEventMaterial = new MaterialRules(this.data);
+
+    protected void handleInteraction(@Nonnull Cancellable event, @Nonnull Block source, @Nonnull Entity entity) {
+        World world = source.getWorld();
+        Material material = source.getType();
+
+        PControlTrigger trigger = this.rulesEntityInteractEventMaterial.findTrigger(material);
+
+        if (trigger != null) {
+            this.data.cancelIfDisabled(event, world, trigger);
+        } else {
+            this.unrecognizedAction(event, source.getLocation(), material + " (by " + entity + ")");
+        }
+    }
+
+    protected final MaterialMaterialRules rulesEntityBlockFormEventFromTo = new MaterialMaterialRules(this.data);
+    protected final MaterialRules rulesEntityBlockFormEventTo = new MaterialRules(this.data);
+
+    @EventHandler(ignoreCancelled = true)
+    public void on(EntityBlockFormEvent event) {
+        Material from = event.getBlock().getType();
+        Material to = event.getNewState().getType();
+
+        PControlTrigger trigger = this.rulesEntityBlockFormEventFromTo.findTrigger(from, to);
+        if (trigger == null) trigger = this.rulesEntityBlockFormEventTo.findTrigger(to);
+
+        if (trigger != null) {
+            this.data.cancelIfDisabled(event, trigger);
+        } else {
+            this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
+        }
     }
 
     @EventHandler(ignoreCancelled = true)
