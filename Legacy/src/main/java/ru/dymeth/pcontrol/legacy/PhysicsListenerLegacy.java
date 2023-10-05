@@ -70,8 +70,6 @@ public final class PhysicsListenerLegacy extends PhysicsListenerCommon {
                 Collections.singleton(Material.DIRT));
             this.rulesEntityChangeBlockEventTo.regSingle(PControlTrigger.IGNORED_STATE, // Redstone ore activation
                 CustomTag.REDSTONE_ORE_BLOCKS.getValues());
-            this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.IGNORED_STATE, // Already existing falling blocks
-                CustomTag.GRAVITY_BLOCKS.getValues());
             this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.SAND_FALLING,
                 CustomTag.SAND.getValues());
             this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.GRAVEL_FALLING,
@@ -126,7 +124,7 @@ public final class PhysicsListenerLegacy extends PhysicsListenerCommon {
             this.rulesBlockFromToEventFrom.regSingle(PControlTrigger.WATER_FLOWING,
                 CustomTag.UNDERWATER_BLOCKS_ONLY.getValues());
             this.rulesBlockFromToEventFrom.regSingle(PControlTrigger.IGNORED_STATE, // Seems bug while chunks generation (water near gravity blocks?): "Action BlockFromTo (GRAVEL > GRAVEL) was detected"
-                CustomTag.GRAVITY_BLOCKS.getValues());
+                CustomTag.NATURAL_GRAVITY_BLOCKS.getValues());
             this.rulesBlockFromToEventFrom.regSingle(PControlTrigger.DRAGON_EGGS_TELEPORTING,
                 Collections.singleton(Material.DRAGON_EGG));
         }

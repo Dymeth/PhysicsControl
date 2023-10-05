@@ -134,6 +134,10 @@ public final class CustomTag {
         .addBlocks("SCAFFOLDING")
         .add(Material::hasGravity);
 
+    public static final KeysSet<Material> NATURAL_GRAVITY_BLOCKS = new MaterialKeysSet()
+        .add(SAND.getValues())
+        .add(GRAVEL);
+
     public static final KeysSet<Material> BONE_MEAL_HERBS = new MaterialKeysSet(
         GRASS,
         DANDELION,

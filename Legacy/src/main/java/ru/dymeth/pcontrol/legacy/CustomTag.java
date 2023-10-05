@@ -55,12 +55,16 @@ public final class CustomTag {
     public static final KeysSet<Material> ANVIL = new MaterialKeysSet(
         Material.ANVIL);
 
-    public static final KeysSet<Material> CONCRETE_POWDERS = new MaterialKeysSet(
-        CONCRETE_POWDER);
+    public static final KeysSet<Material> CONCRETE_POWDERS = new MaterialKeysSet()
+        .addBlocks("CONCRETE_POWDER");
 
     public static final KeysSet<Material> GRAVITY_BLOCKS = new MaterialKeysSet()
         .add(Material::hasGravity)
         .add(DRAGON_EGG);
+
+    public static final KeysSet<Material> NATURAL_GRAVITY_BLOCKS = new MaterialKeysSet()
+        .add(SAND.getValues())
+        .add(GRAVEL);
 
     public static final KeysSet<Material> BONE_MEAL_HERBS = new MaterialKeysSet(
         LONG_GRASS,
