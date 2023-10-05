@@ -343,7 +343,7 @@ public final class PhysicsListenerModern extends PhysicsListener {
 
             if (Tag.RAILS.isTagged(event.getChangedType())) {
                 this.data.cancelIfDisabled(event, PControlTrigger.RAILS_DESTROYING);
-            } else if (this.debugPhysicsEvent) {
+            } else if (this.DEBUG_PHYSICS_EVENT) {
                 this.debugAction(event, event.getBlock().getLocation(), ""
                     + "face=" + BlockFace.SELF.name() + ";"
                     + "changed=" + event.getChangedType() + ";"
@@ -370,7 +370,7 @@ public final class PhysicsListenerModern extends PhysicsListener {
         } else if (this.data.hasVersion(16) && to == Material.SOUL_TORCH) {
             this.data.cancelIfDisabled(event, PControlTrigger.SOUL_TORCHES_DESTROYING);
         } else {
-            if (this.debugPhysicsEvent) {
+            if (this.DEBUG_PHYSICS_EVENT) {
                 this.debugAction(event, event.getBlock().getLocation(), ""
                     + "face=" + BlockFace.UP.name() + ";"
                     + "changed=" + event.getChangedType() + ";"
@@ -378,7 +378,7 @@ public final class PhysicsListenerModern extends PhysicsListener {
                     + "source=" + fromBlock.getType() + ";"
                 );
             }
-            for (BlockFace face : this.nsweFaces) {
+            for (BlockFace face : this.NSWE_FACES) {
                 toBlock = fromBlock.getRelative(face);
                 toData = toBlock.getBlockData();
                 if (!(toData instanceof Directional)) continue;
@@ -393,7 +393,7 @@ public final class PhysicsListenerModern extends PhysicsListener {
                     this.data.cancelIfDisabled(event, PControlTrigger.TORCHES_DESTROYING);
                 } else if (to == Material.REDSTONE_WALL_TORCH) {
                     this.data.cancelIfDisabled(event, PControlTrigger.REDSTONE_TORCHES_DESTROYING);
-                } else if (this.debugPhysicsEvent) {
+                } else if (this.DEBUG_PHYSICS_EVENT) {
                     this.debugAction(event, event.getBlock().getLocation(), ""
                         + "face=" + face.name() + ";"
                         + "changed=" + event.getChangedType() + ";"

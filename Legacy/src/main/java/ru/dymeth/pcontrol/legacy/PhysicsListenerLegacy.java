@@ -265,14 +265,14 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
         } else if (to == Material.REDSTONE_TORCH_ON || to == Material.REDSTONE_TORCH_OFF) {
             this.data.cancelIfDisabled(event, PControlTrigger.REDSTONE_TORCHES_DESTROYING);
         } else {
-            if (this.debugPhysicsEvent) {
+            if (this.DEBUG_PHYSICS_EVENT) {
                 this.debugAction(event, fromBlock.getLocation(), ""
                     + "face=" + BlockFace.UP.name() + ";"
                     + "changed=" + event.getChangedType() + ";"
                     + "block=" + fromBlock.getType() + ";"
                 );
             }
-            for (BlockFace face : this.nsweFaces) {
+            for (BlockFace face : this.NSWE_FACES) {
                 toBlock = fromBlock.getRelative(face);
                 toData = toBlock.getState().getData();
                 if (!(toData instanceof Attachable)) continue;
@@ -287,7 +287,7 @@ public final class PhysicsListenerLegacy extends PhysicsListener {
                     this.data.cancelIfDisabled(event, PControlTrigger.TORCHES_DESTROYING);
                 } else if (to == Material.REDSTONE_TORCH_ON || to == Material.REDSTONE_TORCH_OFF) {
                     this.data.cancelIfDisabled(event, PControlTrigger.REDSTONE_TORCHES_DESTROYING);
-                } else if (this.debugPhysicsEvent) {
+                } else if (this.DEBUG_PHYSICS_EVENT) {
                     this.debugAction(event, fromBlock.getLocation(), ""
                         + "face=" + face.name() + ";"
                         + "changed=" + event.getChangedType() + ";"

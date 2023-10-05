@@ -15,13 +15,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 public abstract class PhysicsListener implements Listener {
-    protected final BlockFace[] nsweFaces = new BlockFace[]{
+    protected static final BlockFace[] NSWE_FACES = new BlockFace[]{
         BlockFace.NORTH,
         BlockFace.SOUTH,
         BlockFace.WEST,
         BlockFace.EAST
     };
-    protected final boolean debugPhysicsEvent = false;
+    protected static final boolean DEBUG_PHYSICS_EVENT = false;
 
     protected final PControlData data;
     protected final Set<Vector> fertilizedBlocks;
