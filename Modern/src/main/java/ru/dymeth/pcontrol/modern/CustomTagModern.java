@@ -91,6 +91,16 @@ public final class CustomTagModern {
         .add(FENCES.getValues())
         .add(DOORS.getValues());
 
+    public static final KeysSet<Material> REDSTONE_ORE_BLOCKS = new MaterialKeysSet(
+        REDSTONE_ORE)
+        .addBlocks("DEEPSLATE_REDSTONE_ORE");
+
+    public static final KeysSet<Material> WATER = new MaterialKeysSet(
+        Material.WATER);
+
+    public static final KeysSet<Material> LAVA = new MaterialKeysSet(
+        Material.LAVA);
+
     public static final KeysSet<Material> CONCRETE_POWDERS = new MaterialKeysSet(
         BLACK_CONCRETE_POWDER,
         BLUE_CONCRETE_POWDER,
@@ -181,16 +191,45 @@ public final class CustomTagModern {
         .add(DEAD_CORALS.getValues());
 
     public static final KeysSet<Material> UNDERWATER_BLOCKS_ONLY = new MaterialKeysSet(
-        WATER,
+        Material.WATER,
         BUBBLE_COLUMN,
         KELP_PLANT,
         TALL_SEAGRASS,
         SEAGRASS);
 
-    public static final KeysSet<Material> GRASS_AND_PATH_BLOCKS = new MaterialKeysSet(
-        GRASS_BLOCK)
-        .addBlocks(
-            "DIRT_PATH",
-            "GRASS_PATH"
-        );
+    public static final KeysSet<Material> GRASS_BLOCK = new MaterialKeysSet(
+        Material.GRASS_BLOCK);
+
+    public static final KeysSet<Material> DIRT_PATH_BLOCK = new MaterialKeysSet()
+        .addBlocks("DIRT_PATH", "GRASS_PATH");
+
+    public static final KeysSet<Material> FARMLAND_BLOCK = new MaterialKeysSet(
+        FARMLAND);
+
+    public static final KeysSet<Material> MYCELIUM_BLOCK = new MaterialKeysSet(
+        MYCELIUM);
+
+    public static final KeysSet<Material> SUGAR_CANE_BLOCK = new MaterialKeysSet(
+        SUGAR_CANE);
+
+    public static final KeysSet<Material> NETHER_WART_BLOCK = new MaterialKeysSet(
+        NETHER_WART);
+
+    public static final KeysSet<Material> WHEAT_BLOCK = new MaterialKeysSet(
+        WHEAT);
+
+    public static final KeysSet<Material> POTATO_BLOCK = new MaterialKeysSet(
+        POTATOES);
+
+    public static final KeysSet<Material> CARROT_BLOCK = new MaterialKeysSet(
+        CARROTS);
+
+    public static final KeysSet<Material> BEETROOT_BLOCK = new MaterialKeysSet(
+        BEETROOTS);
+
+    public static final KeysSet<Material> PUMPKIN_STEM_AND_BLOCK = new MaterialKeysSet(
+        PUMPKIN_STEM, PUMPKIN);
+
+    public static final KeysSet<Material> MELON_STEM_AND_BLOCK = new MaterialKeysSet(
+        MELON_STEM, MELON);
 }

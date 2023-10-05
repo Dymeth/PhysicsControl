@@ -37,6 +37,27 @@ public final class CustomTagLegacy {
         .add(STONE_BUTTON)
         .add(WOOD_BUTTON);
 
+    public static final KeysSet<Material> REDSTONE_ORE_BLOCKS = new MaterialKeysSet(
+        REDSTONE_ORE,
+        GLOWING_REDSTONE_ORE);
+
+    public static final KeysSet<Material> WATER = new MaterialKeysSet(
+        Material.WATER,
+        STATIONARY_WATER);
+
+    public static final KeysSet<Material> LAVA = new MaterialKeysSet(
+        Material.LAVA,
+        STATIONARY_LAVA);
+
+    public static final KeysSet<Material> SAND = new MaterialKeysSet(
+        Material.SAND);
+
+    public static final KeysSet<Material> ANVIL = new MaterialKeysSet(
+        Material.ANVIL);
+
+    public static final KeysSet<Material> CONCRETE_POWDERS = new MaterialKeysSet(
+        CONCRETE_POWDER);
+
     public static final KeysSet<Material> GRAVITY_BLOCKS = new MaterialKeysSet()
         .add(Material::hasGravity)
         .add(DRAGON_EGG);
@@ -50,9 +71,43 @@ public final class CustomTagLegacy {
         RED_MUSHROOM,
         BROWN_MUSHROOM);
 
-    public static final KeysSet<Material> GRASS_AND_PATH_BLOCKS = new MaterialKeysSet(
-        GRASS)
-        .addBlocks(
-            "GRASS_PATH"
-        );
+    public static final KeysSet<Material> UNDERWATER_BLOCKS_ONLY = new MaterialKeysSet(
+        Material.WATER,
+        STATIONARY_WATER);
+
+    public static final KeysSet<Material> GRASS_BLOCK = new MaterialKeysSet(
+        Material.GRASS);
+
+    public static final KeysSet<Material> DIRT_PATH_BLOCK = new MaterialKeysSet()
+        .addBlocks("GRASS_PATH");
+
+    public static final KeysSet<Material> FARMLAND_BLOCK = new MaterialKeysSet(
+        SOIL);
+
+    public static final KeysSet<Material> MYCELIUM_BLOCK = new MaterialKeysSet(
+        MYCEL);
+
+    public static final KeysSet<Material> SUGAR_CANE_BLOCK = new MaterialKeysSet(
+        Material.SUGAR_CANE_BLOCK);
+
+    public static final KeysSet<Material> NETHER_WART_BLOCK = new MaterialKeysSet(
+        NETHER_WARTS);
+
+    public static final KeysSet<Material> WHEAT_BLOCK = new MaterialKeysSet(
+        CROPS);
+
+    public static final KeysSet<Material> POTATO_BLOCK = new MaterialKeysSet(
+        POTATO);
+
+    public static final KeysSet<Material> CARROT_BLOCK = new MaterialKeysSet(
+        CARROT);
+
+    public static final KeysSet<Material> BEETROOT_BLOCK = new MaterialKeysSet()
+        .addBlocks("BEETROOT_BLOCK");
+
+    public static final KeysSet<Material> PUMPKIN_STEM_AND_BLOCK = new MaterialKeysSet(
+        PUMPKIN_STEM, PUMPKIN);
+
+    public static final KeysSet<Material> MELON_STEM_AND_BLOCK = new MaterialKeysSet(
+        MELON_STEM, MELON_BLOCK);
 }
