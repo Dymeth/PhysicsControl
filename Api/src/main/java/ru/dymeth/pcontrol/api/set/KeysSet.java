@@ -3,10 +3,9 @@ package ru.dymeth.pcontrol.api.set;
 import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Set;
 
-public abstract class KeysSet<T> implements Iterable<T> {
+public abstract class KeysSet<T> {
     final Class<T> clazz;
     final Set<T> elements;
 
@@ -41,11 +40,5 @@ public abstract class KeysSet<T> implements Iterable<T> {
 
     public boolean isTagged(@Nonnull T element) {
         return this.elements.contains(element);
-    }
-
-    @Override
-    @Nonnull
-    public Iterator<T> iterator() {
-        return this.elements.iterator();
     }
 }
