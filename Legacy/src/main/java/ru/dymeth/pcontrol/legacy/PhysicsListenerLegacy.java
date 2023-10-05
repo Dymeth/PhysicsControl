@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Attachable;
 import org.bukkit.material.Dye;
 import org.bukkit.material.MaterialData;
+import ru.dymeth.pcontrol.PhysicsListenerCommon;
 import ru.dymeth.pcontrol.api.PControlData;
 import ru.dymeth.pcontrol.api.PControlTrigger;
 import ru.dymeth.pcontrol.api.PhysicsListener;
@@ -26,7 +27,7 @@ import ru.dymeth.pcontrol.api.PhysicsListener;
 import javax.annotation.Nonnull;
 
 @SuppressWarnings({"UnnecessaryReturnStatement", "IsCancelled"})
-public final class PhysicsListenerLegacy extends PhysicsListener {
+public final class PhysicsListenerLegacy extends PhysicsListenerCommon {
     public PhysicsListenerLegacy(@Nonnull PControlData data) {
         super(data);
     }

@@ -42,7 +42,6 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         }
 
         this.getServer().getPluginManager().registerEvents(listener, this);
-        this.getServer().getPluginManager().registerEvents(new PhysicsListenerCommon(this.data), this);
         this.getServer().getPluginManager().registerEvents(this, this);
     }
 

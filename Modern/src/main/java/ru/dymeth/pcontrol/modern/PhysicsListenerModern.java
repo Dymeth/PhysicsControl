@@ -21,6 +21,7 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import ru.dymeth.pcontrol.PhysicsListenerCommon;
 import ru.dymeth.pcontrol.api.PControlData;
 import ru.dymeth.pcontrol.api.PControlTrigger;
 import ru.dymeth.pcontrol.api.PhysicsListener;
@@ -28,7 +29,7 @@ import ru.dymeth.pcontrol.api.PhysicsListener;
 import javax.annotation.Nonnull;
 
 @SuppressWarnings({"IsCancelled", "UnnecessaryReturnStatement"})
-public final class PhysicsListenerModern extends PhysicsListener {
+public final class PhysicsListenerModern extends PhysicsListenerCommon {
     public PhysicsListenerModern(@Nonnull PControlData data) {
         super(data);
     }
