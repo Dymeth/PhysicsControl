@@ -1,6 +1,5 @@
 package ru.dymeth.pcontrol;
 
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nonnull;
@@ -19,7 +18,7 @@ public class UpdateChecker {
     }
 
     public void getVersionAsync(final Consumer<String> consumer) {
-        Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
+        this.plugin.getServer().getScheduler().runTaskAsynchronously(this.plugin, () -> {
             try (InputStream inputStream
                      = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + this.resourceId).openStream();
                  Scanner scanner

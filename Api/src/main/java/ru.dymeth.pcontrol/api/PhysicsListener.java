@@ -2,7 +2,6 @@ package ru.dymeth.pcontrol.api;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -30,7 +29,7 @@ public abstract class PhysicsListener implements Listener {
     protected PhysicsListener(@Nonnull PControlData data) {
         this.data = data;
         this.fertilizedBlocks = new HashSet<>();
-        Bukkit.getScheduler().runTaskTimer(data.getPlugin(), this.fertilizedBlocks::clear, 1L, 1L);
+        data.getPlugin().getServer().getScheduler().runTaskTimer(data.getPlugin(), this.fertilizedBlocks::clear, 1L, 1L);
     }
 
     protected void unrecognizedAction(@Nonnull Cancellable event, @Nonnull Location l, @Nonnull Object content) {

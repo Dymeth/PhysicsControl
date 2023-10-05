@@ -10,7 +10,12 @@ public class PControlCategoryInventory extends PControlInventory {
     private static final boolean DISPLAY_TEST_CATEGORY = false;
 
     public PControlCategoryInventory(@Nonnull PControlDataBukkit data, @Nonnull World world) {
-        super(world, 3, data.getMessage("category-inventory-title", "%world%", world.getName()));
+        super(
+            data.getPlugin().getServer(),
+            world,
+            3,
+            data.getMessage("category-inventory-title", "%world%", world.getName())
+        );
         for (PControlCategory category : PControlCategory.values()) {
             if (category == PControlCategory.TEST && !DISPLAY_TEST_CATEGORY) {
                 continue;

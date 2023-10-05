@@ -1,7 +1,6 @@
 package ru.dymeth.pcontrol;
 
 import net.md_5.bungee.api.chat.BaseComponent;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -59,7 +58,7 @@ public final class PControlDataBukkit implements PControlData {
 
         String serverVersion = "unknown";
         try {
-            serverVersion = Bukkit.getServer().getClass().getName().split("\\.")[3];
+            serverVersion = plugin.getServer().getClass().getName().split("\\.")[3];
             String[] versionArgs = serverVersion.split("_");
             if (versionArgs.length != 3) throw new IllegalArgumentException();
             if (!versionArgs[0].equals("v1")) throw new IllegalArgumentException();
@@ -194,7 +193,7 @@ public final class PControlDataBukkit implements PControlData {
     }
 
     private void reloadTriggers() {
-        for (World world : Bukkit.getWorlds()) {
+        for (World world : this.plugin.getServer().getWorlds()) {
             this.updateWorldData(world, true);
         }
     }
@@ -202,7 +201,7 @@ public final class PControlDataBukkit implements PControlData {
     void unloadData() {
         this.messages.clear();
         this.triggers.clear();
-        Bukkit.getOnlinePlayers().forEach(player -> {
+        this.plugin.getServer().getOnlinePlayers().forEach(player -> {
             InventoryHolder holder = player.getOpenInventory().getTopInventory().getHolder();
             if (!(holder instanceof PControlInventory)) return;
             player.closeInventory();
@@ -368,8 +367,8 @@ public final class PControlDataBukkit implements PControlData {
 
     @Override
     public void announce(@Nullable World world, @Nonnull String plain, @Nullable BaseComponent component) {
-        Bukkit.getConsoleSender().sendMessage(plain);
-        Bukkit.getOnlinePlayers().stream()
+        this.plugin.getServer().getConsoleSender().sendMessage(plain);
+        this.plugin.getServer().getOnlinePlayers().stream()
             .filter(player -> player.isOp() || player.hasPermission("physicscontrol.announce"))
             .filter(player -> world == null || player.getWorld() == world)
             .forEach(component == null

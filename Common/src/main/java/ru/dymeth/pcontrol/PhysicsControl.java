@@ -41,9 +41,9 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
             listener = new PhysicsListenerLegacy(this.data);
         }
 
-        Bukkit.getPluginManager().registerEvents(listener, this);
-        Bukkit.getPluginManager().registerEvents(new PhysicsListenerCommon(this.data), this);
-        Bukkit.getPluginManager().registerEvents(this, this);
+        this.getServer().getPluginManager().registerEvents(listener, this);
+        this.getServer().getPluginManager().registerEvents(new PhysicsListenerCommon(this.data), this);
+        this.getServer().getPluginManager().registerEvents(this, this);
     }
 
     @Override
@@ -85,7 +85,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
                 sender.sendMessage(this.data.getMessage("world-or-key-not-specified"));
                 return true;
             }
-            world = Bukkit.getWorld(args[0]);
+            world = this.data.getPlugin().getServer().getWorld(args[0]);
             if (world == null) {
                 sender.sendMessage(this.data.getMessage("world-not-found", "%world%", args[0]));
                 return true;

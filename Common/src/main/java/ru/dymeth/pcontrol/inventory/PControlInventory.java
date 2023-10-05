@@ -1,6 +1,6 @@
 package ru.dymeth.pcontrol.inventory;
 
-import org.bukkit.Bukkit;
+import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -21,9 +21,9 @@ public abstract class PControlInventory implements InventoryHolder {
     private final Inventory inventory;
     private final Map<Short, Consumer<Player>> slotActions;
 
-    PControlInventory(@Nonnull World world, int rows, @Nonnull String title) {
+    PControlInventory(@Nonnull Server server, @Nonnull World world, int rows, @Nonnull String title) {
         this.world = world;
-        this.inventory = Bukkit.createInventory(this, rows * 9, title);
+        this.inventory = server.createInventory(this, rows * 9, title);
         this.slotActions = new HashMap<>();
     }
 

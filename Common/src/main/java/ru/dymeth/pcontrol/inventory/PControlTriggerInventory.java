@@ -20,7 +20,11 @@ public final class PControlTriggerInventory extends PControlInventory {
     private final Map<PControlTrigger, Short> slotByTrigger;
 
     public PControlTriggerInventory(@Nonnull PControlDataBukkit data, @Nonnull PControlCategory category, @Nonnull World world) {
-        super(world, 4, data.getMessage("inventory-title", "%category%", category.getDisplayName(), "%world%", world.getName()));
+        super(data.getPlugin().getServer(),
+            world,
+            4,
+            data.getMessage("inventory-title", "%category%", category.getDisplayName(), "%world%", world.getName())
+        );
         this.data = data;
         this.slotByTrigger = new HashMap<>();
         for (PControlTrigger trigger : PControlTrigger.values()) {
