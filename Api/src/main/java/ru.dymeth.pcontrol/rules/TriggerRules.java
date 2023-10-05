@@ -7,9 +7,12 @@ import javax.annotation.Nonnull;
 
 public abstract class TriggerRules<T> {
 
-    private static final boolean LOG_SUPPORTED_TRIGGERS = false;
-    private static final boolean LOG_UNSUPPORTED_TRIGGERS = false;
-    protected static final boolean LOG_TRIGGER_OVERRIDES = false;
+    public static final boolean LOG_SUPPORTED_TRIGGERS = false;
+    private static int TOTAL_RULES_REGISTERED = 0;
+
+    public static int getTotalRulesRegistered() {
+        return TOTAL_RULES_REGISTERED;
+    }
 
     protected final PControlData data;
 
@@ -18,24 +21,20 @@ public abstract class TriggerRules<T> {
     }
 
     @Nonnull
-    protected T completeRegistration(@Nonnull PControlTrigger trigger, boolean triggerAvailable) {
-        if (triggerAvailable) {
+    protected T completeRegistration(@Nonnull PControlTrigger trigger, int rulesAdded) {
+        if (rulesAdded > 0) {
+            TOTAL_RULES_REGISTERED += rulesAdded;
             trigger.markAvailable();
-        }
-        if (trigger.isAvailable() != this.data.isTriggerSupported(trigger)) {
-            throw new IllegalStateException("Different trigger availabilities: " + trigger);
-        }
-
-        if (triggerAvailable) {
             if (LOG_SUPPORTED_TRIGGERS) {
                 this.data.getPlugin().getLogger().info("Trigger " + trigger
-                    + " registered successfully");
+                    + " registered " + rulesAdded + " rules");
             }
         } else {
-            if (LOG_UNSUPPORTED_TRIGGERS) {
-                this.data.getPlugin().getLogger().warning("Trigger " + trigger.name()
-                    + " is unavailable at current server version");
-            }
+            this.data.getPlugin().getLogger().warning("Trigger " + trigger.name()
+                + " is unavailable at current server version");
+        }
+        if (trigger.isAvailable() != this.data.isTriggerSupported(trigger)) {
+            this.data.getPlugin().getLogger().warning("Different trigger availabilities: " + trigger);
         }
 
         //noinspection unchecked

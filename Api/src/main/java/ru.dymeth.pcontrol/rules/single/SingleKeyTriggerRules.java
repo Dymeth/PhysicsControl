@@ -21,18 +21,18 @@ public abstract class SingleKeyTriggerRules<T, K1> extends TriggerRules<T> {
     public T regSingle(@Nonnull PControlTrigger trigger,
                        @Nonnull Iterable<K1> keysSet
     ) {
-        boolean triggerAvailable = false;
+        int rulesAdded = 0;
         PControlTrigger previousTrigger;
         for (K1 key : keysSet) {
             previousTrigger = this.singleRules.put(key, trigger);
-            if (previousTrigger != null && LOG_TRIGGER_OVERRIDES) {
+            if (previousTrigger != null) {
                 this.data.getPlugin().getLogger().warning("Changed trigger for key "
                     + key + ": "
                     + previousTrigger + " -> " + trigger);
             }
-            triggerAvailable = true;
+            rulesAdded++;
         }
-        return this.completeRegistration(trigger, triggerAvailable);
+        return this.completeRegistration(trigger, rulesAdded);
     }
 
     @Nullable

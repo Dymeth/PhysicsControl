@@ -22,21 +22,21 @@ public abstract class KeysPairTriggerRules<T, K1, K2> extends TriggerRules<T> {
                      @Nonnull Iterable<K1> firstKeysSet,
                      @Nonnull Iterable<K2> secondKeysSet
     ) {
-        boolean triggerAvailable = false;
+        int rulesAdded = 0;
         PControlTrigger previousTrigger;
         for (K1 firstKey : firstKeysSet) {
             Map<K2, PControlTrigger> map = this.pairRules.computeIfAbsent(firstKey, material1 -> new HashMap<>());
             for (K2 secondKey : secondKeysSet) {
                 previousTrigger = map.put(secondKey, trigger);
-                if (previousTrigger != null && LOG_TRIGGER_OVERRIDES) {
+                if (previousTrigger != null) {
                     this.data.getPlugin().getLogger().warning("Changed trigger for keys pair "
                         + firstKey + " and " + secondKey + ": "
                         + previousTrigger + " -> " + trigger);
                 }
-                triggerAvailable = true;
+                rulesAdded++;
             }
         }
-        return this.completeRegistration(trigger, triggerAvailable);
+        return this.completeRegistration(trigger, rulesAdded);
     }
 
     @Nullable

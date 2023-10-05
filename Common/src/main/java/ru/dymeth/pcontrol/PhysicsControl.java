@@ -1,6 +1,5 @@
 package ru.dymeth.pcontrol;
 
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -21,6 +20,7 @@ import ru.dymeth.pcontrol.inventory.PControlCategoryInventory;
 import ru.dymeth.pcontrol.inventory.PControlInventory;
 import ru.dymeth.pcontrol.legacy.PhysicsListenerLegacy;
 import ru.dymeth.pcontrol.modern.PhysicsListenerModern;
+import ru.dymeth.pcontrol.rules.TriggerRules;
 
 import javax.annotation.Nonnull;
 import java.util.StringJoiner;
@@ -39,6 +39,9 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
             listener = new PhysicsListenerModern(this.data);
         } else {
             listener = new PhysicsListenerLegacy(this.data);
+        }
+        if (TriggerRules.LOG_SUPPORTED_TRIGGERS) {
+            this.getLogger().info("Total rules registered: " + TriggerRules.getTotalRulesRegistered());
         }
 
         this.getServer().getPluginManager().registerEvents(listener, this);
