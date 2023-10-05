@@ -15,13 +15,13 @@ import ru.dymeth.pcontrol.api.PhysicsListener;
 
 import javax.annotation.Nonnull;
 
-class PhysicsListenerCommon extends PhysicsListener {
-    PhysicsListenerCommon(@Nonnull PControlData data) {
+public abstract class PhysicsListenerCommon extends PhysicsListener {
+    protected PhysicsListenerCommon(@Nonnull PControlData data) {
         super(data);
     }
 
     @EventHandler(ignoreCancelled = true)
-    private void on(StructureGrowEvent event) {
+    public void on(StructureGrowEvent event) {
         World world = event.getWorld();
         if (event.getPlayer() != null) {
             this.data.cancelIfDisabled(event, world, PControlTrigger.BONE_MEAL_USAGE);
@@ -62,7 +62,7 @@ class PhysicsListenerCommon extends PhysicsListener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    private void on(BlockIgniteEvent event) {
+    public void on(BlockIgniteEvent event) {
         if (event.getCause() == BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL) {
             this.data.cancelIfDisabled(event, PControlTrigger.PLAYERS_FLINT_USAGE);
         } else {
@@ -71,7 +71,7 @@ class PhysicsListenerCommon extends PhysicsListener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    private void on(ProjectileHitEvent event) {
+    public void on(ProjectileHitEvent event) {
         if (!this.data.hasVersion(11)) return;
         if (event.getHitBlock() == null) return; // Since 1.11
         Entity entity = event.getEntity();
@@ -81,12 +81,12 @@ class PhysicsListenerCommon extends PhysicsListener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    private void on(BlockBurnEvent event) {
+    public void on(BlockBurnEvent event) {
         this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
     }
 
     @EventHandler(ignoreCancelled = true)
-    private void on(LeavesDecayEvent event) {
+    public void on(LeavesDecayEvent event) {
         this.data.cancelIfDisabled(event, PControlTrigger.LEAVES_DECAY);
     }
 }
