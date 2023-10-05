@@ -75,6 +75,20 @@ public final class PhysicsListenerModern extends PhysicsListenerCommon {
             this.rulesBlockGrowEventTo.regSingle(PControlTrigger.SWEET_BERRIES_GROWING,
                 Collections.singleton(Material.SWEET_BERRY_BUSH));
         }
+
+        if (this.data.hasVersion(17)) {
+            this.rulesBlockGrowEventTo.regSingle(PControlTrigger.AMETHYST_CLUSTERS_GROWING, // from = AIR, CAVE_AIR, WATER, etc
+                Collections.singleton(Material.SMALL_AMETHYST_BUD));
+            this.rulesBlockGrowEventFromTo.regPair(PControlTrigger.AMETHYST_CLUSTERS_GROWING,
+                Collections.singleton(Material.SMALL_AMETHYST_BUD),
+                Collections.singleton(Material.MEDIUM_AMETHYST_BUD));
+            this.rulesBlockGrowEventFromTo.regPair(PControlTrigger.AMETHYST_CLUSTERS_GROWING,
+                Collections.singleton(Material.MEDIUM_AMETHYST_BUD),
+                Collections.singleton(Material.LARGE_AMETHYST_BUD));
+            this.rulesBlockGrowEventFromTo.regPair(PControlTrigger.AMETHYST_CLUSTERS_GROWING,
+                Collections.singleton(Material.LARGE_AMETHYST_BUD),
+                Collections.singleton(Material.AMETHYST_CLUSTER));
+        }
     }
 
     {
@@ -84,6 +98,14 @@ public final class PhysicsListenerModern extends PhysicsListenerCommon {
                 Collections.singleton(Material.DIRT));
             this.rulesEntityChangeBlockEventTo.regSingle(PControlTrigger.IGNORED_STATE, // Redstone ore activation
                 CustomTag.REDSTONE_ORE_BLOCKS.getValues());
+            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.SAND_FALLING,
+                CustomTag.SAND.getValues());
+            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.GRAVEL_FALLING,
+                Collections.singleton(Material.GRAVEL));
+            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.ANVILS_FALLING,
+                CustomTag.ANVIL.getValues());
+            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.DRAGON_EGGS_FALLING,
+                Collections.singleton(Material.DRAGON_EGG));
             this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.SAND_FALLING,
                 CustomTag.SAND.getValues());
             this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.GRAVEL_FALLING,
@@ -94,49 +116,53 @@ public final class PhysicsListenerModern extends PhysicsListenerCommon {
                 Collections.singleton(Material.DRAGON_EGG));
             this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.IGNORED_STATE, // On custom falling blocks fall (created by third-party plugins like WoodCutter)
                 CustomTag.WORLD_AIR.getValues());
-            this.rulesFallingEntityChangeBlockEventByFrom.regPair(PControlTrigger.BURNING_ARROWS_ACTIVATE_TNT,
+            this.rulesNonFallingEntityChangeBlockEventByFrom.regPair(PControlTrigger.BURNING_ARROWS_ACTIVATE_TNT,
                 Collections.singleton(EntityType.ARROW),
                 Collections.singleton(Material.TNT));
-            this.rulesFallingEntityChangeBlockEventByFrom.regPair(PControlTrigger.ZOMBIES_BREAK_DOORS,
+            this.rulesNonFallingEntityChangeBlockEventByFrom.regPair(PControlTrigger.ZOMBIES_BREAK_DOORS,
                 Collections.singleton(EntityType.ZOMBIE),
                 CustomTag.WOODEN_DOORS.getValues());
-            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.IGNORED_STATE, // Boats destroys lilies. TODO It is necessary to implement a smart system of destruction and restoration of water lilies so that there are no problems with movement
+            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.IGNORED_STATE, // Boats destroys lilies. TODO It is necessary to implement a smart system of destruction and restoration of water lilies so that there are no problems with movement
                 Collections.singleton(EntityType.BOAT));
-            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.SHEEPS_EATING_GRASS,
+            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.SHEEPS_EATING_GRASS,
                 Collections.singleton(EntityType.SHEEP));
-            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.ENDERMANS_GRIEFING,
+            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.ENDERMANS_GRIEFING,
                 Collections.singleton(EntityType.ENDERMAN));
-            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.WITHERS_GRIEFING,
+            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.WITHERS_GRIEFING,
                 Collections.singleton(EntityType.WITHER));
-            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.SILVERFISHES_HIDING_IN_BLOCKS,
+            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.SILVERFISHES_HIDING_IN_BLOCKS,
                 Collections.singleton(EntityType.SILVERFISH));
-            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.VILLAGERS_FARMING,
+            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.VILLAGERS_FARMING,
                 Collections.singleton(EntityType.VILLAGER));
         }
         if (this.data.hasVersion(8)) {
-            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.RABBITS_EATING_CARROTS,
+            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.RABBITS_EATING_CARROTS,
                 Collections.singleton(EntityType.RABBIT));
         }
         if (this.data.hasVersion(11)) {
-            this.rulesFallingEntityChangeBlockEventByFrom.regPair(PControlTrigger.ZOMBIES_BREAK_DOORS,
+            this.rulesNonFallingEntityChangeBlockEventByFrom.regPair(PControlTrigger.ZOMBIES_BREAK_DOORS,
                 Collections.singleton(EntityType.ZOMBIE_VILLAGER),
                 CustomTag.WOODEN_DOORS.getValues());
         }
         if (this.data.hasVersion(12)) {
+            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.CONCRETE_POWDERS_FALLING,
+                CustomTag.CONCRETE_POWDERS.getValues());
             this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.CONCRETE_POWDERS_FALLING,
                 CustomTag.CONCRETE_POWDERS.getValues());
         }
         // modern versions only
         if (this.data.hasVersion(13)) {
-            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.TURTLES_LAYING_EGGS,
+            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.TURTLES_LAYING_EGGS,
                 Collections.singleton(EntityType.TURTLE));
         }
         if (this.data.hasVersion(14)) {
+            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.SCAFFOLDING_FALLING,
+                Collections.singleton(Material.SCAFFOLDING));
             this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.SCAFFOLDING_FALLING,
                 Collections.singleton(Material.SCAFFOLDING));
-            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.RAVAGERS_DESTROY_BLOCKS,
+            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.RAVAGERS_DESTROY_BLOCKS,
                 Collections.singleton(EntityType.RAVAGER));
-            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.FOXES_EATS_FROM_SWEET_BERRY_BUSHES,
+            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.FOXES_EATS_FROM_SWEET_BERRY_BUSHES,
                 Collections.singleton(EntityType.FOX));
         }
         if (this.data.hasVersion(17)) {
@@ -152,6 +178,8 @@ public final class PhysicsListenerModern extends PhysicsListenerCommon {
             this.rulesEntityChangeBlockEventFromTo.regPair(PControlTrigger.GLOW_BERRIES_PICKING,
                 Collections.singleton(Material.CAVE_VINES_PLANT),
                 Collections.singleton(Material.CAVE_VINES_PLANT));
+            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.POINTED_DRIPSTONES_FALLING,
+                Collections.singleton(Material.POINTED_DRIPSTONE));
             this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.POINTED_DRIPSTONES_FALLING,
                 Collections.singleton(Material.POINTED_DRIPSTONE));
         }
@@ -362,8 +390,7 @@ public final class PhysicsListenerModern extends PhysicsListenerCommon {
     @Nullable
     @Override
     protected PControlTrigger getBlockFromToEventTrigger(@Nonnull Block block, @Nonnull Material from, @Nonnull Material to) {
-        PControlTrigger trigger = this.rulesBlockFromToEventFromTo.findTrigger(from, to);
-        if (trigger == null) trigger = this.rulesBlockFromToEventFrom.findTrigger(to);
+        PControlTrigger trigger = super.getBlockFromToEventTrigger(block, from, to);
         if (trigger == null) {
             if (block.getBlockData() instanceof Waterlogged
                 && ((Waterlogged) block.getBlockData()).isWaterlogged()) {

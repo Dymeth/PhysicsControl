@@ -55,9 +55,12 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
 
     protected final MaterialMaterialRules rulesEntityChangeBlockEventFromTo = new MaterialMaterialRules(this.data);
     protected final MaterialRules rulesEntityChangeBlockEventTo = new MaterialRules(this.data);
+
+    protected final MaterialRules rulesFallingEntityChangeBlockEventBy = new MaterialRules(this.data);
     protected final MaterialRules rulesFallingEntityChangeBlockEventFrom = new MaterialRules(this.data);
-    protected final EntityMaterialRules rulesFallingEntityChangeBlockEventByFrom = new EntityMaterialRules(this.data);
-    protected final EntityRules rulesFallingEntityChangeBlockEventBy = new EntityRules(this.data);
+
+    protected final EntityMaterialRules rulesNonFallingEntityChangeBlockEventByFrom = new EntityMaterialRules(this.data);
+    protected final EntityRules rulesNonFallingEntityChangeBlockEventBy = new EntityRules(this.data);
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     public void on(EntityChangeBlockEvent event) {
@@ -66,22 +69,30 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
         World world = event.getEntity().getWorld();
 
         boolean updateBlockOnCancel = false;
+
         PControlTrigger trigger = this.rulesEntityChangeBlockEventFromTo.findTrigger(from, to);
         if (trigger == null) trigger = this.rulesEntityChangeBlockEventTo.findTrigger(to);
+
         if (trigger == null) {
             if (event.getEntity() instanceof FallingBlock) {
-                trigger = this.rulesFallingEntityChangeBlockEventFrom.findTrigger(from);
+                Material by = ((FallingBlock) event.getEntity()).getMaterial();
+
+                trigger = this.rulesFallingEntityChangeBlockEventBy.findTrigger(from);
+                if (trigger == null) trigger = this.rulesFallingEntityChangeBlockEventFrom.findTrigger(by);
+
                 if (trigger == null) {
-                    this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to + " (by falling " + event.getEntity() + ")");
+                    this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to + " (by falling " + by + ")");
                     return;
                 }
                 updateBlockOnCancel = true;
             } else {
-                EntityType entityType = event.getEntity().getType();
-                trigger = this.rulesFallingEntityChangeBlockEventByFrom.findTrigger(entityType, from);
-                if (trigger == null) trigger = this.rulesFallingEntityChangeBlockEventBy.findTrigger(entityType);
+                EntityType by = event.getEntity().getType();
+
+                trigger = this.rulesNonFallingEntityChangeBlockEventByFrom.findTrigger(by, from);
+                if (trigger == null) trigger = this.rulesNonFallingEntityChangeBlockEventBy.findTrigger(by);
+
                 if (trigger == null) {
-                    this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to + " (by " + event.getEntity() + ")");
+                    this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to + " (by " + by + ")");
                 }
             }
         }
