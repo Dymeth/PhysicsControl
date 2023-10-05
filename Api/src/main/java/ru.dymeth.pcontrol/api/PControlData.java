@@ -23,6 +23,7 @@ public interface PControlData {
 
     boolean hasVersion(int version);
 
+    @Deprecated // TODO Mark trigger as available while filling rules on plugin startup
     boolean isTriggerSupported(@Nonnull PControlTrigger trigger);
 
     void cancelIfDisabled(@Nonnull BlockEvent event, @Nonnull PControlTrigger trigger);

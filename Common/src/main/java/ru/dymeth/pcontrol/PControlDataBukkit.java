@@ -60,17 +60,31 @@ public final class PControlDataBukkit implements PControlData {
         try {
             serverVersion = plugin.getServer().getClass().getName().split("\\.")[3];
             String[] versionArgs = serverVersion.split("_");
-            if (versionArgs.length != 3) throw new IllegalArgumentException();
-            if (!versionArgs[0].equals("v1")) throw new IllegalArgumentException();
-            this.serverVersion = Short.parseShort(versionArgs[1]);
-            if (this.serverVersion < 8) throw new IllegalArgumentException();
-            if (this.serverVersion == 13 && !versionArgs[2].equals("R2")) throw new IllegalArgumentException();
+
+            if (versionArgs.length != 3) {
+                throw new IllegalArgumentException("Wrong version format: " + Arrays.toString(versionArgs));
+            }
+            if (!versionArgs[0].equals("v1")) {
+                throw new IllegalArgumentException("Wrong primary version: " + versionArgs[0]);
+            }
+            try {
+                this.serverVersion = Short.parseShort(versionArgs[1]);
+            } catch (NumberFormatException ex) {
+                throw new IllegalArgumentException("Non-numeric server version: " + versionArgs[1]);
+            }
+            if (!this.hasVersion(8)) {
+                throw new IllegalArgumentException("Too old version: " + this.serverVersion);
+            }
+            if (this.serverVersion == 13 && !versionArgs[2].equals("R2")) {
+                throw new IllegalArgumentException("1.13.0 and 1.13.1 are unsupported");
+            }
+
         } catch (Exception e) {
             throw new RuntimeException("Unsupported server version (" + serverVersion + "). "
-                + "It must be Spigot 1.8-1.12.2 or 1.13.2 and newer");
+                + "It must be Spigot 1.8-1.12.2 or 1.13.2 and newer", e);
         }
 
-        if (this.serverVersion >= 13) {
+        if (this.hasVersion(13)) {
             this.fakeEnchantment = FakeEnchantmentModern.getInstance();
         } else {
             this.fakeEnchantment = FakeEnchantmentLegacy.getInstance();
@@ -89,10 +103,6 @@ public final class PControlDataBukkit implements PControlData {
     @Nonnull
     public Plugin getPlugin() {
         return this.plugin;
-    }
-
-    public short getServerVersion() {
-        return this.serverVersion;
     }
 
     @Nonnull
@@ -327,12 +337,14 @@ public final class PControlDataBukkit implements PControlData {
     }
 
     @Override
+    @Deprecated // TODO Mark trigger as available while filling rules on plugin startup
     public boolean isTriggerSupported(@Nonnull PControlTrigger trigger) {
-        return this.serverVersion >= trigger.getMinVersion();
+        return this.hasVersion(trigger.getMinVersion());
     }
 
     @Override
     public void cancelIfDisabled(@Nonnull BlockEvent event, @Nonnull PControlTrigger trigger) {
+        if (trigger == PControlTrigger.IGNORED_STATE) return;
         if (!this.getWorldTriggers(event.getBlock().getWorld()).getOrDefault(trigger, false)) {
             ((Cancellable) event).setCancelled(true);
         }
@@ -340,6 +352,7 @@ public final class PControlDataBukkit implements PControlData {
 
     @Override
     public void cancelIfDisabled(@Nonnull Cancellable event, @Nonnull World world, @Nonnull PControlTrigger trigger) {
+        if (trigger == PControlTrigger.IGNORED_STATE) return;
         if (!this.getWorldTriggers(world).getOrDefault(trigger, false)) {
             event.setCancelled(true);
         }
@@ -347,10 +360,12 @@ public final class PControlDataBukkit implements PControlData {
 
     @Override
     public boolean isActionAllowed(@Nonnull World world, @Nonnull PControlTrigger trigger) {
+        if (trigger == PControlTrigger.IGNORED_STATE) throw new IllegalArgumentException();
         return this.getWorldTriggers(world).getOrDefault(trigger, false);
     }
 
     public void switchTrigger(@Nonnull World world, @Nonnull PControlTrigger trigger) {
+        if (trigger == PControlTrigger.IGNORED_STATE) return;
         Map<PControlTrigger, Boolean> worldTriggers = this.getWorldTriggers(world);
         worldTriggers.put(trigger, !worldTriggers.get(trigger));
         this.updateWorldData(world, false);

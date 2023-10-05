@@ -35,7 +35,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         this.data = new PControlDataBukkit(this, this.resourceId);
         PhysicsListener listener;
 
-        if (this.data.getServerVersion() >= 13) {
+        if (this.data.hasVersion(13)) {
             listener = new PhysicsListenerModern(this.data);
         } else {
             listener = new PhysicsListenerLegacy(this.data);

@@ -184,10 +184,16 @@ public enum PControlTrigger {
     DEBUG_MESSAGES(
         SETTINGS, true, 2, 4, true, "PAPER"),
     ALLOW_UNRECOGNIZED_ACTIONS(
-        SETTINGS, true, 2, 6, true, "BARRIER");
+        SETTINGS, true, 2, 6, true, "BARRIER"),
+
+
+    IGNORED_STATE(
+        TEST, true, 1, 1, true, "BARRIER");
 
     private final PControlCategory category;
+    @Deprecated // TODO Mark trigger as available while filling rules on plugin startup
     private final short minVersion;
+    private boolean triggerAvailable = false;
     private final ItemStack icon;
     private final boolean realtime;
     private final short slot;
@@ -221,8 +227,17 @@ public enum PControlTrigger {
         return this.category;
     }
 
+    @Deprecated // TODO Mark trigger as available while filling rules on plugin startup
     public short getMinVersion() {
         return this.minVersion;
+    }
+
+    public void markAvailable() {
+        this.triggerAvailable = true;
+    }
+
+    public boolean isAvailable() {
+        return this.triggerAvailable;
     }
 
     @Nonnull

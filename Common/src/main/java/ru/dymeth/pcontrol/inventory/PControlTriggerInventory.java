@@ -43,30 +43,31 @@ public final class PControlTriggerInventory extends PControlInventory {
     }
 
     public void updateTriggerStack(@Nonnull PControlTrigger trigger) {
-        boolean allowed = this.data.getServerVersion() >= trigger.getMinVersion();
+        if (trigger == PControlTrigger.IGNORED_STATE) return;
+        boolean available = true ? this.data.isTriggerSupported(trigger) : trigger.isAvailable();
         boolean enabled = this.data.isActionAllowed(this.world, trigger);
 
-        ItemStack icon = allowed ? trigger.getIcon() : DISALLOWED_TRIGGER;
+        ItemStack icon = available ? trigger.getIcon() : DISALLOWED_TRIGGER;
         icon = icon.clone();
 
         ItemMeta meta = icon.getItemMeta();
         if (meta == null) {
             throw new IllegalArgumentException("Item meta could not be null");
         }
-        if (allowed) {
+        if (available) {
             meta.setDisplayName((enabled ? ChatColor.GREEN : ChatColor.RED) + trigger.getDisplayName());
         } else {
             meta.setDisplayName(ChatColor.GRAY + "" + ChatColor.STRIKETHROUGH + trigger.getDisplayName());
         }
         List<String> lore = new ArrayList<>();
-        if (allowed) {
+        if (available) {
             lore.add(enabled ? this.data.getMessage("trigger-enabled-state") : this.data.getMessage("trigger-disabled-state"));
             lore.addAll(Arrays.asList(this.data.getMessage(trigger.isRealtime() ? "trigger-realtime" : "trigger-on-update").split("\\n")));
         } else {
             lore.add(this.data.getMessage("trigger-unsupported-state", "%min_version%", "1." + trigger.getMinVersion()));
         }
         meta.setLore(lore);
-        if (allowed && enabled) {
+        if (available && enabled) {
             meta.addEnchant(this.data.getFakeEnchantment(), 1, true);
         }
         icon.setItemMeta(meta);
@@ -75,7 +76,8 @@ public final class PControlTriggerInventory extends PControlInventory {
     }
 
     public void switchTrigger(@Nonnull CommandSender sender, @Nonnull PControlTrigger trigger) {
-        if (this.data.getServerVersion() < trigger.getMinVersion()) {
+        if (trigger == PControlTrigger.IGNORED_STATE) return;
+        if (!this.data.isTriggerSupported(trigger)) {
             return;
         }
         if (!sender.isOp()
