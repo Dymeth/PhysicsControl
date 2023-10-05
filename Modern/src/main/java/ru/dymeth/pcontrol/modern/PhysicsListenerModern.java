@@ -371,7 +371,7 @@ public final class PhysicsListenerModern extends PhysicsListenerCommon {
         } else if (this.data.hasVersion(16) && to == Material.SOUL_TORCH) {
             this.data.cancelIfDisabled(event, PControlTrigger.SOUL_TORCHES_DESTROYING);
         } else {
-            if (this.DEBUG_PHYSICS_EVENT) {
+            if (DEBUG_PHYSICS_EVENT) {
                 this.debugAction(event, event.getBlock().getLocation(), ""
                     + "face=" + BlockFace.UP.name() + ";"
                     + "changed=" + event.getChangedType() + ";"
@@ -379,7 +379,7 @@ public final class PhysicsListenerModern extends PhysicsListenerCommon {
                     + "source=" + fromBlock.getType() + ";"
                 );
             }
-            for (BlockFace face : this.NSWE_FACES) {
+            for (BlockFace face : NSWE_FACES) {
                 toBlock = fromBlock.getRelative(face);
                 toData = toBlock.getBlockData();
                 if (!(toData instanceof Directional)) continue;
@@ -394,7 +394,7 @@ public final class PhysicsListenerModern extends PhysicsListenerCommon {
                     this.data.cancelIfDisabled(event, PControlTrigger.TORCHES_DESTROYING);
                 } else if (to == Material.REDSTONE_WALL_TORCH) {
                     this.data.cancelIfDisabled(event, PControlTrigger.REDSTONE_TORCHES_DESTROYING);
-                } else if (this.DEBUG_PHYSICS_EVENT) {
+                } else if (DEBUG_PHYSICS_EVENT) {
                     this.debugAction(event, event.getBlock().getLocation(), ""
                         + "face=" + face.name() + ";"
                         + "changed=" + event.getChangedType() + ";"
