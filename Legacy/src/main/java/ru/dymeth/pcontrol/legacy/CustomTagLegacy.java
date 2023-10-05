@@ -7,6 +7,9 @@ import ru.dymeth.pcontrol.api.set.MaterialKeysSet;
 import static org.bukkit.Material.*;
 
 public final class CustomTagLegacy {
+    public static final KeysSet<Material> WORLD_AIR = new MaterialKeysSet(
+        AIR);
+
     public static final KeysSet<Material> RAILS = new MaterialKeysSet(
         Material.RAILS,
         ACTIVATOR_RAIL,
