@@ -1,6 +1,7 @@
 package ru.dymeth.pcontrol.modern;
 
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import ru.dymeth.pcontrol.api.set.KeysSet;
 import ru.dymeth.pcontrol.api.set.MaterialKeysSet;
 
@@ -11,6 +12,9 @@ public final class CustomTag {
     public static final KeysSet<Material> WORLD_AIR = new MaterialKeysSet(
         AIR,
         CAVE_AIR);
+
+    public static final KeysSet<Material> WOODEN_DOORS = new MaterialKeysSet()
+        .add(Tag.WOODEN_DOORS.getValues());
 
     public static final KeysSet<Material> FENCES = new MaterialKeysSet(
         ACACIA_FENCE,
@@ -100,6 +104,12 @@ public final class CustomTag {
 
     public static final KeysSet<Material> LAVA = new MaterialKeysSet(
         Material.LAVA);
+
+    public static final KeysSet<Material> SAND = new MaterialKeysSet()
+        .add(Tag.SAND.getValues());
+
+    public static final KeysSet<Material> ANVIL = new MaterialKeysSet()
+        .add(Tag.ANVIL.getValues());
 
     public static final KeysSet<Material> CONCRETE_POWDERS = new MaterialKeysSet(
         BLACK_CONCRETE_POWDER,
