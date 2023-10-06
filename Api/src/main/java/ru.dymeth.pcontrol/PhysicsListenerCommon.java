@@ -8,6 +8,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.*;
@@ -16,6 +17,7 @@ import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.StructureGrowEvent;
+import org.bukkit.inventory.ItemStack;
 import ru.dymeth.pcontrol.api.PControlData;
 import ru.dymeth.pcontrol.api.PControlTrigger;
 import ru.dymeth.pcontrol.api.PhysicsListener;
@@ -715,4 +717,23 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
     public void on(LeavesDecayEvent event) {
         this.data.cancelIfDisabled(event, PControlTrigger.LEAVES_DECAY);
     }
+
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+    public void onBoneMeal(PlayerInteractEvent event) {
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        Block targetBlock = event.getClickedBlock();
+        if (targetBlock == null) {
+            throw new IllegalArgumentException("Block absent on PlayerInteractEvent with Action.RIGHT_CLICK_BLOCK");
+        }
+
+        ItemStack usedItem = event.getItem();
+        if (usedItem == null) return;
+        if (!this.isBoneMealItem(usedItem)) return;
+
+        this.data.cancelIfDisabled(event, targetBlock.getWorld(), PControlTrigger.BONE_MEAL_USAGE);
+        if (event.useItemInHand() == Event.Result.DENY) return;
+        this.fertilizedBlocks.add(targetBlock.getLocation().toVector());
+    }
+
+    protected abstract boolean isBoneMealItem(@Nonnull ItemStack stack);
 }

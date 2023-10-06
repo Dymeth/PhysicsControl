@@ -8,13 +8,9 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Waterlogged;
 import org.bukkit.block.data.type.Farmland;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.MoistureChangeEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import ru.dymeth.pcontrol.PhysicsListenerCommon;
 import ru.dymeth.pcontrol.api.PControlData;
@@ -30,20 +26,9 @@ public final class PhysicsListenerModern extends PhysicsListenerCommon {
         super(data);
     }
 
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    private void onBoneMeal(PlayerInteractEvent event) {
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
-        Block targetBlock = event.getClickedBlock();
-        if (targetBlock == null) {
-            throw new IllegalArgumentException("Block absent on PlayerInteractEvent with Action.RIGHT_CLICK_BLOCK");
-        }
-
-        ItemStack usedItem = event.getItem();
-        if (usedItem == null) return;
-        if (usedItem.getType() != Material.BONE_MEAL) return;
-        this.data.cancelIfDisabled(event, targetBlock.getWorld(), PControlTrigger.BONE_MEAL_USAGE);
-        if (event.useItemInHand() == Event.Result.DENY) return;
-        this.fertilizedBlocks.add(targetBlock.getLocation().toVector());
+    @Override
+    protected boolean isBoneMealItem(@Nonnull ItemStack stack) {
+        return stack.getType() == Material.BONE_MEAL;
     }
 
     @Nullable
