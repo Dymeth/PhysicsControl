@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.Set;
 
 public abstract class CustomSet<T> {
+    private static final boolean PREVENT_DUPLICATES = false;
+
     final Class<T> clazz;
     private final Set<T> elements;
 
@@ -17,7 +19,15 @@ public abstract class CustomSet<T> {
 
     @Nonnull
     public CustomSet<T> add(@Nonnull Collection<T> elements) {
-        this.elements.addAll(elements);
+        if (PREVENT_DUPLICATES) {
+            for (T element : elements) {
+                if (!this.elements.add(element)) {
+                    throw new IllegalArgumentException("Duplicate found: " + element);
+                }
+            }
+        } else {
+            this.elements.addAll(elements);
+        }
         return this;
     }
 

@@ -81,16 +81,7 @@ public final class CustomTag {
             PRESSURE_PLATES.add(Tag.WOODEN_PRESSURE_PLATES.getValues());
         }
         if (data.hasVersion(16)) {
-            PRESSURE_PLATES.add(Material.CRIMSON_PRESSURE_PLATE);
-            PRESSURE_PLATES.add(Material.WARPED_PRESSURE_PLATE);
             PRESSURE_PLATES.add(Material.POLISHED_BLACKSTONE_PRESSURE_PLATE);
-        }
-        if (data.hasVersion(19)) {
-            PRESSURE_PLATES.add(Material.MANGROVE_PRESSURE_PLATE);
-        }
-        if (data.hasVersion(20)) {
-            PRESSURE_PLATES.add(Material.BAMBOO_PRESSURE_PLATE);
-            PRESSURE_PLATES.add(Material.CHERRY_PRESSURE_PLATE);
         }
 
         REDSTONE_PASSIVE_INPUTS = new BlocksSet(
@@ -169,9 +160,11 @@ public final class CustomTag {
             }
         }
 
-        GRAVITY_BLOCKS = new BlocksSet(
-            Material.DRAGON_EGG); // Not marked as has-gravity on old Spigot versions
+        GRAVITY_BLOCKS = new BlocksSet();
         GRAVITY_BLOCKS.add(Material::hasGravity);
+        if (!data.hasVersion(13)) {
+            GRAVITY_BLOCKS.add(Material.DRAGON_EGG);
+        }
         if (data.hasVersion(14)) {
             GRAVITY_BLOCKS.add(Material.SCAFFOLDING);
         }
@@ -309,30 +302,24 @@ public final class CustomTag {
         }
 
         FENCES = new BlocksSet();
-        FENCES.add(Material.ACACIA_FENCE);
-        FENCES.add(Material.BIRCH_FENCE);
-        FENCES.add(Material.DARK_OAK_FENCE);
-        FENCES.add(Material.JUNGLE_FENCE);
-        FENCES.add(Material.SPRUCE_FENCE);
-        if (!data.hasVersion(13)) {
-            FENCES.add("FENCE");
-            FENCES.add("NETHER_FENCE");
-            // FENCES.add("IRON_FENCE");
+        if (!data.hasVersion(14)) {
+            FENCES.add(Material.ACACIA_FENCE);
+            FENCES.add(Material.BIRCH_FENCE);
+            FENCES.add(Material.DARK_OAK_FENCE);
+            FENCES.add(Material.JUNGLE_FENCE);
+            FENCES.add(Material.SPRUCE_FENCE);
+            if (!data.hasVersion(13)) {
+                FENCES.add("FENCE");
+                FENCES.add("NETHER_FENCE");
+                // FENCES.add("IRON_FENCE");
+            } else {
+                FENCES.add(Material.OAK_FENCE);
+                FENCES.add(Material.NETHER_BRICK_FENCE);
+                // FENCES.add(Material.IRON_BARS);
+            }
         } else {
-            FENCES.add(Material.OAK_FENCE);
-            FENCES.add(Material.NETHER_BRICK_FENCE);
             // FENCES.add(Material.IRON_BARS);
-        }
-        if (data.hasVersion(16)) {
-            FENCES.add(Material.CRIMSON_FENCE);
-            FENCES.add(Material.WARPED_FENCE);
-        }
-        if (data.hasVersion(19)) {
-            FENCES.add(Material.MANGROVE_FENCE);
-        }
-        if (data.hasVersion(20)) {
-            FENCES.add(Material.BAMBOO_FENCE);
-            FENCES.add(Material.CHERRY_FENCE);
+            FENCES.add(Tag.FENCES.getValues());
         }
 
         // TODO Possibly add SIGN_POST? (1.8-1.12.2)
@@ -340,46 +327,14 @@ public final class CustomTag {
         if (!data.hasVersion(14)) {
             SIGNS.add("SIGN");
         } else {
-            SIGNS.add(Material.ACACIA_SIGN);
-            SIGNS.add(Material.BIRCH_SIGN);
-            SIGNS.add(Material.DARK_OAK_SIGN);
-            SIGNS.add(Material.JUNGLE_SIGN);
-            SIGNS.add(Material.OAK_SIGN);
-            SIGNS.add(Material.SPRUCE_SIGN);
-        }
-        if (data.hasVersion(16)) {
-            SIGNS.add(Material.CRIMSON_SIGN);
-            SIGNS.add(Material.WARPED_SIGN);
-        }
-        if (data.hasVersion(19)) {
-            SIGNS.add(Material.MANGROVE_SIGN);
-        }
-        if (data.hasVersion(20)) {
-            SIGNS.add(Material.BAMBOO_SIGN);
-            SIGNS.add(Material.CHERRY_SIGN);
+            SIGNS.add(Tag.SIGNS.getValues());
         }
 
         WALL_SIGNS = new BlocksSet();
         if (!data.hasVersion(14)) {
             WALL_SIGNS.add("WALL_SIGN");
         } else {
-            WALL_SIGNS.add(Material.ACACIA_WALL_SIGN);
-            WALL_SIGNS.add(Material.BIRCH_WALL_SIGN);
-            WALL_SIGNS.add(Material.DARK_OAK_WALL_SIGN);
-            WALL_SIGNS.add(Material.JUNGLE_WALL_SIGN);
-            WALL_SIGNS.add(Material.OAK_WALL_SIGN);
-            WALL_SIGNS.add(Material.SPRUCE_WALL_SIGN);
-        }
-        if (data.hasVersion(16)) {
-            WALL_SIGNS.add(Material.CRIMSON_WALL_SIGN);
-            WALL_SIGNS.add(Material.WARPED_WALL_SIGN);
-        }
-        if (data.hasVersion(19)) {
-            WALL_SIGNS.add(Material.MANGROVE_WALL_SIGN);
-        }
-        if (data.hasVersion(20)) {
-            WALL_SIGNS.add(Material.BAMBOO_WALL_SIGN);
-            WALL_SIGNS.add(Material.CHERRY_WALL_SIGN);
+            WALL_SIGNS.add(Tag.WALL_SIGNS.getValues());
         }
 
         RAILS = new BlocksSet(
@@ -396,8 +351,7 @@ public final class CustomTag {
         if (data.hasVersion(13)) {
             ALL_ALIVE_CORALS.add(Tag.CORAL_BLOCKS.getValues());
             ALL_ALIVE_CORALS.add(Tag.WALL_CORALS.getValues());
-            ALL_ALIVE_CORALS.add(Tag.CORAL_PLANTS.getValues());
-            ALL_ALIVE_CORALS.add(Tag.CORALS.getValues());
+            ALL_ALIVE_CORALS.add(Tag.CORALS.getValues()); // Contains Tag.CORAL_PLANTS
         }
 
         DEAD_CORAL_PLANTS = new BlocksSet();
@@ -441,8 +395,7 @@ public final class CustomTag {
         if (data.hasVersion(13)) {
             ALL_DEAD_CORALS.add(this.DEAD_CORAL_BLOCKS.getValues());
             ALL_DEAD_CORALS.add(this.DEAD_WALL_CORALS.getValues());
-            ALL_DEAD_CORALS.add(this.DEAD_CORAL_PLANTS.getValues());
-            ALL_DEAD_CORALS.add(this.DEAD_CORALS.getValues());
+            ALL_DEAD_CORALS.add(this.DEAD_CORALS.getValues()); // Contains this.DEAD_CORAL_PLANTS
         }
     }
 }
