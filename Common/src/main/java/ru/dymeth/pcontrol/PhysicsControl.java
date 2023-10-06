@@ -40,7 +40,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         } else {
             listener = new PhysicsListenerLegacy(this.data);
         }
-        if (TriggerRules.LOG_SUPPORTED_TRIGGERS) {
+        if (TriggerRules.LOG_TRIGGERS_REGISTRATIONS) {
             this.getLogger().info("Total rules registered: " + TriggerRules.getTotalRulesRegistered());
         }
 
