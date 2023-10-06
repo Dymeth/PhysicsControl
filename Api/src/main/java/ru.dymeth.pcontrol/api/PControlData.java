@@ -23,6 +23,11 @@ public interface PControlData {
     @Nonnull
     String getMessage(@Nonnull String key, @Nonnull String... placeholders);
 
+    String getTriggerName(@Nonnull PControlTrigger trigger);
+
+    @Nonnull
+    String getCategoryName(@Nonnull PControlCategory category);
+
     boolean hasVersion(int version);
 
     @Deprecated // TODO Mark trigger as available while filling rules on plugin startup

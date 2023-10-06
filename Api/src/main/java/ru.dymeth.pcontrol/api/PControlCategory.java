@@ -5,6 +5,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 public enum PControlCategory {
     MOBS_INTERACTIONS(
@@ -32,16 +34,32 @@ public enum PControlCategory {
 
     private final short slot;
     private final ItemStack icon;
+    private final List<PControlTrigger> triggers = new ArrayList<>();
 
     PControlCategory(int row, int column, @Nonnull String... iconVariants) {
         this.slot = (short) ((row - 1) * 9 + column - 1);
         this.icon = BukkitUtils.matchIcon(iconVariants);
-        if (this.icon != null) {
-            ItemMeta meta = this.icon.getItemMeta();
-            if (meta == null) throw new IllegalArgumentException();
-            meta.setDisplayName(ChatColor.YELLOW + this.getDisplayName());
-            this.icon.setItemMeta(meta);
+    }
+
+    void addTrigger(@Nonnull PControlTrigger trigger) {
+        this.triggers.add(trigger);
+    }
+
+    public void prepareIcon(@Nonnull PControlData data) {
+        if (this.icon == null) return;
+
+        ItemMeta meta = this.icon.getItemMeta();
+        if (meta == null) throw new IllegalArgumentException();
+
+        meta.setDisplayName(ChatColor.YELLOW + data.getCategoryName(this));
+
+        List<String> lore = new ArrayList<>();
+        for (PControlTrigger trigger : this.triggers) {
+            lore.add(ChatColor.YELLOW + " - " + data.getTriggerName(trigger));
         }
+        meta.setLore(lore);
+
+        this.icon.setItemMeta(meta);
     }
 
     public short getSlot() {
@@ -52,11 +70,5 @@ public enum PControlCategory {
     public ItemStack getIcon() {
         if (this.icon == null) throw new IllegalArgumentException("Unable to find icon of category " + this);
         return this.icon;
-    }
-
-    @Nonnull
-    public String getDisplayName() {
-        String name = this.name().toLowerCase().replace("_", " ");
-        return Character.toUpperCase(name.charAt(0)) + name.substring(1);
     }
 }

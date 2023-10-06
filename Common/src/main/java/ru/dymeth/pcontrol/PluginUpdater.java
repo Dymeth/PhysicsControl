@@ -47,9 +47,8 @@ class PluginUpdater {
         if (oldFile.isFile()) {
             ConfigurationSection oldConfig = YamlConfiguration.loadConfiguration(oldFile);
             File newDir = new File(this.plugin.getDataFolder(), "triggers");
-            if (!newDir.isDirectory()) {
-                if (!newDir.mkdirs()) throw new IllegalStateException("Unable to create directory " + newDir);
-            }
+            //noinspection ResultOfMethodCallIgnored
+            newDir.mkdirs();
             for (String worldName : oldConfig.getKeys(false)) {
                 ConfigurationSection worldConfig = oldConfig.getConfigurationSection(worldName);
                 if (worldConfig == null) continue;
@@ -62,7 +61,7 @@ class PluginUpdater {
                 try {
                     newConfig.save(newFile);
                 } catch (Exception e) {
-                    throw new RuntimeException("Unable to save config file " + newFile);
+                    throw new RuntimeException("Unable to save config file " + newFile, e);
                 }
             }
             //noinspection ResultOfMethodCallIgnored
@@ -71,6 +70,29 @@ class PluginUpdater {
     }
 
     private void updateTo_1_2_0() {
+        File oldFile = new File(this.plugin.getDataFolder(), "messages.yml");
+        File newDir = new File(this.plugin.getDataFolder(), "lang");
+        File newFile = new File(newDir, "messages.yml");
+        if (oldFile.isFile() && !newFile.exists()) {
+            //noinspection ResultOfMethodCallIgnored
+            newDir.mkdirs();
+            try {
+                Files.move(oldFile.toPath(), newFile.toPath());
+                //noinspection ResultOfMethodCallIgnored
+                oldFile.delete();
+            } catch (Exception e) {
+                throw new RuntimeException("Unable to move lang file " + oldFile + " to " + newFile, e);
+            }
+        }
+
+        File configFile = new File(this.plugin.getDataFolder(), "config.yml");
+        if (configFile.isFile() && !YamlConfiguration.loadConfiguration(configFile).isBoolean("lang")) {
+            this.appendDataToFile(configFile,
+                "\r\n" +
+                    "language: \"auto\" # auto/en/ru" +
+                    "\r\n"
+            );
+        }
     }
 
     private static int[] parseVersion(String versionName) {

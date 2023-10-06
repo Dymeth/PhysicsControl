@@ -24,20 +24,26 @@ import ru.dymeth.pcontrol.modern.VersionsAdapterModern;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.*;
-import java.util.logging.Logger;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
 
 public final class PControlDataBukkit implements PControlData {
     private final Plugin plugin;
     private final int resourceId;
     private final short serverVersion;
     private final Set<EntityType> removableProjectileTypes;
+
     private final Map<String, String> messages = new HashMap<>();
+    private final Map<String, String> categoriesNames = new HashMap<>();
+    private final Map<String, String> triggersNames = new HashMap<>();
+
     private final Map<World, Map<PControlTrigger, Boolean>> triggers = new HashMap<>();
     private final Map<World, Map<PControlCategory, PControlTriggerInventory>> inventories = new HashMap<>();
     private Metrics metrics = null;
+    private String langKey = null;
     private final CustomTags customTags;
     private final Enchantment fakeEnchantment;
     private final VersionsAdapter versionsAdapter;
@@ -56,8 +62,8 @@ public final class PControlDataBukkit implements PControlData {
         try {
             new PluginUpdater(plugin);
         } catch (Throwable t) {
-            this.plugin.getLogger().warning("Unable to update config from previous plugin version: "
-                + t.getClass().getName() + ": " + t.getMessage());
+            this.plugin.getLogger().warning("Unable to update config from previous plugin version:");
+            t.printStackTrace();
         }
 
         String serverVersion = "unknown";
@@ -121,12 +127,15 @@ public final class PControlDataBukkit implements PControlData {
     void reloadConfigs() {
         this.unloadData();
         this.reloadConfig();
-        this.reloadMessages();
+        this.reloadLocale();
         this.reloadTriggers();
     }
 
     private void reloadConfig() {
-        File configFile = this.createConfigFileIfNotExist("config.yml", true);
+        File configFile = FileUtils.createConfigFileIfNotExist(this.plugin,
+            "config.yml",
+            "config.yml"
+        );
         YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
 
         if (config.getBoolean("check-for-updates", true)) {
@@ -165,50 +174,22 @@ public final class PControlDataBukkit implements PControlData {
                 // So you then have some plugins that respond to config changes and some plugins that ignore it.
             }
         }
+
+        this.langKey = LocaleUtils.prepareLangKey(this.getClass(), this.plugin.getLogger(), config.getString("language"));
     }
 
-    private void reloadMessages() {
-        File messagesFile = this.createConfigFileIfNotExist("messages.yml", true);
-        YamlConfiguration messagesConfig = YamlConfiguration.loadConfiguration(messagesFile);
-        YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(
-            new InputStreamReader(Objects.requireNonNull(this.plugin.getResource("messages.yml"))));
-        Map<String, String> defaultValues = new HashMap<>();
-        Map<String, String> deprecatedKeys = new HashMap<>();
-        Map<String, String> unloadedKeys = new HashMap<>();
+    private void reloadLocale() {
 
-        for (String key : defaultConfig.getKeys(false)) {
-            defaultValues.put(key, defaultConfig.getString(key));
-        }
+        Function<String, String> messageProcessor = msg ->
+            ChatColor.translateAlternateColorCodes('&', msg)
+                .replace("%plugin%", plugin.getName());
 
-        for (String key : messagesConfig.getKeys(false)) {
-            String msg = messagesConfig.getString(key);
-            if (msg == null) continue;
-            if (defaultValues.containsKey(key)) {
-                msg = ChatColor.translateAlternateColorCodes('&', msg);
-                msg = msg.replace("%plugin%", this.plugin.getName());
-                this.messages.put(key, msg);
-            } else {
-                deprecatedKeys.put(key, msg);
-            }
-        }
-
-        for (Map.Entry<String, String> defaultEntry : defaultValues.entrySet()) {
-            String key = defaultEntry.getKey();
-            if (this.messages.containsKey(key)) continue;
-            String value = defaultEntry.getValue();
-            this.messages.put(key, ChatColor.translateAlternateColorCodes('&', value));
-            unloadedKeys.put(key, value);
-        }
-
-        Logger logger = this.plugin.getLogger();
-        if (!unloadedKeys.isEmpty()) {
-            logger.warning("Some localization phrases was not found. Used defaults:");
-            unloadedKeys.forEach((key, value) -> logger.warning(key + ": \"" + value + "\""));
-        }
-        if (!deprecatedKeys.isEmpty()) {
-            logger.warning("Some deprecated localization phrases was not applied:");
-            deprecatedKeys.forEach((key, value) -> logger.warning(key + ": \"" + value + "\""));
-        }
+        LocaleUtils.reloadLocale(this.plugin, this.langKey, messageProcessor,
+            "categories.yml", this.categoriesNames);
+        LocaleUtils.reloadLocale(this.plugin, this.langKey, messageProcessor,
+            "messages.yml", this.messages);
+        LocaleUtils.reloadLocale(this.plugin, this.langKey, messageProcessor,
+            "triggers.yml", this.triggersNames);
     }
 
     private void reloadTriggers() {
@@ -228,27 +209,6 @@ public final class PControlDataBukkit implements PControlData {
         this.inventories.clear();
     }
 
-    @Nonnull
-    private File createConfigFileIfNotExist(@Nonnull String name, boolean fromResource) {
-        File configFile = new File(this.plugin.getDataFolder(), name);
-        if (configFile.isFile()) return configFile;
-        if (fromResource) {
-            this.plugin.saveResource(name, false);
-            return configFile;
-        }
-        if (!configFile.getParentFile().isDirectory() && !configFile.getParentFile().mkdirs()) {
-            throw new RuntimeException("Could not create plugin config directory");
-        }
-        try {
-            if (!configFile.createNewFile()) {
-                throw new RuntimeException("Unable to create config file");
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("Error creating config file " + name, e);
-        }
-        return configFile;
-    }
-
     @Override
     @Nonnull
     public String getMessage(@Nonnull String key, @Nonnull String... placeholders) {
@@ -262,13 +222,28 @@ public final class PControlDataBukkit implements PControlData {
         return result;
     }
 
+    @Override
+    @Nonnull
+    public String getTriggerName(@Nonnull PControlTrigger trigger) {
+        return this.triggersNames.get(trigger.name());
+    }
+
+    @Override
+    @Nonnull
+    public String getCategoryName(@Nonnull PControlCategory category) {
+        return this.categoriesNames.get(category.name());
+    }
+
     @Nonnull
     public PControlTriggerInventory getInventory(@Nonnull PControlCategory category, @Nonnull World world) {
         return this.inventories.get(world).get(category);
     }
 
     void updateWorldData(@Nonnull World world, boolean configPriority) {
-        File file = createConfigFileIfNotExist("triggers" + File.separator + world.getName() + ".yml", false);
+        File file = FileUtils.createConfigFileIfNotExist(this.plugin,
+            "triggers" + File.separator + world.getName() + ".yml",
+            null
+        );
         YamlConfiguration worldConfig = YamlConfiguration.loadConfiguration(file);
 
         Map<PControlTrigger, Boolean> configTriggers = new HashMap<>();
@@ -298,6 +273,7 @@ public final class PControlDataBukkit implements PControlData {
         Map<PControlCategory, PControlTriggerInventory> inventories = this.inventories.computeIfAbsent(world, world1 -> {
             Map<PControlCategory, PControlTriggerInventory> result = new HashMap<>();
             for (PControlCategory category : PControlCategory.values()) {
+                category.prepareIcon(this);
                 result.put(category, new PControlTriggerInventory(this, category, world));
             }
             return result;
@@ -318,7 +294,7 @@ public final class PControlDataBukkit implements PControlData {
                 worldConfig.set(trigger.name(), currentValue);
                 changed = true;
                 if (!firstInit) {
-                    this.plugin.getLogger().info("Added trigger \"" + trigger.getDisplayName() + "\" "
+                    this.plugin.getLogger().info("Added trigger \"" + this.getTriggerName(trigger) + "\" "
                         + "(" + currentValue + ") for world \"" + world.getName() + "\"");
                 }
             }

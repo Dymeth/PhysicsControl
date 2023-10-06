@@ -1,12 +1,8 @@
 package ru.dymeth.pcontrol.api;
 
-import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 
 import static ru.dymeth.pcontrol.api.PControlCategory.*;
 
@@ -212,14 +208,8 @@ public enum PControlTrigger {
             throw new IllegalArgumentException("Invalid slot of trigger " + this);
         }
         this.defaults = defaults;
+        this.category.addTrigger(this);
         this.icon = BukkitUtils.matchIcon(iconVariants);
-        ItemMeta meta = category.getIcon().getItemMeta();
-        if (meta == null) throw new IllegalArgumentException();
-        List<String> lore = meta.getLore();
-        if (lore == null) lore = new ArrayList<>();
-        lore.add(ChatColor.YELLOW + " - " + this.getDisplayName());
-        meta.setLore(lore);
-        category.getIcon().setItemMeta(meta);
     }
 
     @Nonnull
@@ -238,12 +228,6 @@ public enum PControlTrigger {
 
     public boolean isAvailable() {
         return this.triggerAvailable;
-    }
-
-    @Nonnull
-    public String getDisplayName() {
-        String name = this.name().toLowerCase().replace("_", " ");
-        return Character.toUpperCase(name.charAt(0)) + name.substring(1);
     }
 
     @Nonnull

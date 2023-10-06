@@ -23,7 +23,7 @@ public final class PControlTriggerInventory extends PControlInventory {
         super(data.getPlugin().getServer(),
             world,
             4,
-            data.getMessage("inventory-title", "%category%", category.getDisplayName(), "%world%", world.getName())
+            data.getMessage("inventory-title", "%category%", data.getCategoryName(category), "%world%", world.getName())
         );
         this.data = data;
         this.slotByTrigger = new HashMap<>();
@@ -55,9 +55,9 @@ public final class PControlTriggerInventory extends PControlInventory {
             throw new IllegalArgumentException("Item meta could not be null");
         }
         if (available) {
-            meta.setDisplayName((enabled ? ChatColor.GREEN : ChatColor.RED) + trigger.getDisplayName());
+            meta.setDisplayName((enabled ? ChatColor.GREEN : ChatColor.RED) + this.data.getTriggerName(trigger));
         } else {
-            meta.setDisplayName(ChatColor.GRAY + "" + ChatColor.STRIKETHROUGH + trigger.getDisplayName());
+            meta.setDisplayName(ChatColor.GRAY + "" + ChatColor.STRIKETHROUGH + this.data.getTriggerName(trigger));
         }
         List<String> lore = new ArrayList<>();
         if (available) {
@@ -83,7 +83,7 @@ public final class PControlTriggerInventory extends PControlInventory {
         if (!sender.isOp()
             && !sender.hasPermission("physicscontrol.trigger.*")
             && !sender.hasPermission("physicscontrol.trigger." + trigger.name().toLowerCase())) {
-            sender.sendMessage(this.data.getMessage("bad-perms-trigger", "%trigger%", trigger.getDisplayName()));
+            sender.sendMessage(this.data.getMessage("bad-perms-trigger", "%trigger%", this.data.getTriggerName(trigger)));
             return;
         }
         this.data.switchTrigger(this.world, trigger);
@@ -92,7 +92,7 @@ public final class PControlTriggerInventory extends PControlInventory {
         String msg = this.data.getMessage(
             this.data.isActionAllowed(this.world, trigger) ? "trigger-enabled" : "trigger-disabled",
             "%player%", sender.getName(),
-            "%trigger%", trigger.getDisplayName(),
+            "%trigger%", this.data.getTriggerName(trigger),
             "%world%", this.world.getName());
 
         if (msg.isEmpty()) return;
