@@ -9,7 +9,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPhysicsEvent;
-import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Attachable;
@@ -245,14 +244,6 @@ public final class PhysicsListenerLegacy extends PhysicsListenerCommon {
         this.data.cancelIfDisabled(event, targetBlock.getWorld(), PControlTrigger.BONE_MEAL_USAGE);
         if (event.isCancelled()) return;
         this.fertilizedBlocks.add(targetBlock.getLocation().toVector());
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    private void on(EntityInteractEvent event) {
-        if (event.getEntityType() == EntityType.VILLAGER && this.customTag.WOODEN_DOORS.isTagged(event.getBlock().getType())) {
-            return;
-        }
-        this.handleInteraction(event, event.getBlock(), event.getEntity());
     }
 
     @EventHandler(ignoreCancelled = true)

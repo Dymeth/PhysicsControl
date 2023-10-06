@@ -15,7 +15,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.MoistureChangeEvent;
-import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import ru.dymeth.pcontrol.PhysicsListenerCommon;
@@ -423,14 +422,6 @@ public final class PhysicsListenerModern extends PhysicsListenerCommon {
         Material from = oldData.getMaterial();
         Material to = newData.getMaterial();
         this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    private void on(EntityInteractEvent event) {
-        if (event.getEntityType() == EntityType.VILLAGER && this.customTag.WOODEN_DOORS.isTagged(event.getBlock().getType())) {
-            return;
-        }
-        this.handleInteraction(event, event.getBlock(), event.getEntity());
     }
 
     @EventHandler(ignoreCancelled = true)

@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.StructureGrowEvent;
@@ -176,6 +177,14 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
         if (event.getBlockFace() != BlockFace.SELF) return;
         if (event.getClickedBlock() == null) return;
         this.handleInteraction(event, event.getClickedBlock(), event.getPlayer());
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void on(EntityInteractEvent event) {
+        if (event.getEntityType() == EntityType.VILLAGER && this.customTag.WOODEN_DOORS.isTagged(event.getBlock().getType())) {
+            return;
+        }
+        this.handleInteraction(event, event.getBlock(), event.getEntity());
     }
 
     protected final MaterialRules rulesEntityInteractEventMaterial = new MaterialRules(this.data);
