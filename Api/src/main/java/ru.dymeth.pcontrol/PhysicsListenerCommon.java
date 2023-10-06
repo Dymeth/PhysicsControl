@@ -508,7 +508,7 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
 
         if (trigger == null) {
             if (event.getEntity() instanceof FallingBlock) {
-                Material by = ((FallingBlock) event.getEntity()).getMaterial();
+                Material by = this.getFallingBlockMaterial((FallingBlock) event.getEntity());
 
                 trigger = this.rulesFallingEntityChangeBlockEventBy.findTrigger(from);
                 if (trigger == null) trigger = this.rulesFallingEntityChangeBlockEventFrom.findTrigger(by);
@@ -538,6 +538,9 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
             event.getBlock().getState().update(false, false);
         }
     }
+
+    @Nonnull
+    protected abstract Material getFallingBlockMaterial(@Nonnull FallingBlock fallingBlock);
 
     protected final MaterialMaterialRules rulesBlockFromToEventFromTo = new MaterialMaterialRules(this.data);
     protected final MaterialRules rulesBlockFromToEventFrom = new MaterialRules(this.data);

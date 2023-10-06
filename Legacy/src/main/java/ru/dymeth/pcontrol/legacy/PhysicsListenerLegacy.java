@@ -4,6 +4,7 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.FallingBlock;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.inventory.ItemStack;
@@ -21,6 +22,12 @@ public final class PhysicsListenerLegacy extends PhysicsListenerCommon {
 
     public PhysicsListenerLegacy(@Nonnull PControlData data) {
         super(data);
+    }
+
+    @Nonnull
+    @Override
+    protected Material getFallingBlockMaterial(@Nonnull FallingBlock fallingBlock) {
+        return fallingBlock.getMaterial();
     }
 
     @Override

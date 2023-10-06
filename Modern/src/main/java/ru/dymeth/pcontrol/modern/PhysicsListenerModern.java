@@ -8,6 +8,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Waterlogged;
 import org.bukkit.block.data.type.Farmland;
+import org.bukkit.entity.FallingBlock;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.MoistureChangeEvent;
@@ -24,6 +25,12 @@ public final class PhysicsListenerModern extends PhysicsListenerCommon {
 
     public PhysicsListenerModern(@Nonnull PControlData data) {
         super(data);
+    }
+
+    @Nonnull
+    @Override
+    protected Material getFallingBlockMaterial(@Nonnull FallingBlock fallingBlock) {
+        return fallingBlock.getBlockData().getMaterial();
     }
 
     @Override
