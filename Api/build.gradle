@@ -9,6 +9,8 @@ repositories {
 }
 
 dependencies {
-    // compileOnly 'org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT' // Minimal
-    compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT' // Latest
+    // compileOnly 'org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT' // 1.8
+    // compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT' // 1.12.2
+    // compileOnly "org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT" // 1.13.2
+    compileOnly 'org.spigotmc:spigot-api:1.20.2-R0.1-SNAPSHOT' // Latest from hub.spigotmc.org/javadocs/spigot
 }

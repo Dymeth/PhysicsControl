@@ -31,11 +31,8 @@ import java.util.Collections;
 @SuppressWarnings({"IsCancelled"})
 public final class PhysicsListenerModern extends PhysicsListenerCommon {
 
-    private final CustomTag customTag;
-
     public PhysicsListenerModern(@Nonnull PControlData data) {
         super(data);
-        this.customTag = new CustomTag(data);
         this.initBlockGrowEvent();
         this.initEntityChangeBlockEvent();
         this.initBlockFromToEvent();

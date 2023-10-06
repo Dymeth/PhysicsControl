@@ -27,8 +27,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public abstract class PhysicsListenerCommon extends PhysicsListener {
+
+    protected final CustomTag customTag;
+
     protected PhysicsListenerCommon(@Nonnull PControlData data) {
         super(data);
+        this.customTag = new CustomTag(data);
     }
 
     protected final MaterialMaterialRules rulesBlockGrowEventFromTo = new MaterialMaterialRules(this.data);

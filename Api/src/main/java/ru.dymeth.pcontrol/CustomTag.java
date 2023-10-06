@@ -1,4 +1,4 @@
-package ru.dymeth.pcontrol.modern;
+package ru.dymeth.pcontrol;
 
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -37,14 +37,12 @@ public final class CustomTag {
         CARROT_BLOCK,
         BEETROOT_BLOCK,
         PUMPKIN_STEM_AND_BLOCK,
-        MELON_STEM_AND_BLOCK;
-
-    // modern-specific
-    public final BlocksSet
+        MELON_STEM_AND_BLOCK,
         FENCES,
         SIGNS,
         WALL_SIGNS,
         REDSTONE_ACTIVE_INPUTS,
+        RAILS,
         ALL_ALIVE_CORALS,
         DEAD_CORAL_PLANTS,
         DEAD_CORALS,
@@ -52,8 +50,7 @@ public final class CustomTag {
         DEAD_CORAL_BLOCKS,
         ALL_DEAD_CORALS;
 
-    CustomTag(@Nonnull PControlData data) {
-
+    public CustomTag(@Nonnull PControlData data) {
         WORLD_AIR = new BlocksSet(
             Material.AIR);
         if (data.hasVersion(13)) {
@@ -288,8 +285,6 @@ public final class CustomTag {
             MELON_STEM_AND_BLOCK.add(Material.MELON);
         }
 
-        // modern-specific
-
         FENCES = new BlocksSet(
             Material.ACACIA_FENCE,
             Material.BIRCH_FENCE,
@@ -364,6 +359,16 @@ public final class CustomTag {
             Material.OBSERVER);
         if (data.hasVersion(13)) {
             REDSTONE_ACTIVE_INPUTS.add(Tag.BUTTONS.getValues());
+        }
+
+        RAILS = new BlocksSet(
+            Material.ACTIVATOR_RAIL,
+            Material.DETECTOR_RAIL,
+            Material.POWERED_RAIL);
+        if (data.hasVersion(13)) {
+            RAILS.add("RAILS");
+        } else {
+            RAILS.add(Material.RAIL);
         }
 
         ALL_ALIVE_CORALS = new BlocksSet();
