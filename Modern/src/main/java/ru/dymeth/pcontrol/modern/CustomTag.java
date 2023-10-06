@@ -48,7 +48,6 @@ public final class CustomTag {
         SIGNS,
         WALL_SIGNS,
         REDSTONE_ACTIVE_INPUTS,
-        REDSTONE_TRANSMITTERS_AND_OUTPUTS,
         ALL_ALIVE_CORALS,
         DEAD_CORAL_PLANTS,
         DEAD_CORALS,
@@ -243,26 +242,6 @@ public final class CustomTag {
             Material.DAYLIGHT_DETECTOR,
             Material.OBSERVER)
             .add(Tag.BUTTONS.getValues());
-
-        REDSTONE_TRANSMITTERS_AND_OUTPUTS = new BlocksSet(
-            Material.DISPENSER,
-            Material.STICKY_PISTON,
-            Material.PISTON,
-            Material.PISTON_HEAD,
-            Material.MOVING_PISTON,
-            Material.TNT,
-            Material.REDSTONE_TORCH,
-            Material.REDSTONE_WALL_TORCH,
-            Material.REDSTONE_LAMP,
-            Material.REDSTONE_BLOCK,
-            Material.HOPPER,
-            Material.DROPPER,
-            Material.REPEATER,
-            Material.COMPARATOR,
-            Material.REDSTONE_WIRE)
-            .add(Tag.TRAPDOORS.getValues())
-            .add(this.FENCES.getValues())
-            .add(Tag.DOORS.getValues());
 
         ALL_ALIVE_CORALS = new BlocksSet()
             .add(Tag.CORAL_BLOCKS.getValues())
