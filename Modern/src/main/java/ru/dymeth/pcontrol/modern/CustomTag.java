@@ -8,9 +8,6 @@ import ru.dymeth.pcontrol.api.set.CustomSet;
 
 import javax.annotation.Nonnull;
 
-import static org.bukkit.Material.*;
-import static org.bukkit.Tag.*;
-
 public final class CustomTag {
 
     private final PControlData data;
@@ -63,27 +60,27 @@ public final class CustomTag {
         this.data = data;
 
         WORLD_AIR = new BlocksSet(
-            AIR,
-            CAVE_AIR);
+            Material.AIR,
+            Material.CAVE_AIR);
 
         WOODEN_DOORS = new BlocksSet()
             .add(Tag.WOODEN_DOORS.getValues());
 
         PRESSURE_PLATES = new BlocksSet(
-            STONE_PRESSURE_PLATE,
-            LIGHT_WEIGHTED_PRESSURE_PLATE,
-            HEAVY_WEIGHTED_PRESSURE_PLATE)
+            Material.STONE_PRESSURE_PLATE,
+            Material.LIGHT_WEIGHTED_PRESSURE_PLATE,
+            Material.HEAVY_WEIGHTED_PRESSURE_PLATE)
             .add("POLISHED_BLACKSTONE_PRESSURE_PLATE")
-            .add(WOODEN_PRESSURE_PLATES.getValues());
+            .add(Tag.WOODEN_PRESSURE_PLATES.getValues());
 
         REDSTONE_PASSIVE_INPUTS = new BlocksSet(
-            TRIPWIRE_HOOK,
-            TRIPWIRE)
-            .add(PRESSURE_PLATES.getValues())
-            .add(BUTTONS.getValues());
+            Material.TRIPWIRE_HOOK,
+            Material.TRIPWIRE)
+            .add(this.PRESSURE_PLATES.getValues())
+            .add(Tag.BUTTONS.getValues());
 
         REDSTONE_ORE_BLOCKS = new BlocksSet(
-            REDSTONE_ORE)
+            Material.REDSTONE_ORE)
             .add("DEEPSLATE_REDSTONE_ORE");
 
         WATER = new BlocksSet(
@@ -103,22 +100,22 @@ public final class CustomTag {
             .add(Tag.ANVIL.getValues());
 
         CONCRETE_POWDERS = new BlocksSet(
-            BLACK_CONCRETE_POWDER,
-            BLUE_CONCRETE_POWDER,
-            BROWN_CONCRETE_POWDER,
-            CYAN_CONCRETE_POWDER,
-            GRAY_CONCRETE_POWDER,
-            GREEN_CONCRETE_POWDER,
-            LIGHT_BLUE_CONCRETE_POWDER,
-            LIGHT_GRAY_CONCRETE_POWDER,
-            LIME_CONCRETE_POWDER,
-            MAGENTA_CONCRETE_POWDER,
-            ORANGE_CONCRETE_POWDER,
-            PINK_CONCRETE_POWDER,
-            PURPLE_CONCRETE_POWDER,
-            RED_CONCRETE_POWDER,
-            WHITE_CONCRETE_POWDER,
-            YELLOW_CONCRETE_POWDER
+            Material.BLACK_CONCRETE_POWDER,
+            Material.BLUE_CONCRETE_POWDER,
+            Material.BROWN_CONCRETE_POWDER,
+            Material.CYAN_CONCRETE_POWDER,
+            Material.GRAY_CONCRETE_POWDER,
+            Material.GREEN_CONCRETE_POWDER,
+            Material.LIGHT_BLUE_CONCRETE_POWDER,
+            Material.LIGHT_GRAY_CONCRETE_POWDER,
+            Material.LIME_CONCRETE_POWDER,
+            Material.MAGENTA_CONCRETE_POWDER,
+            Material.ORANGE_CONCRETE_POWDER,
+            Material.PINK_CONCRETE_POWDER,
+            Material.PURPLE_CONCRETE_POWDER,
+            Material.RED_CONCRETE_POWDER,
+            Material.WHITE_CONCRETE_POWDER,
+            Material.YELLOW_CONCRETE_POWDER
         );
 
         GRAVITY_BLOCKS = new BlocksSet()
@@ -126,40 +123,40 @@ public final class CustomTag {
             .add(Material::hasGravity);
 
         NATURAL_GRAVITY_BLOCKS = new BlocksSet()
-            .add(SAND.getValues())
-            .add(GRAVEL.getValues());
+            .add(this.SAND.getValues())
+            .add(this.GRAVEL.getValues());
 
         BONE_MEAL_HERBS = new BlocksSet(
-            GRASS,
-            DANDELION,
-            POPPY,
-            BLUE_ORCHID,
-            ALLIUM,
-            AZURE_BLUET,
-            RED_TULIP,
-            ORANGE_TULIP,
-            WHITE_TULIP,
-            PINK_TULIP,
-            OXEYE_DAISY,
-            SUNFLOWER,
-            LILAC,
-            ROSE_BUSH,
-            PEONY)
+            Material.GRASS,
+            Material.DANDELION,
+            Material.POPPY,
+            Material.BLUE_ORCHID,
+            Material.ALLIUM,
+            Material.AZURE_BLUET,
+            Material.RED_TULIP,
+            Material.ORANGE_TULIP,
+            Material.WHITE_TULIP,
+            Material.PINK_TULIP,
+            Material.OXEYE_DAISY,
+            Material.SUNFLOWER,
+            Material.LILAC,
+            Material.ROSE_BUSH,
+            Material.PEONY)
             .add(
                 "CORNFLOWER",
                 "LILY_OF_THE_VALLEY"
             );
 
         LITTLE_MUSHROOMS = new BlocksSet(
-            RED_MUSHROOM,
-            BROWN_MUSHROOM);
+            Material.RED_MUSHROOM,
+            Material.BROWN_MUSHROOM);
 
         UNDERWATER_BLOCKS_ONLY = new BlocksSet(
             Material.WATER,
-            BUBBLE_COLUMN,
-            KELP_PLANT,
-            TALL_SEAGRASS,
-            SEAGRASS);
+            Material.BUBBLE_COLUMN,
+            Material.KELP_PLANT,
+            Material.TALL_SEAGRASS,
+            Material.SEAGRASS);
 
         GRASS_BLOCK = new BlocksSet(
             Material.GRASS_BLOCK);
@@ -168,45 +165,47 @@ public final class CustomTag {
             .add("DIRT_PATH", "GRASS_PATH");
 
         FARMLAND_BLOCK = new BlocksSet(
-            FARMLAND);
+            Material.FARMLAND);
 
         MYCELIUM_BLOCK = new BlocksSet(
-            MYCELIUM);
+            Material.MYCELIUM);
 
         SUGAR_CANE_BLOCK = new BlocksSet(
-            SUGAR_CANE);
+            Material.SUGAR_CANE);
 
         NETHER_WART_BLOCK = new BlocksSet(
-            NETHER_WART);
+            Material.NETHER_WART);
 
         WHEAT_BLOCK = new BlocksSet(
-            WHEAT);
+            Material.WHEAT);
 
         POTATO_BLOCK = new BlocksSet(
-            POTATOES);
+            Material.POTATOES);
 
         CARROT_BLOCK = new BlocksSet(
-            CARROTS);
+            Material.CARROTS);
 
         BEETROOT_BLOCK = new BlocksSet(
-            BEETROOTS);
+            Material.BEETROOTS);
 
         PUMPKIN_STEM_AND_BLOCK = new BlocksSet(
-            PUMPKIN_STEM, PUMPKIN);
+            Material.PUMPKIN_STEM,
+            Material.PUMPKIN);
 
         MELON_STEM_AND_BLOCK = new BlocksSet(
-            MELON_STEM, MELON);
+            Material.MELON_STEM,
+            Material.MELON);
 
         // modern-specific
 
         FENCES = new BlocksSet(
-            ACACIA_FENCE,
-            BIRCH_FENCE,
-            DARK_OAK_FENCE,
-            JUNGLE_FENCE,
-            NETHER_BRICK_FENCE,
-            OAK_FENCE,
-            SPRUCE_FENCE)
+            Material.ACACIA_FENCE,
+            Material.BIRCH_FENCE,
+            Material.DARK_OAK_FENCE,
+            Material.JUNGLE_FENCE,
+            Material.NETHER_BRICK_FENCE,
+            Material.OAK_FENCE,
+            Material.SPRUCE_FENCE)
             .add(
                 "CRIMSON_FENCE",
                 "WARPED_FENCE"
@@ -239,71 +238,71 @@ public final class CustomTag {
             );
 
         REDSTONE_ACTIVE_INPUTS = new BlocksSet(
-            LEVER,
-            TRAPPED_CHEST,
-            DAYLIGHT_DETECTOR,
-            OBSERVER)
-            .add(BUTTONS.getValues());
+            Material.LEVER,
+            Material.TRAPPED_CHEST,
+            Material.DAYLIGHT_DETECTOR,
+            Material.OBSERVER)
+            .add(Tag.BUTTONS.getValues());
 
         REDSTONE_TRANSMITTERS_AND_OUTPUTS = new BlocksSet(
-            DISPENSER,
-            STICKY_PISTON,
-            PISTON,
-            PISTON_HEAD,
-            MOVING_PISTON,
-            TNT,
-            REDSTONE_TORCH,
-            REDSTONE_WALL_TORCH,
-            REDSTONE_LAMP,
-            REDSTONE_BLOCK,
-            HOPPER,
-            DROPPER,
-            REPEATER,
-            COMPARATOR,
-            REDSTONE_WIRE)
-            .add(TRAPDOORS.getValues())
-            .add(FENCES.getValues())
-            .add(DOORS.getValues());
+            Material.DISPENSER,
+            Material.STICKY_PISTON,
+            Material.PISTON,
+            Material.PISTON_HEAD,
+            Material.MOVING_PISTON,
+            Material.TNT,
+            Material.REDSTONE_TORCH,
+            Material.REDSTONE_WALL_TORCH,
+            Material.REDSTONE_LAMP,
+            Material.REDSTONE_BLOCK,
+            Material.HOPPER,
+            Material.DROPPER,
+            Material.REPEATER,
+            Material.COMPARATOR,
+            Material.REDSTONE_WIRE)
+            .add(Tag.TRAPDOORS.getValues())
+            .add(this.FENCES.getValues())
+            .add(Tag.DOORS.getValues());
 
         ALL_ALIVE_CORALS = new BlocksSet()
-            .add(CORAL_BLOCKS.getValues())
-            .add(WALL_CORALS.getValues())
-            .add(CORAL_PLANTS.getValues())
-            .add(CORALS.getValues());
+            .add(Tag.CORAL_BLOCKS.getValues())
+            .add(Tag.WALL_CORALS.getValues())
+            .add(Tag.CORAL_PLANTS.getValues())
+            .add(Tag.CORALS.getValues());
 
         DEAD_CORAL_PLANTS = new BlocksSet(
-            DEAD_TUBE_CORAL,
-            DEAD_BRAIN_CORAL,
-            DEAD_BUBBLE_CORAL,
-            DEAD_FIRE_CORAL,
-            DEAD_HORN_CORAL);
+            Material.DEAD_TUBE_CORAL,
+            Material.DEAD_BRAIN_CORAL,
+            Material.DEAD_BUBBLE_CORAL,
+            Material.DEAD_FIRE_CORAL,
+            Material.DEAD_HORN_CORAL);
 
         DEAD_CORALS = new BlocksSet(
-            DEAD_TUBE_CORAL_FAN,
-            DEAD_BRAIN_CORAL_FAN,
-            DEAD_BUBBLE_CORAL_FAN,
-            DEAD_FIRE_CORAL_FAN,
-            DEAD_HORN_CORAL_FAN)
-            .add(DEAD_CORAL_PLANTS.getValues());
+            Material.DEAD_TUBE_CORAL_FAN,
+            Material.DEAD_BRAIN_CORAL_FAN,
+            Material.DEAD_BUBBLE_CORAL_FAN,
+            Material.DEAD_FIRE_CORAL_FAN,
+            Material.DEAD_HORN_CORAL_FAN)
+            .add(this.DEAD_CORAL_PLANTS.getValues());
 
         DEAD_WALL_CORALS = new BlocksSet(
-            DEAD_TUBE_CORAL_WALL_FAN,
-            DEAD_BRAIN_CORAL_WALL_FAN,
-            DEAD_BUBBLE_CORAL_WALL_FAN,
-            DEAD_FIRE_CORAL_WALL_FAN,
-            DEAD_HORN_CORAL_WALL_FAN);
+            Material.DEAD_TUBE_CORAL_WALL_FAN,
+            Material.DEAD_BRAIN_CORAL_WALL_FAN,
+            Material.DEAD_BUBBLE_CORAL_WALL_FAN,
+            Material.DEAD_FIRE_CORAL_WALL_FAN,
+            Material.DEAD_HORN_CORAL_WALL_FAN);
 
         DEAD_CORAL_BLOCKS = new BlocksSet(
-            DEAD_TUBE_CORAL_BLOCK,
-            DEAD_BRAIN_CORAL_BLOCK,
-            DEAD_BUBBLE_CORAL_BLOCK,
-            DEAD_FIRE_CORAL_BLOCK,
-            DEAD_HORN_CORAL_BLOCK);
+            Material.DEAD_TUBE_CORAL_BLOCK,
+            Material.DEAD_BRAIN_CORAL_BLOCK,
+            Material.DEAD_BUBBLE_CORAL_BLOCK,
+            Material.DEAD_FIRE_CORAL_BLOCK,
+            Material.DEAD_HORN_CORAL_BLOCK);
 
         ALL_DEAD_CORALS = new BlocksSet()
-            .add(DEAD_CORAL_BLOCKS.getValues())
-            .add(DEAD_WALL_CORALS.getValues())
-            .add(DEAD_CORAL_PLANTS.getValues())
-            .add(DEAD_CORALS.getValues());
+            .add(this.DEAD_CORAL_BLOCKS.getValues())
+            .add(this.DEAD_WALL_CORALS.getValues())
+            .add(this.DEAD_CORAL_PLANTS.getValues())
+            .add(this.DEAD_CORALS.getValues());
     }
 }

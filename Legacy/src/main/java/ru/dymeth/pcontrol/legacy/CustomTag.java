@@ -7,8 +7,6 @@ import ru.dymeth.pcontrol.api.set.CustomSet;
 
 import javax.annotation.Nonnull;
 
-import static org.bukkit.Material.*;
-
 public final class CustomTag {
 
     private final PControlData data;
@@ -51,40 +49,40 @@ public final class CustomTag {
         this.data = data;
 
         WORLD_AIR = new BlocksSet(
-            AIR);
+            Material.AIR);
 
         WOODEN_DOORS = new BlocksSet(
-            ACACIA_DOOR,
-            BIRCH_DOOR,
-            DARK_OAK_DOOR,
-            JUNGLE_DOOR,
-            WOODEN_DOOR,
-            SPRUCE_FENCE);
+            Material.ACACIA_DOOR,
+            Material.BIRCH_DOOR,
+            Material.DARK_OAK_DOOR,
+            Material.JUNGLE_DOOR,
+            Material.WOODEN_DOOR,
+            Material.SPRUCE_FENCE);
 
         PRESSURE_PLATES = new BlocksSet(
-            STONE_PLATE,
-            GOLD_PLATE,
-            IRON_PLATE,
-            WOOD_PLATE);
+            Material.STONE_PLATE,
+            Material.GOLD_PLATE,
+            Material.IRON_PLATE,
+            Material.WOOD_PLATE);
 
         REDSTONE_PASSIVE_INPUTS = new BlocksSet(
-            TRIPWIRE_HOOK,
-            TRIPWIRE)
-            .add(PRESSURE_PLATES.getValues())
-            .add(STONE_BUTTON)
-            .add(WOOD_BUTTON);
+            Material.TRIPWIRE_HOOK,
+            Material.TRIPWIRE,
+            Material.STONE_BUTTON,
+            Material.WOOD_BUTTON)
+            .add(this.PRESSURE_PLATES.getValues());
 
         REDSTONE_ORE_BLOCKS = new BlocksSet(
-            REDSTONE_ORE,
-            GLOWING_REDSTONE_ORE);
+            Material.REDSTONE_ORE,
+            Material.GLOWING_REDSTONE_ORE);
 
         WATER = new BlocksSet(
             Material.WATER,
-            STATIONARY_WATER);
+            Material.STATIONARY_WATER);
 
         LAVA = new BlocksSet(
             Material.LAVA,
-            STATIONARY_LAVA);
+            Material.STATIONARY_LAVA);
 
         SAND = new BlocksSet(
             Material.SAND);
@@ -98,26 +96,26 @@ public final class CustomTag {
         CONCRETE_POWDERS = new BlocksSet()
             .add("CONCRETE_POWDER");
 
-        GRAVITY_BLOCKS = new BlocksSet()
-            .add(Material::hasGravity)
-            .add(DRAGON_EGG);
+        GRAVITY_BLOCKS = new BlocksSet(
+            Material.DRAGON_EGG)
+            .add(Material::hasGravity);
 
         NATURAL_GRAVITY_BLOCKS = new BlocksSet()
-            .add(SAND.getValues())
-            .add(GRAVEL.getValues());
+            .add(this.SAND.getValues())
+            .add(this.GRAVEL.getValues());
 
         BONE_MEAL_HERBS = new BlocksSet(
-            LONG_GRASS,
-            YELLOW_FLOWER,
-            RED_ROSE);
+            Material.LONG_GRASS,
+            Material.YELLOW_FLOWER,
+            Material.RED_ROSE);
 
         LITTLE_MUSHROOMS = new BlocksSet(
-            RED_MUSHROOM,
-            BROWN_MUSHROOM);
+            Material.RED_MUSHROOM,
+            Material.BROWN_MUSHROOM);
 
         UNDERWATER_BLOCKS_ONLY = new BlocksSet(
             Material.WATER,
-            STATIONARY_WATER);
+            Material.STATIONARY_WATER);
 
         GRASS_BLOCK = new BlocksSet(
             Material.GRASS);
@@ -126,41 +124,43 @@ public final class CustomTag {
             .add("GRASS_PATH");
 
         FARMLAND_BLOCK = new BlocksSet(
-            SOIL);
+            Material.SOIL);
 
         MYCELIUM_BLOCK = new BlocksSet(
-            MYCEL);
+            Material.MYCEL);
 
         SUGAR_CANE_BLOCK = new BlocksSet(
             Material.SUGAR_CANE_BLOCK);
 
         NETHER_WART_BLOCK = new BlocksSet(
-            NETHER_WARTS);
+            Material.NETHER_WARTS);
 
         WHEAT_BLOCK = new BlocksSet(
-            CROPS);
+            Material.CROPS);
 
         POTATO_BLOCK = new BlocksSet(
-            POTATO);
+            Material.POTATO);
 
         CARROT_BLOCK = new BlocksSet(
-            CARROT);
+            Material.CARROT);
 
         BEETROOT_BLOCK = new BlocksSet()
             .add("BEETROOT_BLOCK");
 
         PUMPKIN_STEM_AND_BLOCK = new BlocksSet(
-            PUMPKIN_STEM, PUMPKIN);
+            Material.PUMPKIN_STEM,
+            Material.PUMPKIN);
 
         MELON_STEM_AND_BLOCK = new BlocksSet(
-            MELON_STEM, MELON_BLOCK);
+            Material.MELON_STEM,
+            Material.MELON_BLOCK);
 
         // legacy-specific
 
         RAILS = new BlocksSet(
             Material.RAILS,
-            ACTIVATOR_RAIL,
-            DETECTOR_RAIL,
-            POWERED_RAIL);
+            Material.ACTIVATOR_RAIL,
+            Material.DETECTOR_RAIL,
+            Material.POWERED_RAIL);
     }
 }
