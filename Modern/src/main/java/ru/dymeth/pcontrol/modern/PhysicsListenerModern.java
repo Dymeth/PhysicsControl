@@ -16,11 +16,15 @@ import ru.dymeth.pcontrol.api.PhysicsListener;
 
 import javax.annotation.Nonnull;
 
-@SuppressWarnings({"IsCancelled"})
+@SuppressWarnings({"IsCancelled", "ClassInitializerMayBeStatic"})
 public final class PhysicsListenerModern extends PhysicsListener {
 
     public PhysicsListenerModern(@Nonnull PControlData data) {
         super(data);
+    }
+
+    {
+        PControlTrigger.FARMLANDS_DRYING.markAvailable();
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -38,6 +42,19 @@ public final class PhysicsListenerModern extends PhysicsListener {
         Material from = oldData.getMaterial();
         Material to = newData.getMaterial();
         this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to);
+    }
+
+    {
+        if (this.data.hasVersion(13)) { // BlockPhysicsEventWorks isn't calls on 1.8-1.12 for an unknown reason
+            PControlTrigger.RAILS_DESTROYING.markAvailable();
+            PControlTrigger.LADDERS_DESTROYING.markAvailable();
+            PControlTrigger.SIGNS_DESTROYING.markAvailable();
+            PControlTrigger.TORCHES_DESTROYING.markAvailable();
+            PControlTrigger.REDSTONE_TORCHES_DESTROYING.markAvailable();
+            if (this.data.hasVersion(16)) {
+                PControlTrigger.SOUL_TORCHES_DESTROYING.markAvailable();
+            }
+        }
     }
 
     @EventHandler(ignoreCancelled = true)

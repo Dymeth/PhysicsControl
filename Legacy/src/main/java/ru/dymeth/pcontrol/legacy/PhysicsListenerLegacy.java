@@ -13,11 +13,20 @@ import ru.dymeth.pcontrol.api.PhysicsListener;
 
 import javax.annotation.Nonnull;
 
-@SuppressWarnings({"IsCancelled"})
+@SuppressWarnings({"IsCancelled", "ClassInitializerMayBeStatic"})
 public final class PhysicsListenerLegacy extends PhysicsListener {
 
     public PhysicsListenerLegacy(@Nonnull PControlData data) {
         super(data);
+    }
+
+    {
+        if (this.data.hasVersion(13)) { // BlockPhysicsEventWorks isn't calls on 1.8-1.12 for an unknown reason
+            PControlTrigger.LADDERS_DESTROYING.markAvailable();
+            PControlTrigger.SIGNS_DESTROYING.markAvailable();
+            PControlTrigger.TORCHES_DESTROYING.markAvailable();
+            PControlTrigger.REDSTONE_TORCHES_DESTROYING.markAvailable();
+        }
     }
 
     @EventHandler(ignoreCancelled = true)

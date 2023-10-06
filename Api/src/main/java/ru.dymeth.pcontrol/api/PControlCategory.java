@@ -6,6 +6,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public enum PControlCategory {
@@ -43,6 +44,11 @@ public enum PControlCategory {
 
     void addTrigger(@Nonnull PControlTrigger trigger) {
         this.triggers.add(trigger);
+    }
+
+    @Nonnull
+    public List<PControlTrigger> getTriggers() {
+        return Collections.unmodifiableList(this.triggers);
     }
 
     public void prepareIcon(@Nonnull PControlData data) {

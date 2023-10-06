@@ -1,6 +1,7 @@
 package ru.dymeth.pcontrol;
 
 import org.bukkit.Material;
+import org.bukkit.TreeType;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -22,15 +23,18 @@ import ru.dymeth.pcontrol.api.PControlData;
 import ru.dymeth.pcontrol.api.PControlTrigger;
 import ru.dymeth.pcontrol.api.PhysicsListener;
 import ru.dymeth.pcontrol.api.set.BlocksSet;
+import ru.dymeth.pcontrol.api.set.TreeTypesSet;
 import ru.dymeth.pcontrol.rules.pair.EntityMaterialRules;
 import ru.dymeth.pcontrol.rules.pair.MaterialMaterialRules;
 import ru.dymeth.pcontrol.rules.single.EntityRules;
 import ru.dymeth.pcontrol.rules.single.MaterialRules;
+import ru.dymeth.pcontrol.rules.single.TreeRules;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.Collections;
 
+@SuppressWarnings("ClassInitializerMayBeStatic")
 public final class PhysicsListenerCommon extends PhysicsListener {
 
     public PhysicsListenerCommon(@Nonnull PControlData data) {
@@ -634,6 +638,41 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         }
     }
 
+    private final TreeRules rulesStructureGrowEventTo = new TreeRules(this.data);
+
+    {
+        PControlTrigger.BONE_MEAL_USAGE.markAvailable();
+        this.rulesStructureGrowEventTo.regSingle(PControlTrigger.TREES_GROWING,
+            TreeTypesSet.create(PControlTrigger.TREES_GROWING + " trigger", this.data, set -> {
+                set.add(TreeType.TREE);
+                set.add(TreeType.BIG_TREE);
+                set.add(TreeType.REDWOOD);
+                set.add(TreeType.TALL_REDWOOD);
+                set.add(TreeType.BIRCH);
+                set.add(TreeType.JUNGLE);
+                set.add(TreeType.SMALL_JUNGLE);
+                set.add(TreeType.COCOA_TREE);
+                set.add(TreeType.JUNGLE_BUSH);
+                set.add(TreeType.SWAMP);
+                set.add(TreeType.ACACIA);
+                set.add(TreeType.DARK_OAK);
+                set.add(TreeType.MEGA_REDWOOD);
+                set.add(TreeType.TALL_BIRCH);
+            }));
+        this.rulesStructureGrowEventTo.regSingle(PControlTrigger.GIANT_MUSHROOMS_GROWING,
+            TreeTypesSet.create(PControlTrigger.GIANT_MUSHROOMS_GROWING + " trigger", this.data, set -> {
+                set.add(TreeType.RED_MUSHROOM);
+                set.add(TreeType.BROWN_MUSHROOM);
+            }));
+        if (this.data.hasVersion(9)) {
+            this.rulesStructureGrowEventTo.regSingle(PControlTrigger.CHORUSES_GROWING,
+                TreeTypesSet.create(PControlTrigger.CHORUSES_GROWING + " trigger", this.data, set -> {
+
+                    set.add(TreeType.CHORUS_PLANT);
+                }));
+        }
+    }
+
     @EventHandler(ignoreCancelled = true)
     private void on(StructureGrowEvent event) {
         World world = event.getWorld();
@@ -642,37 +681,21 @@ public final class PhysicsListenerCommon extends PhysicsListener {
             return;
         }
         Material from = event.getLocation().getBlock().getType();
-        switch (event.getSpecies()) {
-            case TREE:
-            case BIG_TREE:
-            case REDWOOD:
-            case TALL_REDWOOD:
-            case BIRCH:
-            case JUNGLE:
-            case SMALL_JUNGLE:
-            case COCOA_TREE:
-            case JUNGLE_BUSH:
-            case SWAMP:
-            case ACACIA:
-            case DARK_OAK:
-            case MEGA_REDWOOD:
-            case TALL_BIRCH: {
-                this.data.cancelIfDisabled(event, world, PControlTrigger.TREES_GROWING);
-                break;
-            }
-            case RED_MUSHROOM:
-            case BROWN_MUSHROOM: {
-                this.data.cancelIfDisabled(event, world, PControlTrigger.GIANT_MUSHROOMS_GROWING);
-                break;
-            }
-            case CHORUS_PLANT: {
-                this.data.cancelIfDisabled(event, world, PControlTrigger.CHORUSES_GROWING);
-                break;
-            }
-            default: {
-                this.unrecognizedAction(event, event.getLocation(), from + " > " + event.getSpecies());
-            }
+        TreeType to = event.getSpecies();
+
+        PControlTrigger trigger = this.rulesStructureGrowEventTo.findTrigger(to);
+
+        if (trigger != null) {
+            this.data.cancelIfDisabled(event, world, trigger);
+        } else {
+            this.unrecognizedAction(event, event.getLocation(), from + " > " + to);
         }
+    }
+
+
+    {
+        PControlTrigger.PLAYERS_FLINT_USAGE.markAvailable();
+        PControlTrigger.FIRE_SPREADING.markAvailable();
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -681,6 +704,12 @@ public final class PhysicsListenerCommon extends PhysicsListener {
             this.data.cancelIfDisabled(event, PControlTrigger.PLAYERS_FLINT_USAGE);
         } else {
             this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
+        }
+    }
+
+    {
+        if (this.data.hasVersion(11)) { // ProjectileHitEvent.getHitBlock() since 1.11
+            PControlTrigger.BLOCK_HIT_PROJECTILES_REMOVING.markAvailable();
         }
     }
 
@@ -694,14 +723,26 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         entity.remove();
     }
 
+    {
+        PControlTrigger.FIRE_SPREADING.markAvailable();
+    }
+
     @EventHandler(ignoreCancelled = true)
     private void on(BlockBurnEvent event) {
         this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
     }
 
+    {
+        PControlTrigger.LEAVES_DECAY.markAvailable();
+    }
+
     @EventHandler(ignoreCancelled = true)
     private void on(LeavesDecayEvent event) {
         this.data.cancelIfDisabled(event, PControlTrigger.LEAVES_DECAY);
+    }
+
+    {
+        PControlTrigger.BONE_MEAL_USAGE.markAvailable();
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)

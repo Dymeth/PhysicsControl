@@ -27,8 +27,7 @@ public final class PControlTriggerInventory extends PControlInventory {
         );
         this.data = data;
         this.slotByTrigger = new HashMap<>();
-        for (PControlTrigger trigger : PControlTrigger.values()) {
-            if (trigger.getCategory() != category) continue;
+        for (PControlTrigger trigger : category.getTriggers()) {
             this.slotByTrigger.put(trigger, trigger.getSlot());
             this.updateTriggerStack(trigger);
         }
