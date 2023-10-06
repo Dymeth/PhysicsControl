@@ -15,7 +15,6 @@ import org.bukkit.event.world.WorldUnloadEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.dymeth.pcontrol.api.PControlTrigger;
-import ru.dymeth.pcontrol.api.PhysicsListener;
 import ru.dymeth.pcontrol.inventory.PControlCategoryInventory;
 import ru.dymeth.pcontrol.inventory.PControlInventory;
 import ru.dymeth.pcontrol.legacy.PhysicsListenerLegacy;
@@ -33,19 +32,18 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         this.data = new PControlDataBukkit(this, this.resourceId);
-        PhysicsListener listener;
 
-        if (this.data.hasVersion(13)) {
-            listener = new PhysicsListenerModern(this.data);
-        } else {
-            listener = new PhysicsListenerLegacy(this.data);
-        }
+        this.getServer().getPluginManager().registerEvents(this, this);
+        this.getServer().getPluginManager().registerEvents(new PhysicsListenerCommon(this.data), this);
+        this.getServer().getPluginManager().registerEvents(
+            this.data.hasVersion(13)
+                ? new PhysicsListenerModern(this.data)
+                : new PhysicsListenerLegacy(this.data),
+            this);
+
         if (TriggerRules.LOG_TRIGGERS_REGISTRATIONS) {
             this.getLogger().info("Total rules registered: " + TriggerRules.getTotalRulesRegistered());
         }
-
-        this.getServer().getPluginManager().registerEvents(listener, this);
-        this.getServer().getPluginManager().registerEvents(this, this);
     }
 
     @Override

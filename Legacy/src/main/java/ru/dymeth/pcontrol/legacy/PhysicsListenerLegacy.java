@@ -1,43 +1,23 @@
 package ru.dymeth.pcontrol.legacy;
 
-import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.FallingBlock;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockPhysicsEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Attachable;
-import org.bukkit.material.Dye;
 import org.bukkit.material.MaterialData;
-import ru.dymeth.pcontrol.PhysicsListenerCommon;
 import ru.dymeth.pcontrol.api.PControlData;
 import ru.dymeth.pcontrol.api.PControlTrigger;
+import ru.dymeth.pcontrol.api.PhysicsListener;
 
 import javax.annotation.Nonnull;
 
 @SuppressWarnings({"IsCancelled"})
-public final class PhysicsListenerLegacy extends PhysicsListenerCommon {
+public final class PhysicsListenerLegacy extends PhysicsListener {
 
     public PhysicsListenerLegacy(@Nonnull PControlData data) {
         super(data);
-    }
-
-    @Nonnull
-    @Override
-    protected Material getFallingBlockMaterial(@Nonnull FallingBlock fallingBlock) {
-        return fallingBlock.getMaterial();
-    }
-
-    @Override
-    protected boolean isBoneMealItem(@Nonnull ItemStack stack) {
-        return stack.getData() instanceof Dye && ((Dye) stack.getData()).getColor() == DyeColor.WHITE;
-    }
-
-    @Override
-    protected boolean isBlockContainsWater(@Nonnull Block block) {
-        return this.customTag.BLOCKS_UNDER_WATER_ONLY.contains(block.getType());
     }
 
     @EventHandler(ignoreCancelled = true)

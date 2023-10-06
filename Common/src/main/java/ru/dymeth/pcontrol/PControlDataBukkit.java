@@ -17,7 +17,9 @@ import ru.dymeth.pcontrol.api.PControlTrigger;
 import ru.dymeth.pcontrol.inventory.PControlInventory;
 import ru.dymeth.pcontrol.inventory.PControlTriggerInventory;
 import ru.dymeth.pcontrol.legacy.FakeEnchantmentLegacy;
+import ru.dymeth.pcontrol.legacy.VersionsAdapterLegacy;
 import ru.dymeth.pcontrol.modern.FakeEnchantmentModern;
+import ru.dymeth.pcontrol.modern.VersionsAdapterModern;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,12 +33,14 @@ public final class PControlDataBukkit implements PControlData {
     private final Plugin plugin;
     private final int resourceId;
     private final short serverVersion;
-    private final Enchantment fakeEnchantment;
     private final Set<EntityType> removableProjectileTypes;
     private final Map<String, String> messages = new HashMap<>();
     private final Map<World, Map<PControlTrigger, Boolean>> triggers = new HashMap<>();
     private final Map<World, Map<PControlCategory, PControlTriggerInventory>> inventories = new HashMap<>();
     private Metrics metrics = null;
+    private final CustomTags customTags;
+    private final Enchantment fakeEnchantment;
+    private final VersionsAdapter versionsAdapter;
 
     PControlDataBukkit(@Nonnull Plugin plugin, @Nonnull String resourceIdString) {
         this.plugin = plugin;
@@ -84,17 +88,20 @@ public final class PControlDataBukkit implements PControlData {
                 + "It must be Spigot 1.8-1.12.2 or 1.13.2 and newer", e);
         }
 
-        if (this.hasVersion(13)) {
-            this.fakeEnchantment = FakeEnchantmentModern.getInstance();
-        } else {
-            this.fakeEnchantment = FakeEnchantmentLegacy.getInstance();
-        }
-
         this.removableProjectileTypes = BukkitUtils.matchEntityTypes(null,
             "ARROW",
             "SPECTRAL_ARROW",
             "TIPPED_ARROW",
             "TRIDENT");
+
+        this.customTags = new CustomTags(this);
+        if (this.hasVersion(13)) {
+            this.versionsAdapter = new VersionsAdapterModern(this);
+            this.fakeEnchantment = FakeEnchantmentModern.getInstance();
+        } else {
+            this.versionsAdapter = new VersionsAdapterLegacy(this);
+            this.fakeEnchantment = FakeEnchantmentLegacy.getInstance();
+        }
 
         this.reloadConfigs();
     }
@@ -103,11 +110,6 @@ public final class PControlDataBukkit implements PControlData {
     @Nonnull
     public Plugin getPlugin() {
         return this.plugin;
-    }
-
-    @Nonnull
-    public Enchantment getFakeEnchantment() {
-        return this.fakeEnchantment;
     }
 
     @Override
@@ -394,5 +396,20 @@ public final class PControlDataBukkit implements PControlData {
             .forEach(component == null
                 ? player -> player.sendMessage(plain)
                 : player -> player.spigot().sendMessage(component));
+    }
+
+    @Nonnull
+    public CustomTags getCustomTags() {
+        return this.customTags;
+    }
+
+    @Nonnull
+    public VersionsAdapter getVersionsAdapter() {
+        return this.versionsAdapter;
+    }
+
+    @Nonnull
+    public Enchantment getFakeEnchantment() {
+        return this.fakeEnchantment;
     }
 }

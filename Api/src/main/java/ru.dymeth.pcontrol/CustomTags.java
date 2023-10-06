@@ -8,7 +8,7 @@ import ru.dymeth.pcontrol.api.set.BlocksSet;
 import javax.annotation.Nonnull;
 import java.util.Set;
 
-public final class CustomTag {
+public final class CustomTags {
 
     public final Set<Material>
         WORLD_AIR,
@@ -50,7 +50,7 @@ public final class CustomTag {
         DEAD_CORAL_BLOCKS,
         ALL_DEAD_CORALS;
 
-    public CustomTag(@Nonnull PControlData data) {
+    public CustomTags(@Nonnull PControlData data) {
         WORLD_AIR = BlocksSet.create("WORLD_AIR", data, set -> {
             set.add(Material.AIR);
             if (data.hasVersion(13)) {

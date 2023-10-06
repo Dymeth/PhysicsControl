@@ -9,6 +9,8 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 import org.bukkit.util.Vector;
+import ru.dymeth.pcontrol.CustomTags;
+import ru.dymeth.pcontrol.VersionsAdapter;
 
 import javax.annotation.Nonnull;
 import java.util.HashSet;
@@ -24,10 +26,14 @@ public abstract class PhysicsListener implements Listener {
     protected static final boolean DEBUG_PHYSICS_EVENT = false;
 
     protected final PControlData data;
+    protected final CustomTags tags;
+    protected final VersionsAdapter versionsAdapter;
     protected final Set<Vector> fertilizedBlocks;
 
     protected PhysicsListener(@Nonnull PControlData data) {
         this.data = data;
+        this.tags = data.getCustomTags();
+        this.versionsAdapter = data.getVersionsAdapter();
         this.fertilizedBlocks = new HashSet<>();
         data.getPlugin().getServer().getScheduler().runTaskTimer(data.getPlugin(), this.fertilizedBlocks::clear, 1L, 1L);
     }

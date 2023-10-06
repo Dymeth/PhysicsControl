@@ -6,6 +6,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.block.BlockEvent;
 import org.bukkit.plugin.Plugin;
+import ru.dymeth.pcontrol.CustomTags;
+import ru.dymeth.pcontrol.VersionsAdapter;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -33,4 +35,10 @@ public interface PControlData {
     boolean isActionAllowed(@Nonnull World world, @Nonnull PControlTrigger trigger);
 
     void announce(@Nullable World world, @Nonnull String plain, @Nullable BaseComponent component);
+
+    @Nonnull
+    CustomTags getCustomTags();
+
+    @Nonnull
+    VersionsAdapter getVersionsAdapter();
 }

@@ -6,41 +6,21 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
-import org.bukkit.block.data.Waterlogged;
 import org.bukkit.block.data.type.Farmland;
-import org.bukkit.entity.FallingBlock;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.MoistureChangeEvent;
-import org.bukkit.inventory.ItemStack;
-import ru.dymeth.pcontrol.PhysicsListenerCommon;
 import ru.dymeth.pcontrol.api.PControlData;
 import ru.dymeth.pcontrol.api.PControlTrigger;
+import ru.dymeth.pcontrol.api.PhysicsListener;
 
 import javax.annotation.Nonnull;
 
 @SuppressWarnings({"IsCancelled"})
-public final class PhysicsListenerModern extends PhysicsListenerCommon {
+public final class PhysicsListenerModern extends PhysicsListener {
 
     public PhysicsListenerModern(@Nonnull PControlData data) {
         super(data);
-    }
-
-    @Nonnull
-    @Override
-    protected Material getFallingBlockMaterial(@Nonnull FallingBlock fallingBlock) {
-        return fallingBlock.getBlockData().getMaterial();
-    }
-
-    @Override
-    protected boolean isBoneMealItem(@Nonnull ItemStack stack) {
-        return stack.getType() == Material.BONE_MEAL;
-    }
-
-    @Override
-    protected boolean isBlockContainsWater(@Nonnull Block block) {
-        return (block.getBlockData() instanceof Waterlogged && ((Waterlogged) block.getBlockData()).isWaterlogged())
-            || this.customTag.BLOCKS_UNDER_WATER_ONLY.contains(block.getType());
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -86,7 +66,7 @@ public final class PhysicsListenerModern extends PhysicsListenerCommon {
         toBlock = fromBlock.getRelative(BlockFace.UP);
         to = toBlock.getType();
 
-        if (this.customTag.SIGNS.contains(to)) {
+        if (this.tags.SIGNS.contains(to)) {
             this.data.cancelIfDisabled(event, PControlTrigger.SIGNS_DESTROYING);
         } else if (to == Material.TORCH) {
             this.data.cancelIfDisabled(event, PControlTrigger.TORCHES_DESTROYING);
@@ -112,7 +92,7 @@ public final class PhysicsListenerModern extends PhysicsListenerCommon {
 
                 if (to == Material.LADDER) {
                     this.data.cancelIfDisabled(event, PControlTrigger.LADDERS_DESTROYING);
-                } else if (this.customTag.WALL_SIGNS.contains(to)) {
+                } else if (this.tags.WALL_SIGNS.contains(to)) {
                     this.data.cancelIfDisabled(event, PControlTrigger.SIGNS_DESTROYING);
                 } else if (to == Material.WALL_TORCH) {
                     this.data.cancelIfDisabled(event, PControlTrigger.TORCHES_DESTROYING);
