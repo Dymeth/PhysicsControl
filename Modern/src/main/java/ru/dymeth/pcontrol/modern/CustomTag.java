@@ -4,15 +4,12 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import ru.dymeth.pcontrol.api.PControlData;
 import ru.dymeth.pcontrol.api.set.BlocksSet;
-import ru.dymeth.pcontrol.api.set.CustomSet;
 
 import javax.annotation.Nonnull;
 
 public final class CustomTag {
 
-    private final PControlData data;
-
-    public final CustomSet<Material>
+    public final BlocksSet
         WORLD_AIR,
         WOODEN_DOORS,
         PRESSURE_PLATES,
@@ -43,7 +40,7 @@ public final class CustomTag {
         MELON_STEM_AND_BLOCK;
 
     // modern-specific
-    public final CustomSet<Material>
+    public final BlocksSet
         FENCES,
         SIGNS,
         WALL_SIGNS,
@@ -56,31 +53,56 @@ public final class CustomTag {
         ALL_DEAD_CORALS;
 
     CustomTag(@Nonnull PControlData data) {
-        this.data = data;
 
         WORLD_AIR = new BlocksSet(
-            Material.AIR,
-            Material.CAVE_AIR);
+            Material.AIR);
+        if (data.hasVersion(13)) {
+            WORLD_AIR.add(Material.CAVE_AIR);
+        }
 
-        WOODEN_DOORS = new BlocksSet()
-            .add(Tag.WOODEN_DOORS.getValues());
+        WOODEN_DOORS = new BlocksSet();
+        if (data.hasVersion(13)) {
+            WOODEN_DOORS.add(Tag.WOODEN_DOORS.getValues());
+        }
 
-        PRESSURE_PLATES = new BlocksSet(
-            Material.STONE_PRESSURE_PLATE,
-            Material.LIGHT_WEIGHTED_PRESSURE_PLATE,
-            Material.HEAVY_WEIGHTED_PRESSURE_PLATE)
-            .add("POLISHED_BLACKSTONE_PRESSURE_PLATE")
-            .add(Tag.WOODEN_PRESSURE_PLATES.getValues());
+        PRESSURE_PLATES = new BlocksSet();
+        if (!data.hasVersion(13)) {
+            PRESSURE_PLATES.add("STONE_PLATE");
+            PRESSURE_PLATES.add("GOLD_PLATE");
+            PRESSURE_PLATES.add("IRON_PLATE");
+            PRESSURE_PLATES.add("WOOD_PLATE");
+        } else {
+            PRESSURE_PLATES.add(Material.STONE_PRESSURE_PLATE);
+            PRESSURE_PLATES.add(Material.LIGHT_WEIGHTED_PRESSURE_PLATE);
+            PRESSURE_PLATES.add(Material.HEAVY_WEIGHTED_PRESSURE_PLATE);
+            PRESSURE_PLATES.add(Tag.WOODEN_PRESSURE_PLATES.getValues());
+        }
+        if (data.hasVersion(16)) {
+            PRESSURE_PLATES.add(Material.CRIMSON_PRESSURE_PLATE);
+            PRESSURE_PLATES.add(Material.WARPED_PRESSURE_PLATE);
+            PRESSURE_PLATES.add(Material.POLISHED_BLACKSTONE_PRESSURE_PLATE);
+        }
+        if (data.hasVersion(19)) {
+            PRESSURE_PLATES.add(Material.MANGROVE_PRESSURE_PLATE);
+        }
+        if (data.hasVersion(20)) {
+            PRESSURE_PLATES.add(Material.BAMBOO_PRESSURE_PLATE);
+            PRESSURE_PLATES.add(Material.CHERRY_PRESSURE_PLATE);
+        }
 
         REDSTONE_PASSIVE_INPUTS = new BlocksSet(
             Material.TRIPWIRE_HOOK,
-            Material.TRIPWIRE)
-            .add(this.PRESSURE_PLATES.getValues())
-            .add(Tag.BUTTONS.getValues());
+            Material.TRIPWIRE);
+        REDSTONE_PASSIVE_INPUTS.add(this.PRESSURE_PLATES.getValues());
+        if (data.hasVersion(13)) {
+            REDSTONE_PASSIVE_INPUTS.add(Tag.BUTTONS.getValues());
+        }
 
         REDSTONE_ORE_BLOCKS = new BlocksSet(
-            Material.REDSTONE_ORE)
-            .add("DEEPSLATE_REDSTONE_ORE");
+            Material.REDSTONE_ORE);
+        if (data.hasVersion(17)) {
+            REDSTONE_ORE_BLOCKS.add(Material.DEEPSLATE_REDSTONE_ORE);
+        }
 
         WATER = new BlocksSet(
             Material.WATER);
@@ -88,112 +110,183 @@ public final class CustomTag {
         LAVA = new BlocksSet(
             Material.LAVA);
 
-        SAND = new BlocksSet()
-            .add(Tag.SAND.getValues());
+        SAND = new BlocksSet();
+        if (data.hasVersion(13)) {
+            SAND.add(Tag.SAND.getValues());
+        }
 
         GRAVEL = new BlocksSet(
-            Material.GRAVEL)
-            .add("SUSPICIOUS_GRAVEL");
+            Material.GRAVEL);
+        if (data.hasVersion(20)) {
+            GRAVEL.add(Material.SUSPICIOUS_GRAVEL);
+        }
 
-        ANVIL = new BlocksSet()
-            .add(Tag.ANVIL.getValues());
+        ANVIL = new BlocksSet();
+        if (data.hasVersion(13)) {
+            ANVIL.add(Tag.ANVIL.getValues());
+        }
 
-        CONCRETE_POWDERS = new BlocksSet(
-            Material.BLACK_CONCRETE_POWDER,
-            Material.BLUE_CONCRETE_POWDER,
-            Material.BROWN_CONCRETE_POWDER,
-            Material.CYAN_CONCRETE_POWDER,
-            Material.GRAY_CONCRETE_POWDER,
-            Material.GREEN_CONCRETE_POWDER,
-            Material.LIGHT_BLUE_CONCRETE_POWDER,
-            Material.LIGHT_GRAY_CONCRETE_POWDER,
-            Material.LIME_CONCRETE_POWDER,
-            Material.MAGENTA_CONCRETE_POWDER,
-            Material.ORANGE_CONCRETE_POWDER,
-            Material.PINK_CONCRETE_POWDER,
-            Material.PURPLE_CONCRETE_POWDER,
-            Material.RED_CONCRETE_POWDER,
-            Material.WHITE_CONCRETE_POWDER,
-            Material.YELLOW_CONCRETE_POWDER
-        );
+        CONCRETE_POWDERS = new BlocksSet();
+        if (data.hasVersion(12)) {
+            if (!data.hasVersion(13)) {
+                CONCRETE_POWDERS.add("CONCRETE_POWDER");
+            } else {
+                CONCRETE_POWDERS.add(Material.BLACK_CONCRETE_POWDER);
+                CONCRETE_POWDERS.add(Material.BLUE_CONCRETE_POWDER);
+                CONCRETE_POWDERS.add(Material.BROWN_CONCRETE_POWDER);
+                CONCRETE_POWDERS.add(Material.CYAN_CONCRETE_POWDER);
+                CONCRETE_POWDERS.add(Material.GRAY_CONCRETE_POWDER);
+                CONCRETE_POWDERS.add(Material.GREEN_CONCRETE_POWDER);
+                CONCRETE_POWDERS.add(Material.LIGHT_BLUE_CONCRETE_POWDER);
+                CONCRETE_POWDERS.add(Material.LIGHT_GRAY_CONCRETE_POWDER);
+                CONCRETE_POWDERS.add(Material.LIME_CONCRETE_POWDER);
+                CONCRETE_POWDERS.add(Material.MAGENTA_CONCRETE_POWDER);
+                CONCRETE_POWDERS.add(Material.ORANGE_CONCRETE_POWDER);
+                CONCRETE_POWDERS.add(Material.PINK_CONCRETE_POWDER);
+                CONCRETE_POWDERS.add(Material.PURPLE_CONCRETE_POWDER);
+                CONCRETE_POWDERS.add(Material.RED_CONCRETE_POWDER);
+                CONCRETE_POWDERS.add(Material.WHITE_CONCRETE_POWDER);
+                CONCRETE_POWDERS.add(Material.YELLOW_CONCRETE_POWDER);
+            }
+        }
 
-        GRAVITY_BLOCKS = new BlocksSet()
-            .add("SCAFFOLDING")
-            .add(Material::hasGravity);
+        GRAVITY_BLOCKS = new BlocksSet();
+        GRAVITY_BLOCKS.add(Material::hasGravity);
+        if (data.hasVersion(14)) {
+            GRAVITY_BLOCKS.add(Material.SCAFFOLDING);
+        }
 
-        NATURAL_GRAVITY_BLOCKS = new BlocksSet()
-            .add(this.SAND.getValues())
-            .add(this.GRAVEL.getValues());
+        NATURAL_GRAVITY_BLOCKS = new BlocksSet();
+        NATURAL_GRAVITY_BLOCKS.add(this.SAND.getValues());
+        NATURAL_GRAVITY_BLOCKS.add(this.GRAVEL.getValues());
 
-        BONE_MEAL_HERBS = new BlocksSet(
-            Material.GRASS,
-            Material.DANDELION,
-            Material.POPPY,
-            Material.BLUE_ORCHID,
-            Material.ALLIUM,
-            Material.AZURE_BLUET,
-            Material.RED_TULIP,
-            Material.ORANGE_TULIP,
-            Material.WHITE_TULIP,
-            Material.PINK_TULIP,
-            Material.OXEYE_DAISY,
-            Material.SUNFLOWER,
-            Material.LILAC,
-            Material.ROSE_BUSH,
-            Material.PEONY)
-            .add(
-                "CORNFLOWER",
-                "LILY_OF_THE_VALLEY"
-            );
+        BONE_MEAL_HERBS = new BlocksSet();
+        if (!data.hasVersion(13)) {
+            BONE_MEAL_HERBS.add("LONG_GRASS");
+            BONE_MEAL_HERBS.add("YELLOW_FLOWER");
+            BONE_MEAL_HERBS.add("RED_ROSE");
+        } else {
+            BONE_MEAL_HERBS.add(Material.GRASS);
+            BONE_MEAL_HERBS.add(Material.DANDELION);
+            BONE_MEAL_HERBS.add(Material.POPPY);
+            BONE_MEAL_HERBS.add(Material.BLUE_ORCHID);
+            BONE_MEAL_HERBS.add(Material.ALLIUM);
+            BONE_MEAL_HERBS.add(Material.AZURE_BLUET);
+            BONE_MEAL_HERBS.add(Material.RED_TULIP);
+            BONE_MEAL_HERBS.add(Material.ORANGE_TULIP);
+            BONE_MEAL_HERBS.add(Material.WHITE_TULIP);
+            BONE_MEAL_HERBS.add(Material.PINK_TULIP);
+            BONE_MEAL_HERBS.add(Material.OXEYE_DAISY);
+            BONE_MEAL_HERBS.add(Material.SUNFLOWER);
+            BONE_MEAL_HERBS.add(Material.LILAC);
+            BONE_MEAL_HERBS.add(Material.ROSE_BUSH);
+            BONE_MEAL_HERBS.add(Material.PEONY);
+        }
+        if (data.hasVersion(14)) {
+            BONE_MEAL_HERBS.add(Material.CORNFLOWER);
+            BONE_MEAL_HERBS.add(Material.LILY_OF_THE_VALLEY);
+        }
 
         LITTLE_MUSHROOMS = new BlocksSet(
             Material.RED_MUSHROOM,
             Material.BROWN_MUSHROOM);
 
         UNDERWATER_BLOCKS_ONLY = new BlocksSet(
-            Material.WATER,
-            Material.BUBBLE_COLUMN,
-            Material.KELP_PLANT,
-            Material.TALL_SEAGRASS,
-            Material.SEAGRASS);
+            Material.WATER);
+        if (!data.hasVersion(13)) {
+            UNDERWATER_BLOCKS_ONLY.add("STATIONARY_WATER");
+        } else {
+            UNDERWATER_BLOCKS_ONLY.add(Material.BUBBLE_COLUMN);
+            UNDERWATER_BLOCKS_ONLY.add(Material.KELP_PLANT);
+            UNDERWATER_BLOCKS_ONLY.add(Material.TALL_SEAGRASS);
+            UNDERWATER_BLOCKS_ONLY.add(Material.SEAGRASS);
+        }
 
-        GRASS_BLOCK = new BlocksSet(
-            Material.GRASS_BLOCK);
+        GRASS_BLOCK = new BlocksSet();
+        if (!data.hasVersion(13)) {
+            GRASS_BLOCK.add("GRASS");
+        } else {
+            GRASS_BLOCK.add(Material.GRASS_BLOCK);
+        }
 
-        DIRT_PATH_BLOCK = new BlocksSet()
-            .add("DIRT_PATH", "GRASS_PATH");
+        DIRT_PATH_BLOCK = new BlocksSet();
+        if (data.hasVersion(9)) {
+            if (!data.hasVersion(17)) {
+                DIRT_PATH_BLOCK.add("GRASS_PATH");
+            } else {
+                DIRT_PATH_BLOCK.add(Material.DIRT_PATH);
+            }
+        }
 
-        FARMLAND_BLOCK = new BlocksSet(
-            Material.FARMLAND);
+        FARMLAND_BLOCK = new BlocksSet();
+        if (!data.hasVersion(13)) {
+            FARMLAND_BLOCK.add("SOIL");
+        } else {
+            FARMLAND_BLOCK.add(Material.FARMLAND);
+        }
 
-        MYCELIUM_BLOCK = new BlocksSet(
-            Material.MYCELIUM);
+        MYCELIUM_BLOCK = new BlocksSet();
+        if (!data.hasVersion(13)) {
+            MYCELIUM_BLOCK.add("MYCEL");
+        } else {
+            MYCELIUM_BLOCK.add(Material.MYCELIUM);
+        }
 
-        SUGAR_CANE_BLOCK = new BlocksSet(
-            Material.SUGAR_CANE);
+        SUGAR_CANE_BLOCK = new BlocksSet();
+        if (!data.hasVersion(13)) {
+            SUGAR_CANE_BLOCK.add("SUGAR_CANE_BLOCK");
+        } else {
+            SUGAR_CANE_BLOCK.add(Material.SUGAR_CANE);
+        }
 
-        NETHER_WART_BLOCK = new BlocksSet(
-            Material.NETHER_WART);
+        NETHER_WART_BLOCK = new BlocksSet();
+        if (!data.hasVersion(13)) {
+            NETHER_WART_BLOCK.add("NETHER_WARTS");
+        } else {
+            NETHER_WART_BLOCK.add(Material.NETHER_WART);
+        }
 
-        WHEAT_BLOCK = new BlocksSet(
-            Material.WHEAT);
+        WHEAT_BLOCK = new BlocksSet();
+        if (!data.hasVersion(13)) {
+            WHEAT_BLOCK.add("CROPS");
+        } else {
+            WHEAT_BLOCK.add(Material.WHEAT);
+        }
 
-        POTATO_BLOCK = new BlocksSet(
-            Material.POTATOES);
+        POTATO_BLOCK = new BlocksSet();
+        if (!data.hasVersion(13)) {
+            POTATO_BLOCK.add("POTATO");
+        } else {
+            POTATO_BLOCK.add(Material.POTATOES);
+        }
 
-        CARROT_BLOCK = new BlocksSet(
-            Material.CARROTS);
+        CARROT_BLOCK = new BlocksSet();
+        if (!data.hasVersion(13)) {
+            CARROT_BLOCK.add("CARROT");
+        } else {
+            CARROT_BLOCK.add(Material.CARROTS);
+        }
 
-        BEETROOT_BLOCK = new BlocksSet(
-            Material.BEETROOTS);
+        BEETROOT_BLOCK = new BlocksSet();
+        if (!data.hasVersion(13)) {
+            if (data.hasVersion(9)) {
+                BEETROOT_BLOCK.add("BEETROOT_BLOCK");
+            }
+        } else {
+            BEETROOT_BLOCK.add(Material.BEETROOTS);
+        }
 
         PUMPKIN_STEM_AND_BLOCK = new BlocksSet(
             Material.PUMPKIN_STEM,
             Material.PUMPKIN);
 
         MELON_STEM_AND_BLOCK = new BlocksSet(
-            Material.MELON_STEM,
-            Material.MELON);
+            Material.MELON_STEM);
+        if (!data.hasVersion(13)) {
+            MELON_STEM_AND_BLOCK.add("MELON_BLOCK");
+        } else {
+            MELON_STEM_AND_BLOCK.add(Material.MELON);
+        }
 
         // modern-specific
 
@@ -204,84 +297,126 @@ public final class CustomTag {
             Material.JUNGLE_FENCE,
             Material.NETHER_BRICK_FENCE,
             Material.OAK_FENCE,
-            Material.SPRUCE_FENCE)
-            .add(
-                "CRIMSON_FENCE",
-                "WARPED_FENCE"
-            );
+            Material.SPRUCE_FENCE);
+        if (data.hasVersion(16)) {
+            FENCES.add(Material.CRIMSON_FENCE);
+            FENCES.add(Material.WARPED_FENCE);
+        }
+        if (data.hasVersion(19)) {
+            FENCES.add(Material.MANGROVE_FENCE);
+        }
+        if (data.hasVersion(20)) {
+            FENCES.add(Material.BAMBOO_FENCE);
+            FENCES.add(Material.CHERRY_FENCE);
+        }
 
-        SIGNS = new BlocksSet()
-            .add(
-                "SIGN",
-                "ACACIA_SIGN",
-                "BIRCH_SIGN",
-                "DARK_OAK_SIGN",
-                "JUNGLE_SIGN",
-                "OAK_SIGN",
-                "SPRUCE_SIGN",
-                "CRIMSON_SIGN",
-                "WARPED_SIGN"
-            );
+        // TODO Possibly add SIGN_POST? (1.8-1.12.2)
+        SIGNS = new BlocksSet();
+        if (!data.hasVersion(14)) {
+            SIGNS.add("SIGN");
+        } else {
+            SIGNS.add(Material.ACACIA_SIGN);
+            SIGNS.add(Material.BIRCH_SIGN);
+            SIGNS.add(Material.DARK_OAK_SIGN);
+            SIGNS.add(Material.JUNGLE_SIGN);
+            SIGNS.add(Material.OAK_SIGN);
+            SIGNS.add(Material.SPRUCE_SIGN);
+        }
+        if (data.hasVersion(16)) {
+            SIGNS.add(Material.CRIMSON_SIGN);
+            SIGNS.add(Material.WARPED_SIGN);
+        }
+        if (data.hasVersion(19)) {
+            SIGNS.add(Material.MANGROVE_SIGN);
+        }
+        if (data.hasVersion(20)) {
+            SIGNS.add(Material.BAMBOO_SIGN);
+            SIGNS.add(Material.CHERRY_SIGN);
+        }
 
-        WALL_SIGNS = new BlocksSet()
-            .add(
-                "WALL_SIGN",
-                "ACACIA_WALL_SIGN",
-                "BIRCH_WALL_SIGN",
-                "DARK_OAK_WALL_SIGN",
-                "JUNGLE_WALL_SIGN",
-                "OAK_WALL_SIGN",
-                "SPRUCE_WALL_SIGN",
-                "CRIMSON_WALL_SIGN",
-                "WARPED_WALL_SIGN"
-            );
+        WALL_SIGNS = new BlocksSet();
+        if (!data.hasVersion(14)) {
+            WALL_SIGNS.add("WALL_SIGN");
+        } else {
+            WALL_SIGNS.add(Material.ACACIA_WALL_SIGN);
+            WALL_SIGNS.add(Material.BIRCH_WALL_SIGN);
+            WALL_SIGNS.add(Material.DARK_OAK_WALL_SIGN);
+            WALL_SIGNS.add(Material.JUNGLE_WALL_SIGN);
+            WALL_SIGNS.add(Material.OAK_WALL_SIGN);
+            WALL_SIGNS.add(Material.SPRUCE_WALL_SIGN);
+        }
+        if (data.hasVersion(16)) {
+            WALL_SIGNS.add(Material.CRIMSON_WALL_SIGN);
+            WALL_SIGNS.add(Material.WARPED_WALL_SIGN);
+        }
+        if (data.hasVersion(19)) {
+            WALL_SIGNS.add(Material.MANGROVE_WALL_SIGN);
+        }
+        if (data.hasVersion(20)) {
+            WALL_SIGNS.add(Material.BAMBOO_WALL_SIGN);
+            WALL_SIGNS.add(Material.CHERRY_WALL_SIGN);
+        }
 
         REDSTONE_ACTIVE_INPUTS = new BlocksSet(
             Material.LEVER,
             Material.TRAPPED_CHEST,
             Material.DAYLIGHT_DETECTOR,
-            Material.OBSERVER)
-            .add(Tag.BUTTONS.getValues());
+            Material.OBSERVER);
+        if (data.hasVersion(13)) {
+            REDSTONE_ACTIVE_INPUTS.add(Tag.BUTTONS.getValues());
+        }
 
-        ALL_ALIVE_CORALS = new BlocksSet()
-            .add(Tag.CORAL_BLOCKS.getValues())
-            .add(Tag.WALL_CORALS.getValues())
-            .add(Tag.CORAL_PLANTS.getValues())
-            .add(Tag.CORALS.getValues());
+        ALL_ALIVE_CORALS = new BlocksSet();
+        if (data.hasVersion(13)) {
+            ALL_ALIVE_CORALS.add(Tag.CORAL_BLOCKS.getValues());
+            ALL_ALIVE_CORALS.add(Tag.WALL_CORALS.getValues());
+            ALL_ALIVE_CORALS.add(Tag.CORAL_PLANTS.getValues());
+            ALL_ALIVE_CORALS.add(Tag.CORALS.getValues());
+        }
 
-        DEAD_CORAL_PLANTS = new BlocksSet(
-            Material.DEAD_TUBE_CORAL,
-            Material.DEAD_BRAIN_CORAL,
-            Material.DEAD_BUBBLE_CORAL,
-            Material.DEAD_FIRE_CORAL,
-            Material.DEAD_HORN_CORAL);
+        DEAD_CORAL_PLANTS = new BlocksSet();
+        if (data.hasVersion(13)) {
+            DEAD_CORAL_PLANTS.add(Material.DEAD_TUBE_CORAL);
+            DEAD_CORAL_PLANTS.add(Material.DEAD_BRAIN_CORAL);
+            DEAD_CORAL_PLANTS.add(Material.DEAD_BUBBLE_CORAL);
+            DEAD_CORAL_PLANTS.add(Material.DEAD_FIRE_CORAL);
+            DEAD_CORAL_PLANTS.add(Material.DEAD_HORN_CORAL);
+        }
 
-        DEAD_CORALS = new BlocksSet(
-            Material.DEAD_TUBE_CORAL_FAN,
-            Material.DEAD_BRAIN_CORAL_FAN,
-            Material.DEAD_BUBBLE_CORAL_FAN,
-            Material.DEAD_FIRE_CORAL_FAN,
-            Material.DEAD_HORN_CORAL_FAN)
-            .add(this.DEAD_CORAL_PLANTS.getValues());
+        DEAD_CORALS = new BlocksSet();
+        if (data.hasVersion(13)) {
+            DEAD_CORALS.add(Material.DEAD_TUBE_CORAL_FAN);
+            DEAD_CORALS.add(Material.DEAD_BRAIN_CORAL_FAN);
+            DEAD_CORALS.add(Material.DEAD_BUBBLE_CORAL_FAN);
+            DEAD_CORALS.add(Material.DEAD_FIRE_CORAL_FAN);
+            DEAD_CORALS.add(Material.DEAD_HORN_CORAL_FAN);
+            DEAD_CORALS.add(this.DEAD_CORAL_PLANTS.getValues());
+        }
 
-        DEAD_WALL_CORALS = new BlocksSet(
-            Material.DEAD_TUBE_CORAL_WALL_FAN,
-            Material.DEAD_BRAIN_CORAL_WALL_FAN,
-            Material.DEAD_BUBBLE_CORAL_WALL_FAN,
-            Material.DEAD_FIRE_CORAL_WALL_FAN,
-            Material.DEAD_HORN_CORAL_WALL_FAN);
+        DEAD_WALL_CORALS = new BlocksSet();
+        if (data.hasVersion(13)) {
+            DEAD_WALL_CORALS.add(Material.DEAD_TUBE_CORAL_WALL_FAN);
+            DEAD_WALL_CORALS.add(Material.DEAD_BRAIN_CORAL_WALL_FAN);
+            DEAD_WALL_CORALS.add(Material.DEAD_BUBBLE_CORAL_WALL_FAN);
+            DEAD_WALL_CORALS.add(Material.DEAD_FIRE_CORAL_WALL_FAN);
+            DEAD_WALL_CORALS.add(Material.DEAD_HORN_CORAL_WALL_FAN);
+        }
 
-        DEAD_CORAL_BLOCKS = new BlocksSet(
-            Material.DEAD_TUBE_CORAL_BLOCK,
-            Material.DEAD_BRAIN_CORAL_BLOCK,
-            Material.DEAD_BUBBLE_CORAL_BLOCK,
-            Material.DEAD_FIRE_CORAL_BLOCK,
-            Material.DEAD_HORN_CORAL_BLOCK);
+        DEAD_CORAL_BLOCKS = new BlocksSet();
+        if (data.hasVersion(13)) {
+            DEAD_CORAL_BLOCKS.add(Material.DEAD_TUBE_CORAL_BLOCK);
+            DEAD_CORAL_BLOCKS.add(Material.DEAD_BRAIN_CORAL_BLOCK);
+            DEAD_CORAL_BLOCKS.add(Material.DEAD_BUBBLE_CORAL_BLOCK);
+            DEAD_CORAL_BLOCKS.add(Material.DEAD_FIRE_CORAL_BLOCK);
+            DEAD_CORAL_BLOCKS.add(Material.DEAD_HORN_CORAL_BLOCK);
+        }
 
-        ALL_DEAD_CORALS = new BlocksSet()
-            .add(this.DEAD_CORAL_BLOCKS.getValues())
-            .add(this.DEAD_WALL_CORALS.getValues())
-            .add(this.DEAD_CORAL_PLANTS.getValues())
-            .add(this.DEAD_CORALS.getValues());
+        ALL_DEAD_CORALS = new BlocksSet();
+        if (data.hasVersion(13)) {
+            ALL_DEAD_CORALS.add(this.DEAD_CORAL_BLOCKS.getValues());
+            ALL_DEAD_CORALS.add(this.DEAD_WALL_CORALS.getValues());
+            ALL_DEAD_CORALS.add(this.DEAD_CORAL_PLANTS.getValues());
+            ALL_DEAD_CORALS.add(this.DEAD_CORALS.getValues());
+        }
     }
 }

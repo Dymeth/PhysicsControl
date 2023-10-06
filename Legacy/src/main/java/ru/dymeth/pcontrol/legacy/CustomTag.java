@@ -3,15 +3,12 @@ package ru.dymeth.pcontrol.legacy;
 import org.bukkit.Material;
 import ru.dymeth.pcontrol.api.PControlData;
 import ru.dymeth.pcontrol.api.set.BlocksSet;
-import ru.dymeth.pcontrol.api.set.CustomSet;
 
 import javax.annotation.Nonnull;
 
 public final class CustomTag {
 
-    private final PControlData data;
-
-    public final CustomSet<Material>
+    public final BlocksSet
         WORLD_AIR,
         WOODEN_DOORS,
         PRESSURE_PLATES,
@@ -42,11 +39,10 @@ public final class CustomTag {
         MELON_STEM_AND_BLOCK;
 
     // legacy-specific
-    public final CustomSet<Material>
+    public final BlocksSet
         RAILS;
 
     CustomTag(@Nonnull PControlData data) {
-        this.data = data;
 
         WORLD_AIR = new BlocksSet(
             Material.AIR);
@@ -69,8 +65,8 @@ public final class CustomTag {
             Material.TRIPWIRE_HOOK,
             Material.TRIPWIRE,
             Material.STONE_BUTTON,
-            Material.WOOD_BUTTON)
-            .add(this.PRESSURE_PLATES.getValues());
+            Material.WOOD_BUTTON);
+        REDSTONE_PASSIVE_INPUTS.add(this.PRESSURE_PLATES.getValues());
 
         REDSTONE_ORE_BLOCKS = new BlocksSet(
             Material.REDSTONE_ORE,
@@ -93,16 +89,18 @@ public final class CustomTag {
         ANVIL = new BlocksSet(
             Material.ANVIL);
 
-        CONCRETE_POWDERS = new BlocksSet()
-            .add("CONCRETE_POWDER");
+        CONCRETE_POWDERS = new BlocksSet();
+        if (data.hasVersion(12)) {
+            CONCRETE_POWDERS.add(Material.CONCRETE_POWDER);
+        }
 
         GRAVITY_BLOCKS = new BlocksSet(
-            Material.DRAGON_EGG)
-            .add(Material::hasGravity);
+            Material.DRAGON_EGG);
+        GRAVITY_BLOCKS.add(Material::hasGravity);
 
-        NATURAL_GRAVITY_BLOCKS = new BlocksSet()
-            .add(this.SAND.getValues())
-            .add(this.GRAVEL.getValues());
+        NATURAL_GRAVITY_BLOCKS = new BlocksSet();
+        NATURAL_GRAVITY_BLOCKS.add(this.SAND.getValues());
+        NATURAL_GRAVITY_BLOCKS.add(this.GRAVEL.getValues());
 
         BONE_MEAL_HERBS = new BlocksSet(
             Material.LONG_GRASS,
@@ -120,8 +118,10 @@ public final class CustomTag {
         GRASS_BLOCK = new BlocksSet(
             Material.GRASS);
 
-        DIRT_PATH_BLOCK = new BlocksSet()
-            .add("GRASS_PATH");
+        DIRT_PATH_BLOCK = new BlocksSet();
+        if (data.hasVersion(9)) {
+            DIRT_PATH_BLOCK.add(Material.GRASS_PATH);
+        }
 
         FARMLAND_BLOCK = new BlocksSet(
             Material.SOIL);
@@ -144,8 +144,10 @@ public final class CustomTag {
         CARROT_BLOCK = new BlocksSet(
             Material.CARROT);
 
-        BEETROOT_BLOCK = new BlocksSet()
-            .add("BEETROOT_BLOCK");
+        BEETROOT_BLOCK = new BlocksSet();
+        if (data.hasVersion(9)) {
+            BEETROOT_BLOCK.add(Material.BEETROOT_BLOCK);
+        }
 
         PUMPKIN_STEM_AND_BLOCK = new BlocksSet(
             Material.PUMPKIN_STEM,
