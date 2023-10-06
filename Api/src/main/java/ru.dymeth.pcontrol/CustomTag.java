@@ -41,7 +41,6 @@ public final class CustomTag {
         FENCES,
         SIGNS,
         WALL_SIGNS,
-        REDSTONE_ACTIVE_INPUTS,
         RAILS,
         ALL_ALIVE_CORALS,
         DEAD_CORAL_PLANTS,
@@ -350,15 +349,6 @@ public final class CustomTag {
         if (data.hasVersion(20)) {
             WALL_SIGNS.add(Material.BAMBOO_WALL_SIGN);
             WALL_SIGNS.add(Material.CHERRY_WALL_SIGN);
-        }
-
-        REDSTONE_ACTIVE_INPUTS = new BlocksSet(
-            Material.LEVER,
-            Material.TRAPPED_CHEST,
-            Material.DAYLIGHT_DETECTOR,
-            Material.OBSERVER);
-        if (data.hasVersion(13)) {
-            REDSTONE_ACTIVE_INPUTS.add(Tag.BUTTONS.getValues());
         }
 
         RAILS = new BlocksSet(
