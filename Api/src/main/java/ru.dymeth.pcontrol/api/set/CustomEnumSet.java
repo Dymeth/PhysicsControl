@@ -19,4 +19,12 @@ public abstract class CustomEnumSet<T extends Enum<T>> extends CustomSet<T> {
         this.elements.addAll(Stream.of(this.clazz.getEnumConstants()).filter(filter).collect(Collectors.toList()));
         return this;
     }
+
+    @Nonnull
+    public CustomEnumSet<T> add(@Nonnull String... elementNames) {
+        for (String elementName : elementNames) {
+            this.elements.add(Enum.valueOf(this.clazz, elementName));
+        }
+        return this;
+    }
 }

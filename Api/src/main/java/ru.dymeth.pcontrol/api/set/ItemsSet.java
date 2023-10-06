@@ -18,8 +18,9 @@ public final class ItemsSet extends CustomEnumSet<Material> {
     }
 
     @Nonnull
-    public ItemsSet add(@Nonnull String... itemNames) {
-        this.elements.addAll(BukkitUtils.matchItemMaterials(null, itemNames));
+    @Override
+    public ItemsSet add(@Nonnull String... elementNames) {
+        this.elements.addAll(BukkitUtils.matchItemMaterials(null, elementNames));
         return this;
     }
 }
