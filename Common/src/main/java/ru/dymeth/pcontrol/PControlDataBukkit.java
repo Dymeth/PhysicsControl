@@ -197,11 +197,11 @@ public final class PControlDataBukkit implements PControlData {
         }
 
         Logger logger = this.plugin.getLogger();
-        if (unloadedKeys.size() > 0) {
+        if (!unloadedKeys.isEmpty()) {
             logger.warning("Some localization phrases was not found. Used defaults:");
             unloadedKeys.forEach((key, value) -> logger.warning(key + ": \"" + value + "\""));
         }
-        if (deprecatedKeys.size() > 0) {
+        if (!deprecatedKeys.isEmpty()) {
             logger.warning("Some deprecated localization phrases was not applied:");
             deprecatedKeys.forEach((key, value) -> logger.warning(key + ": \"" + value + "\""));
         }

@@ -37,11 +37,6 @@ public abstract class PControlInventory implements InventoryHolder {
         this.slotActions.put(slot, action);
     }
 
-    @Nullable
-    final ItemStack getItem(int slot) {
-        return this.inventory.getItem(slot);
-    }
-
     public final void handle(@Nonnull InventoryClickEvent event) {
         event.setCancelled(true);
         if (event.getClick() != ClickType.LEFT) return;
