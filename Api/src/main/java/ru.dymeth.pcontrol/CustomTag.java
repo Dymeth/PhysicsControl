@@ -57,7 +57,14 @@ public final class CustomTag {
         }
 
         WOODEN_DOORS = new BlocksSet();
-        if (data.hasVersion(13)) {
+        if (!data.hasVersion(13)) {
+            WOODEN_DOORS.add("WOODEN_DOOR");
+            WOODEN_DOORS.add(Material.ACACIA_DOOR);
+            WOODEN_DOORS.add(Material.BIRCH_DOOR);
+            WOODEN_DOORS.add(Material.DARK_OAK_DOOR);
+            WOODEN_DOORS.add(Material.JUNGLE_DOOR);
+            WOODEN_DOORS.add(Material.SPRUCE_FENCE);
+        } else {
             WOODEN_DOORS.add(Tag.WOODEN_DOORS.getValues());
         }
 
@@ -90,24 +97,38 @@ public final class CustomTag {
             Material.TRIPWIRE_HOOK,
             Material.TRIPWIRE);
         REDSTONE_PASSIVE_INPUTS.add(this.PRESSURE_PLATES.getValues());
-        if (data.hasVersion(13)) {
+        if (!data.hasVersion(13)) {
+            REDSTONE_PASSIVE_INPUTS.add("WOOD_BUTTON");
+            REDSTONE_PASSIVE_INPUTS.add(Material.STONE_BUTTON);
+        } else {
             REDSTONE_PASSIVE_INPUTS.add(Tag.BUTTONS.getValues());
         }
 
         REDSTONE_ORE_BLOCKS = new BlocksSet(
             Material.REDSTONE_ORE);
+        if (!data.hasVersion(13)) {
+            REDSTONE_ORE_BLOCKS.add("GLOWING_REDSTONE_ORE");
+        }
         if (data.hasVersion(17)) {
             REDSTONE_ORE_BLOCKS.add(Material.DEEPSLATE_REDSTONE_ORE);
         }
 
         WATER = new BlocksSet(
             Material.WATER);
+        if (!data.hasVersion(13)) {
+            WATER.add("STATIONARY_WATER");
+        }
 
         LAVA = new BlocksSet(
             Material.LAVA);
+        if (!data.hasVersion(13)) {
+            LAVA.add("STATIONARY_LAVA");
+        }
 
         SAND = new BlocksSet();
-        if (data.hasVersion(13)) {
+        if (!data.hasVersion(13)) {
+            SAND.add(Material.SAND);
+        } else {
             SAND.add(Tag.SAND.getValues());
         }
 
@@ -118,7 +139,9 @@ public final class CustomTag {
         }
 
         ANVIL = new BlocksSet();
-        if (data.hasVersion(13)) {
+        if (!data.hasVersion(13)) {
+            ANVIL.add(Material.ANVIL);
+        } else {
             ANVIL.add(Tag.ANVIL.getValues());
         }
 
@@ -146,7 +169,8 @@ public final class CustomTag {
             }
         }
 
-        GRAVITY_BLOCKS = new BlocksSet();
+        GRAVITY_BLOCKS = new BlocksSet(
+            Material.DRAGON_EGG); // Not marked as has-gravity on old Spigot versions
         GRAVITY_BLOCKS.add(Material::hasGravity);
         if (data.hasVersion(14)) {
             GRAVITY_BLOCKS.add(Material.SCAFFOLDING);
@@ -200,7 +224,7 @@ public final class CustomTag {
 
         GRASS_BLOCK = new BlocksSet();
         if (!data.hasVersion(13)) {
-            GRASS_BLOCK.add("GRASS");
+            GRASS_BLOCK.add(Material.GRASS);
         } else {
             GRASS_BLOCK.add(Material.GRASS_BLOCK);
         }
@@ -284,14 +308,21 @@ public final class CustomTag {
             MELON_STEM_AND_BLOCK.add(Material.MELON);
         }
 
-        FENCES = new BlocksSet(
-            Material.ACACIA_FENCE,
-            Material.BIRCH_FENCE,
-            Material.DARK_OAK_FENCE,
-            Material.JUNGLE_FENCE,
-            Material.NETHER_BRICK_FENCE,
-            Material.OAK_FENCE,
-            Material.SPRUCE_FENCE);
+        FENCES = new BlocksSet();
+        FENCES.add(Material.ACACIA_FENCE);
+        FENCES.add(Material.BIRCH_FENCE);
+        FENCES.add(Material.DARK_OAK_FENCE);
+        FENCES.add(Material.JUNGLE_FENCE);
+        FENCES.add(Material.SPRUCE_FENCE);
+        if (!data.hasVersion(13)) {
+            FENCES.add("FENCE");
+            FENCES.add("NETHER_FENCE");
+            // FENCES.add("IRON_FENCE");
+        } else {
+            FENCES.add(Material.OAK_FENCE);
+            FENCES.add(Material.NETHER_BRICK_FENCE);
+            // FENCES.add(Material.IRON_BARS);
+        }
         if (data.hasVersion(16)) {
             FENCES.add(Material.CRIMSON_FENCE);
             FENCES.add(Material.WARPED_FENCE);
@@ -355,7 +386,7 @@ public final class CustomTag {
             Material.ACTIVATOR_RAIL,
             Material.DETECTOR_RAIL,
             Material.POWERED_RAIL);
-        if (data.hasVersion(13)) {
+        if (!data.hasVersion(13)) {
             RAILS.add("RAILS");
         } else {
             RAILS.add(Material.RAIL);
