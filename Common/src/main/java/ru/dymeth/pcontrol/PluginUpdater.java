@@ -7,7 +7,9 @@ import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Arrays;
@@ -110,7 +112,7 @@ class PluginUpdater {
             previousVersion = nextVersion;
         }
         this.writeVersionFile();
-        this.plugin.getLogger().info("Updated plugin from " + sourceVersion + " to " + currentVersion);
+        this.plugin.getLogger().info("Plugin updated successfully: " + sourceVersion + " -> " + currentVersion);
     }
 
     private String getCurrentVersion() {
@@ -137,6 +139,16 @@ class PluginUpdater {
             }
         } catch (Exception e) {
             throw new RuntimeException("Could not create " + f.getName() + " file", e);
+        }
+    }
+
+    private void appendDataToFile(@Nonnull File file, @Nonnull String data) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
+            writer.write(data);
+            writer.close();
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to append data to file " + file);
         }
     }
 }

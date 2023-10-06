@@ -128,6 +128,7 @@ public final class PControlDataBukkit implements PControlData {
     private void reloadConfig() {
         File configFile = this.createConfigFileIfNotExist("config.yml", true);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+
         if (config.getBoolean("check-for-updates", true)) {
             this.plugin.getLogger().info("Checking for updates...");
             new UpdateChecker(this.plugin, this.resourceId).getVersionAsync(newVersion -> {
@@ -137,10 +138,11 @@ public final class PControlDataBukkit implements PControlData {
                 }
                 String oldVersion = this.plugin.getDescription().getVersion();
                 if (oldVersion.equals(newVersion)) return;
-                this.plugin.getLogger().info("There is a new update available: "
+                this.plugin.getLogger().warning("There is a new update available: "
                     + newVersion + " (current version is " + oldVersion + ")");
             });
         }
+
         if (config.getBoolean("metrics", true)) {
             if (this.metrics == null) {
                 try {
