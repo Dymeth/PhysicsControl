@@ -8,14 +8,14 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public abstract class EnumKeysSet<T extends Enum<T>> extends KeysSet<T> {
+public abstract class CustomEnumSet<T extends Enum<T>> extends CustomSet<T> {
     @SafeVarargs
-    public EnumKeysSet(@Nonnull Class<T> clazz, @Nonnull T... elements) {
+    public CustomEnumSet(@Nonnull Class<T> clazz, @Nonnull T... elements) {
         super(clazz, Sets.newEnumSet(Lists.newArrayList(elements), clazz));
     }
 
     @Nonnull
-    public EnumKeysSet<T> add(@Nonnull Predicate<T> filter) {
+    public CustomEnumSet<T> add(@Nonnull Predicate<T> filter) {
         this.elements.addAll(Stream.of(this.clazz.getEnumConstants()).filter(filter).collect(Collectors.toList()));
         return this;
     }

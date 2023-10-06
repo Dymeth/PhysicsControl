@@ -21,7 +21,7 @@ import org.bukkit.inventory.ItemStack;
 import ru.dymeth.pcontrol.PhysicsListenerCommon;
 import ru.dymeth.pcontrol.api.PControlData;
 import ru.dymeth.pcontrol.api.PControlTrigger;
-import ru.dymeth.pcontrol.api.set.MaterialKeysSet;
+import ru.dymeth.pcontrol.api.set.BlocksSet;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -221,7 +221,7 @@ public final class PhysicsListenerModern extends PhysicsListenerCommon {
     private void initBlockFadeEvent() {
         if (this.data.hasVersion(0)) {
             this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.GRASS_BLOCKS_FADING,
-                new MaterialKeysSet().add(this.customTag.GRASS_BLOCK).add(this.customTag.DIRT_PATH_BLOCK).getValues(),
+                new BlocksSet().add(this.customTag.GRASS_BLOCK).add(this.customTag.DIRT_PATH_BLOCK).getValues(),
                 Collections.singleton(Material.DIRT));
             this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.MYCELIUM_SPREADING,
                 this.customTag.MYCELIUM_BLOCK.getValues(),
@@ -234,7 +234,7 @@ public final class PhysicsListenerModern extends PhysicsListenerCommon {
                 this.customTag.WORLD_AIR.getValues());
             this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.ICE_MELTING,
                 Collections.singleton(Material.ICE),
-                new MaterialKeysSet().add(this.customTag.WATER).add(this.customTag.WORLD_AIR).getValues());
+                new BlocksSet().add(this.customTag.WATER).add(this.customTag.WORLD_AIR).getValues());
             this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.FIRE_SPREADING,
                 Collections.singleton(Material.FIRE),
                 this.customTag.WORLD_AIR.getValues());
@@ -280,7 +280,7 @@ public final class PhysicsListenerModern extends PhysicsListenerCommon {
                 Collections.singleton(Material.DIRT),
                 this.customTag.MYCELIUM_BLOCK.getValues());
             this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.VINES_GROWING,
-                new MaterialKeysSet(Material.VINE).add(this.customTag.WORLD_AIR).getValues(),
+                new BlocksSet(Material.VINE).add(this.customTag.WORLD_AIR).getValues(),
                 Collections.singleton(Material.VINE));
             this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.LITTLE_MUSHROOMS_SPREADING,
                 this.customTag.WORLD_AIR.getValues(),
@@ -314,16 +314,16 @@ public final class PhysicsListenerModern extends PhysicsListenerCommon {
         }
         if (this.data.hasVersion(17)) {
             this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.GLOW_BERRIES_GROWING,
-                new MaterialKeysSet(Material.CAVE_VINES).add(this.customTag.WORLD_AIR).getValues(),
+                new BlocksSet(Material.CAVE_VINES).add(this.customTag.WORLD_AIR).getValues(),
                 Collections.singleton(Material.CAVE_VINES));
             this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.POINTED_DRIPSTONES_GROWING,
-                new MaterialKeysSet(Material.POINTED_DRIPSTONE).add(this.customTag.WORLD_AIR).getValues(),
+                new BlocksSet(Material.POINTED_DRIPSTONE).add(this.customTag.WORLD_AIR).getValues(),
                 Collections.singleton(Material.POINTED_DRIPSTONE));
             this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.IGNORED_STATE, // BONE_MEAL_USAGE
                 this.customTag.WORLD_AIR.getValues(),
                 Collections.singleton(Material.HANGING_ROOTS));
             this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.IGNORED_STATE, // BONE_MEAL_USAGE
-                new MaterialKeysSet(Material.GLOW_LICHEN).add(this.customTag.WORLD_AIR).getValues(),
+                new BlocksSet(Material.GLOW_LICHEN).add(this.customTag.WORLD_AIR).getValues(),
                 Collections.singleton(Material.GLOW_LICHEN));
             this.rulesBlockSpreadEventTo.regSingle(PControlTrigger.AMETHYST_CLUSTERS_GROWING, // from = AIR, CAVE_AIR, WATER, etc
                 Collections.singleton(Material.SMALL_AMETHYST_BUD));

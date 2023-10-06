@@ -3,8 +3,8 @@ package ru.dymeth.pcontrol.modern;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import ru.dymeth.pcontrol.api.PControlData;
-import ru.dymeth.pcontrol.api.set.KeysSet;
-import ru.dymeth.pcontrol.api.set.MaterialKeysSet;
+import ru.dymeth.pcontrol.api.set.CustomSet;
+import ru.dymeth.pcontrol.api.set.BlocksSet;
 
 import javax.annotation.Nonnull;
 
@@ -18,47 +18,47 @@ public final class CustomTag {
         this.data = data;
     }
 
-    public final KeysSet<Material> WORLD_AIR = new MaterialKeysSet(
+    public final CustomSet<Material> WORLD_AIR = new BlocksSet(
         AIR,
         CAVE_AIR);
 
-    public final KeysSet<Material> WOODEN_DOORS = new MaterialKeysSet()
+    public final CustomSet<Material> WOODEN_DOORS = new BlocksSet()
         .add(Tag.WOODEN_DOORS.getValues());
 
-    public final KeysSet<Material> PRESSURE_PLATES = new MaterialKeysSet(
+    public final CustomSet<Material> PRESSURE_PLATES = new BlocksSet(
         STONE_PRESSURE_PLATE,
         LIGHT_WEIGHTED_PRESSURE_PLATE,
         HEAVY_WEIGHTED_PRESSURE_PLATE)
-        .addBlocks("POLISHED_BLACKSTONE_PRESSURE_PLATE")
+        .add("POLISHED_BLACKSTONE_PRESSURE_PLATE")
         .add(WOODEN_PRESSURE_PLATES.getValues());
 
-    public final KeysSet<Material> REDSTONE_PASSIVE_INPUTS = new MaterialKeysSet(
+    public final CustomSet<Material> REDSTONE_PASSIVE_INPUTS = new BlocksSet(
         TRIPWIRE_HOOK,
         TRIPWIRE)
         .add(PRESSURE_PLATES.getValues())
         .add(BUTTONS.getValues());
 
-    public final KeysSet<Material> REDSTONE_ORE_BLOCKS = new MaterialKeysSet(
+    public final CustomSet<Material> REDSTONE_ORE_BLOCKS = new BlocksSet(
         REDSTONE_ORE)
-        .addBlocks("DEEPSLATE_REDSTONE_ORE");
+        .add("DEEPSLATE_REDSTONE_ORE");
 
-    public final KeysSet<Material> WATER = new MaterialKeysSet(
+    public final CustomSet<Material> WATER = new BlocksSet(
         Material.WATER);
 
-    public final KeysSet<Material> LAVA = new MaterialKeysSet(
+    public final CustomSet<Material> LAVA = new BlocksSet(
         Material.LAVA);
 
-    public final KeysSet<Material> SAND = new MaterialKeysSet()
+    public final CustomSet<Material> SAND = new BlocksSet()
         .add(Tag.SAND.getValues());
 
-    public final KeysSet<Material> GRAVEL = new MaterialKeysSet(
+    public final CustomSet<Material> GRAVEL = new BlocksSet(
         Material.GRAVEL)
-        .addBlocks("SUSPICIOUS_GRAVEL");
+        .add("SUSPICIOUS_GRAVEL");
 
-    public final KeysSet<Material> ANVIL = new MaterialKeysSet()
+    public final CustomSet<Material> ANVIL = new BlocksSet()
         .add(Tag.ANVIL.getValues());
 
-    public final KeysSet<Material> CONCRETE_POWDERS = new MaterialKeysSet(
+    public final CustomSet<Material> CONCRETE_POWDERS = new BlocksSet(
         BLACK_CONCRETE_POWDER,
         BLUE_CONCRETE_POWDER,
         BROWN_CONCRETE_POWDER,
@@ -77,15 +77,15 @@ public final class CustomTag {
         YELLOW_CONCRETE_POWDER
     );
 
-    public final KeysSet<Material> GRAVITY_BLOCKS = new MaterialKeysSet()
-        .addBlocks("SCAFFOLDING")
+    public final CustomSet<Material> GRAVITY_BLOCKS = new BlocksSet()
+        .add("SCAFFOLDING")
         .add(Material::hasGravity);
 
-    public final KeysSet<Material> NATURAL_GRAVITY_BLOCKS = new MaterialKeysSet()
+    public final CustomSet<Material> NATURAL_GRAVITY_BLOCKS = new BlocksSet()
         .add(SAND.getValues())
         .add(GRAVEL);
 
-    public final KeysSet<Material> BONE_MEAL_HERBS = new MaterialKeysSet(
+    public final CustomSet<Material> BONE_MEAL_HERBS = new BlocksSet(
         GRASS,
         DANDELION,
         POPPY,
@@ -101,59 +101,59 @@ public final class CustomTag {
         LILAC,
         ROSE_BUSH,
         PEONY)
-        .addBlocks(
+        .add(
             "CORNFLOWER",
             "LILY_OF_THE_VALLEY"
         );
 
-    public final KeysSet<Material> LITTLE_MUSHROOMS = new MaterialKeysSet(
+    public final CustomSet<Material> LITTLE_MUSHROOMS = new BlocksSet(
         RED_MUSHROOM,
-        BROWN_MUSHROOM);public final KeysSet<Material> UNDERWATER_BLOCKS_ONLY = new MaterialKeysSet(
+        BROWN_MUSHROOM);public final CustomSet<Material> UNDERWATER_BLOCKS_ONLY = new BlocksSet(
         Material.WATER,
         BUBBLE_COLUMN,
         KELP_PLANT,
         TALL_SEAGRASS,
         SEAGRASS);
 
-    public final KeysSet<Material> GRASS_BLOCK = new MaterialKeysSet(
+    public final CustomSet<Material> GRASS_BLOCK = new BlocksSet(
         Material.GRASS_BLOCK);
 
-    public final KeysSet<Material> DIRT_PATH_BLOCK = new MaterialKeysSet()
-        .addBlocks("DIRT_PATH", "GRASS_PATH");
+    public final CustomSet<Material> DIRT_PATH_BLOCK = new BlocksSet()
+        .add("DIRT_PATH", "GRASS_PATH");
 
-    public final KeysSet<Material> FARMLAND_BLOCK = new MaterialKeysSet(
+    public final CustomSet<Material> FARMLAND_BLOCK = new BlocksSet(
         FARMLAND);
 
-    public final KeysSet<Material> MYCELIUM_BLOCK = new MaterialKeysSet(
+    public final CustomSet<Material> MYCELIUM_BLOCK = new BlocksSet(
         MYCELIUM);
 
-    public final KeysSet<Material> SUGAR_CANE_BLOCK = new MaterialKeysSet(
+    public final CustomSet<Material> SUGAR_CANE_BLOCK = new BlocksSet(
         SUGAR_CANE);
 
-    public final KeysSet<Material> NETHER_WART_BLOCK = new MaterialKeysSet(
+    public final CustomSet<Material> NETHER_WART_BLOCK = new BlocksSet(
         NETHER_WART);
 
-    public final KeysSet<Material> WHEAT_BLOCK = new MaterialKeysSet(
+    public final CustomSet<Material> WHEAT_BLOCK = new BlocksSet(
         WHEAT);
 
-    public final KeysSet<Material> POTATO_BLOCK = new MaterialKeysSet(
+    public final CustomSet<Material> POTATO_BLOCK = new BlocksSet(
         POTATOES);
 
-    public final KeysSet<Material> CARROT_BLOCK = new MaterialKeysSet(
+    public final CustomSet<Material> CARROT_BLOCK = new BlocksSet(
         CARROTS);
 
-    public final KeysSet<Material> BEETROOT_BLOCK = new MaterialKeysSet(
+    public final CustomSet<Material> BEETROOT_BLOCK = new BlocksSet(
         BEETROOTS);
 
-    public final KeysSet<Material> PUMPKIN_STEM_AND_BLOCK = new MaterialKeysSet(
+    public final CustomSet<Material> PUMPKIN_STEM_AND_BLOCK = new BlocksSet(
         PUMPKIN_STEM, PUMPKIN);
 
-    public final KeysSet<Material> MELON_STEM_AND_BLOCK = new MaterialKeysSet(
+    public final CustomSet<Material> MELON_STEM_AND_BLOCK = new BlocksSet(
         MELON_STEM, MELON);
 
     // modern-specific
 
-    public final KeysSet<Material> FENCES = new MaterialKeysSet(
+    public final CustomSet<Material> FENCES = new BlocksSet(
         ACACIA_FENCE,
         BIRCH_FENCE,
         DARK_OAK_FENCE,
@@ -161,13 +161,13 @@ public final class CustomTag {
         NETHER_BRICK_FENCE,
         OAK_FENCE,
         SPRUCE_FENCE)
-        .addBlocks(
+        .add(
             "CRIMSON_FENCE",
             "WARPED_FENCE"
         );
 
-    public final KeysSet<Material> SIGNS = new MaterialKeysSet()
-        .addBlocks(
+    public final CustomSet<Material> SIGNS = new BlocksSet()
+        .add(
             "SIGN",
             "ACACIA_SIGN",
             "BIRCH_SIGN",
@@ -179,8 +179,8 @@ public final class CustomTag {
             "WARPED_SIGN"
         );
 
-    public final KeysSet<Material> WALL_SIGNS = new MaterialKeysSet()
-        .addBlocks(
+    public final CustomSet<Material> WALL_SIGNS = new BlocksSet()
+        .add(
             "WALL_SIGN",
             "ACACIA_WALL_SIGN",
             "BIRCH_WALL_SIGN",
@@ -192,14 +192,14 @@ public final class CustomTag {
             "WARPED_WALL_SIGN"
         );
 
-    public final KeysSet<Material> REDSTONE_ACTIVE_INPUTS = new MaterialKeysSet(
+    public final CustomSet<Material> REDSTONE_ACTIVE_INPUTS = new BlocksSet(
         LEVER,
         TRAPPED_CHEST,
         DAYLIGHT_DETECTOR,
         OBSERVER)
         .add(BUTTONS.getValues());
 
-    public final KeysSet<Material> REDSTONE_TRANSMITTERS_AND_OUTPUTS = new MaterialKeysSet(
+    public final CustomSet<Material> REDSTONE_TRANSMITTERS_AND_OUTPUTS = new BlocksSet(
         DISPENSER,
         STICKY_PISTON,
         PISTON,
@@ -219,20 +219,20 @@ public final class CustomTag {
         .add(FENCES.getValues())
         .add(DOORS.getValues());
 
-    public final KeysSet<Material> ALL_ALIVE_CORALS = new MaterialKeysSet()
+    public final CustomSet<Material> ALL_ALIVE_CORALS = new BlocksSet()
         .add(CORAL_BLOCKS.getValues())
         .add(WALL_CORALS.getValues())
         .add(CORAL_PLANTS.getValues())
         .add(CORALS.getValues());
 
-    public final KeysSet<Material> DEAD_CORAL_PLANTS = new MaterialKeysSet(
+    public final CustomSet<Material> DEAD_CORAL_PLANTS = new BlocksSet(
         DEAD_TUBE_CORAL,
         DEAD_BRAIN_CORAL,
         DEAD_BUBBLE_CORAL,
         DEAD_FIRE_CORAL,
         DEAD_HORN_CORAL);
 
-    public final KeysSet<Material> DEAD_CORALS = new MaterialKeysSet(
+    public final CustomSet<Material> DEAD_CORALS = new BlocksSet(
         DEAD_TUBE_CORAL_FAN,
         DEAD_BRAIN_CORAL_FAN,
         DEAD_BUBBLE_CORAL_FAN,
@@ -240,21 +240,21 @@ public final class CustomTag {
         DEAD_HORN_CORAL_FAN)
         .add(DEAD_CORAL_PLANTS.getValues());
 
-    public final KeysSet<Material> DEAD_WALL_CORALS = new MaterialKeysSet(
+    public final CustomSet<Material> DEAD_WALL_CORALS = new BlocksSet(
         DEAD_TUBE_CORAL_WALL_FAN,
         DEAD_BRAIN_CORAL_WALL_FAN,
         DEAD_BUBBLE_CORAL_WALL_FAN,
         DEAD_FIRE_CORAL_WALL_FAN,
         DEAD_HORN_CORAL_WALL_FAN);
 
-    public final KeysSet<Material> DEAD_CORAL_BLOCKS = new MaterialKeysSet(
+    public final CustomSet<Material> DEAD_CORAL_BLOCKS = new BlocksSet(
         DEAD_TUBE_CORAL_BLOCK,
         DEAD_BRAIN_CORAL_BLOCK,
         DEAD_BUBBLE_CORAL_BLOCK,
         DEAD_FIRE_CORAL_BLOCK,
         DEAD_HORN_CORAL_BLOCK);
 
-    public final KeysSet<Material> ALL_DEAD_CORALS = new MaterialKeysSet()
+    public final CustomSet<Material> ALL_DEAD_CORALS = new BlocksSet()
         .add(DEAD_CORAL_BLOCKS.getValues())
         .add(DEAD_WALL_CORALS.getValues())
         .add(DEAD_CORAL_PLANTS.getValues())

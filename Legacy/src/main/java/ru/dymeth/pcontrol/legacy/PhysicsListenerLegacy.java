@@ -18,7 +18,7 @@ import org.bukkit.material.MaterialData;
 import ru.dymeth.pcontrol.PhysicsListenerCommon;
 import ru.dymeth.pcontrol.api.PControlData;
 import ru.dymeth.pcontrol.api.PControlTrigger;
-import ru.dymeth.pcontrol.api.set.MaterialKeysSet;
+import ru.dymeth.pcontrol.api.set.BlocksSet;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -154,7 +154,7 @@ public final class PhysicsListenerLegacy extends PhysicsListenerCommon {
     private void initBlockFadeEvent() {
         if (this.data.hasVersion(0)) {
             this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.GRASS_BLOCKS_FADING,
-                new MaterialKeysSet().add(this.customTag.GRASS_BLOCK).add(this.customTag.DIRT_PATH_BLOCK).getValues(),
+                new BlocksSet().add(this.customTag.GRASS_BLOCK).add(this.customTag.DIRT_PATH_BLOCK).getValues(),
                 Collections.singleton(Material.DIRT));
             this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.MYCELIUM_SPREADING,
                 this.customTag.MYCELIUM_BLOCK.getValues(),
@@ -167,7 +167,7 @@ public final class PhysicsListenerLegacy extends PhysicsListenerCommon {
                 this.customTag.WORLD_AIR.getValues());
             this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.ICE_MELTING,
                 Collections.singleton(Material.ICE),
-                new MaterialKeysSet().add(this.customTag.WATER).add(this.customTag.WORLD_AIR).getValues());
+                new BlocksSet().add(this.customTag.WATER).add(this.customTag.WORLD_AIR).getValues());
             this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.FIRE_SPREADING,
                 Collections.singleton(Material.FIRE),
                 this.customTag.WORLD_AIR.getValues());
@@ -194,7 +194,7 @@ public final class PhysicsListenerLegacy extends PhysicsListenerCommon {
                 Collections.singleton(Material.DIRT),
                 this.customTag.MYCELIUM_BLOCK.getValues());
             this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.VINES_GROWING,
-                new MaterialKeysSet(Material.VINE).add(this.customTag.WORLD_AIR).getValues(),
+                new BlocksSet(Material.VINE).add(this.customTag.WORLD_AIR).getValues(),
                 Collections.singleton(Material.VINE));
             this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.LITTLE_MUSHROOMS_SPREADING,
                 this.customTag.WORLD_AIR.getValues(),

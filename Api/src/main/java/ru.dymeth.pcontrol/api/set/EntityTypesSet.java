@@ -4,8 +4,8 @@ import org.bukkit.entity.EntityType;
 
 import javax.annotation.Nonnull;
 
-public final class EntityTypeKeysSet extends EnumKeysSet<EntityType> {
-    public EntityTypeKeysSet(@Nonnull EntityType... elements) {
+public final class EntityTypesSet extends CustomEnumSet<EntityType> {
+    public EntityTypesSet(@Nonnull EntityType... elements) {
         super(EntityType.class, elements);
     }
 }
