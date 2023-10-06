@@ -3,6 +3,7 @@ package ru.dymeth.pcontrol.api;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import static ru.dymeth.pcontrol.api.PControlCategory.*;
 
@@ -187,8 +188,6 @@ public enum PControlTrigger {
         TEST, true, 1, 1, true, "BARRIER");
 
     private final PControlCategory category;
-    @Deprecated // TODO Mark trigger as available while filling rules on plugin startup
-    private final short minVersion;
     private boolean triggerAvailable = false;
     private final ItemStack icon;
     private final boolean realtime;
@@ -201,7 +200,6 @@ public enum PControlTrigger {
 
     PControlTrigger(@Nonnull PControlCategory category, boolean realtime, int row, int column, boolean defaults, int minVersion, @Nonnull String... iconVariants) {
         this.category = category;
-        this.minVersion = (short) minVersion;
         this.realtime = realtime;
         this.slot = (short) ((row - 1) * 9 + column - 1);
         if (this.slot < 0 || this.slot >= 3 * 9) {
@@ -215,11 +213,6 @@ public enum PControlTrigger {
     @Nonnull
     public PControlCategory getCategory() {
         return this.category;
-    }
-
-    @Deprecated // TODO Mark trigger as available while filling rules on plugin startup
-    public short getMinVersion() {
-        return this.minVersion;
     }
 
     public void markAvailable() {

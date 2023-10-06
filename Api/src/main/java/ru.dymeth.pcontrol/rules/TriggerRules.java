@@ -8,7 +8,6 @@ import javax.annotation.Nonnull;
 public abstract class TriggerRules<T> {
 
     public static final boolean LOG_TRIGGERS_REGISTRATIONS = false;
-    public static final boolean LOG_DIFFERENT_TRIGGERS_AVAILABILITY = false;
     private static int TOTAL_RULES_REGISTERED = 0;
 
     public static int getTotalRulesRegistered() {
@@ -33,12 +32,6 @@ public abstract class TriggerRules<T> {
         } else {
             this.data.getPlugin().getLogger().warning("Trigger " + trigger.name()
                 + " is unavailable at current server version");
-        }
-
-        if (LOG_DIFFERENT_TRIGGERS_AVAILABILITY) {
-            if (trigger.isAvailable() != this.data.isTriggerSupported(trigger)) {
-                this.data.getPlugin().getLogger().warning("Different trigger availabilities: " + trigger);
-            }
         }
 
         //noinspection unchecked

@@ -43,7 +43,7 @@ public final class PControlTriggerInventory extends PControlInventory {
 
     public void updateTriggerStack(@Nonnull PControlTrigger trigger) {
         if (trigger == PControlTrigger.IGNORED_STATE) return;
-        boolean available = true ? this.data.isTriggerSupported(trigger) : trigger.isAvailable();
+        boolean available = trigger.isAvailable();
         boolean enabled = this.data.isActionAllowed(this.world, trigger);
 
         ItemStack icon = available ? trigger.getIcon() : DISALLOWED_TRIGGER;
@@ -63,7 +63,7 @@ public final class PControlTriggerInventory extends PControlInventory {
             lore.add(enabled ? this.data.getMessage("trigger-enabled-state") : this.data.getMessage("trigger-disabled-state"));
             lore.addAll(Arrays.asList(this.data.getMessage(trigger.isRealtime() ? "trigger-realtime" : "trigger-on-update").split("\\n")));
         } else {
-            lore.add(this.data.getMessage("trigger-unsupported-state", "%min_version%", "1." + trigger.getMinVersion()));
+            lore.add(this.data.getMessage("trigger-unsupported-state", "%min_version%", "?"));
         }
         meta.setLore(lore);
         if (available && enabled) {
@@ -76,7 +76,7 @@ public final class PControlTriggerInventory extends PControlInventory {
 
     public void switchTrigger(@Nonnull CommandSender sender, @Nonnull PControlTrigger trigger) {
         if (trigger == PControlTrigger.IGNORED_STATE) return;
-        if (!this.data.isTriggerSupported(trigger)) {
+        if (!trigger.isAvailable()) {
             return;
         }
         if (!sender.isOp()

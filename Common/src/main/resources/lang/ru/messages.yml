@@ -6,7 +6,7 @@ trigger-disabled: "&e[%plugin%] &f%player% выключил %trigger% в мир�
 inventory-title: "%category% мира %world%"
 trigger-enabled-state: "&aВключено"
 trigger-disabled-state: "&cВыключено"
-trigger-unsupported-state: "&cПоддерживается с версии Minecraft %min_version%"
+trigger-unsupported-state: "&cНе поддерживается в текущей версии Minecraft"
 trigger-realtime: "&eВнимание!\n&eПереключение этого триггера повлияет\n&eна все блоки в мире в реальном времени!\n&e(все загруженные чанки)"
 trigger-on-update: "&aВлияет только на обновляющиеся блоки"
 category-inventory-title: "Физика мира %world%"

@@ -322,12 +322,6 @@ public final class PControlDataBukkit implements PControlData {
     }
 
     @Override
-    @Deprecated // TODO Mark trigger as available while filling rules on plugin startup
-    public boolean isTriggerSupported(@Nonnull PControlTrigger trigger) {
-        return this.hasVersion(trigger.getMinVersion());
-    }
-
-    @Override
     public void cancelIfDisabled(@Nonnull BlockEvent event, @Nonnull PControlTrigger trigger) {
         if (trigger == PControlTrigger.IGNORED_STATE) return;
         if (!this.getWorldTriggers(event.getBlock().getWorld()).getOrDefault(trigger, false)) {
