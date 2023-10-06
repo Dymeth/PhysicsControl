@@ -3,7 +3,6 @@ package ru.dymeth.pcontrol.api;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import static ru.dymeth.pcontrol.api.PControlCategory.*;
 
@@ -17,11 +16,11 @@ public enum PControlTrigger {
     DRAGON_EGGS_FALLING(
         GRAVITY_BLOCKS, false, 2, 5, true, "DRAGON_EGG"),
     CONCRETE_POWDERS_FALLING(
-        GRAVITY_BLOCKS, false, 2, 6, true, 12, "LIME_CONCRETE_POWDER", "CONCRETE_POWDER:5"),
+        GRAVITY_BLOCKS, false, 2, 6, true, "LIME_CONCRETE_POWDER", "CONCRETE_POWDER:5"),
     SCAFFOLDING_FALLING(
-        GRAVITY_BLOCKS, false, 2, 7, true, 14, "SCAFFOLDING"),
+        GRAVITY_BLOCKS, false, 2, 7, true, "SCAFFOLDING"),
     POINTED_DRIPSTONES_FALLING(
-        GRAVITY_BLOCKS, false, 2, 8, true, 17, "POINTED_DRIPSTONE"),
+        GRAVITY_BLOCKS, false, 2, 8, true, "POINTED_DRIPSTONE"),
 
 
     WATER_FLOWING(
@@ -31,22 +30,22 @@ public enum PControlTrigger {
 
 
     LADDERS_DESTROYING(
-        BUILDING, false, 2, 4, true, 13, "LADDER"),
+        BUILDING, false, 2, 4, true, "LADDER"),
     SIGNS_DESTROYING(
-        BUILDING, false, 2, 5, true, 13, "OAK_SIGN", "SIGN"),
+        BUILDING, false, 2, 5, true, "OAK_SIGN", "SIGN"),
     RAILS_DESTROYING(
-        BUILDING, false, 2, 6, true, 13, "RAIL", "RAILS"),
+        BUILDING, false, 2, 6, true, "RAIL", "RAILS"),
 
     TORCHES_DESTROYING(
-        BUILDING, false, 3, 4, true, 13, "TORCH"),
+        BUILDING, false, 3, 4, true, "TORCH"),
     REDSTONE_TORCHES_DESTROYING(
-        BUILDING, false, 3, 5, true, 13, "REDSTONE_TORCH", "REDSTONE_TORCH_ON"),
+        BUILDING, false, 3, 5, true, "REDSTONE_TORCH", "REDSTONE_TORCH_ON"),
     SOUL_TORCHES_DESTROYING(
-        BUILDING, false, 3, 6, true, 16, "SOUL_TORCH"),
+        BUILDING, false, 3, 6, true, "SOUL_TORCH"),
 
 
     RABBITS_EATING_CARROTS(
-        MOBS_INTERACTIONS, false, 1, 2, true, 8, "CARROT_ITEM", "CARROT"),
+        MOBS_INTERACTIONS, false, 1, 2, true, "CARROT_ITEM", "CARROT"),
     VILLAGERS_FARMING(
         MOBS_INTERACTIONS, false, 1, 3, true, "WHEAT"),
     SHEEPS_EATING_GRASS(
@@ -63,13 +62,13 @@ public enum PControlTrigger {
     WITHERS_GRIEFING(
         MOBS_INTERACTIONS, false, 2, 3, true, "WITHER_SKELETON_SKULL", "SKULL_ITEM:1"),
     TURTLES_LAYING_EGGS(
-        MOBS_INTERACTIONS, false, 2, 4, true, 13, "TURTLE_EGG"),
+        MOBS_INTERACTIONS, false, 2, 4, true, "TURTLE_EGG"),
     WITHER_CREATE_WITHER_ROSE_BLOCKS(
-        MOBS_INTERACTIONS, false, 2, 5, true, 14, "WITHER_ROSE"),
+        MOBS_INTERACTIONS, false, 2, 5, true, "WITHER_ROSE"),
     FOXES_EATS_FROM_SWEET_BERRY_BUSHES(
-        MOBS_INTERACTIONS, false, 2, 6, true, 14, "SWEET_BERRIES"),
+        MOBS_INTERACTIONS, false, 2, 6, true, "SWEET_BERRIES"),
     RAVAGERS_DESTROY_BLOCKS(
-        MOBS_INTERACTIONS, false, 2, 7, true, 14, "RAVAGER_SPAWN_EGG"),
+        MOBS_INTERACTIONS, false, 2, 7, true, "RAVAGER_SPAWN_EGG"),
 
 
     BURNING_ARROWS_ACTIVATE_TNT(
@@ -84,18 +83,18 @@ public enum PControlTrigger {
     DRAGON_EGGS_TELEPORTING(
         ENTITIES_INTERACTIONS, false, 2, 4, true, "DRAGON_EGG"),
     FROSTED_ICE_PHYSICS(
-        ENTITIES_INTERACTIONS, false, 2, 5, true, 9, "ICE"),
+        ENTITIES_INTERACTIONS, false, 2, 5, true, "ICE"),
     BLOCK_HIT_PROJECTILES_REMOVING(
-        ENTITIES_INTERACTIONS, false, 2, 6, false, 11, "ARROW"),
+        ENTITIES_INTERACTIONS, false, 2, 6, false, "ARROW"),
     TURTLE_EGGS_TRAMPLING(
-        ENTITIES_INTERACTIONS, false, 2, 7, true, 13, "TURTLE_EGG"),
+        ENTITIES_INTERACTIONS, false, 2, 7, true, "TURTLE_EGG"),
 
     DRIPLEAFS_LOWERING(
-        ENTITIES_INTERACTIONS, false, 3, 4, true, 17, "BIG_DRIPLEAF"),
+        ENTITIES_INTERACTIONS, false, 3, 4, true, "BIG_DRIPLEAF"),
     POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES(
-        ENTITIES_INTERACTIONS, false, 3, 5, true, 17, "POWDER_SNOW_BUCKET"),
+        ENTITIES_INTERACTIONS, false, 3, 5, true, "POWDER_SNOW_BUCKET"),
     GLOW_BERRIES_PICKING(
-        ENTITIES_INTERACTIONS, false, 3, 6, true, 17, "GLOW_BERRIES"),
+        ENTITIES_INTERACTIONS, false, 3, 6, true, "GLOW_BERRIES"),
 
 
     FIRE_SPREADING(
@@ -112,13 +111,13 @@ public enum PControlTrigger {
     GRASS_BLOCKS_FADING(
         WORLD_DESTRUCTION, true, 2, 3, true, "GRASS_BLOCK", "GRASS"),
     CORALS_DRYING(
-        WORLD_DESTRUCTION, true, 2, 4, true, 13, "FIRE_CORAL"),
+        WORLD_DESTRUCTION, true, 2, 4, true, "FIRE_CORAL"),
     CRIMSON_NYLIUM_FADING(
-        WORLD_DESTRUCTION, true, 2, 5, true, 16, "CRIMSON_NYLIUM"),
+        WORLD_DESTRUCTION, true, 2, 5, true, "CRIMSON_NYLIUM"),
     WARPED_NYLIUM_FADING(
-        WORLD_DESTRUCTION, true, 2, 6, true, 16, "WARPED_NYLIUM"),
+        WORLD_DESTRUCTION, true, 2, 6, true, "WARPED_NYLIUM"),
     SCULKS_SPREADING(
-        WORLD_DESTRUCTION, true, 2, 7, true, 19, "SCULK"),
+        WORLD_DESTRUCTION, true, 2, 7, true, "SCULK"),
 
 
     GRASS_SPREADING(
@@ -144,11 +143,11 @@ public enum PControlTrigger {
         GROWING_BLOCKS_AND_SMALL_PLANTS, true, 2, 7, true, "CARROT_ITEM", "CARROT"),
 
     BEETROOTS_GROWING(
-        GROWING_BLOCKS_AND_SMALL_PLANTS, true, 3, 4, true, 9, "BEETROOT"),
+        GROWING_BLOCKS_AND_SMALL_PLANTS, true, 3, 4, true, "BEETROOT"),
     SWEET_BERRIES_GROWING(
-        GROWING_BLOCKS_AND_SMALL_PLANTS, true, 3, 5, true, 14, "SWEET_BERRIES"),
+        GROWING_BLOCKS_AND_SMALL_PLANTS, true, 3, 5, true, "SWEET_BERRIES"),
     AMETHYST_CLUSTERS_GROWING(
-        GROWING_BLOCKS_AND_SMALL_PLANTS, true, 3, 6, true, 17, "AMETHYST_CLUSTER"),
+        GROWING_BLOCKS_AND_SMALL_PLANTS, true, 3, 6, true, "AMETHYST_CLUSTER"),
 
 
     SUGAR_CANE_GROWING(
@@ -163,19 +162,19 @@ public enum PControlTrigger {
         VINES_AND_TALL_STRUCTURES, true, 1, 7, true, "RED_MUSHROOM_BLOCK", "HUGE_MUSHROOM_2"),
 
     CHORUSES_GROWING(
-        VINES_AND_TALL_STRUCTURES, true, 2, 2, true, 9, "CHORUS_FLOWER"),
+        VINES_AND_TALL_STRUCTURES, true, 2, 2, true, "CHORUS_FLOWER"),
     KELPS_GROWING(
-        VINES_AND_TALL_STRUCTURES, true, 2, 3, true, 13, "KELP"),
+        VINES_AND_TALL_STRUCTURES, true, 2, 3, true, "KELP"),
     BAMBOO_GROWING(
-        VINES_AND_TALL_STRUCTURES, true, 2, 4, true, 14, "BAMBOO"),
+        VINES_AND_TALL_STRUCTURES, true, 2, 4, true, "BAMBOO"),
     WEEPING_VINES_GROWING(
-        VINES_AND_TALL_STRUCTURES, true, 2, 5, true, 16, "WEEPING_VINES"),
+        VINES_AND_TALL_STRUCTURES, true, 2, 5, true, "WEEPING_VINES"),
     TWISTING_VINES_GROWING(
-        VINES_AND_TALL_STRUCTURES, true, 2, 6, true, 16, "TWISTING_VINES"),
+        VINES_AND_TALL_STRUCTURES, true, 2, 6, true, "TWISTING_VINES"),
     POINTED_DRIPSTONES_GROWING(
-        VINES_AND_TALL_STRUCTURES, true, 2, 7, true, 17, "POINTED_DRIPSTONE"),
+        VINES_AND_TALL_STRUCTURES, true, 2, 7, true, "POINTED_DRIPSTONE"),
     GLOW_BERRIES_GROWING(
-        VINES_AND_TALL_STRUCTURES, true, 2, 8, true, 17, "GLOW_BERRIES"),
+        VINES_AND_TALL_STRUCTURES, true, 2, 8, true, "GLOW_BERRIES"),
 
 
     DEBUG_MESSAGES(
@@ -195,10 +194,6 @@ public enum PControlTrigger {
     private final boolean defaults;
 
     PControlTrigger(@Nonnull PControlCategory category, boolean realtime, int row, int column, boolean defaults, @Nonnull String... iconVariants) {
-        this(category, realtime, row, column, defaults, -1, iconVariants);
-    }
-
-    PControlTrigger(@Nonnull PControlCategory category, boolean realtime, int row, int column, boolean defaults, int minVersion, @Nonnull String... iconVariants) {
         this.category = category;
         this.realtime = realtime;
         this.slot = (short) ((row - 1) * 9 + column - 1);
