@@ -35,6 +35,11 @@ public final class PhysicsListenerLegacy extends PhysicsListenerCommon {
         return stack.getData() instanceof Dye && ((Dye) stack.getData()).getColor() == DyeColor.WHITE;
     }
 
+    @Override
+    protected boolean isBlockContainsWater(@Nonnull Block block) {
+        return this.customTag.BLOCKS_UNDER_WATER_ONLY.contains(block.getType());
+    }
+
     @EventHandler(ignoreCancelled = true)
     private void on(BlockPhysicsEvent event) {
         Block fromBlock = event.getBlock();

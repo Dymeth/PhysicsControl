@@ -26,7 +26,7 @@ public final class CustomTag {
         NATURAL_GRAVITY_BLOCKS,
         BONE_MEAL_HERBS,
         LITTLE_MUSHROOMS,
-        UNDERWATER_BLOCKS_ONLY,
+        BLOCKS_UNDER_WATER_ONLY,
         GRASS_BLOCK,
         DIRT_PATH_BLOCK,
         FARMLAND_BLOCK,
@@ -205,11 +205,9 @@ public final class CustomTag {
             set.add(Material.RED_MUSHROOM);
             set.add(Material.BROWN_MUSHROOM);
         });
-        UNDERWATER_BLOCKS_ONLY = BlocksSet.create("UNDERWATER_BLOCKS_ONLY", data, set -> {
-            set.add(Material.WATER);
-            if (!data.hasVersion(13)) {
-                set.add("STATIONARY_WATER");
-            } else {
+        BLOCKS_UNDER_WATER_ONLY = BlocksSet.create("UNDERWATER_BLOCKS_ONLY", data, set -> {
+            set.add(this.WATER);
+            if (data.hasVersion(13)) {
                 set.add(Material.BUBBLE_COLUMN);
                 set.add(Material.KELP_PLANT);
                 set.add(Material.TALL_SEAGRASS);

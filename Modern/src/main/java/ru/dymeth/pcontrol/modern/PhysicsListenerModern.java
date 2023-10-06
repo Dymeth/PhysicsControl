@@ -18,7 +18,6 @@ import ru.dymeth.pcontrol.api.PControlData;
 import ru.dymeth.pcontrol.api.PControlTrigger;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 @SuppressWarnings({"IsCancelled"})
 public final class PhysicsListenerModern extends PhysicsListenerCommon {
@@ -38,17 +37,10 @@ public final class PhysicsListenerModern extends PhysicsListenerCommon {
         return stack.getType() == Material.BONE_MEAL;
     }
 
-    @Nullable
     @Override
-    protected PControlTrigger getBlockFromToEventTrigger(@Nonnull Block block, @Nonnull Material from, @Nonnull Material to) {
-        PControlTrigger trigger = super.getBlockFromToEventTrigger(block, from, to);
-        if (trigger == null) {
-            if (block.getBlockData() instanceof Waterlogged
-                && ((Waterlogged) block.getBlockData()).isWaterlogged()) {
-                trigger = PControlTrigger.WATER_FLOWING;
-            }
-        }
-        return trigger;
+    protected boolean isBlockContainsWater(@Nonnull Block block) {
+        return (block.getBlockData() instanceof Waterlogged && ((Waterlogged) block.getBlockData()).isWaterlogged())
+            || this.customTag.BLOCKS_UNDER_WATER_ONLY.contains(block.getType());
     }
 
     @EventHandler(ignoreCancelled = true)

@@ -28,7 +28,6 @@ import ru.dymeth.pcontrol.rules.single.EntityRules;
 import ru.dymeth.pcontrol.rules.single.MaterialRules;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -234,7 +233,7 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
             this.rulesBlockFromToEventFrom.regSingle(PControlTrigger.LAVA_FLOWING,
                 this.customTag.LAVA);
             this.rulesBlockFromToEventFrom.regSingle(PControlTrigger.WATER_FLOWING,
-                this.customTag.UNDERWATER_BLOCKS_ONLY);
+                this.customTag.BLOCKS_UNDER_WATER_ONLY);
             this.rulesBlockFromToEventFrom.regSingle(PControlTrigger.IGNORED_STATE, // Seems bug while chunks generation (water near gravity blocks?): "Action BlockFromTo (GRAVEL > GRAVEL) was detected"
                 this.customTag.NATURAL_GRAVITY_BLOCKS);
             this.rulesBlockFromToEventFrom.regSingle(PControlTrigger.DRAGON_EGGS_TELEPORTING,
@@ -533,6 +532,7 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
         if (trigger != null) {
             this.data.cancelIfDisabled(event, world, trigger);
         }
+
         // Prevent client bug with disappearing blocks on start falling (fixed on paper 1.16.5, spigot 1.19.4 and client 1.18.2)
         if (event.isCancelled() && updateBlockOnCancel && !this.data.hasVersion(19)) {
             event.getBlock().getState().update(false, false);
@@ -550,7 +550,9 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
         Material from = event.getBlock().getType();
         Material to = event.getToBlock().getType();
 
-        PControlTrigger trigger = this.getBlockFromToEventTrigger(event.getBlock(), from, to);
+        PControlTrigger trigger = this.rulesBlockFromToEventFromTo.findTrigger(from, to);
+        if (trigger == null) trigger = this.rulesBlockFromToEventFrom.findTrigger(from);
+        if (trigger == null && this.isBlockContainsWater(event.getBlock())) trigger = PControlTrigger.WATER_FLOWING;
 
         if (trigger != null) {
             this.data.cancelIfDisabled(event, trigger);
@@ -559,12 +561,7 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
         }
     }
 
-    @Nullable
-    protected PControlTrigger getBlockFromToEventTrigger(@Nonnull Block block, @Nonnull Material from, @Nonnull Material to) {
-        PControlTrigger trigger = this.rulesBlockFromToEventFromTo.findTrigger(from, to);
-        if (trigger == null) trigger = this.rulesBlockFromToEventFrom.findTrigger(from);
-        return trigger;
-    }
+    protected abstract boolean isBlockContainsWater(@Nonnull Block block);
 
     protected final MaterialMaterialRules rulesBlockFadeEventFromTo = new MaterialMaterialRules(this.data);
     protected final MaterialRules rulesBlockFadeEventTo = new MaterialRules(this.data);
