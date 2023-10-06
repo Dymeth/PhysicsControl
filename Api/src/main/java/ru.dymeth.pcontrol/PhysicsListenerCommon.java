@@ -49,32 +49,32 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
     private void initBlockGrowEvent() {
         if (this.data.hasVersion(0)) {
             this.rulesBlockGrowEventTo.regSingle(PControlTrigger.SUGAR_CANE_GROWING,
-                this.customTag.SUGAR_CANE_BLOCK.getValues());
+                this.customTag.SUGAR_CANE_BLOCK);
             this.rulesBlockGrowEventTo.regSingle(PControlTrigger.CACTUS_GROWING,
                 Collections.singleton(Material.CACTUS));
             this.rulesBlockGrowEventTo.regSingle(PControlTrigger.WHEAT_GROWING,
-                this.customTag.WHEAT_BLOCK.getValues());
+                this.customTag.WHEAT_BLOCK);
             this.rulesBlockGrowEventTo.regSingle(PControlTrigger.POTATOES_GROWING,
-                this.customTag.POTATO_BLOCK.getValues());
+                this.customTag.POTATO_BLOCK);
             this.rulesBlockGrowEventTo.regSingle(PControlTrigger.CARROTS_GROWING,
-                this.customTag.CARROT_BLOCK.getValues());
+                this.customTag.CARROT_BLOCK);
             this.rulesBlockGrowEventTo.regSingle(PControlTrigger.PUMPKINS_GROWING,
-                this.customTag.PUMPKIN_STEM_AND_BLOCK.getValues());
+                this.customTag.PUMPKIN_STEM_AND_BLOCK);
             this.rulesBlockGrowEventTo.regSingle(PControlTrigger.MELONS_GROWING,
-                this.customTag.MELON_STEM_AND_BLOCK.getValues());
+                this.customTag.MELON_STEM_AND_BLOCK);
             this.rulesBlockGrowEventTo.regSingle(PControlTrigger.COCOAS_GROWING,
                 Collections.singleton(Material.COCOA));
             this.rulesBlockGrowEventFromTo.regPair(PControlTrigger.VINES_GROWING,
                 Collections.singleton(Material.VINE),
                 Collections.singleton(Material.VINE));
             this.rulesBlockGrowEventTo.regSingle(PControlTrigger.NETHER_WARTS_GROWING,
-                this.customTag.NETHER_WART_BLOCK.getValues());
+                this.customTag.NETHER_WART_BLOCK);
             this.rulesBlockGrowEventTo.regSingle(PControlTrigger.BONE_MEAL_USAGE,
-                this.customTag.BONE_MEAL_HERBS.getValues());
+                this.customTag.BONE_MEAL_HERBS);
         }
         if (this.data.hasVersion(9)) {
             this.rulesBlockGrowEventTo.regSingle(PControlTrigger.BEETROOTS_GROWING,
-                this.customTag.BEETROOT_BLOCK.getValues());
+                this.customTag.BEETROOT_BLOCK);
             this.rulesBlockGrowEventTo.regSingle(PControlTrigger.CHORUSES_GROWING,
                 Collections.singleton(Material.CHORUS_FLOWER));
         }
@@ -105,34 +105,34 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
     private void initEntityChangeBlockEvent() {
         if (this.data.hasVersion(0)) {
             this.rulesEntityChangeBlockEventFromTo.regPair(PControlTrigger.FARMLANDS_TRAMPLING,
-                this.customTag.FARMLAND_BLOCK.getValues(),
+                this.customTag.FARMLAND_BLOCK,
                 Collections.singleton(Material.DIRT));
             this.rulesEntityChangeBlockEventTo.regSingle(PControlTrigger.IGNORED_STATE, // Redstone ore activation
-                this.customTag.REDSTONE_ORE_BLOCKS.getValues());
+                this.customTag.REDSTONE_ORE_BLOCKS);
             this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.SAND_FALLING,
-                this.customTag.SAND.getValues());
+                this.customTag.SAND);
             this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.GRAVEL_FALLING,
-                this.customTag.GRAVEL.getValues());
+                this.customTag.GRAVEL);
             this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.ANVILS_FALLING,
-                this.customTag.ANVIL.getValues());
+                this.customTag.ANVIL);
             this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.DRAGON_EGGS_FALLING,
                 Collections.singleton(Material.DRAGON_EGG));
             this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.SAND_FALLING,
-                this.customTag.SAND.getValues());
+                this.customTag.SAND);
             this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.GRAVEL_FALLING,
-                this.customTag.GRAVEL.getValues());
+                this.customTag.GRAVEL);
             this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.ANVILS_FALLING,
-                this.customTag.ANVIL.getValues());
+                this.customTag.ANVIL);
             this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.DRAGON_EGGS_FALLING,
                 Collections.singleton(Material.DRAGON_EGG));
             this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.IGNORED_STATE, // On custom falling blocks fall (created by third-party plugins like WoodCutter)
-                this.customTag.WORLD_AIR.getValues());
+                this.customTag.WORLD_AIR);
             this.rulesNonFallingEntityChangeBlockEventByFrom.regPair(PControlTrigger.BURNING_ARROWS_ACTIVATE_TNT,
                 Collections.singleton(EntityType.ARROW),
                 Collections.singleton(Material.TNT));
             this.rulesNonFallingEntityChangeBlockEventByFrom.regPair(PControlTrigger.ZOMBIES_BREAK_DOORS,
                 Collections.singleton(EntityType.ZOMBIE),
-                this.customTag.WOODEN_DOORS.getValues());
+                this.customTag.WOODEN_DOORS);
             this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.IGNORED_STATE, // Boats destroys lilies. TODO It is necessary to implement a smart system of destruction and restoration of water lilies so that there are no problems with movement
                 Collections.singleton(EntityType.BOAT));
             this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.SHEEPS_EATING_GRASS,
@@ -153,13 +153,13 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
         if (this.data.hasVersion(11)) {
             this.rulesNonFallingEntityChangeBlockEventByFrom.regPair(PControlTrigger.ZOMBIES_BREAK_DOORS,
                 Collections.singleton(EntityType.ZOMBIE_VILLAGER),
-                this.customTag.WOODEN_DOORS.getValues());
+                this.customTag.WOODEN_DOORS);
         }
         if (this.data.hasVersion(12)) {
             this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.CONCRETE_POWDERS_FALLING,
-                this.customTag.CONCRETE_POWDERS.getValues());
+                this.customTag.CONCRETE_POWDERS);
             this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.CONCRETE_POWDERS_FALLING,
-                this.customTag.CONCRETE_POWDERS.getValues());
+                this.customTag.CONCRETE_POWDERS);
         }
         if (this.data.hasVersion(13)) {
             this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.TURTLES_LAYING_EGGS,
@@ -181,7 +181,7 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
                 Collections.singleton(Material.BIG_DRIPLEAF));
             this.rulesEntityChangeBlockEventFromTo.regPair(PControlTrigger.POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES,
                 Collections.singleton(Material.POWDER_SNOW),
-                this.customTag.WORLD_AIR.getValues());
+                this.customTag.WORLD_AIR);
             this.rulesEntityChangeBlockEventFromTo.regPair(PControlTrigger.GLOW_BERRIES_PICKING,
                 Collections.singleton(Material.CAVE_VINES),
                 Collections.singleton(Material.CAVE_VINES));
@@ -198,65 +198,71 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
     private void initBlockFromToEvent() {
         if (this.data.hasVersion(0)) {
             this.rulesBlockFromToEventFromTo.regPair(PControlTrigger.IGNORED_STATE, // Strange thing from FluidTypeFlowing
-                this.customTag.WORLD_AIR.getValues(),
-                this.customTag.WORLD_AIR.getValues());
+                this.customTag.WORLD_AIR,
+                this.customTag.WORLD_AIR);
             this.rulesBlockFromToEventFrom.regSingle(PControlTrigger.LAVA_FLOWING,
-                this.customTag.LAVA.getValues());
+                this.customTag.LAVA);
             this.rulesBlockFromToEventFrom.regSingle(PControlTrigger.WATER_FLOWING,
-                this.customTag.UNDERWATER_BLOCKS_ONLY.getValues());
+                this.customTag.UNDERWATER_BLOCKS_ONLY);
             this.rulesBlockFromToEventFrom.regSingle(PControlTrigger.IGNORED_STATE, // Seems bug while chunks generation (water near gravity blocks?): "Action BlockFromTo (GRAVEL > GRAVEL) was detected"
-                this.customTag.NATURAL_GRAVITY_BLOCKS.getValues());
+                this.customTag.NATURAL_GRAVITY_BLOCKS);
             this.rulesBlockFromToEventFrom.regSingle(PControlTrigger.DRAGON_EGGS_TELEPORTING,
                 Collections.singleton(Material.DRAGON_EGG));
         }
         if (this.data.hasVersion(13)) {
             this.rulesBlockFromToEventFromTo.regPair(PControlTrigger.IGNORED_STATE, // Seems bug while chunks generation (kelp near caves?): "Action BlockFromTo (KELP > AIR) was detected"
                 Collections.singleton(Material.KELP),
-                this.customTag.WORLD_AIR.getValues());
+                this.customTag.WORLD_AIR);
         }
     }
 
     private void initBlockFadeEvent() {
         if (this.data.hasVersion(0)) {
             this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.GRASS_BLOCKS_FADING,
-                new BlocksSet().add(this.customTag.GRASS_BLOCK).add(this.customTag.DIRT_PATH_BLOCK).getValues(),
+                BlocksSet.create("GRASS_BLOCKS_FADING trigger", this.data, set -> {
+                    set.add(this.customTag.GRASS_BLOCK);
+                    set.add(this.customTag.DIRT_PATH_BLOCK);
+                }),
                 Collections.singleton(Material.DIRT));
             this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.MYCELIUM_SPREADING,
-                this.customTag.MYCELIUM_BLOCK.getValues(),
+                this.customTag.MYCELIUM_BLOCK,
                 Collections.singleton(Material.DIRT));
             this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.FARMLANDS_DRYING,
-                this.customTag.FARMLAND_BLOCK.getValues(),
+                this.customTag.FARMLAND_BLOCK,
                 Collections.singleton(Material.DIRT));
             this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.SNOW_MELTING,
                 Collections.singleton(Material.SNOW),
-                this.customTag.WORLD_AIR.getValues());
+                this.customTag.WORLD_AIR);
             this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.ICE_MELTING,
                 Collections.singleton(Material.ICE),
-                new BlocksSet().add(this.customTag.WATER).add(this.customTag.WORLD_AIR).getValues());
+                BlocksSet.create("ICE_MELTING trigger", this.data, set -> {
+                    set.add(this.customTag.WATER);
+                    set.add(this.customTag.WORLD_AIR);
+                }));
             this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.FIRE_SPREADING,
                 Collections.singleton(Material.FIRE),
-                this.customTag.WORLD_AIR.getValues());
+                this.customTag.WORLD_AIR);
             this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.IGNORED_STATE, // Redstone ore deactivation
-                this.customTag.REDSTONE_ORE_BLOCKS.getValues(),
-                this.customTag.REDSTONE_ORE_BLOCKS.getValues());
+                this.customTag.REDSTONE_ORE_BLOCKS,
+                this.customTag.REDSTONE_ORE_BLOCKS);
             this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.IGNORED_STATE, // Strange server action. Perhaps this is due to the fall of blocks without a base (torches for example) during generation (only in mineshafts?)
-                this.customTag.WORLD_AIR.getValues(),
-                this.customTag.WORLD_AIR.getValues());
+                this.customTag.WORLD_AIR,
+                this.customTag.WORLD_AIR);
         }
         if (this.data.hasVersion(9)) {
             this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.FROSTED_ICE_PHYSICS,
                 Collections.singleton(Material.FROSTED_ICE),
-                this.customTag.WATER.getValues());
+                this.customTag.WATER);
         }
         if (this.data.hasVersion(13)) {
             this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.CORALS_DRYING,
-                this.customTag.ALL_ALIVE_CORALS.getValues(),
-                this.customTag.ALL_DEAD_CORALS.getValues());
+                this.customTag.ALL_ALIVE_CORALS,
+                this.customTag.ALL_DEAD_CORALS);
         }
         if (this.data.hasVersion(14)) {
             this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.SCAFFOLDING_FALLING,
                 Collections.singleton(Material.SCAFFOLDING),
-                this.customTag.WORLD_AIR.getValues());
+                this.customTag.WORLD_AIR);
         }
         if (this.data.hasVersion(16)) {
             this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.CRIMSON_NYLIUM_FADING,
@@ -272,18 +278,21 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
         if (this.data.hasVersion(0)) {
             this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.GRASS_SPREADING,
                 Collections.singleton(Material.DIRT),
-                this.customTag.GRASS_BLOCK.getValues());
+                this.customTag.GRASS_BLOCK);
             this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.MYCELIUM_SPREADING,
                 Collections.singleton(Material.DIRT),
-                this.customTag.MYCELIUM_BLOCK.getValues());
+                this.customTag.MYCELIUM_BLOCK);
             this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.VINES_GROWING,
-                new BlocksSet(Material.VINE).add(this.customTag.WORLD_AIR).getValues(),
+                BlocksSet.create("VINES_GROWING trigger", this.data, set -> {
+                    set.add(Material.VINE);
+                    set.add(this.customTag.WORLD_AIR);
+                }),
                 Collections.singleton(Material.VINE));
             this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.LITTLE_MUSHROOMS_SPREADING,
-                this.customTag.WORLD_AIR.getValues(),
-                this.customTag.LITTLE_MUSHROOMS.getValues());
+                this.customTag.WORLD_AIR,
+                this.customTag.LITTLE_MUSHROOMS);
             this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.FIRE_SPREADING,
-                this.customTag.WORLD_AIR.getValues(),
+                this.customTag.WORLD_AIR,
                 Collections.singleton(Material.FIRE));
         }
         if (this.data.hasVersion(9)) {
@@ -292,34 +301,43 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
         }
         if (this.data.hasVersion(13)) {
             this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.KELPS_GROWING,
-                this.customTag.WATER.getValues(),
+                this.customTag.WATER,
                 Collections.singleton(Material.KELP));
         }
         if (this.data.hasVersion(14)) {
             this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.BAMBOO_GROWING,
-                this.customTag.WORLD_AIR.getValues(),
+                this.customTag.WORLD_AIR,
                 Collections.singleton(Material.BAMBOO));
         }
         if (this.data.hasVersion(16)) {
             this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.WEEPING_VINES_GROWING,
-                this.customTag.WORLD_AIR.getValues(),
+                this.customTag.WORLD_AIR,
                 Collections.singleton(Material.WEEPING_VINES));
             this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.TWISTING_VINES_GROWING,
-                this.customTag.WORLD_AIR.getValues(),
+                this.customTag.WORLD_AIR,
                 Collections.singleton(Material.TWISTING_VINES));
         }
         if (this.data.hasVersion(17)) {
             this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.GLOW_BERRIES_GROWING,
-                new BlocksSet(Material.CAVE_VINES).add(this.customTag.WORLD_AIR).getValues(),
+                BlocksSet.create("GLOW_BERRIES_GROWING trigger", this.data, set -> {
+                    set.add(Material.CAVE_VINES);
+                    set.add(this.customTag.WORLD_AIR);
+                }),
                 Collections.singleton(Material.CAVE_VINES));
             this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.POINTED_DRIPSTONES_GROWING,
-                new BlocksSet(Material.POINTED_DRIPSTONE).add(this.customTag.WORLD_AIR).getValues(),
+                BlocksSet.create("POINTED_DRIPSTONES_GROWING trigger", this.data, set -> {
+                    set.add(Material.POINTED_DRIPSTONE);
+                    set.add(this.customTag.WORLD_AIR);
+                }),
                 Collections.singleton(Material.POINTED_DRIPSTONE));
             this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.IGNORED_STATE, // BONE_MEAL_USAGE
-                this.customTag.WORLD_AIR.getValues(),
+                this.customTag.WORLD_AIR,
                 Collections.singleton(Material.HANGING_ROOTS));
             this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.IGNORED_STATE, // BONE_MEAL_USAGE
-                new BlocksSet(Material.GLOW_LICHEN).add(this.customTag.WORLD_AIR).getValues(),
+                BlocksSet.create("IGNORED_STATE trigger", this.data, set -> {
+                    set.add(Material.GLOW_LICHEN);
+                    set.add(this.customTag.WORLD_AIR);
+                }),
                 Collections.singleton(Material.GLOW_LICHEN));
             this.rulesBlockSpreadEventTo.regSingle(PControlTrigger.AMETHYST_CLUSTERS_GROWING, // from = AIR, CAVE_AIR, WATER, etc
                 Collections.singleton(Material.SMALL_AMETHYST_BUD));
@@ -342,11 +360,11 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
     private void initEntityInteractEvent() {
         if (this.data.hasVersion(0)) {
             this.rulesEntityInteractEventMaterial.regSingle(PControlTrigger.FARMLANDS_TRAMPLING,
-                this.customTag.FARMLAND_BLOCK.getValues());
+                this.customTag.FARMLAND_BLOCK);
             this.rulesEntityInteractEventMaterial.regSingle(PControlTrigger.IGNORED_STATE, // Redstone activators
-                this.customTag.REDSTONE_PASSIVE_INPUTS.getValues());
+                this.customTag.REDSTONE_PASSIVE_INPUTS);
             this.rulesEntityInteractEventMaterial.regSingle(PControlTrigger.IGNORED_STATE, // Redstone ore activation
-                this.customTag.REDSTONE_ORE_BLOCKS.getValues());
+                this.customTag.REDSTONE_ORE_BLOCKS);
         }
         if (this.data.hasVersion(13)) {
             this.rulesEntityInteractEventMaterial.regSingle(PControlTrigger.TURTLE_EGGS_TRAMPLING,
@@ -361,17 +379,17 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
     private void initEntityBlockFormEvent() {
         if (this.data.hasVersion(0)) {
             this.rulesEntityBlockFormEventFromTo.regPair(PControlTrigger.SNOW_GOLEMS_CREATE_SNOW,
-                this.customTag.WORLD_AIR.getValues(),
+                this.customTag.WORLD_AIR,
                 Collections.singleton(Material.SNOW));
         }
         if (this.data.hasVersion(9)) {
             this.rulesEntityBlockFormEventFromTo.regPair(PControlTrigger.FROSTED_ICE_PHYSICS,
-                this.customTag.WATER.getValues(),
+                this.customTag.WATER,
                 Collections.singleton(Material.FROSTED_ICE));
         }
         if (this.data.hasVersion(14)) {
             this.rulesEntityBlockFormEventFromTo.regPair(PControlTrigger.WITHER_CREATE_WITHER_ROSE_BLOCKS,
-                this.customTag.WORLD_AIR.getValues(),
+                this.customTag.WORLD_AIR,
                 Collections.singleton(Material.WITHER_ROSE));
         }
     }
@@ -521,7 +539,7 @@ public abstract class PhysicsListenerCommon extends PhysicsListener {
 
     @EventHandler(ignoreCancelled = true)
     public void on(EntityInteractEvent event) {
-        if (event.getEntityType() == EntityType.VILLAGER && this.customTag.WOODEN_DOORS.isTagged(event.getBlock().getType())) {
+        if (event.getEntityType() == EntityType.VILLAGER && this.customTag.WOODEN_DOORS.contains(event.getBlock().getType())) {
             return;
         }
         this.handleInteraction(event, event.getBlock(), event.getEntity());

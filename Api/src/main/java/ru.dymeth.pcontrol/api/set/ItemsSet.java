@@ -2,12 +2,29 @@ package ru.dymeth.pcontrol.api.set;
 
 import org.bukkit.Material;
 import ru.dymeth.pcontrol.api.BukkitUtils;
+import ru.dymeth.pcontrol.api.PControlData;
 
 import javax.annotation.Nonnull;
+import java.util.Collections;
+import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public final class ItemsSet extends CustomEnumSet<Material> {
-    public ItemsSet(@Nonnull Material... elements) {
+
+    @Nonnull
+    public static Set<Material> create(@Nonnull String setName, @Nonnull PControlData data, @Nonnull Consumer<ItemsSet> consumer) {
+        ItemsSet result = new ItemsSet();
+        try {
+            consumer.accept(result);
+        } catch (NoSuchFieldError e) {
+            data.getPlugin().getLogger().warning("Unable to fill set " + setName + ". " +
+                "Item " + e.getMessage() + " not found. Plugin may not work correctly");
+        }
+        return Collections.unmodifiableSet(result.getValues());
+    }
+
+    private ItemsSet(@Nonnull Material... elements) {
         super(Material.class, elements);
     }
 
