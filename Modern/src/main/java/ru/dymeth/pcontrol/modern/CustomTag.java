@@ -108,6 +108,10 @@ public final class CustomTag {
     public static final KeysSet<Material> SAND = new MaterialKeysSet()
         .add(Tag.SAND.getValues());
 
+    public static final KeysSet<Material> GRAVEL = new MaterialKeysSet(
+        Material.GRAVEL)
+        .addBlocks("SUSPICIOUS_GRAVEL");
+
     public static final KeysSet<Material> ANVIL = new MaterialKeysSet()
         .add(Tag.ANVIL.getValues());
 

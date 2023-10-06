@@ -101,7 +101,7 @@ public final class PhysicsListenerModern extends PhysicsListenerCommon {
             this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.SAND_FALLING,
                 CustomTag.SAND.getValues());
             this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.GRAVEL_FALLING,
-                Collections.singleton(Material.GRAVEL));
+                CustomTag.GRAVEL.getValues());
             this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.ANVILS_FALLING,
                 CustomTag.ANVIL.getValues());
             this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.DRAGON_EGGS_FALLING,
@@ -109,7 +109,7 @@ public final class PhysicsListenerModern extends PhysicsListenerCommon {
             this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.SAND_FALLING,
                 CustomTag.SAND.getValues());
             this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.GRAVEL_FALLING,
-                Collections.singleton(Material.GRAVEL));
+                CustomTag.GRAVEL.getValues());
             this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.ANVILS_FALLING,
                 CustomTag.ANVIL.getValues());
             this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.DRAGON_EGGS_FALLING,

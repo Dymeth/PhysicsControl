@@ -52,6 +52,9 @@ public final class CustomTag {
     public static final KeysSet<Material> SAND = new MaterialKeysSet(
         Material.SAND);
 
+    public static final KeysSet<Material> GRAVEL = new MaterialKeysSet(
+        Material.GRAVEL);
+
     public static final KeysSet<Material> ANVIL = new MaterialKeysSet(
         Material.ANVIL);
 
