@@ -33,6 +33,10 @@ class PluginUpdater {
             this.updateTo_1_1_0();
             return "1.1.0";
         }
+        if (majorVersion == 1 && minorVersion == 1) {
+            this.updateTo_1_2_0();
+            return "1.2.0";
+        }
         return currentVersion;
     }
 
@@ -62,6 +66,9 @@ class PluginUpdater {
             //noinspection ResultOfMethodCallIgnored
             oldFile.delete();
         }
+    }
+
+    private void updateTo_1_2_0() {
     }
 
     private static int[] parseVersion(String versionName) {
