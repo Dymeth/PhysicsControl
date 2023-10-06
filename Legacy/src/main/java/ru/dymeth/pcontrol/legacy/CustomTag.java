@@ -19,12 +19,6 @@ public final class CustomTag {
     public final KeysSet<Material> WORLD_AIR = new MaterialKeysSet(
         AIR);
 
-    public final KeysSet<Material> RAILS = new MaterialKeysSet(
-        Material.RAILS,
-        ACTIVATOR_RAIL,
-        DETECTOR_RAIL,
-        POWERED_RAIL);
-
     public final KeysSet<Material> WOODEN_DOORS = new MaterialKeysSet(
         ACACIA_DOOR,
         BIRCH_DOOR,
@@ -126,4 +120,12 @@ public final class CustomTag {
 
     public final KeysSet<Material> MELON_STEM_AND_BLOCK = new MaterialKeysSet(
         MELON_STEM, MELON_BLOCK);
+
+    // legacy-specific
+
+    public final KeysSet<Material> RAILS = new MaterialKeysSet(
+        Material.RAILS,
+        ACTIVATOR_RAIL,
+        DETECTOR_RAIL,
+        POWERED_RAIL);
 }

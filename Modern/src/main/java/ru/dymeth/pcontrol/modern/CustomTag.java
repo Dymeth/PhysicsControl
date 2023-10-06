@@ -25,45 +25,6 @@ public final class CustomTag {
     public final KeysSet<Material> WOODEN_DOORS = new MaterialKeysSet()
         .add(Tag.WOODEN_DOORS.getValues());
 
-    public final KeysSet<Material> FENCES = new MaterialKeysSet(
-        ACACIA_FENCE,
-        BIRCH_FENCE,
-        DARK_OAK_FENCE,
-        JUNGLE_FENCE,
-        NETHER_BRICK_FENCE,
-        OAK_FENCE,
-        SPRUCE_FENCE)
-        .addBlocks(
-            "CRIMSON_FENCE",
-            "WARPED_FENCE"
-        );
-
-    public final KeysSet<Material> SIGNS = new MaterialKeysSet()
-        .addBlocks(
-            "SIGN",
-            "ACACIA_SIGN",
-            "BIRCH_SIGN",
-            "DARK_OAK_SIGN",
-            "JUNGLE_SIGN",
-            "OAK_SIGN",
-            "SPRUCE_SIGN",
-            "CRIMSON_SIGN",
-            "WARPED_SIGN"
-        );
-
-    public final KeysSet<Material> WALL_SIGNS = new MaterialKeysSet()
-        .addBlocks(
-            "WALL_SIGN",
-            "ACACIA_WALL_SIGN",
-            "BIRCH_WALL_SIGN",
-            "DARK_OAK_WALL_SIGN",
-            "JUNGLE_WALL_SIGN",
-            "OAK_WALL_SIGN",
-            "SPRUCE_WALL_SIGN",
-            "CRIMSON_WALL_SIGN",
-            "WARPED_WALL_SIGN"
-        );
-
     public final KeysSet<Material> PRESSURE_PLATES = new MaterialKeysSet(
         STONE_PRESSURE_PLATE,
         LIGHT_WEIGHTED_PRESSURE_PLATE,
@@ -71,38 +32,11 @@ public final class CustomTag {
         .addBlocks("POLISHED_BLACKSTONE_PRESSURE_PLATE")
         .add(WOODEN_PRESSURE_PLATES.getValues());
 
-    public final KeysSet<Material> REDSTONE_ACTIVE_INPUTS = new MaterialKeysSet(
-        LEVER,
-        TRAPPED_CHEST,
-        DAYLIGHT_DETECTOR,
-        OBSERVER)
-        .add(BUTTONS.getValues());
-
     public final KeysSet<Material> REDSTONE_PASSIVE_INPUTS = new MaterialKeysSet(
         TRIPWIRE_HOOK,
         TRIPWIRE)
         .add(PRESSURE_PLATES.getValues())
         .add(BUTTONS.getValues());
-
-    public final KeysSet<Material> REDSTONE_TRANSMITTERS_AND_OUTPUTS = new MaterialKeysSet(
-        DISPENSER,
-        STICKY_PISTON,
-        PISTON,
-        PISTON_HEAD,
-        MOVING_PISTON,
-        TNT,
-        REDSTONE_TORCH,
-        REDSTONE_WALL_TORCH,
-        REDSTONE_LAMP,
-        REDSTONE_BLOCK,
-        HOPPER,
-        DROPPER,
-        REPEATER,
-        COMPARATOR,
-        REDSTONE_WIRE)
-        .add(TRAPDOORS.getValues())
-        .add(FENCES.getValues())
-        .add(DOORS.getValues());
 
     public final KeysSet<Material> REDSTONE_ORE_BLOCKS = new MaterialKeysSet(
         REDSTONE_ORE)
@@ -174,50 +108,7 @@ public final class CustomTag {
 
     public final KeysSet<Material> LITTLE_MUSHROOMS = new MaterialKeysSet(
         RED_MUSHROOM,
-        BROWN_MUSHROOM);
-
-    public final KeysSet<Material> ALL_ALIVE_CORALS = new MaterialKeysSet()
-        .add(CORAL_BLOCKS.getValues())
-        .add(WALL_CORALS.getValues())
-        .add(CORAL_PLANTS.getValues())
-        .add(CORALS.getValues());
-
-    public final KeysSet<Material> DEAD_CORAL_PLANTS = new MaterialKeysSet(
-        DEAD_TUBE_CORAL,
-        DEAD_BRAIN_CORAL,
-        DEAD_BUBBLE_CORAL,
-        DEAD_FIRE_CORAL,
-        DEAD_HORN_CORAL);
-
-    public final KeysSet<Material> DEAD_CORALS = new MaterialKeysSet(
-        DEAD_TUBE_CORAL_FAN,
-        DEAD_BRAIN_CORAL_FAN,
-        DEAD_BUBBLE_CORAL_FAN,
-        DEAD_FIRE_CORAL_FAN,
-        DEAD_HORN_CORAL_FAN)
-        .add(DEAD_CORAL_PLANTS.getValues());
-
-    public final KeysSet<Material> DEAD_WALL_CORALS = new MaterialKeysSet(
-        DEAD_TUBE_CORAL_WALL_FAN,
-        DEAD_BRAIN_CORAL_WALL_FAN,
-        DEAD_BUBBLE_CORAL_WALL_FAN,
-        DEAD_FIRE_CORAL_WALL_FAN,
-        DEAD_HORN_CORAL_WALL_FAN);
-
-    public final KeysSet<Material> DEAD_CORAL_BLOCKS = new MaterialKeysSet(
-        DEAD_TUBE_CORAL_BLOCK,
-        DEAD_BRAIN_CORAL_BLOCK,
-        DEAD_BUBBLE_CORAL_BLOCK,
-        DEAD_FIRE_CORAL_BLOCK,
-        DEAD_HORN_CORAL_BLOCK);
-
-    public final KeysSet<Material> ALL_DEAD_CORALS = new MaterialKeysSet()
-        .add(DEAD_CORAL_BLOCKS.getValues())
-        .add(DEAD_WALL_CORALS.getValues())
-        .add(DEAD_CORAL_PLANTS.getValues())
-        .add(DEAD_CORALS.getValues());
-
-    public final KeysSet<Material> UNDERWATER_BLOCKS_ONLY = new MaterialKeysSet(
+        BROWN_MUSHROOM);public final KeysSet<Material> UNDERWATER_BLOCKS_ONLY = new MaterialKeysSet(
         Material.WATER,
         BUBBLE_COLUMN,
         KELP_PLANT,
@@ -259,4 +150,113 @@ public final class CustomTag {
 
     public final KeysSet<Material> MELON_STEM_AND_BLOCK = new MaterialKeysSet(
         MELON_STEM, MELON);
+
+    // modern-specific
+
+    public final KeysSet<Material> FENCES = new MaterialKeysSet(
+        ACACIA_FENCE,
+        BIRCH_FENCE,
+        DARK_OAK_FENCE,
+        JUNGLE_FENCE,
+        NETHER_BRICK_FENCE,
+        OAK_FENCE,
+        SPRUCE_FENCE)
+        .addBlocks(
+            "CRIMSON_FENCE",
+            "WARPED_FENCE"
+        );
+
+    public final KeysSet<Material> SIGNS = new MaterialKeysSet()
+        .addBlocks(
+            "SIGN",
+            "ACACIA_SIGN",
+            "BIRCH_SIGN",
+            "DARK_OAK_SIGN",
+            "JUNGLE_SIGN",
+            "OAK_SIGN",
+            "SPRUCE_SIGN",
+            "CRIMSON_SIGN",
+            "WARPED_SIGN"
+        );
+
+    public final KeysSet<Material> WALL_SIGNS = new MaterialKeysSet()
+        .addBlocks(
+            "WALL_SIGN",
+            "ACACIA_WALL_SIGN",
+            "BIRCH_WALL_SIGN",
+            "DARK_OAK_WALL_SIGN",
+            "JUNGLE_WALL_SIGN",
+            "OAK_WALL_SIGN",
+            "SPRUCE_WALL_SIGN",
+            "CRIMSON_WALL_SIGN",
+            "WARPED_WALL_SIGN"
+        );
+
+    public final KeysSet<Material> REDSTONE_ACTIVE_INPUTS = new MaterialKeysSet(
+        LEVER,
+        TRAPPED_CHEST,
+        DAYLIGHT_DETECTOR,
+        OBSERVER)
+        .add(BUTTONS.getValues());
+
+    public final KeysSet<Material> REDSTONE_TRANSMITTERS_AND_OUTPUTS = new MaterialKeysSet(
+        DISPENSER,
+        STICKY_PISTON,
+        PISTON,
+        PISTON_HEAD,
+        MOVING_PISTON,
+        TNT,
+        REDSTONE_TORCH,
+        REDSTONE_WALL_TORCH,
+        REDSTONE_LAMP,
+        REDSTONE_BLOCK,
+        HOPPER,
+        DROPPER,
+        REPEATER,
+        COMPARATOR,
+        REDSTONE_WIRE)
+        .add(TRAPDOORS.getValues())
+        .add(FENCES.getValues())
+        .add(DOORS.getValues());
+
+    public final KeysSet<Material> ALL_ALIVE_CORALS = new MaterialKeysSet()
+        .add(CORAL_BLOCKS.getValues())
+        .add(WALL_CORALS.getValues())
+        .add(CORAL_PLANTS.getValues())
+        .add(CORALS.getValues());
+
+    public final KeysSet<Material> DEAD_CORAL_PLANTS = new MaterialKeysSet(
+        DEAD_TUBE_CORAL,
+        DEAD_BRAIN_CORAL,
+        DEAD_BUBBLE_CORAL,
+        DEAD_FIRE_CORAL,
+        DEAD_HORN_CORAL);
+
+    public final KeysSet<Material> DEAD_CORALS = new MaterialKeysSet(
+        DEAD_TUBE_CORAL_FAN,
+        DEAD_BRAIN_CORAL_FAN,
+        DEAD_BUBBLE_CORAL_FAN,
+        DEAD_FIRE_CORAL_FAN,
+        DEAD_HORN_CORAL_FAN)
+        .add(DEAD_CORAL_PLANTS.getValues());
+
+    public final KeysSet<Material> DEAD_WALL_CORALS = new MaterialKeysSet(
+        DEAD_TUBE_CORAL_WALL_FAN,
+        DEAD_BRAIN_CORAL_WALL_FAN,
+        DEAD_BUBBLE_CORAL_WALL_FAN,
+        DEAD_FIRE_CORAL_WALL_FAN,
+        DEAD_HORN_CORAL_WALL_FAN);
+
+    public final KeysSet<Material> DEAD_CORAL_BLOCKS = new MaterialKeysSet(
+        DEAD_TUBE_CORAL_BLOCK,
+        DEAD_BRAIN_CORAL_BLOCK,
+        DEAD_BUBBLE_CORAL_BLOCK,
+        DEAD_FIRE_CORAL_BLOCK,
+        DEAD_HORN_CORAL_BLOCK);
+
+    public final KeysSet<Material> ALL_DEAD_CORALS = new MaterialKeysSet()
+        .add(DEAD_CORAL_BLOCKS.getValues())
+        .add(DEAD_WALL_CORALS.getValues())
+        .add(DEAD_CORAL_PLANTS.getValues())
+        .add(DEAD_CORALS.getValues());
 }
