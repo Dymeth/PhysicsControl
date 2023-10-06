@@ -14,7 +14,7 @@ public final class MaterialKeysSet extends EnumKeysSet<Material> {
     @Nonnull
     @Override
     public EnumKeysSet<Material> add(@Nonnull Predicate<Material> filter) {
-        return super.add(material -> filter.test(material) && !material.name().startsWith("LEGACY_"));
+        return super.add(material -> material.isBlock() && !material.name().startsWith("LEGACY_") && filter.test(material));
     }
 
     @Nonnull
