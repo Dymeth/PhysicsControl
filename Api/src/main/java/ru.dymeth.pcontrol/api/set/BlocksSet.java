@@ -20,7 +20,7 @@ public final class BlocksSet extends CustomEnumSet<Material> {
     @Nonnull
     @Override
     public BlocksSet add(@Nonnull String... elementNames) {
-        this.elements.addAll(BukkitUtils.matchBlockMaterials(null, elementNames));
+        this.add(BukkitUtils.matchBlockMaterials(null, elementNames));
         return this;
     }
 }
