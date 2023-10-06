@@ -164,7 +164,9 @@ class PluginUpdater {
         }
     }
 
-    private void appendDataToFile(@Nonnull File file, @Nonnull String data) {
+    private void appendDataToFile(@Nonnull File file,
+                                  @SuppressWarnings("SameParameterValue") @Nonnull String data
+    ) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
             writer.write(data);

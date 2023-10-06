@@ -58,13 +58,16 @@ public abstract class PhysicsListener implements Listener {
         this.data.announce(l.getWorld(), message.toPlainText(), message);
     }
 
-    protected String genOffsetMsg(Block first, Block second) {
+    @SuppressWarnings("unused")
+    @Nonnull
+    protected String genOffsetMsg(@Nonnull Block first, @Nonnull Block second) {
         return genOffsetMsg(
             first.getX() - second.getX(),
             first.getY() - second.getY(),
             first.getZ() - second.getZ());
     }
 
+    @Nonnull
     private String genOffsetMsg(int oX, int oY, int oZ) {
         return "offset=" + (oX < 0 ? oX : " " + oX) + " " + (oY < 0 ? oY : " " + oY) + " " + (oZ < 0 ? oZ : " " + oZ) + ";";
     }

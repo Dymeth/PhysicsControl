@@ -42,6 +42,10 @@ public class FileUtils {
              */
             String me = clazz.getName().replace(".", "/") + ".class";
             dirURL = clazz.getClassLoader().getResource(me);
+
+            if (dirURL == null) {
+                throw new IllegalArgumentException("Specified resource not found");
+            }
         }
 
         if (dirURL.getProtocol().equals("jar")) {
@@ -49,7 +53,7 @@ public class FileUtils {
             String jarPath = dirURL.getPath().substring(5, dirURL.getPath().indexOf("!")); //strip out only the JAR file
             JarFile jar = new JarFile(URLDecoder.decode(jarPath, "UTF-8"));
             Enumeration<JarEntry> entries = jar.entries(); //gives ALL entries in jar
-            Set<String> result = new HashSet<String>(); //avoid duplicates in case it is a subdirectory
+            Set<String> result = new HashSet<>(); //avoid duplicates in case it is a subdirectory
             while (entries.hasMoreElements()) {
                 String name = entries.nextElement().getName();
                 if (name.startsWith(path)) { //filter according to the path
@@ -62,7 +66,7 @@ public class FileUtils {
                     result.add(entry);
                 }
             }
-            return result.toArray(new String[result.size()]);
+            return result.toArray(new String[0]);
         }
 
         throw new UnsupportedOperationException("Cannot list files for URL " + dirURL);

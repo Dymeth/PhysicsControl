@@ -16,7 +16,7 @@ import ru.dymeth.pcontrol.api.PhysicsListener;
 
 import javax.annotation.Nonnull;
 
-@SuppressWarnings({"IsCancelled", "ClassInitializerMayBeStatic"})
+@SuppressWarnings({"IsCancelled", "ClassInitializerMayBeStatic", "ConcatenationWithEmptyString"})
 public final class PhysicsListenerModern extends PhysicsListener {
 
     public PhysicsListenerModern(@Nonnull PControlData data) {

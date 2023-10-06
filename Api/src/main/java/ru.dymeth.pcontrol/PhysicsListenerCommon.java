@@ -666,10 +666,8 @@ public final class PhysicsListenerCommon extends PhysicsListener {
             }));
         if (this.data.hasVersion(9)) {
             this.rulesStructureGrowEventTo.regSingle(PControlTrigger.CHORUSES_GROWING,
-                TreeTypesSet.create(PControlTrigger.CHORUSES_GROWING + " trigger", this.data, set -> {
-
-                    set.add(TreeType.CHORUS_PLANT);
-                }));
+                TreeTypesSet.create(PControlTrigger.CHORUSES_GROWING + " trigger", this.data,
+                    set -> set.add(TreeType.CHORUS_PLANT)));
         }
     }
 

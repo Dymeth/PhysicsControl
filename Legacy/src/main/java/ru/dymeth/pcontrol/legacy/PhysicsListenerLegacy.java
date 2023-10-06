@@ -13,7 +13,7 @@ import ru.dymeth.pcontrol.api.PhysicsListener;
 
 import javax.annotation.Nonnull;
 
-@SuppressWarnings({"IsCancelled", "ClassInitializerMayBeStatic"})
+@SuppressWarnings({"IsCancelled", "ConcatenationWithEmptyString"})
 public final class PhysicsListenerLegacy extends PhysicsListener {
 
     public PhysicsListenerLegacy(@Nonnull PControlData data) {

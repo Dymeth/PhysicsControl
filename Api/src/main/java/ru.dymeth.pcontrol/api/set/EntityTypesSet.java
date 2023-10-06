@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.function.Consumer;
 
+@SuppressWarnings("unused")
 public final class EntityTypesSet extends CustomEnumSet<EntityType> {
 
     @Nonnull

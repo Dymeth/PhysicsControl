@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+@SuppressWarnings("unused")
 public final class ItemsSet extends CustomEnumSet<Material> {
 
     @Nonnull
