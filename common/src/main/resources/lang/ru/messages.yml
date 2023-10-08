@@ -1,0 +1,28 @@
+# Переключение триггеров
+trigger-enabled: "&e[%plugin%] &f%player% включил %trigger% в мире %world%"
+trigger-disabled: "&e[%plugin%] &f%player% выключил %trigger% в мире %world%"
+
+# Инвентари
+inventory-title: "%category% мира %world%"
+trigger-enabled-state: "&aВключено"
+trigger-disabled-state: "&cВыключено"
+trigger-unsupported-state: "&cНе поддерживается в текущей версии Minecraft"
+trigger-realtime: "&eВнимание!\n&eПереключение этого триггера повлияет\n&eна все блоки в мире в реальном времени!\n&e(все загруженные чанки)"
+trigger-on-update: "&aВлияет только на обновляющиеся блоки"
+category-inventory-title: "Физика мира %world%"
+select-another-category-item: "&eВыбрать другую категорию"
+
+# Команда переключения триггеров
+only-players-menu: "&c[%plugin%] Только игроки могут открывать меню. Для переключения триггеров используйте /pc <мир> <триггер>"
+bad-perms-inventory: "&c[%plugin%] У вас недостаточно прав для открытия меню"
+bad-perms-trigger: "&c[%plugin%] У вас недостаточно прав для переключения триггера %trigger%"
+world-or-key-not-specified: "&c[%plugin%] Укажите название мира и название триггера"
+world-not-found: "&c[%plugin%] Указанный мир не найден"
+key-not-found: "&c[%plugin%] Указанный ключ не найден"
+
+# Команда перезагрузки
+bad-perms-reload: "&c[%plugin%] У вас недостаточно прав для перезагрузки конфигурации"
+config-reloaded: "&e[%plugin%] Конфигурация перезагружена"
+
+# Прочее
+debug-message: "&e[%plugin%] &fДействие %action% (%content%) было обнаружено: %pos%"
