@@ -67,6 +67,7 @@ public enum PControlCategory {
 
         List<Text> lore = new ArrayList<>();
         for (PControlTrigger trigger : this.triggers) {
+            if (!trigger.isAvailable()) continue;
             lore.add(helper.create(" - " + data.getTriggerName(trigger), CommonColor.YELLOW));
         }
         helper.setStackLore(meta, lore);
