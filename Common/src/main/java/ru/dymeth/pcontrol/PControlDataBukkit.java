@@ -1,7 +1,5 @@
 package ru.dymeth.pcontrol;
 
-import net.md_5.bungee.api.chat.BaseComponent;
-import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
@@ -20,6 +18,12 @@ import ru.dymeth.pcontrol.legacy.FakeEnchantmentLegacy;
 import ru.dymeth.pcontrol.legacy.VersionsAdapterLegacy;
 import ru.dymeth.pcontrol.modern.FakeEnchantmentModern;
 import ru.dymeth.pcontrol.modern.VersionsAdapterModern;
+import ru.dymeth.pcontrol.text.CommonColor;
+import ru.dymeth.pcontrol.text.NullText;
+import ru.dymeth.pcontrol.text.Text;
+import ru.dymeth.pcontrol.text.TextHelper;
+import ru.dymeth.pcontrol.text.adventure.AdventureTextHelper;
+import ru.pcontrol.text.bungee.BungeeTextHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -47,6 +51,7 @@ public final class PControlDataBukkit implements PControlData {
     private final CustomTags customTags;
     private final Enchantment fakeEnchantment;
     private final VersionsAdapter versionsAdapter;
+    private final TextHelper textHelper;
 
     PControlDataBukkit(@Nonnull Plugin plugin, @Nonnull String resourceIdString) {
         this.plugin = plugin;
@@ -101,12 +106,20 @@ public final class PControlDataBukkit implements PControlData {
             "TRIDENT");
 
         this.customTags = new CustomTags(this);
+
         if (this.hasVersion(13)) {
             this.versionsAdapter = new VersionsAdapterModern(this);
             this.fakeEnchantment = FakeEnchantmentModern.getInstance();
         } else {
             this.versionsAdapter = new VersionsAdapterLegacy(this);
             this.fakeEnchantment = FakeEnchantmentLegacy.getInstance();
+        }
+
+        if (FileUtils.isClassPresent(
+            "net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer")) {
+            this.textHelper = new AdventureTextHelper();
+        } else {
+            this.textHelper = new BungeeTextHelper();
         }
 
         this.reloadConfigs();
@@ -181,8 +194,7 @@ public final class PControlDataBukkit implements PControlData {
     private void reloadLocale() {
 
         Function<String, String> messageProcessor = msg ->
-            ChatColor.translateAlternateColorCodes('&', msg)
-                .replace("%plugin%", plugin.getName());
+            msg.replace("%plugin%", this.plugin.getName());
 
         LocaleUtils.reloadLocale(this.plugin, this.langKey, messageProcessor,
             "categories.yml", this.categoriesNames);
@@ -211,15 +223,16 @@ public final class PControlDataBukkit implements PControlData {
 
     @Override
     @Nonnull
-    public String getMessage(@Nonnull String key, @Nonnull String... placeholders) {
+    public Text getMessage(@Nonnull String key, @Nonnull String... placeholders) {
         String result = this.messages.get(key);
         if (result == null) {
-            return ChatColor.RED + key + " " + Arrays.toString(placeholders);
+            if (this.messages.containsKey(key)) return NullText.INSTANCE;
+            return this.textHelper.create(key + " " + Arrays.toString(placeholders), CommonColor.RED);
         }
         for (int i = 0; i < placeholders.length; i++) {
             result = result.replace(placeholders[i], placeholders[++i]);
         }
-        return result;
+        return this.textHelper.fromAmpersandFormat(result);
     }
 
     @Override
@@ -360,14 +373,12 @@ public final class PControlDataBukkit implements PControlData {
     }
 
     @Override
-    public void announce(@Nullable World world, @Nonnull String plain, @Nullable BaseComponent component) {
-        this.plugin.getServer().getConsoleSender().sendMessage(plain);
+    public void announce(@Nullable World world, @Nonnull Text text) {
+        text.send(this.plugin.getServer().getConsoleSender());
         this.plugin.getServer().getOnlinePlayers().stream()
             .filter(player -> player.isOp() || player.hasPermission("physicscontrol.announce"))
             .filter(player -> world == null || player.getWorld() == world)
-            .forEach(component == null
-                ? player -> player.sendMessage(plain)
-                : player -> player.spigot().sendMessage(component));
+            .forEach(text::send);
     }
 
     @Nonnull
@@ -383,5 +394,10 @@ public final class PControlDataBukkit implements PControlData {
     @Nonnull
     public Enchantment getFakeEnchantment() {
         return this.fakeEnchantment;
+    }
+
+    @Nonnull
+    public TextHelper getTextHelper() {
+        return this.textHelper;
     }
 }

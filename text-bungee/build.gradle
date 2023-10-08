@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    shade project(':Api')
+    compileOnly 'org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT'
+}

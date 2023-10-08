@@ -1,6 +1,5 @@
 package ru.dymeth.pcontrol.inventory;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -10,9 +9,16 @@ import ru.dymeth.pcontrol.PControlDataBukkit;
 import ru.dymeth.pcontrol.api.BukkitUtils;
 import ru.dymeth.pcontrol.api.PControlCategory;
 import ru.dymeth.pcontrol.api.PControlTrigger;
+import ru.dymeth.pcontrol.text.CommonColor;
+import ru.dymeth.pcontrol.text.CommonDecoration;
+import ru.dymeth.pcontrol.text.Text;
+import ru.dymeth.pcontrol.text.TextHelper;
 
 import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class PControlTriggerInventory extends PControlInventory {
     private static final ItemStack DISALLOWED_TRIGGER = new ItemStack(Material.BARRIER);
@@ -20,22 +26,24 @@ public final class PControlTriggerInventory extends PControlInventory {
     private final Map<PControlTrigger, Short> slotByTrigger;
 
     public PControlTriggerInventory(@Nonnull PControlDataBukkit data, @Nonnull PControlCategory category, @Nonnull World world) {
-        super(data.getPlugin().getServer(),
+        super(
+            data,
             world,
             4,
-            data.getMessage("inventory-title", "%category%", data.getCategoryName(category), "%world%", world.getName())
+            data.getMessage("inventory-title",
+                "%category%", data.getCategoryName(category),
+                "%world%", world.getName())
         );
         this.data = data;
         this.slotByTrigger = new HashMap<>();
         for (PControlTrigger trigger : category.getTriggers()) {
             this.slotByTrigger.put(trigger, trigger.getSlot());
-            this.updateTriggerStack(trigger);
         }
         ItemStack back = BukkitUtils.matchIcon("RED_WOOL", "WOOL:14");
         if (back == null) throw new IllegalArgumentException();
         ItemMeta meta = back.getItemMeta();
         if (meta == null) throw new IllegalArgumentException();
-        meta.setDisplayName(data.getMessage("select-another-category-item"));
+        data.getTextHelper().setStackName(meta, data.getMessage("select-another-category-item"));
         back.setItemMeta(meta);
         this.setItem((short) (3 * 9 + 4), back, player ->
             player.openInventory(new PControlCategoryInventory(data, world).getInventory()));
@@ -53,19 +61,32 @@ public final class PControlTriggerInventory extends PControlInventory {
         if (meta == null) {
             throw new IllegalArgumentException("Item meta could not be null");
         }
+
+        TextHelper helper = this.data.getTextHelper();
+
+        Text name;
         if (available) {
-            meta.setDisplayName((enabled ? ChatColor.GREEN : ChatColor.RED) + this.data.getTriggerName(trigger));
+            name = helper.create(this.data.getTriggerName(trigger), (enabled ? CommonColor.GREEN : CommonColor.RED));
         } else {
-            meta.setDisplayName(ChatColor.GRAY + "" + ChatColor.STRIKETHROUGH + this.data.getTriggerName(trigger));
+            name = helper.create(this.data.getTriggerName(trigger), CommonColor.RED, CommonDecoration.STRIKETHROUGH);
         }
-        List<String> lore = new ArrayList<>();
+        helper.setStackName(meta, name);
+
+        List<Text> lore = new ArrayList<>();
         if (available) {
-            lore.add(enabled ? this.data.getMessage("trigger-enabled-state") : this.data.getMessage("trigger-disabled-state"));
-            lore.addAll(Arrays.asList(this.data.getMessage(trigger.isRealtime() ? "trigger-realtime" : "trigger-on-update").split("\\n")));
+            lore.add(this.data.getMessage(enabled
+                ? "trigger-enabled-state"
+                : "trigger-disabled-state"
+            ));
+            lore.addAll(this.data.getMessage(trigger.isRealtime()
+                ? "trigger-realtime"
+                : "trigger-on-update"
+            ).split("\n"));
         } else {
             lore.add(this.data.getMessage("trigger-unsupported-state", "%min_version%", "?"));
         }
-        meta.setLore(lore);
+        helper.setStackLore(meta, lore);
+
         if (available && enabled) {
             meta.addEnchant(this.data.getFakeEnchantment(), 1, true);
         }
@@ -82,19 +103,18 @@ public final class PControlTriggerInventory extends PControlInventory {
         if (!sender.isOp()
             && !sender.hasPermission("physicscontrol.trigger.*")
             && !sender.hasPermission("physicscontrol.trigger." + trigger.name().toLowerCase())) {
-            sender.sendMessage(this.data.getMessage("bad-perms-trigger", "%trigger%", this.data.getTriggerName(trigger)));
+            this.data.getMessage("bad-perms-trigger", "%trigger%", this.data.getTriggerName(trigger)).send(sender);
             return;
         }
         this.data.switchTrigger(this.world, trigger);
         this.updateTriggerStack(trigger);
 
-        String msg = this.data.getMessage(
+        Text msg = this.data.getMessage(
             this.data.isActionAllowed(this.world, trigger) ? "trigger-enabled" : "trigger-disabled",
             "%player%", sender.getName(),
             "%trigger%", this.data.getTriggerName(trigger),
             "%world%", this.world.getName());
 
-        if (msg.isEmpty()) return;
-        this.data.announce(this.world, msg, null);
+        this.data.announce(this.world, msg);
     }
 }

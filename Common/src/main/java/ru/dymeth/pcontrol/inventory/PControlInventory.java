@@ -1,6 +1,5 @@
 package ru.dymeth.pcontrol.inventory;
 
-import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -9,6 +8,8 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import ru.dymeth.pcontrol.PControlDataBukkit;
+import ru.dymeth.pcontrol.text.Text;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -21,9 +22,10 @@ public abstract class PControlInventory implements InventoryHolder {
     private final Inventory inventory;
     private final Map<Short, Consumer<Player>> slotActions;
 
-    PControlInventory(@Nonnull Server server, @Nonnull World world, int rows, @Nonnull String title) {
+    PControlInventory(@Nonnull PControlDataBukkit data, @Nonnull World world, int rows, @Nonnull Text title) {
         this.world = world;
-        this.inventory = server.createInventory(this, rows * 9, title);
+        this.inventory = data.getTextHelper().createInventory(
+            data.getPlugin().getServer(), this, rows * 9, title);
         this.slotActions = new HashMap<>();
     }
 

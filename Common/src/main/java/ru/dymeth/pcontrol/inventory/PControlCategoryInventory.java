@@ -11,7 +11,7 @@ public class PControlCategoryInventory extends PControlInventory {
 
     public PControlCategoryInventory(@Nonnull PControlDataBukkit data, @Nonnull World world) {
         super(
-            data.getPlugin().getServer(),
+            data,
             world,
             3,
             data.getMessage("category-inventory-title", "%world%", world.getName())

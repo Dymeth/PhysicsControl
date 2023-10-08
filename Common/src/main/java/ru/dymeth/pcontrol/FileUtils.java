@@ -110,4 +110,13 @@ public class FileUtils {
         }
         return configFile;
     }
+
+    public static boolean isClassPresent(@Nonnull String className) {
+        try {
+            Class.forName(className);
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
 }

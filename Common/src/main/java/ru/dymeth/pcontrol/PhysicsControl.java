@@ -63,11 +63,11 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
     public boolean onCommand(@Nonnull CommandSender sender, @Nonnull Command command, @Nonnull String label, @Nonnull String[] args) {
         if (args.length == 0) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(this.data.getMessage("only-players-menu"));
+                this.data.getMessage("only-players-menu").send(sender);
                 return true;
             }
             if (!sender.isOp() && !sender.hasPermission("physicscontrol.open-menu")) {
-                sender.sendMessage(this.data.getMessage("bad-perms-inventory"));
+                this.data.getMessage("bad-perms-inventory").send(sender);
                 return true;
             }
             ((Player) sender).openInventory(new PControlCategoryInventory(this.data, ((Player) sender).getWorld()).getInventory());
@@ -75,11 +75,11 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         }
         if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
             if (!sender.isOp() && !sender.hasPermission("physicscontrol.reload")) {
-                sender.sendMessage(this.data.getMessage("bad-perms-reload"));
+                this.data.getMessage("bad-perms-reload").send(sender);
                 return true;
             }
             this.data.reloadConfigs();
-            sender.sendMessage(this.data.getMessage("config-reloaded"));
+            this.data.getMessage("config-reloaded").send(sender);
             return true;
         }
         World world;
@@ -87,12 +87,12 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
             world = ((Player) sender).getWorld();
         } else {
             if (args.length < 2) {
-                sender.sendMessage(this.data.getMessage("world-or-key-not-specified"));
+                this.data.getMessage("world-or-key-not-specified").send(sender);
                 return true;
             }
             world = this.data.getPlugin().getServer().getWorld(args[0]);
             if (world == null) {
-                sender.sendMessage(this.data.getMessage("world-not-found", "%world%", args[0]));
+                this.data.getMessage("world-not-found", "%world%", args[0]).send(sender);
                 return true;
             }
         }
@@ -101,7 +101,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
             PControlTrigger trigger = PControlTrigger.valueOf(key);
             this.data.getInventory(trigger.getCategory(), world).switchTrigger(sender, trigger);
         } catch (IllegalArgumentException e) {
-            sender.sendMessage(this.data.getMessage("key-not-found", "%key%", key));
+            this.data.getMessage("key-not-found", "%key%", key).send(sender);
         }
         return true;
     }

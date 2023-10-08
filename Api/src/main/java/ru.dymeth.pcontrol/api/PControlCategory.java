@@ -1,8 +1,10 @@
 package ru.dymeth.pcontrol.api;
 
-import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import ru.dymeth.pcontrol.text.CommonColor;
+import ru.dymeth.pcontrol.text.Text;
+import ru.dymeth.pcontrol.text.TextHelper;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -57,13 +59,16 @@ public enum PControlCategory {
         ItemMeta meta = this.icon.getItemMeta();
         if (meta == null) throw new IllegalArgumentException();
 
-        meta.setDisplayName(ChatColor.YELLOW + data.getCategoryName(this));
+        TextHelper helper = data.getTextHelper();
 
-        List<String> lore = new ArrayList<>();
+        helper.setStackName(meta,
+            helper.create(data.getCategoryName(this), CommonColor.YELLOW));
+
+        List<Text> lore = new ArrayList<>();
         for (PControlTrigger trigger : this.triggers) {
-            lore.add(ChatColor.YELLOW + " - " + data.getTriggerName(trigger));
+            lore.add(helper.create(" - " + data.getTriggerName(trigger), CommonColor.YELLOW));
         }
-        meta.setLore(lore);
+        helper.setStackLore(meta, lore);
 
         this.icon.setItemMeta(meta);
     }

@@ -1,6 +1,5 @@
 package ru.dymeth.pcontrol.api;
 
-import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.Cancellable;
@@ -8,6 +7,8 @@ import org.bukkit.event.block.BlockEvent;
 import org.bukkit.plugin.Plugin;
 import ru.dymeth.pcontrol.CustomTags;
 import ru.dymeth.pcontrol.VersionsAdapter;
+import ru.dymeth.pcontrol.text.Text;
+import ru.dymeth.pcontrol.text.TextHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -21,7 +22,7 @@ public interface PControlData {
     Set<EntityType> getRemovableProjectileTypes();
 
     @Nonnull
-    String getMessage(@Nonnull String key, @Nonnull String... placeholders);
+    Text getMessage(@Nonnull String key, @Nonnull String... placeholders);
 
     String getTriggerName(@Nonnull PControlTrigger trigger);
 
@@ -36,11 +37,14 @@ public interface PControlData {
 
     boolean isActionAllowed(@Nonnull World world, @Nonnull PControlTrigger trigger);
 
-    void announce(@Nullable World world, @Nonnull String plain, @Nullable BaseComponent component);
+    void announce(@Nullable World world, @Nonnull Text text);
 
     @Nonnull
     CustomTags getCustomTags();
 
     @Nonnull
     VersionsAdapter getVersionsAdapter();
+
+    @Nonnull
+    TextHelper getTextHelper();
 }

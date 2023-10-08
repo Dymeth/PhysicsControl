@@ -1,7 +1,5 @@
 package ru.dymeth.pcontrol.api;
 
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -50,12 +48,24 @@ public abstract class PhysicsListener implements Listener {
 
     protected void debugAction(@Nonnull Event event, @Nonnull Location l, @Nonnull Object content) {
         if (l.getWorld() == null) throw new IllegalArgumentException("World cannot be null");
+
+        String world = l.getWorld().getName();
         String xyz = l.getBlockX() + " " + l.getBlockY() + " " + l.getBlockZ();
-        TextComponent message = new TextComponent(this.data.getMessage("debug-message", "%action%", event.getClass().getSimpleName().replace("Event", ""), "%content%", content.toString()));
-        TextComponent posPart = new TextComponent(l.getWorld().getName() + " " + xyz);
-        posPart.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/minecraft:tp @p " + xyz));
-        message.addExtra(posPart);
-        this.data.announce(l.getWorld(), message.toPlainText(), message);
+
+        String text = this.data.getMessage("debug-message",
+            "%action%", event.getClass().getSimpleName().replace("Event", ""),
+            "%content%", content.toString())
+            + l.getWorld().getName() + " " + xyz;
+
+        String command;
+        if (this.data.hasVersion(13)) {
+            command = "/execute in " + world + " run tp @p " + xyz;
+        } else {
+            // TODO Create own command to teleport any different worlds
+            command = "/minecraft:tp @p " + xyz;
+        }
+
+        this.data.announce(l.getWorld(), this.data.getTextHelper().createClickable(text, command));
     }
 
     @SuppressWarnings("unused")
