@@ -1,5 +1,6 @@
 package ru.dymeth.pcontrol.api;
 
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import ru.dymeth.pcontrol.text.CommonColor;
@@ -69,6 +70,8 @@ public enum PControlCategory {
             lore.add(helper.create(" - " + data.getTriggerName(trigger), CommonColor.YELLOW));
         }
         helper.setStackLore(meta, lore);
+
+        meta.addItemFlags(ItemFlag.values());
 
         this.icon.setItemMeta(meta);
     }

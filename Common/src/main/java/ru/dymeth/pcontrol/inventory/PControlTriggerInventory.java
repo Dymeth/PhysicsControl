@@ -3,6 +3,8 @@ package ru.dymeth.pcontrol.inventory;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import ru.dymeth.pcontrol.PControlDataBukkit;
@@ -105,8 +107,9 @@ public final class PControlTriggerInventory extends PControlInventory {
         helper.setStackLore(meta, lore);
 
         if (available && enabled) {
-            meta.addEnchant(this.data.getFakeEnchantment(), 1, true);
+            meta.addEnchant(Enchantment.DURABILITY, 1, true);
         }
+        meta.addItemFlags(ItemFlag.values());
         icon.setItemMeta(meta);
         short slot = this.slotByTrigger.get(trigger);
         this.setItem(slot, icon, player -> this.switchTrigger(player, trigger));

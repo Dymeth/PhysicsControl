@@ -2,7 +2,6 @@ package ru.dymeth.pcontrol;
 
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.block.BlockEvent;
@@ -14,9 +13,7 @@ import ru.dymeth.pcontrol.api.PControlData;
 import ru.dymeth.pcontrol.api.PControlTrigger;
 import ru.dymeth.pcontrol.inventory.PControlInventory;
 import ru.dymeth.pcontrol.inventory.PControlTriggerInventory;
-import ru.dymeth.pcontrol.legacy.FakeEnchantmentLegacy;
 import ru.dymeth.pcontrol.legacy.VersionsAdapterLegacy;
-import ru.dymeth.pcontrol.modern.FakeEnchantmentModern;
 import ru.dymeth.pcontrol.modern.VersionsAdapterModern;
 import ru.dymeth.pcontrol.text.CommonColor;
 import ru.dymeth.pcontrol.text.NullText;
@@ -49,7 +46,6 @@ public final class PControlDataBukkit implements PControlData {
     private Metrics metrics = null;
     private String langKey = null;
     private final CustomTags customTags;
-    private final Enchantment fakeEnchantment;
     private final VersionsAdapter versionsAdapter;
     private final TextHelper textHelper;
 
@@ -109,10 +105,8 @@ public final class PControlDataBukkit implements PControlData {
 
         if (this.hasVersion(13)) {
             this.versionsAdapter = new VersionsAdapterModern(this);
-            this.fakeEnchantment = FakeEnchantmentModern.getInstance();
         } else {
             this.versionsAdapter = new VersionsAdapterLegacy(this);
-            this.fakeEnchantment = FakeEnchantmentLegacy.getInstance();
         }
 
         if (FileUtils.isClassPresent(
@@ -387,11 +381,6 @@ public final class PControlDataBukkit implements PControlData {
     @Nonnull
     public VersionsAdapter getVersionsAdapter() {
         return this.versionsAdapter;
-    }
-
-    @Nonnull
-    public Enchantment getFakeEnchantment() {
-        return this.fakeEnchantment;
     }
 
     @Nonnull
