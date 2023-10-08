@@ -31,18 +31,18 @@ public enum PControlTrigger {
 
 
     LADDERS_DESTROYING(
-        BUILDING, false, 2, 4, true, "LADDER"),
+        BUILDING, false, 1, 4, true, "LADDER"),
     SIGNS_DESTROYING(
-        BUILDING, false, 2, 5, true, "OAK_SIGN", "SIGN"),
+        BUILDING, false, 1, 5, true, "OAK_SIGN", "SIGN"),
     RAILS_DESTROYING(
-        BUILDING, false, 2, 6, true, "RAIL", "RAILS"),
+        BUILDING, false, 1, 6, true, "RAIL", "RAILS"),
 
     TORCHES_DESTROYING(
-        BUILDING, false, 3, 4, true, "TORCH"),
+        BUILDING, false, 2, 4, true, "TORCH"),
     REDSTONE_TORCHES_DESTROYING(
-        BUILDING, false, 3, 5, true, "REDSTONE_TORCH", "REDSTONE_TORCH_ON"),
+        BUILDING, false, 2, 5, true, "REDSTONE_TORCH", "REDSTONE_TORCH_ON"),
     SOUL_TORCHES_DESTROYING(
-        BUILDING, false, 3, 6, true, "SOUL_TORCH"),
+        BUILDING, false, 2, 6, true, "SOUL_TORCH"),
 
 
     RABBITS_EATING_CARROTS(
