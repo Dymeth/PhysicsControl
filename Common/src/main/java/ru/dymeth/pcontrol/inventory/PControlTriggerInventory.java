@@ -21,8 +21,11 @@ import java.util.List;
 import java.util.Map;
 
 public final class PControlTriggerInventory extends PControlInventory {
+
+    private static final boolean WARN_ON_SET_ICONS_FOR_UNAVAILABLE_TRIGGERS = false;
     private static final ItemStack DISALLOWED_TRIGGER = new ItemStack(Material.BARRIER);
     private static final ItemStack WRONG_ICON_TRIGGER = new ItemStack(Material.PAPER);
+
     private final PControlDataBukkit data;
     private final Map<PControlTrigger, Short> slotByTrigger;
 
@@ -55,10 +58,19 @@ public final class PControlTriggerInventory extends PControlInventory {
         boolean available = trigger.isAvailable();
         boolean enabled = this.data.isActionAllowed(this.world, trigger);
 
-        ItemStack icon = available ? trigger.getIcon() : DISALLOWED_TRIGGER;
-        if (icon == null) {
-            icon = WRONG_ICON_TRIGGER;
-            this.data.getPlugin().getLogger().warning("Unable to find icon of trigger " + trigger);
+        ItemStack icon = trigger.getIcon();
+        if (available) {
+            if (icon == null) {
+                this.data.getPlugin().getLogger().warning(
+                    "Unable to find icon of trigger " + trigger);
+                icon = WRONG_ICON_TRIGGER;
+            }
+        } else {
+            if (icon != null && WARN_ON_SET_ICONS_FOR_UNAVAILABLE_TRIGGERS) {
+                this.data.getPlugin().getLogger().warning(
+                    "Set icon for unavailable trigger " + trigger + ": " + icon.getType());
+            }
+            icon = DISALLOWED_TRIGGER;
         }
         icon = icon.clone();
 
