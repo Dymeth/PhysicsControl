@@ -54,8 +54,9 @@ public abstract class PhysicsListener implements Listener {
 
         String text = this.data.getMessage("debug-message",
             "%action%", event.getClass().getSimpleName().replace("Event", ""),
-            "%content%", content.toString())
-            + l.getWorld().getName() + " " + xyz;
+            "%content%", content.toString(),
+            "%pos%", (l.getWorld().getName() + " " + xyz)
+        ).toString(); // FIXME
 
         String command;
         if (this.data.hasVersion(13)) {

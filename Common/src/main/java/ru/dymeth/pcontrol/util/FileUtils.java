@@ -1,21 +1,20 @@
-package ru.dymeth.pcontrol;
+package ru.dymeth.pcontrol.util;
 
 import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.file.Files;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Supplier;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+@SuppressWarnings({"unused", "SameParameterValue"})
 public class FileUtils {
     /**
      * <a href="https://www.uofr.net/~greg/java/get-resource-listing.html">Source</a>
@@ -117,6 +116,114 @@ public class FileUtils {
             return true;
         } catch (ClassNotFoundException e) {
             return false;
+        }
+    }
+
+    @Nonnull
+    public static Map<String, String> readCommentsFromYml(@Nonnull InputStream stream) throws IOException {
+        Map<String, String> result = new HashMap<>();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        while (reader.ready()) {
+            String line = reader.readLine();
+            String key = getFirstSubstring(line, ":");
+            if (key == null) continue;
+
+            String comment = getLastSubstring(line, "#");
+            if (comment == null) continue;
+
+            result.put(key, comment);
+        }
+        reader.close();
+        return result;
+    }
+
+    public static void writeCommentsToYmlFile(@Nonnull InputStream in,
+                                              @Nonnull Supplier<OutputStream> out,
+                                              @Nullable Map<String, String> mandatoryComments,
+                                              @Nullable Map<String, String> optionalComments
+    ) throws IOException {
+        if (mandatoryComments == null && optionalComments == null) return;
+
+        List<String> lines = readLines(in);
+
+        boolean contentChanged = false;
+        for (int i = 0; i < lines.size(); i++) {
+            String line = lines.get(i);
+            String key = getFirstSubstring(line, ":");
+            if (key == null) continue;
+
+            String oldComment = getLastSubstring(line, "#");
+
+            String newComment;
+            if (mandatoryComments != null && mandatoryComments.containsKey(key)) {
+                newComment = mandatoryComments.get(key);
+            } else if (optionalComments != null && optionalComments.containsKey(key) && oldComment == null) {
+                newComment = optionalComments.get(key);
+            } else {
+                continue;
+            }
+
+            if (Objects.equals(oldComment, newComment)) continue;
+
+            if (oldComment != null) {
+                line = line.substring(0, oldComment.length() - "#".length()).trim();
+            }
+            if (newComment != null) {
+                line = line + " #" + newComment;
+            }
+
+            lines.set(i, line);
+            contentChanged = true;
+        }
+        if (!contentChanged) return;
+
+        writeLines(out.get(), lines);
+    }
+
+    @Nonnull
+    public static List<String> readLines(@Nonnull InputStream in) throws IOException {
+        List<String> result = new ArrayList<>();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        while (reader.ready()) {
+            result.add(reader.readLine());
+        }
+        reader.close();
+        in.close();
+        return result;
+    }
+
+    public static void writeLines(@Nonnull OutputStream out, @Nonnull List<String> lines) throws IOException {
+        PrintWriter writer = new PrintWriter(out);
+        for (String line : lines) {
+            writer.write(line + "\n");
+        }
+        writer.close();
+        out.close();
+    }
+
+    @Nullable
+    private static String getFirstSubstring(@Nonnull String string, @Nonnull String splitter) {
+        int index = string.indexOf(splitter);
+        if (index < 0) return null;
+        return string.substring(0, index);
+    }
+
+    @Nullable
+    private static String getLastSubstring(@Nonnull String string, @Nonnull String splitter) {
+        int index = string.indexOf(splitter);
+        if (index < 0) return null;
+        return string.substring(index + splitter.length());
+    }
+
+    public static void appendDataToFile(@Nonnull File file,
+                                        @Nonnull String data
+    ) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
+            writer.write(data);
+            writer.close();
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to append data to file " + file);
         }
     }
 }

@@ -102,7 +102,7 @@ public final class PControlTriggerInventory extends PControlInventory {
                 : "trigger-on-update"
             ).split("\n"));
         } else {
-            lore.add(this.data.getMessage("trigger-unsupported-state", "%min_version%", "?"));
+            lore.add(this.data.getMessage("trigger-unsupported-state"));
         }
         helper.setStackLore(meta, lore);
 

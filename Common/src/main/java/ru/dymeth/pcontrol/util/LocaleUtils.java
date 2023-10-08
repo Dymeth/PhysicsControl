@@ -1,4 +1,4 @@
-package ru.dymeth.pcontrol;
+package ru.dymeth.pcontrol.util;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;

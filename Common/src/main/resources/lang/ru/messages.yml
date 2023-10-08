@@ -25,4 +25,4 @@ bad-perms-reload: "&c[%plugin%] У вас недостаточно прав дл
 config-reloaded: "&e[%plugin%] Конфигурация перезагружена"
 
 # Прочее
-debug-message: "&e[%plugin%] &fДействие %action% (%content%) было обнаружено: "
+debug-message: "&e[%plugin%] &fДействие %action% (%content%) было обнаружено: %pos%"

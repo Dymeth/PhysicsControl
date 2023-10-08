@@ -4,15 +4,19 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
+import ru.dymeth.pcontrol.util.FileUtils;
+import ru.dymeth.pcontrol.util.SneakyThrowsSupplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Function;
 
 class PluginUpdater {
     @SuppressWarnings("unused")
@@ -70,32 +74,87 @@ class PluginUpdater {
     }
 
     private void updateTo_1_2_0() {
-        File oldFile = new File(this.plugin.getDataFolder(), "messages.yml");
-        File newDir = new File(this.plugin.getDataFolder(), "lang");
-        File newFile = new File(newDir, "messages.yml");
-        if (oldFile.isFile() && !newFile.exists()) {
+        File oldMessagesFile = new File(this.plugin.getDataFolder(), "messages.yml");
+        File langDir = new File(this.plugin.getDataFolder(), "lang");
+        File newMessagesFile = new File(langDir, "messages.yml");
+        if (oldMessagesFile.isFile() && !newMessagesFile.exists()) {
             //noinspection ResultOfMethodCallIgnored
-            newDir.mkdirs();
+            langDir.mkdirs();
             try {
-                Files.move(oldFile.toPath(), newFile.toPath());
+                Files.move(oldMessagesFile.toPath(), newMessagesFile.toPath());
                 //noinspection ResultOfMethodCallIgnored
-                oldFile.delete();
+                oldMessagesFile.delete();
             } catch (Exception e) {
-                throw new RuntimeException("Unable to move lang file " + oldFile + " to " + newFile, e);
+                throw new RuntimeException("Unable to move messages file " + oldMessagesFile + " to " + newMessagesFile, e);
             }
         }
 
+        try {
+            YamlConfiguration messagesConfig = YamlConfiguration.loadConfiguration(newMessagesFile);
+
+            boolean someUpdated = false;
+            //noinspection ConstantValue
+            someUpdated = updateValue(messagesConfig,
+                "trigger-unsupported-state", String.class, false,
+                msg -> msg.replace("%min_version%", "?")
+            ) || someUpdated;
+            someUpdated = updateValue(messagesConfig,
+                "debug-message", String.class, false,
+                msg -> msg.contains("%pos%") ? msg : msg + "%pos%"
+            ) || someUpdated;
+
+            if (someUpdated) {
+                messagesConfig.save(newMessagesFile);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to patch messages file " + newMessagesFile, e);
+        }
+
         File configFile = new File(this.plugin.getDataFolder(), "config.yml");
-        if (configFile.isFile() && !YamlConfiguration.loadConfiguration(configFile).isBoolean("lang")) {
-            this.appendDataToFile(configFile,
-                "\r\n" +
-                    "language: \"auto\" # auto/en/ru" +
-                    "\r\n"
-            );
+        if (configFile.isFile()) {
+            try {
+                YamlConfiguration configData = YamlConfiguration.loadConfiguration(configFile);
+                if (!configData.isBoolean("language")) {
+                    configData.set("language", "auto");
+                }
+                configData.save(configFile);
+
+                Map<String, String> defaultComments = FileUtils.readCommentsFromYml(
+                    this.plugin.getResource("config.yml"));
+
+                System.out.println("comments:");
+                for (Map.Entry<String, String> entry : defaultComments.entrySet()) {
+                    System.out.println(entry.getKey() + ": *** #" + entry.getValue());
+                }
+
+                FileUtils.writeCommentsToYmlFile(
+                    Files.newInputStream(configFile.toPath()),
+                    (SneakyThrowsSupplier<OutputStream>) () -> Files.newOutputStream(configFile.toPath()),
+                    defaultComments,
+                    null
+                );
+            } catch (Exception e) {
+                throw new RuntimeException("Unable to patch config file " + configFile, e);
+            }
         }
     }
 
-    private static int[] parseVersion(String versionName) {
+    private static <T> boolean updateValue(@Nonnull ConfigurationSection section,
+                                           @Nonnull String path,
+                                           @Nonnull Class<T> valueClass,
+                                           boolean addIfNotExist,
+                                           @Nonnull Function<T, T> mapper
+    ) {
+        Object previous = section.get(path);
+        if (previous == null && !addIfNotExist) return false;
+        if (!valueClass.isInstance(previous)) return false;
+        T actual = mapper.apply(valueClass.cast(previous));
+        if (Objects.equals(previous, actual)) return false;
+        section.set(path, actual);
+        return true;
+    }
+
+    private static int[] parseVersion(@Nonnull String versionName) {
         String[] args = versionName.split("\\.");
         if (args.length != 3) throw new IllegalArgumentException("Unable to parse version: " + versionName);
         int majorVersion = Integer.parseInt(args[0]);
@@ -137,10 +196,12 @@ class PluginUpdater {
         this.plugin.getLogger().info("Plugin updated successfully: " + sourceVersion + " -> " + currentVersion);
     }
 
+    @Nonnull
     private String getCurrentVersion() {
         return this.plugin.getDescription().getVersion();
     }
 
+    @Nonnull
     private File getVersionFile() {
         return new File(this.plugin.getDataFolder(), "plugin-version");
     }
@@ -161,18 +222,6 @@ class PluginUpdater {
             }
         } catch (Exception e) {
             throw new RuntimeException("Could not create " + f.getName() + " file", e);
-        }
-    }
-
-    private void appendDataToFile(@Nonnull File file,
-                                  @SuppressWarnings("SameParameterValue") @Nonnull String data
-    ) {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-            writer.write(data);
-            writer.close();
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to append data to file " + file);
         }
     }
 }
