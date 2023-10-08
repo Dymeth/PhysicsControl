@@ -10,4 +10,10 @@ public interface Text {
 
     @Nonnull
     List<Text> split(@Nonnull String regex);
+
+    @Nonnull
+    Text setClickCommand(@Nonnull String command);
+
+    @Nonnull
+    Text setHoverText(@Nonnull Text text);
 }

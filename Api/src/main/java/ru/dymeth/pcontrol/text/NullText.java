@@ -21,4 +21,16 @@ public class NullText implements Text {
     public List<Text> split(@Nonnull String regex) {
         return Collections.singletonList(this);
     }
+
+    @Nonnull
+    @Override
+    public Text setClickCommand(@Nonnull String command) {
+        return this;
+    }
+
+    @Nonnull
+    @Override
+    public Text setHoverText(@Nonnull Text text) {
+        return this;
+    }
 }

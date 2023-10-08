@@ -18,9 +18,6 @@ public interface TextHelper {
     Text create(@Nonnull String text, @Nonnull CommonColor color, @Nonnull CommonDecoration decoration);
 
     @Nonnull
-    Text createClickable(@Nonnull String text, @Nonnull String command);
-
-    @Nonnull
     Text fromAmpersandFormat(@Nonnull String ampersandText);
 
     void setStackName(@Nonnull ItemMeta meta, @Nonnull Text name);

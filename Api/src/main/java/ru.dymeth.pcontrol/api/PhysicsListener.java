@@ -9,6 +9,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.util.Vector;
 import ru.dymeth.pcontrol.CustomTags;
 import ru.dymeth.pcontrol.VersionsAdapter;
+import ru.dymeth.pcontrol.text.CommonColor;
+import ru.dymeth.pcontrol.text.Text;
 
 import javax.annotation.Nonnull;
 import java.util.HashSet;
@@ -49,24 +51,19 @@ public abstract class PhysicsListener implements Listener {
     protected void debugAction(@Nonnull Event event, @Nonnull Location l, @Nonnull Object content) {
         if (l.getWorld() == null) throw new IllegalArgumentException("World cannot be null");
 
-        String world = l.getWorld().getName();
-        String xyz = l.getBlockX() + " " + l.getBlockY() + " " + l.getBlockZ();
+        String pos = l.getWorld().getName() + " " + l.getBlockX() + " " + l.getBlockY() + " " + l.getBlockZ();
 
-        String text = this.data.getMessage("debug-message",
+        Text text = this.data.getMessage("debug-message",
             "%action%", event.getClass().getSimpleName().replace("Event", ""),
             "%content%", content.toString(),
-            "%pos%", (l.getWorld().getName() + " " + xyz)
-        ).toString(); // FIXME
+            "%pos%", pos
+        );
 
-        String command;
-        if (this.data.hasVersion(13)) {
-            command = "/execute in " + world + " run tp @p " + xyz;
-        } else {
-            // TODO Create own command to teleport any different worlds
-            command = "/minecraft:tp @p " + xyz;
-        }
+        String command = "/pc tp " + pos;
 
-        this.data.announce(l.getWorld(), this.data.getTextHelper().createClickable(text, command));
+        Text hover = this.data.getTextHelper().create("✔", CommonColor.YELLOW);
+
+        this.data.announce(l.getWorld(), text.setClickCommand(command).setHoverText(hover));
     }
 
     @SuppressWarnings("unused")

@@ -1,6 +1,8 @@
 package ru.dymeth.pcontrol.text.adventure;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.command.CommandSender;
 import org.intellij.lang.annotations.RegExp;
@@ -37,6 +39,17 @@ public class AdventureText implements Text {
             result.add(new AdventureText(element));
         }
         return result;
+    }
+
+    @Nonnull
+    @Override
+    public Text setClickCommand(@Nonnull String command) {
+        return new AdventureText(this.component.clickEvent(ClickEvent.runCommand(command)));
+    }
+
+    @Nonnull
+    public Text setHoverText(@Nonnull Text text) {
+        return new AdventureText(this.component.hoverEvent(HoverEvent.showText(((AdventureText) text).component)));
     }
 
     @Nonnull

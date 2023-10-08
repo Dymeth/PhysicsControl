@@ -1,7 +1,6 @@
 package ru.dymeth.pcontrol.text.adventure;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -34,12 +33,6 @@ public class AdventureTextHelper implements TextHelper {
             NamedTextColor.NAMES.value(color.name().toLowerCase()),
             TextDecoration.NAMES.value(decoration.name().toLowerCase())
         ));
-    }
-
-    @Nonnull
-    @Override
-    public Text createClickable(@Nonnull String text, @Nonnull String command) {
-        return new AdventureText(Component.text(text).clickEvent(ClickEvent.runCommand(command)));
     }
 
     @Nonnull

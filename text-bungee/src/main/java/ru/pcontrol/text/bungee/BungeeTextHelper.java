@@ -2,7 +2,6 @@ package ru.pcontrol.text.bungee;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Server;
 import org.bukkit.event.inventory.InventoryType;
@@ -32,14 +31,6 @@ public class BungeeTextHelper implements TextHelper {
         TextComponent message = new TextComponent(text);
         message.setColor(ChatColor.valueOf(color.name()));
         applyDecoration(message, decoration);
-        return new BungeeText(message);
-    }
-
-    @Nonnull
-    @Override
-    public Text createClickable(@Nonnull String text, @Nonnull String command) {
-        TextComponent message = new TextComponent(text);
-        message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command));
         return new BungeeText(message);
     }
 

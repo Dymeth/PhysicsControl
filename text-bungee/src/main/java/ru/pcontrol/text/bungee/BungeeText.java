@@ -1,6 +1,8 @@
 package ru.pcontrol.text.bungee;
 
 import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -59,5 +61,23 @@ public class BungeeText implements Text {
             result.add(new BungeeText(TextComponent.fromLegacyText(element)));
         }
         return result;
+    }
+
+    @Nonnull
+    @Override
+    public Text setClickCommand(@Nonnull String command) {
+        for (BaseComponent component : this.components) {
+            component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command));
+        }
+        return this;
+    }
+
+    @Nonnull
+    public Text setHoverText(@Nonnull Text text) {
+        BaseComponent[] hover = ((BungeeText) text).components;
+        for (BaseComponent component : this.components) {
+            component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hover));
+        }
+        return this;
     }
 }

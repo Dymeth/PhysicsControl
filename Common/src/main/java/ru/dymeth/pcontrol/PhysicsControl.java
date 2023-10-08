@@ -1,5 +1,6 @@
 package ru.dymeth.pcontrol;
 
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -64,38 +65,87 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, @Nonnull Command command, @Nonnull String label, @Nonnull String[] args) {
         if (args.length == 0) {
-            if (!(sender instanceof Player)) {
-                this.data.getMessage("only-players-menu").send(sender);
-                return true;
-            }
-            if (!sender.isOp() && !sender.hasPermission("physicscontrol.open-menu")) {
-                this.data.getMessage("bad-perms-inventory").send(sender);
-                return true;
-            }
-            ((Player) sender).openInventory(new PControlCategoryInventory(this.data, ((Player) sender).getWorld()).getInventory());
+            this.openGui(sender, args);
             return true;
         }
-        if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
-            if (!sender.isOp() && !sender.hasPermission("physicscontrol.reload")) {
-                this.data.getMessage("bad-perms-reload").send(sender);
+        switch (args[0].toLowerCase()) {
+            case "reload": {
+                this.reload(sender, args);
                 return true;
             }
-            this.data.reloadConfigs();
-            this.data.getMessage("config-reloaded").send(sender);
-            return true;
+            case "tp": {
+                this.teleport(sender, args);
+                return true;
+            }
+            default: {
+                this.switchTrigger(sender, args);
+                return true;
+            }
         }
+    }
+
+    private void openGui(@Nonnull CommandSender sender, @Nonnull String[] args) {
+        if (!(sender instanceof Player)) {
+            this.data.getMessage("only-players-menu").send(sender);
+            return;
+        }
+        if (!sender.isOp() && !sender.hasPermission("physicscontrol.open-menu")) {
+            this.data.getMessage("bad-perms-inventory").send(sender);
+            return;
+        }
+        ((Player) sender).openInventory(new PControlCategoryInventory(this.data, ((Player) sender).getWorld()).getInventory());
+    }
+
+    private void reload(@Nonnull CommandSender sender, @Nonnull String[] args) {
+        if (!sender.isOp() && !sender.hasPermission("physicscontrol.reload")) {
+            this.data.getMessage("bad-perms-reload").send(sender);
+            return;
+        }
+        this.data.reloadConfigs();
+        this.data.getMessage("config-reloaded").send(sender);
+    }
+
+    private void teleport(@Nonnull CommandSender sender, @Nonnull String[] args) {
+        if (!sender.isOp() && !sender.hasPermission("minecraft.command.tp")) {
+            this.data.getMessage("bad-perms-reload").send(sender);
+            return;
+        }
+        if (!(sender instanceof Player)) {
+            this.data.getMessage("only-players-menu").send(sender);
+            return;
+        }
+        if (args.length != 5) return;
+
+        World world = this.data.getPlugin().getServer().getWorld(args[1]);
+        if (world == null) return;
+
+        int x;
+        int y;
+        int z;
+        try {
+            x = Integer.parseInt(args[2]);
+            y = Integer.parseInt(args[3]);
+            z = Integer.parseInt(args[4]);
+        } catch (NumberFormatException ex) {
+            return;
+        }
+
+        ((Player) sender).teleport(new Location(world, x, y, z));
+    }
+
+    private void switchTrigger(@Nonnull CommandSender sender, @Nonnull String[] args) {
         World world;
         if (sender instanceof Player && args.length < 2) {
             world = ((Player) sender).getWorld();
         } else {
             if (args.length < 2) {
                 this.data.getMessage("world-or-key-not-specified").send(sender);
-                return true;
+                return;
             }
             world = this.data.getPlugin().getServer().getWorld(args[0]);
             if (world == null) {
                 this.data.getMessage("world-not-found", "%world%", args[0]).send(sender);
-                return true;
+                return;
             }
         }
         String key = join("_", 1, args).toUpperCase();
@@ -106,7 +156,6 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         } catch (IllegalArgumentException e) {
             this.data.getMessage("key-not-found", "%key%", key).send(sender);
         }
-        return true;
     }
 
     @SuppressWarnings("SameParameterValue")
