@@ -31,7 +31,7 @@ public class BungeeTextHelper implements TextHelper {
     public Text create(@Nonnull String text, @Nonnull CommonColor color, @Nonnull CommonDecoration decoration) {
         TextComponent message = new TextComponent(text);
         message.setColor(ChatColor.valueOf(color.name()));
-        this.applyDecoration(message, decoration);
+        applyDecoration(message, decoration);
         return new BungeeText(message);
     }
 
@@ -74,7 +74,7 @@ public class BungeeTextHelper implements TextHelper {
         return server.createInventory(holder, size, ((BungeeText) title).sectionText());
     }
 
-    private void applyDecoration(@Nonnull BaseComponent component, @Nonnull CommonDecoration decoration) {
+    private static void applyDecoration(@Nonnull BaseComponent component, @Nonnull CommonDecoration decoration) {
         switch (decoration) {
             case OBFUSCATED: {
                 component.setObfuscated(true);

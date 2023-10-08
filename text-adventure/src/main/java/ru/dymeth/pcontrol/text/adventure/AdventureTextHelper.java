@@ -10,7 +10,6 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.jetbrains.annotations.NotNull;
 import ru.dymeth.pcontrol.text.CommonColor;
 import ru.dymeth.pcontrol.text.CommonDecoration;
 import ru.dymeth.pcontrol.text.Text;
@@ -24,16 +23,16 @@ public class AdventureTextHelper implements TextHelper {
     @Nonnull
     public Text create(@Nonnull String text, @Nonnull CommonColor color) {
         return new AdventureText(Component.text(text,
-            NamedTextColor.NAMES.value(color.name())
+            NamedTextColor.NAMES.value(color.name().toLowerCase())
         ));
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public Text create(@NotNull String text, @NotNull CommonColor color, @NotNull CommonDecoration decoration) {
+    public Text create(@Nonnull String text, @Nonnull CommonColor color, @Nonnull CommonDecoration decoration) {
         return new AdventureText(Component.text(text,
-            NamedTextColor.NAMES.value(color.name()),
-            TextDecoration.NAMES.value(decoration.name())
+            NamedTextColor.NAMES.value(color.name().toLowerCase()),
+            TextDecoration.NAMES.value(decoration.name().toLowerCase())
         ));
     }
 

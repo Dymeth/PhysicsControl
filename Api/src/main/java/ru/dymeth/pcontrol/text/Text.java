@@ -9,5 +9,5 @@ public interface Text {
     void send(@Nonnull CommandSender receiver);
 
     @Nonnull
-    List<Text> split(@Nonnull String splitter);
+    List<Text> split(@Nonnull String regex);
 }

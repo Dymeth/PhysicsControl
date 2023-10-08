@@ -14,6 +14,7 @@ import java.util.List;
 public class BungeeText implements Text {
 
     private final BaseComponent[] components;
+    private String sectionText = null;
 
     BungeeText(@Nonnull BaseComponent... components) {
         this.components = components;
@@ -21,7 +22,16 @@ public class BungeeText implements Text {
 
     @Nonnull
     public String sectionText() {
-        return BaseComponent.toLegacyText(this.components);
+        if (this.sectionText == null) {
+            this.sectionText = BaseComponent.toLegacyText(this.components);
+            if (this.components.length > 0
+                && this.components[0].getColorRaw() == null
+                && this.sectionText.length() >= 2
+            ) {
+                this.sectionText = this.sectionText.substring(2);
+            }
+        }
+        return this.sectionText;
     }
 
     @Nonnull
@@ -41,9 +51,9 @@ public class BungeeText implements Text {
     @Nonnull
     @Override
     // TODO Support for non-plain-text components
-    public List<Text> split(@Nonnull String splitter) {
+    public List<Text> split(@Nonnull String regex) {
         List<Text> result = new ArrayList<>();
-        String[] elements = BaseComponent.toLegacyText(this.components).split(splitter);
+        String[] elements = this.sectionText().split(regex);
         if (elements.length <= 1) return Collections.singletonList(this);
         for (String element : elements) {
             result.add(new BungeeText(TextComponent.fromLegacyText(element)));

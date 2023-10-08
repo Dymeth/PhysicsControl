@@ -18,7 +18,7 @@ public class NullText implements Text {
 
     @Nonnull
     @Override
-    public List<Text> split(@Nonnull String splitter) {
+    public List<Text> split(@Nonnull String regex) {
         return Collections.singletonList(this);
     }
 }
