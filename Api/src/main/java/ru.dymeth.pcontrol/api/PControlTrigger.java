@@ -3,6 +3,7 @@ package ru.dymeth.pcontrol.api;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import static ru.dymeth.pcontrol.api.PControlCategory.*;
 
@@ -218,9 +219,8 @@ public enum PControlTrigger {
         return this.triggerAvailable;
     }
 
-    @Nonnull
+    @Nullable
     public ItemStack getIcon() {
-        if (this.icon == null) throw new IllegalArgumentException("Unable to find icon of trigger " + this);
         return this.icon;
     }
 
