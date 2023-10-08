@@ -22,7 +22,7 @@ import ru.dymeth.pcontrol.text.TextHelper;
 import ru.dymeth.pcontrol.text.adventure.AdventureTextHelper;
 import ru.dymeth.pcontrol.util.FileUtils;
 import ru.dymeth.pcontrol.util.LocaleUtils;
-import ru.pcontrol.text.bungee.BungeeTextHelper;
+import ru.dymeth.pcontrol.text.bungee.BungeeTextHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

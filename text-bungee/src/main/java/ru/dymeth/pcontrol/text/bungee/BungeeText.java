@@ -1,4 +1,4 @@
-package ru.pcontrol.text.bungee;
+package ru.dymeth.pcontrol.text.bungee;
 
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
