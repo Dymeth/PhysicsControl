@@ -121,8 +121,6 @@ public final class PControlDataBukkit implements PControlData {
         } else {
             this.textHelper = new BungeeTextHelper();
         }
-
-        this.reloadConfigs();
     }
 
     @Override
@@ -137,7 +135,7 @@ public final class PControlDataBukkit implements PControlData {
         return this.removableProjectileTypes;
     }
 
-    void reloadConfigs() {
+    public void reloadConfigs() {
         this.unloadData();
         this.reloadConfig();
         this.reloadLocale();
