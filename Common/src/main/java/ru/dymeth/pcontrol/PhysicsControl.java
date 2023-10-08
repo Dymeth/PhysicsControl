@@ -101,6 +101,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         String key = join("_", 1, args).toUpperCase();
         try {
             PControlTrigger trigger = PControlTrigger.valueOf(key);
+            if (trigger == PControlTrigger.IGNORED_STATE) throw new IllegalArgumentException();
             this.data.getInventory(trigger.getCategory(), world).switchTrigger(sender, trigger);
         } catch (IllegalArgumentException e) {
             this.data.getMessage("key-not-found", "%key%", key).send(sender);

@@ -257,6 +257,7 @@ public final class PControlDataBukkit implements PControlData {
                 PControlTrigger trigger;
                 try {
                     trigger = PControlTrigger.valueOf(key.toUpperCase().replace(" ", "_"));
+                    if (trigger == PControlTrigger.IGNORED_STATE) throw new IllegalArgumentException();
                 } catch (IllegalArgumentException e) {
                     throw new IllegalArgumentException("Unknown trigger type");
                 }
@@ -295,7 +296,7 @@ public final class PControlDataBukkit implements PControlData {
             } else {
                 currentValue = memoryValue == null ? trigger.getDefaultValue() : memoryValue;
             }
-            if (configValue == null || configValue != currentValue) {
+            if ((configValue == null || configValue != currentValue) && trigger != PControlTrigger.IGNORED_STATE) {
                 worldConfig.set(trigger.name(), currentValue);
                 changed = true;
                 if (!firstInit) {
