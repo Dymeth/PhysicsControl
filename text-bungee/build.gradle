@@ -10,6 +10,6 @@ repositories {
 }
 
 dependencies {
-    shade project(':Api')
+    implementation project(':api')
     compileOnly 'org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT'
 }

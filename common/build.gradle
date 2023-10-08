@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+version 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // compileOnly 'org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT' // Minimal
+    compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
+    shade project(':api') // Latest
+    shade project(':listener-legacy')
+    shade project(':listener-modern')
+    shade project(':text-adventure')
+    shade project(':text-bungee')
+}
+
+jar {
+    destinationDirectory = file('..\\build')
+    archiveName 'PhysicsControl.jar'
+}

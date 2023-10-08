@@ -53,10 +53,12 @@ cmake-build-*/
 # IntelliJ
 out/
 target/
-Api/target/
-Common/target/
-Legacy/target/
-Modern/target/
+api/target/
+common/target/
+listener-legacy/target/
+listener-modern/target/
+text-adventure/target/
+text-bungee/target/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
