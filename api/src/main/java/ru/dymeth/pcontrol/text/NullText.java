@@ -24,13 +24,13 @@ public class NullText implements Text {
 
     @Nonnull
     @Override
-    public Text setClickCommand(@Nonnull String command) {
+    public NullText setClickCommand(@Nonnull String command) {
         return this;
     }
 
     @Nonnull
     @Override
-    public Text setHoverText(@Nonnull Text text) {
+    public NullText setHoverText(@Nonnull Text text) {
         return this;
     }
 }

@@ -10,6 +10,7 @@ repositories {
 
 dependencies {
     // compileOnly 'org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT' // 1.8
+    //noinspection VulnerableLibrariesLocal
     compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
     implementation project(':api') // 1.12.2
 }

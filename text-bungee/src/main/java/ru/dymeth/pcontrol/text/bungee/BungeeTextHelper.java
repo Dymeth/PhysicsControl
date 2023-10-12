@@ -12,32 +12,37 @@ import ru.dymeth.pcontrol.text.CommonColor;
 import ru.dymeth.pcontrol.text.CommonDecoration;
 import ru.dymeth.pcontrol.text.Text;
 import ru.dymeth.pcontrol.text.TextHelper;
+import ru.dymeth.pcontrol.util.FileUtils;
 
 import javax.annotation.Nonnull;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BungeeTextHelper implements TextHelper {
+
+    private static final boolean RGB_SUPPORT = FileUtils.isMethodPresent(ChatColor.class, "of", Color.class);
+
     @Nonnull
     public Text create(@Nonnull String text, @Nonnull CommonColor color) {
         TextComponent message = new TextComponent(text);
-        message.setColor(ChatColor.valueOf(color.name()));
-        return new BungeeText(message);
+        message.setColor(convert(color));
+        return BungeeText.of(message);
     }
 
     @Nonnull
     @Override
     public Text create(@Nonnull String text, @Nonnull CommonColor color, @Nonnull CommonDecoration decoration) {
         TextComponent message = new TextComponent(text);
-        message.setColor(ChatColor.valueOf(color.name()));
+        message.setColor(convert(color));
         applyDecoration(message, decoration);
-        return new BungeeText(message);
+        return BungeeText.of(message);
     }
 
     @Nonnull
     @Override
     public Text fromAmpersandFormat(@Nonnull String ampersandText) {
-        return new BungeeText(TextComponent.fromLegacyText(
+        return BungeeText.of(TextComponent.fromLegacyText(
             ChatColor.translateAlternateColorCodes('&', ampersandText)));
     }
 
@@ -63,6 +68,17 @@ public class BungeeTextHelper implements TextHelper {
     @Nonnull
     public Inventory createInventory(@Nonnull Server server, @Nonnull InventoryHolder holder, int size, @Nonnull Text title) {
         return server.createInventory(holder, size, ((BungeeText) title).sectionText());
+    }
+
+    @Nonnull
+    private static ChatColor convert(@Nonnull CommonColor color) {
+        if (RGB_SUPPORT) {
+            String name = color.name();
+            return name == null ? ChatColor.of(color.awtColor()) : ChatColor.of(name);
+        } else {
+            //noinspection deprecation
+            return ChatColor.valueOf(color.nearestName().toUpperCase());
+        }
     }
 
     private static void applyDecoration(@Nonnull BaseComponent component, @Nonnull CommonDecoration decoration) {

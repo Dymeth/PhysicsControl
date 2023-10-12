@@ -43,12 +43,13 @@ public class AdventureText implements Text {
 
     @Nonnull
     @Override
-    public Text setClickCommand(@Nonnull String command) {
+    public AdventureText setClickCommand(@Nonnull String command) {
         return new AdventureText(this.component.clickEvent(ClickEvent.runCommand(command)));
     }
 
     @Nonnull
-    public Text setHoverText(@Nonnull Text text) {
+    @Override
+    public AdventureText setHoverText(@Nonnull Text text) {
         return new AdventureText(this.component.hoverEvent(HoverEvent.showText(((AdventureText) text).component)));
     }
 

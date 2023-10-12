@@ -10,8 +10,9 @@ repositories {
 
 dependencies {
     // compileOnly 'org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT' // Minimal
-    compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
-    shade project(':api') // Latest
+    //noinspection VulnerableLibrariesLocal
+    compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT' // Maximal
+    shade project(':api')
     shade project(':listener-legacy')
     shade project(':listener-modern')
     shade project(':text-adventure')

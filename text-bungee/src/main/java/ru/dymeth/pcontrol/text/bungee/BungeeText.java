@@ -7,6 +7,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import ru.dymeth.pcontrol.text.Text;
+import ru.dymeth.pcontrol.util.FileUtils;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -15,8 +16,19 @@ import java.util.List;
 
 public class BungeeText implements Text {
 
+    private static final boolean CONTENT_SUPPORT = FileUtils.isClassPresent("net.md_5.bungee.api.chat.hover.content.Content");
+
     private final BaseComponent[] components;
     private String sectionText = null;
+
+    @Nonnull
+    static BungeeText of(@Nonnull BaseComponent... components) {
+        if (CONTENT_SUPPORT) {
+            return new BungeeContentText(components);
+        } else {
+            return new BungeeText(components);
+        }
+    }
 
     BungeeText(@Nonnull BaseComponent... components) {
         this.components = components;
@@ -36,11 +48,6 @@ public class BungeeText implements Text {
         return this.sectionText;
     }
 
-    @Nonnull
-    public BaseComponent[] components() {
-        return this.components;
-    }
-
     @Override
     public void send(@Nonnull CommandSender receiver) {
         if (receiver instanceof Player) {
@@ -58,14 +65,14 @@ public class BungeeText implements Text {
         String[] elements = this.sectionText().split(regex);
         if (elements.length <= 1) return Collections.singletonList(this);
         for (String element : elements) {
-            result.add(new BungeeText(TextComponent.fromLegacyText(element)));
+            result.add(BungeeText.of(TextComponent.fromLegacyText(element)));
         }
         return result;
     }
 
     @Nonnull
     @Override
-    public Text setClickCommand(@Nonnull String command) {
+    public BungeeText setClickCommand(@Nonnull String command) {
         for (BaseComponent component : this.components) {
             component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command));
         }
@@ -73,11 +80,19 @@ public class BungeeText implements Text {
     }
 
     @Nonnull
-    public Text setHoverText(@Nonnull Text text) {
-        BaseComponent[] hover = ((BungeeText) text).components;
+    @Override
+    public BungeeText setHoverText(@Nonnull Text text) {
+        HoverEvent hoverEvent = ((BungeeText) text).createHover(HoverEvent.Action.SHOW_TEXT);
         for (BaseComponent component : this.components) {
-            component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hover));
+            component.setHoverEvent(hoverEvent);
         }
         return this;
     }
+
+    @Nonnull
+    protected HoverEvent createHover(@SuppressWarnings("SameParameterValue") @Nonnull HoverEvent.Action action) {
+        //noinspection deprecation
+        return new HoverEvent(action, this.components);
+    }
+
 }
