@@ -42,6 +42,12 @@ public final class CustomTags {
         FENCES,
         SIGNS,
         WALL_SIGNS,
+        TORCHES,
+        WALL_TORCHES,
+        REDSTONE_TORCHES,
+        WALL_REDSTONE_TORCHES,
+        SOUL_TORCHES,
+        WALL_SOUL_TORCHES,
         RAILS,
         ALL_ALIVE_CORALS,
         DEAD_CORAL_PLANTS,
@@ -334,6 +340,46 @@ public final class CustomTags {
                 set.add("WALL_SIGN");
             } else {
                 set.add(Tag.WALL_SIGNS.getValues());
+            }
+        });
+        TORCHES = BlocksSet.create("WALL_TORCHES", data, set -> {
+            if (!data.hasVersion(13)) {
+                set.add(Material.TORCH);
+            } else {
+                set.add(Material.TORCH);
+            }
+        });
+        WALL_TORCHES = BlocksSet.create("WALL_TORCHES", data, set -> {
+            if (!data.hasVersion(13)) {
+                set.add(Material.TORCH);
+            } else {
+                set.add(Material.WALL_TORCH);
+            }
+        });
+        REDSTONE_TORCHES = BlocksSet.create("WALL_REDSTONE_TORCHES", data, set -> {
+            if (!data.hasVersion(13)) {
+                set.add("REDSTONE_TORCH_ON");
+                set.add("REDSTONE_TORCH_OFF");
+            } else {
+                set.add(Material.REDSTONE_TORCH);
+            }
+        });
+        WALL_REDSTONE_TORCHES = BlocksSet.create("WALL_REDSTONE_TORCHES", data, set -> {
+            if (!data.hasVersion(13)) {
+                set.add("REDSTONE_TORCH_ON");
+                set.add("REDSTONE_TORCH_OFF");
+            } else {
+                set.add(Material.REDSTONE_WALL_TORCH);
+            }
+        });
+        SOUL_TORCHES = BlocksSet.create("WALL_SOUL_TORCHES", data, set -> {
+            if (data.hasVersion(16)) {
+                set.add(Material.SOUL_TORCH);
+            }
+        });
+        WALL_SOUL_TORCHES = BlocksSet.create("WALL_SOUL_TORCHES", data, set -> {
+            if (data.hasVersion(16)) {
+                set.add(Material.SOUL_WALL_TORCH);
             }
         });
         RAILS = BlocksSet.create("RAILS", data, set -> {

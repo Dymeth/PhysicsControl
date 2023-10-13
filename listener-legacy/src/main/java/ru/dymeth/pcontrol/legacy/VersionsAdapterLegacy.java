@@ -3,9 +3,12 @@ package ru.dymeth.pcontrol.legacy;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.Attachable;
 import org.bukkit.material.Dye;
+import org.bukkit.material.MaterialData;
 import ru.dymeth.pcontrol.CustomTags;
 import ru.dymeth.pcontrol.VersionsAdapter;
 import ru.dymeth.pcontrol.api.PControlData;
@@ -34,6 +37,12 @@ public class VersionsAdapterLegacy implements VersionsAdapter {
     @Override
     public boolean isBlockContainsWater(@Nonnull Block block) {
         return this.tags.BLOCKS_UNDER_WATER_ONLY.contains(block.getType());
+    }
+
+    @Override
+    public boolean isFacingAt(@Nonnull Block block, @Nonnull BlockFace face) {
+        MaterialData data = block.getState().getData();
+        return data instanceof Attachable && ((Attachable) data).getFacing() == face;
     }
 
 }

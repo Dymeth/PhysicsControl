@@ -1,6 +1,7 @@
 package ru.dymeth.pcontrol;
 
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.TreeType;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -34,7 +35,7 @@ import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.Collections;
 
-@SuppressWarnings("ClassInitializerMayBeStatic")
+@SuppressWarnings({"ClassInitializerMayBeStatic", "ConcatenationWithEmptyString", "IsCancelled"})
 public final class PhysicsListenerCommon extends PhysicsListener {
 
     public PhysicsListenerCommon(@Nonnull PControlData data) {
@@ -758,5 +759,98 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         this.data.cancelIfDisabled(event, targetBlock.getWorld(), PControlTrigger.BONE_MEAL_USAGE);
         if (event.useItemInHand() == Event.Result.DENY) return;
         this.fertilizedBlocks.add(targetBlock.getLocation().toVector());
+    }
+
+    {
+        if (this.data.hasVersion(13)) { // BlockPhysicsEvent isn't calls on 1.8-1.12 for an unknown reason
+            PControlTrigger.RAILS_DESTROYING.markAvailable();
+            PControlTrigger.LADDERS_DESTROYING.markAvailable();
+            PControlTrigger.SIGNS_DESTROYING.markAvailable();
+            PControlTrigger.TORCHES_DESTROYING.markAvailable();
+            PControlTrigger.REDSTONE_TORCHES_DESTROYING.markAvailable();
+            if (this.data.hasVersion(16)) {
+                PControlTrigger.SOUL_TORCHES_DESTROYING.markAvailable();
+            }
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    private void on(BlockPhysicsEvent event) {
+        Material changedType = event.getChangedType();
+
+        Block block = event.getBlock();
+        Material blockType = block.getType();
+
+        Block source = this.data.hasVersion(13) ? event.getSourceBlock() : null;
+        if (source != null && source != block) {
+            Material sourceType = source.getType();
+            if (sourceType == changedType) return;
+
+            if (Tag.RAILS.isTagged(changedType)) {
+                this.data.cancelIfDisabled(event, PControlTrigger.RAILS_DESTROYING);
+            } else if (PhysicsListener.DEBUG_PHYSICS_EVENT) {
+                this.debugAction(event, block.getLocation(), ""
+                    + "tree=" + 1 + ";"
+                    + "face=" + BlockFace.SELF.name() + ";"
+                    + "block=" + blockType + ";"
+                    + "source=" + sourceType + ";"
+                    + "changed=" + changedType + ";"
+                );
+            }
+            return;
+        }
+
+        Block to;
+        Material toType;
+
+        to = block.getRelative(BlockFace.UP);
+        toType = to.getType();
+
+        if (this.tags.SIGNS.contains(toType)) {
+            this.data.cancelIfDisabled(event, PControlTrigger.SIGNS_DESTROYING);
+        } else if (this.tags.TORCHES.contains(toType)) {
+            this.data.cancelIfDisabled(event, PControlTrigger.TORCHES_DESTROYING);
+        } else if (this.tags.REDSTONE_TORCHES.contains(toType)) {
+            this.data.cancelIfDisabled(event, PControlTrigger.REDSTONE_TORCHES_DESTROYING);
+        } else if (this.tags.SOUL_TORCHES.contains(toType)) {
+            this.data.cancelIfDisabled(event, PControlTrigger.SOUL_TORCHES_DESTROYING);
+        } else {
+            if (PhysicsListener.DEBUG_PHYSICS_EVENT) {
+                this.debugAction(event, block.getLocation(), ""
+                    + "tree=" + 2 + ";"
+                    + "face=" + BlockFace.UP.name() + ";"
+                    + "block=" + blockType + ";"
+                    + "changed=" + changedType + ";"
+                    + "to=" + toType + ";"
+                );
+            }
+            for (BlockFace face : PhysicsListener.NSWE_FACES) {
+                to = block.getRelative(face);
+                if (!this.versionsAdapter.isFacingAt(to, face)) continue;
+                toType = to.getType();
+
+                if (toType == Material.LADDER) {
+                    this.data.cancelIfDisabled(event, PControlTrigger.LADDERS_DESTROYING);
+                } else if (this.tags.WALL_SIGNS.contains(toType)) {
+                    this.data.cancelIfDisabled(event, PControlTrigger.SIGNS_DESTROYING);
+                } else if (this.tags.WALL_TORCHES.contains(toType)) {
+                    this.data.cancelIfDisabled(event, PControlTrigger.TORCHES_DESTROYING);
+                } else if (this.tags.WALL_REDSTONE_TORCHES.contains(toType)) {
+                    this.data.cancelIfDisabled(event, PControlTrigger.REDSTONE_TORCHES_DESTROYING);
+                } else if (this.tags.WALL_SOUL_TORCHES.contains(toType)) {
+                    this.data.cancelIfDisabled(event, PControlTrigger.SOUL_TORCHES_DESTROYING);
+                } else if (PhysicsListener.DEBUG_PHYSICS_EVENT) {
+                    this.debugAction(event, block.getLocation(), ""
+                        + "tree=" + 3 + ";"
+                        + "face=" + face.name() + ";"
+                        + "block=" + blockType + ";"
+                        + "changed=" + changedType + ";"
+                        + "to=" + toType + ";"
+                    );
+                }
+
+                if (event.isCancelled()) return;
+            }
+        }
     }
 }

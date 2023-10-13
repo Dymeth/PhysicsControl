@@ -1,83 +1,14 @@
 package ru.dymeth.pcontrol.legacy;
 
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.BlockPhysicsEvent;
-import org.bukkit.material.Attachable;
-import org.bukkit.material.MaterialData;
 import ru.dymeth.pcontrol.api.PControlData;
-import ru.dymeth.pcontrol.api.PControlTrigger;
 import ru.dymeth.pcontrol.api.PhysicsListener;
 
 import javax.annotation.Nonnull;
 
-@SuppressWarnings({"IsCancelled", "ConcatenationWithEmptyString"})
 public final class PhysicsListenerLegacy extends PhysicsListener {
 
     public PhysicsListenerLegacy(@Nonnull PControlData data) {
         super(data);
     }
 
-    {
-        if (this.data.hasVersion(13)) { // BlockPhysicsEventWorks isn't calls on 1.8-1.12 for an unknown reason
-            PControlTrigger.LADDERS_DESTROYING.markAvailable();
-            PControlTrigger.SIGNS_DESTROYING.markAvailable();
-            PControlTrigger.TORCHES_DESTROYING.markAvailable();
-            PControlTrigger.REDSTONE_TORCHES_DESTROYING.markAvailable();
-        }
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    private void on(BlockPhysicsEvent event) {
-        Block fromBlock = event.getBlock();
-        Block toBlock;
-        MaterialData toData;
-        Material to;
-
-        toBlock = fromBlock.getRelative(BlockFace.UP);
-        to = toBlock.getType();
-
-        if (to == Material.SIGN) {
-            this.data.cancelIfDisabled(event, PControlTrigger.SIGNS_DESTROYING);
-        } else if (to == Material.TORCH) {
-            this.data.cancelIfDisabled(event, PControlTrigger.TORCHES_DESTROYING);
-        } else if (to == Material.REDSTONE_TORCH_ON || to == Material.REDSTONE_TORCH_OFF) {
-            this.data.cancelIfDisabled(event, PControlTrigger.REDSTONE_TORCHES_DESTROYING);
-        } else {
-            if (PhysicsListener.DEBUG_PHYSICS_EVENT) {
-                this.debugAction(event, fromBlock.getLocation(), ""
-                    + "face=" + BlockFace.UP.name() + ";"
-                    + "changed=" + event.getChangedType() + ";"
-                    + "block=" + fromBlock.getType() + ";"
-                );
-            }
-            for (BlockFace face : PhysicsListener.NSWE_FACES) {
-                toBlock = fromBlock.getRelative(face);
-                toData = toBlock.getState().getData();
-                if (!(toData instanceof Attachable)) continue;
-                if (((Attachable) toData).getFacing() != face) continue;
-                to = toBlock.getType();
-
-                if (to == Material.LADDER) {
-                    this.data.cancelIfDisabled(event, PControlTrigger.LADDERS_DESTROYING);
-                } else if (to == Material.WALL_SIGN) {
-                    this.data.cancelIfDisabled(event, PControlTrigger.SIGNS_DESTROYING);
-                } else if (to == Material.TORCH) {
-                    this.data.cancelIfDisabled(event, PControlTrigger.TORCHES_DESTROYING);
-                } else if (to == Material.REDSTONE_TORCH_ON || to == Material.REDSTONE_TORCH_OFF) {
-                    this.data.cancelIfDisabled(event, PControlTrigger.REDSTONE_TORCHES_DESTROYING);
-                } else if (PhysicsListener.DEBUG_PHYSICS_EVENT) {
-                    this.debugAction(event, fromBlock.getLocation(), ""
-                        + "face=" + face.name() + ";"
-                        + "changed=" + event.getChangedType() + ";"
-                        + "block=" + fromBlock.getType() + ";"
-                    );
-                }
-
-                if (event.isCancelled()) return;
-            }
-        }
-    }
 }
