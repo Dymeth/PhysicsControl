@@ -781,23 +781,25 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         Block block = event.getBlock();
         Material blockType = block.getType();
 
-        Block source = this.data.hasVersion(13) ? event.getSourceBlock() : null;
-        if (source != null && source != block) {
-            Material sourceType = source.getType();
-            if (sourceType == changedType) return;
+        if (this.data.hasVersion(13)) {
+            Block source = event.getSourceBlock();
+            if (source != block) {
+                Material sourceType = source.getType();
+                if (sourceType == changedType) return;
 
-            if (Tag.RAILS.isTagged(changedType)) {
-                this.data.cancelIfDisabled(event, PControlTrigger.RAILS_DESTROYING);
-            } else if (PhysicsListener.DEBUG_PHYSICS_EVENT) {
-                this.debugAction(event, block.getLocation(), ""
-                    + "tree=" + 1 + ";"
-                    + "face=" + BlockFace.SELF.name() + ";"
-                    + "block=" + blockType + ";"
-                    + "source=" + sourceType + ";"
-                    + "changed=" + changedType + ";"
-                );
+                if (Tag.RAILS.isTagged(changedType)) {
+                    this.data.cancelIfDisabled(event, PControlTrigger.RAILS_DESTROYING);
+                } else if (PhysicsListener.DEBUG_PHYSICS_EVENT) {
+                    this.debugAction(event, block.getLocation(), ""
+                        + "tree=" + 1 + ";"
+                        + "face=" + BlockFace.SELF.name() + ";"
+                        + "block=" + blockType + ";"
+                        + "source=" + sourceType + ";"
+                        + "changed=" + changedType + ";"
+                    );
+                }
+                return;
             }
-            return;
         }
 
         Block to;
