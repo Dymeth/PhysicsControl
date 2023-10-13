@@ -7,7 +7,7 @@ import ru.dymeth.pcontrol.api.PControlCategory;
 import javax.annotation.Nonnull;
 
 public class PControlCategoryInventory extends PControlInventory {
-    private static final boolean DISPLAY_TEST_CATEGORY = false;
+    public static final boolean DISPLAY_TEST_CATEGORY = false;
 
     public PControlCategoryInventory(@Nonnull PControlDataBukkit data, @Nonnull World world) {
         super(

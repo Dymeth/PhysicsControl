@@ -40,8 +40,8 @@ public final class PControlDataBukkit implements PControlData {
     private final Set<EntityType> removableProjectileTypes;
 
     private final Map<String, String> messages = new HashMap<>();
-    private final Map<String, String> categoriesNames = new HashMap<>();
-    private final Map<String, String> triggersNames = new HashMap<>();
+    private final Map<PControlCategory, String> categoriesNames = new HashMap<>();
+    private final Map<PControlTrigger, String> triggersNames = new HashMap<>();
 
     private final Map<World, Map<PControlTrigger, Boolean>> triggers = new HashMap<>();
     private final Map<World, Map<PControlCategory, PControlTriggerInventory>> inventories = new HashMap<>();
@@ -185,17 +185,44 @@ public final class PControlDataBukkit implements PControlData {
         this.langKey = LocaleUtils.prepareLangKey(this.getClass(), this.plugin.getLogger(), config.getString("language"));
     }
 
+    @Nullable
+    private static <T extends Enum<T>> T getEnum(@Nonnull Class<T> enumType, @Nonnull String key) {
+        try {
+            return Enum.valueOf(enumType, key);
+        } catch (IllegalArgumentException ex) {
+            return null;
+        }
+    }
+
     private void reloadLocale() {
 
         Function<String, String> messageProcessor = msg ->
             msg.replace("%plugin%", this.plugin.getName());
 
-        LocaleUtils.reloadLocale(this.plugin, this.langKey, messageProcessor,
+        LocaleUtils.reloadLocale(this.plugin, this.langKey,
+            key -> getEnum(PControlCategory.class, key), messageProcessor,
             "categories.yml", this.categoriesNames);
-        LocaleUtils.reloadLocale(this.plugin, this.langKey, messageProcessor,
+
+        LocaleUtils.reloadLocale(this.plugin, this.langKey,
+            key -> key, messageProcessor,
             "messages.yml", this.messages);
-        LocaleUtils.reloadLocale(this.plugin, this.langKey, messageProcessor,
+
+        LocaleUtils.reloadLocale(this.plugin, this.langKey,
+            key -> getEnum(PControlTrigger.class, key), messageProcessor,
             "triggers.yml", this.triggersNames);
+
+        for (PControlCategory category : PControlCategory.values()) {
+            if (this.categoriesNames.containsKey(category)) continue;
+            this.categoriesNames.put(category, category.name());
+            if (category == PControlCategory.TEST) continue;
+            this.plugin.getLogger().warning("Unable to load name of category " + category);
+        }
+        for (PControlTrigger trigger : PControlTrigger.values()) {
+            if (this.triggersNames.containsKey(trigger)) continue;
+            if (trigger == PControlTrigger.IGNORED_STATE) continue;
+            this.triggersNames.put(trigger, trigger.name());
+            this.plugin.getLogger().warning("Unable to load name of trigger " + trigger);
+        }
     }
 
     private void reloadTriggers() {
@@ -232,13 +259,13 @@ public final class PControlDataBukkit implements PControlData {
     @Override
     @Nonnull
     public String getTriggerName(@Nonnull PControlTrigger trigger) {
-        return this.triggersNames.get(trigger.name());
+        return this.triggersNames.get(trigger);
     }
 
     @Override
     @Nonnull
     public String getCategoryName(@Nonnull PControlCategory category) {
-        return this.categoriesNames.get(category.name());
+        return this.categoriesNames.get(category);
     }
 
     @Nonnull

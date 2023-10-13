@@ -69,11 +69,12 @@ public class LocaleUtils {
         }
     }
 
-    public static void reloadLocale(@Nonnull Plugin plugin,
-                                    @Nonnull String langKey,
-                                    @Nonnull Function<String, String> messageProcessor,
-                                    @Nonnull String simpleFileName,
-                                    @Nonnull Map<String, String> targetMap
+    public static <K> void reloadLocale(@Nonnull Plugin plugin,
+                                        @Nonnull String langKey,
+                                        @Nonnull Function<String, K> keyMapper,
+                                        @Nonnull Function<String, String> messageProcessor,
+                                        @Nonnull String simpleFileName,
+                                        @Nonnull Map<K, String> targetMap
     ) {
         String systemFileName = "lang" + File.separator + simpleFileName;
         String resourceFileName = "lang/" + langKey + "/" + simpleFileName;
@@ -87,38 +88,46 @@ public class LocaleUtils {
             new InputStreamReader(Objects.requireNonNull(plugin.getResource(resourceFileName))));
 
         loadMessagesAndWarnAboutWrongKeys(
-            actualConfig, defaultConfig, targetMap,
+            actualConfig, defaultConfig,
+            keyMapper, targetMap,
             plugin.getLogger(), simpleFileName,
             messageProcessor);
     }
 
-    private static void loadMessagesAndWarnAboutWrongKeys(@Nonnull YamlConfiguration actualConfig,
-                                                          @Nonnull YamlConfiguration defaultConfig,
-                                                          @Nonnull Map<String, String> targetMap,
-                                                          @Nonnull Logger logger,
-                                                          @Nonnull String fileName,
-                                                          @Nonnull Function<String, String> messageProcessor
+    private static <K> void loadMessagesAndWarnAboutWrongKeys(@Nonnull YamlConfiguration actualConfig,
+                                                              @Nonnull YamlConfiguration defaultConfig,
+                                                              @Nonnull Function<String, K> keyMapper,
+                                                              @Nonnull Map<K, String> targetMap,
+                                                              @Nonnull Logger logger,
+                                                              @Nonnull String fileName,
+                                                              @Nonnull Function<String, String> messageProcessor
     ) {
-        Map<String, String> defaultValues = new HashMap<>();
+        Map<K, String> defaultValues = new HashMap<>();
         Map<String, String> deprecatedKeys = new HashMap<>();
-        Map<String, String> unloadedKeys = new HashMap<>();
+        Map<K, String> unloadedKeys = new HashMap<>();
 
-        for (String key : defaultConfig.getKeys(false)) {
-            defaultValues.put(key, defaultConfig.getString(key));
+        for (String stringKey : defaultConfig.getKeys(false)) {
+            K key = keyMapper.apply(stringKey);
+            if (key == null) {
+                throw new IllegalArgumentException("Unable to map key " + stringKey + " to object " +
+                    "in default " + fileName + ". Is it key deprecated?");
+            }
+            defaultValues.put(key, defaultConfig.getString(stringKey));
         }
 
-        for (String key : actualConfig.getKeys(false)) {
-            String msg = actualConfig.getString(key);
+        for (String stringKey : actualConfig.getKeys(false)) {
+            K key = keyMapper.apply(stringKey);
+            String msg = actualConfig.getString(stringKey);
             if (msg == null) continue;
-            if (defaultValues.containsKey(key)) {
+            if (key == null || defaultValues.containsKey(key)) {
                 targetMap.put(key, messageProcessor.apply(msg));
             } else {
-                deprecatedKeys.put(key, msg);
+                deprecatedKeys.put(stringKey, msg);
             }
         }
 
-        for (Map.Entry<String, String> defaultEntry : defaultValues.entrySet()) {
-            String key = defaultEntry.getKey();
+        for (Map.Entry<K, String> defaultEntry : defaultValues.entrySet()) {
+            K key = defaultEntry.getKey();
             if (targetMap.containsKey(key)) continue;
             String msg = messageProcessor.apply(defaultEntry.getValue());
             targetMap.put(key, msg);
@@ -135,7 +144,7 @@ public class LocaleUtils {
         }
     }
 
-    private static void logValues(@Nonnull Logger logger, @Nonnull Map<String, String> map) {
+    private static <K> void logValues(@Nonnull Logger logger, @Nonnull Map<K, String> map) {
         map.forEach((key, value) -> logger.warning(key + ": \"" + value.replace("\n", "\\n") + "\""));
     }
 }
