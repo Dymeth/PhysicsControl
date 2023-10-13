@@ -1,7 +1,6 @@
 package ru.dymeth.pcontrol;
 
 import org.bukkit.Material;
-import org.bukkit.Tag;
 import org.bukkit.TreeType;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -787,7 +786,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
                 Material sourceType = source.getType();
                 if (sourceType == changedType) return;
 
-                if (Tag.RAILS.isTagged(changedType)) {
+                if (this.tags.RAILS.contains(changedType)) {
                     this.data.cancelIfDisabled(event, PControlTrigger.RAILS_DESTROYING);
                 } else if (PhysicsListener.DEBUG_PHYSICS_EVENT) {
                     this.debugAction(event, block.getLocation(), ""
