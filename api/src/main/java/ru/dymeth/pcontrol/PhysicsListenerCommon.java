@@ -812,11 +812,11 @@ public final class PhysicsListenerCommon extends PhysicsListener {
             return;
         }
 
-        if (!BLOCK_PHYSICS_EVENT_GET_SOURCE_BLOCK_SUPPORT) { // Not supported on Spigot 1.13 and 1.13.1
+        if (!BLOCK_PHYSICS_EVENT_GET_SOURCE_BLOCK_SUPPORT) {
             return;
         }
 
-        Block source = event.getSourceBlock();
+        Block source = event.getSourceBlock(); // Not supported on Spigot 1.13 and 1.13.1
 
         if (PhysicsListener.DEBUG_BLOCK_PHYSICS_EVENT) {
             this.debugAction(event, block.getLocation(), ""

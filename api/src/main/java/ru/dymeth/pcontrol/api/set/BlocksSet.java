@@ -18,8 +18,31 @@ public final class BlocksSet extends CustomEnumSet<Material> {
         try {
             consumer.accept(result);
         } catch (NoSuchFieldError e) {
+            String materialName = e.getMessage();
             data.getPlugin().getLogger().warning("Unable to fill set " + setName + ". " +
-                "Block " + e.getMessage() + " not found. Plugin may not work correctly");
+                "Block " + materialName + " not found. Plugin may not work correctly");
+        } catch (NullPointerException e) {
+            String tagName = e.getMessage();
+            if (tagName != null && tagName.startsWith("Cannot invoke \"org.bukkit.Tag.getValues()\" because \"org.bukkit.Tag.")) {
+                tagName = tagName.substring(
+                    "Cannot invoke \"org.bukkit.Tag.getValues()\" because \"org.bukkit.Tag.".length(),
+                    tagName.length() - "\" is null".length()
+                );
+            } else {
+                tagName = null;
+            }
+            if (tagName == null) {
+                data.getPlugin().getLogger().warning("Unable to fill set " + setName + ". " +
+                    "Unknown error occurred. Plugin may not work correctly. Stack:");
+                e.printStackTrace();
+            } else {
+                data.getPlugin().getLogger().warning("Unable to fill set " + setName + ". " +
+                    "Tag " + tagName + " not found. Plugin may not work correctly");
+            }
+        } catch (Throwable t) {
+            data.getPlugin().getLogger().warning("Unable to fill set " + setName + ". " +
+                "Unknown error occurred. Plugin may not work correctly. Stack:");
+            t.printStackTrace();
         }
         return Collections.unmodifiableSet(result.getValues());
     }
