@@ -90,7 +90,7 @@ public class LocaleUtils {
         loadMessagesAndWarnAboutWrongKeys(
             actualConfig, defaultConfig,
             keyMapper, targetMap,
-            plugin.getLogger(), simpleFileName,
+            plugin.getLogger(), systemFileName,
             messageProcessor);
     }
 
@@ -99,7 +99,7 @@ public class LocaleUtils {
                                                               @Nonnull Function<String, K> keyMapper,
                                                               @Nonnull Map<K, String> targetMap,
                                                               @Nonnull Logger logger,
-                                                              @Nonnull String fileName,
+                                                              @Nonnull String systemFileName,
                                                               @Nonnull Function<String, String> messageProcessor
     ) {
         Map<K, String> defaultValues = new HashMap<>();
@@ -110,7 +110,7 @@ public class LocaleUtils {
             K key = keyMapper.apply(stringKey);
             if (key == null) {
                 throw new IllegalArgumentException("Unable to map key " + stringKey + " to object " +
-                    "in default " + fileName + ". Is it key deprecated?");
+                    "in default " + systemFileName + ". Is it key deprecated?");
             }
             defaultValues.put(key, defaultConfig.getString(stringKey));
         }
@@ -135,11 +135,11 @@ public class LocaleUtils {
         }
 
         if (!unloadedKeys.isEmpty()) {
-            logger.warning("Some localization phrases was not found in " + fileName + ". Used defaults:");
+            logger.warning("Some localization phrases was not found in " + systemFileName + ". Used defaults:");
             logValues(logger, unloadedKeys);
         }
         if (!deprecatedKeys.isEmpty()) {
-            logger.warning("Some deprecated localization phrases from " + fileName + " was not applied:");
+            logger.warning("Some deprecated localization phrases from " + systemFileName + " was not applied:");
             logValues(logger, deprecatedKeys);
         }
     }
