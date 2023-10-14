@@ -346,7 +346,7 @@ public final class CustomTags {
                 set.add(Tag.WALL_SIGNS.getValues());
                 set.add(Tag.SIGNS.getValues());
             }
-            if (data.hasVersion(19)) {
+            if (data.hasVersion(20)) {
                 set.add(Tag.CEILING_HANGING_SIGNS.getValues());
                 set.add(Tag.WALL_HANGING_SIGNS.getValues());
                 set.add(Tag.ALL_HANGING_SIGNS.getValues());
