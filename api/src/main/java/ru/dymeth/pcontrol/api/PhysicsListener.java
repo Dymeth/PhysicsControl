@@ -23,7 +23,7 @@ public abstract class PhysicsListener implements Listener {
         BlockFace.WEST,
         BlockFace.EAST
     };
-    protected static final boolean DEBUG_PHYSICS_EVENT = false;
+    protected static final boolean DEBUG_BLOCK_PHYSICS_EVENT = false;
 
     protected final PControlData data;
     protected final CustomTags tags;

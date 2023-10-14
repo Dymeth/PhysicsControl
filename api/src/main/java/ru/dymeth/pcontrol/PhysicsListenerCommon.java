@@ -29,6 +29,7 @@ import ru.dymeth.pcontrol.rules.pair.MaterialMaterialRules;
 import ru.dymeth.pcontrol.rules.single.EntityRules;
 import ru.dymeth.pcontrol.rules.single.MaterialRules;
 import ru.dymeth.pcontrol.rules.single.TreeRules;
+import ru.dymeth.pcontrol.util.FileUtils;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
@@ -36,6 +37,9 @@ import java.util.Collections;
 
 @SuppressWarnings({"ClassInitializerMayBeStatic", "ConcatenationWithEmptyString", "IsCancelled"})
 public final class PhysicsListenerCommon extends PhysicsListener {
+
+    private static final boolean BLOCK_PHYSICS_EVENT_GET_SOURCE_BLOCK_SUPPORT
+        = FileUtils.isMethodPresent(BlockPhysicsEvent.class, "getSourceBlock");
 
     public PhysicsListenerCommon(@Nonnull PControlData data) {
         super(data);
@@ -760,97 +764,93 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         this.fertilizedBlocks.add(targetBlock.getLocation().toVector());
     }
 
+    private final MaterialRules rulesBlockPhysicsEventFrom = new MaterialRules(this.data);
+
     {
-        if (this.data.hasVersion(13)) { // BlockPhysicsEvent isn't calls on 1.8-1.12 for an unknown reason
-            PControlTrigger.RAILS_DESTROYING.markAvailable();
-            PControlTrigger.LADDERS_DESTROYING.markAvailable();
-            PControlTrigger.SIGNS_DESTROYING.markAvailable();
-            PControlTrigger.TORCHES_DESTROYING.markAvailable();
-            PControlTrigger.REDSTONE_TORCHES_DESTROYING.markAvailable();
-            if (this.data.hasVersion(16)) {
-                PControlTrigger.SOUL_TORCHES_DESTROYING.markAvailable();
-            }
+        if (BLOCK_PHYSICS_EVENT_GET_SOURCE_BLOCK_SUPPORT || !this.data.hasVersion(13)) {
+            this.rulesBlockPhysicsEventFrom.regSingle(PControlTrigger.LADDERS_DESTROYING,
+                BlocksSet.create(PControlTrigger.LADDERS_DESTROYING + " trigger", this.data, set ->
+                    set.add(this.tags.LADDERS)));
+            this.rulesBlockPhysicsEventFrom.regSingle(PControlTrigger.SIGNS_DESTROYING,
+                BlocksSet.create(PControlTrigger.SIGNS_DESTROYING + " trigger", this.data, set ->
+                    set.add(this.tags.SIGNS)));
+            this.rulesBlockPhysicsEventFrom.regSingle(PControlTrigger.TORCHES_DESTROYING,
+                BlocksSet.create(PControlTrigger.TORCHES_DESTROYING + " trigger", this.data, set ->
+                    set.add(this.tags.TORCHES)));
+            this.rulesBlockPhysicsEventFrom.regSingle(PControlTrigger.REDSTONE_TORCHES_DESTROYING,
+                BlocksSet.create(PControlTrigger.REDSTONE_TORCHES_DESTROYING + " trigger", this.data, set ->
+                    set.add(this.tags.REDSTONE_TORCHES)));
+            this.rulesBlockPhysicsEventFrom.regSingle(PControlTrigger.SOUL_TORCHES_DESTROYING,
+                BlocksSet.create(PControlTrigger.SOUL_TORCHES_DESTROYING + " trigger", this.data, set ->
+                    set.add(this.tags.SOUL_TORCHES)));
+            this.rulesBlockPhysicsEventFrom.regSingle(PControlTrigger.RAILS_DESTROYING,
+                BlocksSet.create(PControlTrigger.RAILS_DESTROYING + " trigger", this.data, set ->
+                    set.add(this.tags.RAILS)));
         }
     }
 
     @EventHandler(ignoreCancelled = true)
-    private void on(BlockPhysicsEvent event) {
-        Material changedType = event.getChangedType();
-
+    private void modernListener(BlockPhysicsEvent event) {
         Block block = event.getBlock();
-        Material blockType = block.getType();
 
-        if (this.data.hasVersion(13)) {
-            Block source = event.getSourceBlock();
-            if (source != block) {
-                Material sourceType = source.getType();
-                if (sourceType == changedType) return;
-
-                if (this.tags.RAILS.contains(changedType)) {
-                    this.data.cancelIfDisabled(event, PControlTrigger.RAILS_DESTROYING);
-                } else if (PhysicsListener.DEBUG_PHYSICS_EVENT) {
-                    this.debugAction(event, block.getLocation(), ""
-                        + "tree=" + 1 + ";"
-                        + "face=" + BlockFace.SELF.name() + ";"
-                        + "block=" + blockType + ";"
-                        + "source=" + sourceType + ";"
-                        + "changed=" + changedType + ";"
-                    );
-                }
-                return;
-            }
-        }
-
-        Block to;
-        Material toType;
-
-        to = block.getRelative(BlockFace.UP);
-        toType = to.getType();
-
-        if (this.tags.SIGNS.contains(toType)) {
-            this.data.cancelIfDisabled(event, PControlTrigger.SIGNS_DESTROYING);
-        } else if (this.tags.TORCHES.contains(toType)) {
-            this.data.cancelIfDisabled(event, PControlTrigger.TORCHES_DESTROYING);
-        } else if (this.tags.REDSTONE_TORCHES.contains(toType)) {
-            this.data.cancelIfDisabled(event, PControlTrigger.REDSTONE_TORCHES_DESTROYING);
-        } else if (this.tags.SOUL_TORCHES.contains(toType)) {
-            this.data.cancelIfDisabled(event, PControlTrigger.SOUL_TORCHES_DESTROYING);
-        } else {
-            if (PhysicsListener.DEBUG_PHYSICS_EVENT) {
+        if (!this.data.hasVersion(13)) {
+            if (PhysicsListener.DEBUG_BLOCK_PHYSICS_EVENT) {
                 this.debugAction(event, block.getLocation(), ""
-                    + "tree=" + 2 + ";"
-                    + "face=" + BlockFace.UP.name() + ";"
-                    + "block=" + blockType + ";"
-                    + "changed=" + changedType + ";"
-                    + "to=" + toType + ";"
+                    + "block=" + block.getType() + ";"
+                    + "changed=" + event.getChangedType() + ";"
                 );
             }
-            for (BlockFace face : PhysicsListener.NSWE_FACES) {
-                to = block.getRelative(face);
-                if (!this.versionsAdapter.isFacingAt(to, face)) continue;
-                toType = to.getType();
+            PControlTrigger trigger = this.rulesBlockPhysicsEventFrom.findTrigger(block.getType());
+            if (trigger != null) {
+                this.data.cancelIfDisabled(event, trigger);
+            }
+            return;
+        }
 
-                if (toType == Material.LADDER) {
-                    this.data.cancelIfDisabled(event, PControlTrigger.LADDERS_DESTROYING);
-                } else if (this.tags.WALL_SIGNS.contains(toType)) {
-                    this.data.cancelIfDisabled(event, PControlTrigger.SIGNS_DESTROYING);
-                } else if (this.tags.WALL_TORCHES.contains(toType)) {
-                    this.data.cancelIfDisabled(event, PControlTrigger.TORCHES_DESTROYING);
-                } else if (this.tags.WALL_REDSTONE_TORCHES.contains(toType)) {
-                    this.data.cancelIfDisabled(event, PControlTrigger.REDSTONE_TORCHES_DESTROYING);
-                } else if (this.tags.WALL_SOUL_TORCHES.contains(toType)) {
-                    this.data.cancelIfDisabled(event, PControlTrigger.SOUL_TORCHES_DESTROYING);
-                } else if (PhysicsListener.DEBUG_PHYSICS_EVENT) {
-                    this.debugAction(event, block.getLocation(), ""
-                        + "tree=" + 3 + ";"
-                        + "face=" + face.name() + ";"
-                        + "block=" + blockType + ";"
-                        + "changed=" + changedType + ";"
-                        + "to=" + toType + ";"
-                    );
-                }
+        if (!BLOCK_PHYSICS_EVENT_GET_SOURCE_BLOCK_SUPPORT) { // Not supported on Spigot 1.13 and 1.13.1
+            return;
+        }
 
-                if (event.isCancelled()) return;
+        Block source = event.getSourceBlock();
+
+        if (PhysicsListener.DEBUG_BLOCK_PHYSICS_EVENT) {
+            this.debugAction(event, block.getLocation(), ""
+                + "block=" + block.getType() + ";"
+                + "source=" + source.getType() + ";"
+                + "changed=" + event.getChangedType() + ";"
+            );
+        }
+
+        PControlTrigger trigger;
+        Block sourceRelative;
+
+        BlockFace faceUp = BlockFace.UP;
+        sourceRelative = source.getRelative(faceUp);
+        if (PhysicsListener.DEBUG_BLOCK_PHYSICS_EVENT) {
+            this.debugAction(event, sourceRelative.getLocation(), ""
+                + "face=" + faceUp + ";"
+                + "sourceRelative=" + sourceRelative.getType() + ";"
+            );
+        }
+        trigger = this.rulesBlockPhysicsEventFrom.findTrigger(sourceRelative.getType());
+        if (trigger != null) {
+            this.data.cancelIfDisabled(event, trigger);
+            return;
+        }
+
+        for (BlockFace faceNSWE : PhysicsListener.NSWE_FACES) {
+            sourceRelative = source.getRelative(faceNSWE);
+            if (PhysicsListener.DEBUG_BLOCK_PHYSICS_EVENT) {
+                this.debugAction(event, sourceRelative.getLocation(), ""
+                    + "face=" + faceNSWE + ";"
+                    + "sourceRelative=" + sourceRelative.getType() + ";"
+                );
+            }
+            if (!this.versionsAdapter.isFacingAt(sourceRelative, faceNSWE)) continue;
+            trigger = this.rulesBlockPhysicsEventFrom.findTrigger(sourceRelative.getType());
+            if (trigger != null) {
+                this.data.cancelIfDisabled(event, trigger);
+                return;
             }
         }
     }

@@ -42,7 +42,7 @@ public class VersionsAdapterLegacy implements VersionsAdapter {
     @Override
     public boolean isFacingAt(@Nonnull Block block, @Nonnull BlockFace face) {
         MaterialData data = block.getState().getData();
-        return data instanceof Attachable && ((Attachable) data).getFacing() == face;
+        return !(data instanceof Attachable) || ((Attachable) data).getFacing() == face;
     }
 
 }

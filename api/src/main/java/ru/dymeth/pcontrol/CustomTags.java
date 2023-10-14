@@ -40,14 +40,11 @@ public final class CustomTags {
         PUMPKIN_STEM_AND_BLOCK,
         MELON_STEM_AND_BLOCK,
         FENCES,
+        LADDERS,
         SIGNS,
-        WALL_SIGNS,
         TORCHES,
-        WALL_TORCHES,
         REDSTONE_TORCHES,
-        WALL_REDSTONE_TORCHES,
         SOUL_TORCHES,
-        WALL_SOUL_TORCHES,
         RAILS,
         ALL_ALIVE_CORALS,
         DEAD_CORAL_PLANTS,
@@ -56,6 +53,7 @@ public final class CustomTags {
         DEAD_CORAL_BLOCKS,
         ALL_DEAD_CORALS;
 
+    @SuppressWarnings("CodeBlock2Expr")
     public CustomTags(@Nonnull PControlData data) {
         WORLD_AIR = BlocksSet.create("WORLD_AIR", data, set -> {
             set.add(Material.AIR);
@@ -327,58 +325,45 @@ public final class CustomTags {
                 set.add(Tag.FENCES.getValues());
             }
         });
-        // TODO Possibly add SIGN_POST? (1.8-1.12.2)
+        LADDERS = BlocksSet.create("LADDERS", data, set -> {
+            set.add(Material.LADDER);
+        });
         SIGNS = BlocksSet.create("SIGNS", data, set -> {
             if (!data.hasVersion(14)) {
                 set.add("SIGN");
-            } else {
-                set.add(Tag.SIGNS.getValues());
-            }
-        });
-        WALL_SIGNS = BlocksSet.create("WALL_SIGNS", data, set -> {
-            if (!data.hasVersion(14)) {
+                set.add("SIGN_POST");
                 set.add("WALL_SIGN");
             } else {
+                set.add(Tag.STANDING_SIGNS.getValues());
                 set.add(Tag.WALL_SIGNS.getValues());
+                set.add(Tag.SIGNS.getValues());
+            }
+            if (data.hasVersion(19)) {
+                set.add(Tag.CEILING_HANGING_SIGNS.getValues());
+                set.add(Tag.WALL_HANGING_SIGNS.getValues());
+                set.add(Tag.ALL_HANGING_SIGNS.getValues());
+                set.add(Tag.ALL_SIGNS.getValues());
             }
         });
-        TORCHES = BlocksSet.create("WALL_TORCHES", data, set -> {
-            if (!data.hasVersion(13)) {
+        TORCHES = BlocksSet.create("TORCHES", data, set -> {
+            set.add(Material.TORCH);
+            if (data.hasVersion(13)) {
                 set.add(Material.TORCH);
-            } else {
-                set.add(Material.TORCH);
-            }
-        });
-        WALL_TORCHES = BlocksSet.create("WALL_TORCHES", data, set -> {
-            if (!data.hasVersion(13)) {
-                set.add(Material.TORCH);
-            } else {
                 set.add(Material.WALL_TORCH);
             }
         });
-        REDSTONE_TORCHES = BlocksSet.create("WALL_REDSTONE_TORCHES", data, set -> {
+        REDSTONE_TORCHES = BlocksSet.create("REDSTONE_TORCHES", data, set -> {
             if (!data.hasVersion(13)) {
                 set.add("REDSTONE_TORCH_ON");
                 set.add("REDSTONE_TORCH_OFF");
             } else {
                 set.add(Material.REDSTONE_TORCH);
-            }
-        });
-        WALL_REDSTONE_TORCHES = BlocksSet.create("WALL_REDSTONE_TORCHES", data, set -> {
-            if (!data.hasVersion(13)) {
-                set.add("REDSTONE_TORCH_ON");
-                set.add("REDSTONE_TORCH_OFF");
-            } else {
                 set.add(Material.REDSTONE_WALL_TORCH);
             }
         });
-        SOUL_TORCHES = BlocksSet.create("WALL_SOUL_TORCHES", data, set -> {
+        SOUL_TORCHES = BlocksSet.create("SOUL_TORCHES", data, set -> {
             if (data.hasVersion(16)) {
                 set.add(Material.SOUL_TORCH);
-            }
-        });
-        WALL_SOUL_TORCHES = BlocksSet.create("WALL_SOUL_TORCHES", data, set -> {
-            if (data.hasVersion(16)) {
                 set.add(Material.SOUL_WALL_TORCH);
             }
         });

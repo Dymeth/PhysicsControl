@@ -42,7 +42,7 @@ public class VersionsAdapterModern implements VersionsAdapter {
     @Override
     public boolean isFacingAt(@Nonnull Block block, @Nonnull BlockFace face) {
         BlockData data = block.getBlockData();
-        return data instanceof Directional && ((Directional) data).getFacing() == face;
+        return !(data instanceof Directional) || ((Directional) data).getFacing() == face;
     }
 
 }
