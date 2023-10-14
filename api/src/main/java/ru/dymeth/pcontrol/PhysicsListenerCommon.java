@@ -774,18 +774,20 @@ public final class PhysicsListenerCommon extends PhysicsListener {
             this.rulesBlockPhysicsEventFrom.regSingle(PControlTrigger.SIGNS_DESTROYING,
                 BlocksSet.create(PControlTrigger.SIGNS_DESTROYING + " trigger", this.data, set ->
                     set.add(this.tags.SIGNS)));
+            this.rulesBlockPhysicsEventFrom.regSingle(PControlTrigger.RAILS_DESTROYING,
+                BlocksSet.create(PControlTrigger.RAILS_DESTROYING + " trigger", this.data, set ->
+                    set.add(this.tags.RAILS)));
             this.rulesBlockPhysicsEventFrom.regSingle(PControlTrigger.TORCHES_DESTROYING,
                 BlocksSet.create(PControlTrigger.TORCHES_DESTROYING + " trigger", this.data, set ->
                     set.add(this.tags.TORCHES)));
             this.rulesBlockPhysicsEventFrom.regSingle(PControlTrigger.REDSTONE_TORCHES_DESTROYING,
                 BlocksSet.create(PControlTrigger.REDSTONE_TORCHES_DESTROYING + " trigger", this.data, set ->
                     set.add(this.tags.REDSTONE_TORCHES)));
+        }
+        if (this.data.hasVersion(16)) {
             this.rulesBlockPhysicsEventFrom.regSingle(PControlTrigger.SOUL_TORCHES_DESTROYING,
                 BlocksSet.create(PControlTrigger.SOUL_TORCHES_DESTROYING + " trigger", this.data, set ->
                     set.add(this.tags.SOUL_TORCHES)));
-            this.rulesBlockPhysicsEventFrom.regSingle(PControlTrigger.RAILS_DESTROYING,
-                BlocksSet.create(PControlTrigger.RAILS_DESTROYING + " trigger", this.data, set ->
-                    set.add(this.tags.RAILS)));
         }
     }
 

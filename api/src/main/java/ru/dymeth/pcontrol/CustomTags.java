@@ -42,10 +42,10 @@ public final class CustomTags {
         FENCES,
         LADDERS,
         SIGNS,
+        RAILS,
         TORCHES,
         REDSTONE_TORCHES,
         SOUL_TORCHES,
-        RAILS,
         ALL_ALIVE_CORALS,
         DEAD_CORAL_PLANTS,
         DEAD_CORALS,
@@ -345,6 +345,16 @@ public final class CustomTags {
                 set.add(Tag.ALL_SIGNS.getValues());
             }
         });
+        RAILS = BlocksSet.create("RAILS", data, set -> {
+            set.add(Material.ACTIVATOR_RAIL);
+            set.add(Material.DETECTOR_RAIL);
+            set.add(Material.POWERED_RAIL);
+            if (!data.hasVersion(13)) {
+                set.add("RAILS");
+            } else {
+                set.add(Material.RAIL);
+            }
+        });
         TORCHES = BlocksSet.create("TORCHES", data, set -> {
             set.add(Material.TORCH);
             if (data.hasVersion(13)) {
@@ -365,16 +375,6 @@ public final class CustomTags {
             if (data.hasVersion(16)) {
                 set.add(Material.SOUL_TORCH);
                 set.add(Material.SOUL_WALL_TORCH);
-            }
-        });
-        RAILS = BlocksSet.create("RAILS", data, set -> {
-            set.add(Material.ACTIVATOR_RAIL);
-            set.add(Material.DETECTOR_RAIL);
-            set.add(Material.POWERED_RAIL);
-            if (!data.hasVersion(13)) {
-                set.add("RAILS");
-            } else {
-                set.add(Material.RAIL);
             }
         });
         ALL_ALIVE_CORALS = BlocksSet.create("ALL_ALIVE_CORALS", data, set -> {
