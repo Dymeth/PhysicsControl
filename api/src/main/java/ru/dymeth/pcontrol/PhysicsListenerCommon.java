@@ -768,6 +768,9 @@ public final class PhysicsListenerCommon extends PhysicsListener {
 
     {
         if (BLOCK_PHYSICS_EVENT_GET_SOURCE_BLOCK_SUPPORT || !this.data.hasVersion(13)) {
+            this.rulesBlockPhysicsEventFrom.regSingle(PControlTrigger.SAPLINGS_DESTROYING,
+                BlocksSet.create(PControlTrigger.SAPLINGS_DESTROYING + " trigger", this.data, set ->
+                    set.add(this.tags.SAPLINGS)));
             this.rulesBlockPhysicsEventFrom.regSingle(PControlTrigger.LADDERS_DESTROYING,
                 BlocksSet.create(PControlTrigger.LADDERS_DESTROYING + " trigger", this.data, set ->
                     set.add(this.tags.LADDERS)));

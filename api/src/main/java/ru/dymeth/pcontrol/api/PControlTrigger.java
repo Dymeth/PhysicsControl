@@ -44,6 +44,9 @@ public enum PControlTrigger {
     SOUL_TORCHES_DESTROYING(
         BUILDING, false, 2, 6, true, "SOUL_TORCH"),
 
+    SAPLINGS_DESTROYING(
+        BUILDING, false, 3, 5, true, "SAPLING", "OAK_SAPLING"),
+
 
     RABBITS_EATING_CARROTS(
         MOBS_INTERACTIONS, false, 1, 2, true, "CARROT_ITEM", "CARROT"),

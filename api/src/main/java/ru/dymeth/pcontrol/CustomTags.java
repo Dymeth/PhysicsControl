@@ -40,6 +40,7 @@ public final class CustomTags {
         PUMPKIN_STEM_AND_BLOCK,
         MELON_STEM_AND_BLOCK,
         FENCES,
+        SAPLINGS,
         LADDERS,
         SIGNS,
         RAILS,
@@ -323,6 +324,13 @@ public final class CustomTags {
             } else {
                 // set.add(Material.IRON_BARS);
                 set.add(Tag.FENCES.getValues());
+            }
+        });
+        SAPLINGS = BlocksSet.create("SAPLINGS", data, set -> {
+            if (!data.hasVersion(13)) {
+                set.add("SAPLING");
+            } else {
+                set.add(Tag.SAPLINGS.getValues());
             }
         });
         LADDERS = BlocksSet.create("LADDERS", data, set -> {
