@@ -16,15 +16,17 @@ import org.bukkit.event.world.WorldUnloadEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.dymeth.pcontrol.api.PControlCategory;
+import ru.dymeth.pcontrol.api.PControlData;
 import ru.dymeth.pcontrol.api.PControlTrigger;
 import ru.dymeth.pcontrol.inventory.PControlCategoryInventory;
 import ru.dymeth.pcontrol.inventory.PControlInventory;
-import ru.dymeth.pcontrol.legacy.PhysicsListenerLegacy;
-import ru.dymeth.pcontrol.modern.PhysicsListenerModern;
+import ru.dymeth.pcontrol.modern.MoistureChangeEventListener;
 import ru.dymeth.pcontrol.rules.TriggerRules;
+import ru.dymeth.pcontrol.util.FileUtils;
 
 import javax.annotation.Nonnull;
 import java.util.StringJoiner;
+import java.util.function.Function;
 
 public final class PhysicsControl extends JavaPlugin implements Listener {
     @SuppressWarnings("FieldCanBeLocal")
@@ -37,11 +39,8 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
 
         this.getServer().getPluginManager().registerEvents(this, this);
         this.getServer().getPluginManager().registerEvents(new PhysicsListenerCommon(this.data), this);
-        this.getServer().getPluginManager().registerEvents(
-            this.data.hasVersion(13)
-                ? new PhysicsListenerModern(this.data)
-                : new PhysicsListenerLegacy(this.data),
-            this);
+
+        this.reg("org.bukkit.event.block.MoistureChangeEvent", MoistureChangeEventListener::new);
 
         for (PControlTrigger trigger : PControlCategory.SETTINGS.getTriggers()) {
             trigger.markAvailable();
@@ -52,6 +51,12 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         }
 
         this.data.reloadConfigs();
+    }
+
+    private void reg(@Nonnull String eventClassName, @Nonnull Function<PControlData, Listener> listenerCreator) {
+        if (FileUtils.isClassPresent(eventClassName)) {
+            this.getServer().getPluginManager().registerEvents(listenerCreator.apply(this.data), this);
+        }
     }
 
     @Override

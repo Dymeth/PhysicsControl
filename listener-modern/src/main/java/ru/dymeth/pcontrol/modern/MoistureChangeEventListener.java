@@ -12,9 +12,9 @@ import ru.dymeth.pcontrol.api.PhysicsListener;
 import javax.annotation.Nonnull;
 
 @SuppressWarnings("ClassInitializerMayBeStatic")
-public final class PhysicsListenerModern extends PhysicsListener {
+public final class MoistureChangeEventListener extends PhysicsListener {
 
-    public PhysicsListenerModern(@Nonnull PControlData data) {
+    public MoistureChangeEventListener(@Nonnull PControlData data) {
         super(data);
     }
 
