@@ -206,7 +206,7 @@ public enum PControlTrigger {
         }
         this.defaults = defaults;
         this.category.addTrigger(this);
-        this.icon = BukkitUtils.matchIcon(iconVariants);
+        this.icon = MaterialUtils.matchIcon(iconVariants);
     }
 
     @Nonnull

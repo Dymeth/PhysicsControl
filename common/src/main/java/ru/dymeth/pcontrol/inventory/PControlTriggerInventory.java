@@ -45,7 +45,7 @@ public final class PControlTriggerInventory extends PControlInventory {
         for (PControlTrigger trigger : category.getTriggers()) {
             this.slotByTrigger.put(trigger, trigger.getSlot());
         }
-        ItemStack back = BukkitUtils.matchIcon("RED_WOOL", "WOOL:14");
+        ItemStack back = MaterialUtils.matchIcon("RED_WOOL", "WOOL:14");
         if (back == null) throw new IllegalArgumentException();
         ItemMeta meta = back.getItemMeta();
         if (meta == null) throw new IllegalArgumentException();

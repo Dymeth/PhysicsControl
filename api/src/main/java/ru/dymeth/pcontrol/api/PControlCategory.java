@@ -42,7 +42,7 @@ public enum PControlCategory {
 
     PControlCategory(int row, int column, @Nonnull String... iconVariants) {
         this.slot = (short) ((row - 1) * 9 + column - 1);
-        this.icon = BukkitUtils.matchIcon(iconVariants);
+        this.icon = MaterialUtils.matchIcon(iconVariants);
     }
 
     void addTrigger(@Nonnull PControlTrigger trigger) {

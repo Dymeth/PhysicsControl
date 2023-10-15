@@ -1,7 +1,7 @@
 package ru.dymeth.pcontrol.api.set;
 
 import org.bukkit.Material;
-import ru.dymeth.pcontrol.api.BukkitUtils;
+import ru.dymeth.pcontrol.api.MaterialUtils;
 import ru.dymeth.pcontrol.api.PControlData;
 
 import javax.annotation.Nonnull;
@@ -32,13 +32,13 @@ public final class ItemsSet extends CustomEnumSet<Material> {
     @Nonnull
     @Override
     public CustomEnumSet<Material> add(@Nonnull Predicate<Material> filter) {
-        return super.add(material -> material.isItem() && !material.name().startsWith("LEGACY_") && filter.test(material));
+        return super.add(material -> MaterialUtils.isItemMaterial(material, true) && filter.test(material));
     }
 
     @Nonnull
     @Override
     public ItemsSet add(@Nonnull String... elementNames) {
-        this.add(BukkitUtils.matchItemMaterials(null, elementNames));
+        this.add(MaterialUtils.matchItemMaterials(null, elementNames));
         return this;
     }
 }

@@ -7,7 +7,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.block.BlockEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.plugin.Plugin;
-import ru.dymeth.pcontrol.api.BukkitUtils;
+import ru.dymeth.pcontrol.api.EntityTypeUtils;
 import ru.dymeth.pcontrol.api.PControlCategory;
 import ru.dymeth.pcontrol.api.PControlData;
 import ru.dymeth.pcontrol.api.PControlTrigger;
@@ -97,7 +97,7 @@ public final class PControlDataBukkit implements PControlData {
                 + "It must be Spigot 1.8-1.12.2 or 1.13.2 and newer", e);
         }
 
-        this.removableProjectileTypes = BukkitUtils.matchEntityTypes(null,
+        this.removableProjectileTypes = EntityTypeUtils.matchEntityTypes(null,
             "ARROW",
             "SPECTRAL_ARROW",
             "TIPPED_ARROW",
