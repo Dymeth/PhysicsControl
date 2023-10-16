@@ -15,13 +15,14 @@ import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import ru.dymeth.pcontrol.api.PControlCategory;
-import ru.dymeth.pcontrol.api.PControlTrigger;
+import ru.dymeth.pcontrol.data.PControlCategory;
+import ru.dymeth.pcontrol.data.PControlTrigger;
 import ru.dymeth.pcontrol.inventory.PControlCategoryInventory;
 import ru.dymeth.pcontrol.inventory.PControlInventory;
-import ru.dymeth.pcontrol.modern.MoistureChangeEventListener;
+import ru.dymeth.pcontrol.listener.MoistureChangeEventListener;
+import ru.dymeth.pcontrol.listener.PhysicsListenerCommon;
 import ru.dymeth.pcontrol.rules.TriggerRules;
-import ru.dymeth.pcontrol.util.FileUtils;
+import ru.dymeth.pcontrol.util.ReflectionUtils;
 
 import javax.annotation.Nonnull;
 import java.util.StringJoiner;
@@ -53,7 +54,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
     }
 
     private void reg(@Nonnull String eventClassName, @Nonnull Supplier<Listener> listenerCreator) {
-        if (FileUtils.isClassPresent(eventClassName)) {
+        if (ReflectionUtils.isClassPresent(eventClassName)) {
             this.getServer().getPluginManager().registerEvents(listenerCreator.get(), this);
         }
     }

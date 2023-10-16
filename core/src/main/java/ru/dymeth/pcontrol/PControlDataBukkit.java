@@ -7,22 +7,21 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.block.BlockEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.plugin.Plugin;
-import ru.dymeth.pcontrol.api.EntityTypeUtils;
-import ru.dymeth.pcontrol.api.PControlCategory;
-import ru.dymeth.pcontrol.api.PControlData;
-import ru.dymeth.pcontrol.api.PControlTrigger;
+import ru.dymeth.pcontrol.data.CustomTags;
+import ru.dymeth.pcontrol.data.PControlCategory;
+import ru.dymeth.pcontrol.data.PControlData;
+import ru.dymeth.pcontrol.data.PControlTrigger;
 import ru.dymeth.pcontrol.inventory.PControlInventory;
 import ru.dymeth.pcontrol.inventory.PControlTriggerInventory;
-import ru.dymeth.pcontrol.legacy.VersionsAdapterLegacy;
-import ru.dymeth.pcontrol.modern.VersionsAdapterModern;
+import ru.dymeth.pcontrol.util.*;
 import ru.dymeth.pcontrol.text.CommonColor;
 import ru.dymeth.pcontrol.text.NullText;
 import ru.dymeth.pcontrol.text.Text;
 import ru.dymeth.pcontrol.text.TextHelper;
 import ru.dymeth.pcontrol.text.adventure.AdventureTextHelper;
 import ru.dymeth.pcontrol.text.bungee.BungeeTextHelper;
-import ru.dymeth.pcontrol.util.FileUtils;
-import ru.dymeth.pcontrol.util.LocaleUtils;
+import ru.dymeth.pcontrol.versionsadapter.VersionsAdapterLegacy;
+import ru.dymeth.pcontrol.versionsadapter.VersionsAdapterModern;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -111,7 +110,7 @@ public final class PControlDataBukkit implements PControlData {
             this.versionsAdapter = new VersionsAdapterLegacy(this);
         }
 
-        if (FileUtils.isClassPresent(
+        if (ReflectionUtils.isClassPresent(
             "net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer")) {
             this.textHelper = new AdventureTextHelper();
         } else {

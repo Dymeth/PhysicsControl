@@ -1,9 +1,9 @@
+//file:noinspection VulnerableLibrariesLocal
 plugins {
     id 'java'
 }
 
-group = 'org.example'
-version = 'unspecified'
+version 'unspecified'
 
 repositories {
     mavenCentral()
@@ -11,5 +11,7 @@ repositories {
 
 dependencies {
     implementation project(':api')
-    compileOnly 'org.spigotmc:spigot-api:1.20.2-R0.1-SNAPSHOT' // Latest from hub.spigotmc.org/nexus/content/repositories/snapshots/org/spigotmc/spigot-api
+
+    // compileOnly 'org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT' // Min
+    compileOnly 'org.spigotmc:spigot-api:1.20.2-R0.1-SNAPSHOT' // Max: hub.spigotmc.org/nexus/content/repositories/snapshots/org/spigotmc/spigot-api
 }

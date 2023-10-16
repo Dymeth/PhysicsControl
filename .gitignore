@@ -55,10 +55,10 @@ out/
 target/
 api/target/
 common/target/
-listener-legacy/target/
-listener-modern/target/
 text-adventure/target/
 text-bungee/target/
+versions-adapter-legacy/target/
+versions-adapter-modern/target/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/

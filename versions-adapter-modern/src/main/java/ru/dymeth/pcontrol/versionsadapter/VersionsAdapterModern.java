@@ -1,4 +1,4 @@
-package ru.dymeth.pcontrol.modern;
+package ru.dymeth.pcontrol.versionsadapter;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -8,9 +8,9 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Waterlogged;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.inventory.ItemStack;
-import ru.dymeth.pcontrol.CustomTags;
+import ru.dymeth.pcontrol.data.CustomTags;
+import ru.dymeth.pcontrol.data.PControlData;
 import ru.dymeth.pcontrol.VersionsAdapter;
-import ru.dymeth.pcontrol.api.PControlData;
 
 import javax.annotation.Nonnull;
 

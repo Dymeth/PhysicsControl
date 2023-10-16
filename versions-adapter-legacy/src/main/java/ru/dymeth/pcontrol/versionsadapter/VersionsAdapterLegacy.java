@@ -1,4 +1,4 @@
-package ru.dymeth.pcontrol.legacy;
+package ru.dymeth.pcontrol.versionsadapter;
 
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -9,9 +9,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Attachable;
 import org.bukkit.material.Dye;
 import org.bukkit.material.MaterialData;
-import ru.dymeth.pcontrol.CustomTags;
+import ru.dymeth.pcontrol.data.CustomTags;
+import ru.dymeth.pcontrol.data.PControlData;
 import ru.dymeth.pcontrol.VersionsAdapter;
-import ru.dymeth.pcontrol.api.PControlData;
 
 import javax.annotation.Nonnull;
 
