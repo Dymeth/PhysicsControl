@@ -570,6 +570,19 @@ public final class PhysicsListenerCommon extends PhysicsListener {
             this.rulesEntityInteractEventMaterial.regSingle(PControlTrigger.IGNORED_STATE, // Control by DRIPLEAFS_LOWERING
                 BlocksSet.create(PControlTrigger.IGNORED_STATE + " trigger", this.data, set ->
                     set.add(Material.BIG_DRIPLEAF)));
+            this.rulesEntityInteractEventMaterial.regSingle(PControlTrigger.IGNORED_STATE, // Any entities stay on block
+                BlocksSet.create(PControlTrigger.IGNORED_STATE + " trigger", this.data, set ->
+                    set.add(Material.SCULK_SENSOR)));
+        }
+        if (this.data.hasVersion(19)) {
+            this.rulesEntityInteractEventMaterial.regSingle(PControlTrigger.IGNORED_STATE, // Players stay on block
+                BlocksSet.create(PControlTrigger.IGNORED_STATE + " trigger", this.data, set ->
+                    set.add(Material.SCULK_SHRIEKER)));
+        }
+        if (this.data.hasVersion(20)) {
+            this.rulesEntityInteractEventMaterial.regSingle(PControlTrigger.IGNORED_STATE, // Any entities stay on block
+                BlocksSet.create(PControlTrigger.IGNORED_STATE + " trigger", this.data, set ->
+                    set.add(Material.CALIBRATED_SCULK_SENSOR)));
         }
     }
 
