@@ -1,7 +1,7 @@
 package ru.dymeth.pcontrol.rules.single;
 
-import ru.dymeth.pcontrol.api.PControlData;
-import ru.dymeth.pcontrol.api.PControlTrigger;
+import ru.dymeth.pcontrol.data.PControlData;
+import ru.dymeth.pcontrol.data.PControlTrigger;
 import ru.dymeth.pcontrol.rules.TriggerRules;
 
 import javax.annotation.Nonnull;

@@ -110,24 +110,6 @@ public class FileUtils {
         return configFile;
     }
 
-    public static boolean isClassPresent(@Nonnull String className) {
-        try {
-            Class.forName(className);
-            return true;
-        } catch (ClassNotFoundException e) {
-            return false;
-        }
-    }
-
-    public static boolean isMethodPresent(@Nonnull Class<?> clazz, @Nonnull String name, @Nonnull Class<?>... parameterTypes) {
-        try {
-            clazz.getDeclaredMethod(name, parameterTypes);
-            return true;
-        } catch (NoSuchMethodException e) {
-            return false;
-        }
-    }
-
     @Nonnull
     public static Map<String, String> readCommentsFromYml(@Nonnull InputStream stream) throws IOException {
         Map<String, String> result = new HashMap<>();

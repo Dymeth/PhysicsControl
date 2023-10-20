@@ -12,7 +12,7 @@ import ru.dymeth.pcontrol.text.CommonColor;
 import ru.dymeth.pcontrol.text.CommonDecoration;
 import ru.dymeth.pcontrol.text.Text;
 import ru.dymeth.pcontrol.text.TextHelper;
-import ru.dymeth.pcontrol.util.FileUtils;
+import ru.dymeth.pcontrol.util.ReflectionUtils;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
@@ -21,7 +21,7 @@ import java.util.List;
 
 public class BungeeTextHelper implements TextHelper {
 
-    private static final boolean RGB_SUPPORT = FileUtils.isMethodPresent(ChatColor.class, "of", Color.class);
+    private static final boolean RGB_SUPPORT = ReflectionUtils.isMethodPresent(ChatColor.class, "of", Color.class);
 
     @Nonnull
     public Text create(@Nonnull String text, @Nonnull CommonColor color) {

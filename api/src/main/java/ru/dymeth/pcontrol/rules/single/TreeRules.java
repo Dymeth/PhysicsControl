@@ -1,7 +1,7 @@
 package ru.dymeth.pcontrol.rules.single;
 
 import org.bukkit.TreeType;
-import ru.dymeth.pcontrol.api.PControlData;
+import ru.dymeth.pcontrol.data.PControlData;
 
 import javax.annotation.Nonnull;
 

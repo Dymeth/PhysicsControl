@@ -7,7 +7,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import ru.dymeth.pcontrol.text.Text;
-import ru.dymeth.pcontrol.util.FileUtils;
+import ru.dymeth.pcontrol.util.ReflectionUtils;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.List;
 
 public class BungeeText implements Text {
 
-    private static final boolean CONTENT_SUPPORT = FileUtils.isClassPresent("net.md_5.bungee.api.chat.hover.content.Content");
+    private static final boolean CONTENT_SUPPORT = ReflectionUtils.isClassPresent("net.md_5.bungee.api.chat.hover.content.Content");
 
     private final BaseComponent[] components;
     private String sectionText = null;

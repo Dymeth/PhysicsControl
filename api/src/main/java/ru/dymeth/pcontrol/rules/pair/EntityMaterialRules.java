@@ -2,7 +2,7 @@ package ru.dymeth.pcontrol.rules.pair;
 
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
-import ru.dymeth.pcontrol.api.PControlData;
+import ru.dymeth.pcontrol.data.PControlData;
 
 import javax.annotation.Nonnull;
 
