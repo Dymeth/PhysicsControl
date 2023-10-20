@@ -258,7 +258,6 @@ public final class PhysicsListenerCommon extends PhysicsListener {
     private void on(EntityChangeBlockEvent event) {
         Material from = event.getBlock().getType();
         Material to = event.getTo();
-        World world = event.getEntity().getWorld();
 
         boolean updateBlockOnCancel = false;
 
@@ -290,7 +289,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         }
 
         if (trigger != null) {
-            this.data.cancelIfDisabled(event, world, trigger);
+            this.data.cancelIfDisabled(event, trigger);
         }
 
         // Prevent client bug with disappearing blocks on start falling (fixed on paper 1.16.5, spigot 1.19.4 and client 1.18.2)
@@ -677,9 +676,8 @@ public final class PhysicsListenerCommon extends PhysicsListener {
 
     @EventHandler(ignoreCancelled = true)
     private void on(StructureGrowEvent event) {
-        World world = event.getWorld();
         if (event.getPlayer() != null) {
-            this.data.cancelIfDisabled(event, world, PControlTrigger.BONE_MEAL_USAGE);
+            this.data.cancelIfDisabled(event, PControlTrigger.BONE_MEAL_USAGE);
             return;
         }
         Material from = event.getLocation().getBlock().getType();
@@ -688,7 +686,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         PControlTrigger trigger = this.rulesStructureGrowEventTo.findTrigger(to);
 
         if (trigger != null) {
-            this.data.cancelIfDisabled(event, world, trigger);
+            this.data.cancelIfDisabled(event, trigger);
         } else {
             this.unrecognizedAction(event, event.getLocation(), from + " > " + to);
         }

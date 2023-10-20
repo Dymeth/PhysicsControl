@@ -4,6 +4,8 @@ import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.block.BlockEvent;
+import org.bukkit.event.entity.EntityEvent;
+import org.bukkit.event.world.WorldEvent;
 import org.bukkit.plugin.Plugin;
 import ru.dymeth.pcontrol.VersionsAdapter;
 import ru.dymeth.pcontrol.text.Text;
@@ -30,7 +32,17 @@ public interface PControlData {
 
     boolean hasVersion(int version);
 
-    void cancelIfDisabled(@Nonnull BlockEvent event, @Nonnull PControlTrigger trigger);
+    default <E extends BlockEvent & Cancellable> void cancelIfDisabled(@Nonnull E event, @Nonnull PControlTrigger trigger) {
+        this.cancelIfDisabled(event, event.getBlock().getWorld(), trigger);
+    }
+
+    default <E extends WorldEvent & Cancellable> void cancelIfDisabled(@Nonnull E event, @Nonnull PControlTrigger trigger) {
+        this.cancelIfDisabled(event, event.getWorld(), trigger);
+    }
+
+    default <E extends EntityEvent & Cancellable> void cancelIfDisabled(@Nonnull E event, @Nonnull PControlTrigger trigger) {
+        this.cancelIfDisabled(event, event.getEntity().getWorld(), trigger);
+    }
 
     void cancelIfDisabled(@Nonnull Cancellable event, @Nonnull World world, @Nonnull PControlTrigger trigger);
 

@@ -4,7 +4,6 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.Cancellable;
-import org.bukkit.event.block.BlockEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.plugin.Plugin;
 import ru.dymeth.pcontrol.data.CustomTags;
@@ -13,13 +12,13 @@ import ru.dymeth.pcontrol.data.PControlData;
 import ru.dymeth.pcontrol.data.PControlTrigger;
 import ru.dymeth.pcontrol.inventory.PControlInventory;
 import ru.dymeth.pcontrol.inventory.PControlTriggerInventory;
-import ru.dymeth.pcontrol.util.*;
 import ru.dymeth.pcontrol.text.CommonColor;
 import ru.dymeth.pcontrol.text.NullText;
 import ru.dymeth.pcontrol.text.Text;
 import ru.dymeth.pcontrol.text.TextHelper;
 import ru.dymeth.pcontrol.text.adventure.AdventureTextHelper;
 import ru.dymeth.pcontrol.text.bungee.BungeeTextHelper;
+import ru.dymeth.pcontrol.util.*;
 import ru.dymeth.pcontrol.versionsadapter.VersionsAdapterLegacy;
 import ru.dymeth.pcontrol.versionsadapter.VersionsAdapterModern;
 
@@ -353,14 +352,6 @@ public final class PControlDataBukkit implements PControlData {
     @Override
     public boolean hasVersion(int version) {
         return this.serverVersion >= version;
-    }
-
-    @Override
-    public void cancelIfDisabled(@Nonnull BlockEvent event, @Nonnull PControlTrigger trigger) {
-        if (trigger == PControlTrigger.IGNORED_STATE) return;
-        if (!this.getWorldTriggers(event.getBlock().getWorld()).getOrDefault(trigger, false)) {
-            ((Cancellable) event).setCancelled(true);
-        }
     }
 
     @Override
