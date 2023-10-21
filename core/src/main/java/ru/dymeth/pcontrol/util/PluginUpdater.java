@@ -120,11 +120,6 @@ public class PluginUpdater {
                 Map<String, String> defaultComments = FileUtils.readCommentsFromYml(
                     this.plugin.getResource("config.yml"));
 
-                System.out.println("comments:");
-                for (Map.Entry<String, String> entry : defaultComments.entrySet()) {
-                    System.out.println(entry.getKey() + ": *** #" + entry.getValue());
-                }
-
                 FileUtils.writeCommentsToYmlFile(
                     Files.newInputStream(configFile.toPath()),
                     (SneakyThrowsSupplier<OutputStream>) () -> Files.newOutputStream(configFile.toPath()),
