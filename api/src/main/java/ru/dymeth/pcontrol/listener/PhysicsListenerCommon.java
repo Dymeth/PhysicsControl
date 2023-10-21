@@ -252,6 +252,13 @@ public final class PhysicsListenerCommon extends PhysicsListener {
                 BlocksSet.create(PControlTrigger.POINTED_DRIPSTONES_FALLING + " trigger", this.data, set ->
                     set.add(Material.POINTED_DRIPSTONE)));
         }
+        if (this.data.hasVersion(19)) {
+            this.rulesEntityChangeBlockEventFromTo.regPair(PControlTrigger.FROGSPAWN_LAYING_AND_SPAWNING,
+                BlocksSet.create(PControlTrigger.FROGSPAWN_LAYING_AND_SPAWNING + " trigger", this.data, set ->
+                    set.add(this.tags.WORLD_AIR)),
+                BlocksSet.create(PControlTrigger.FROGSPAWN_LAYING_AND_SPAWNING + " trigger", this.data, set ->
+                    set.add(Material.FROGSPAWN)));
+        }
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
@@ -411,6 +418,13 @@ public final class PhysicsListenerCommon extends PhysicsListener {
                     set.add(Material.WARPED_NYLIUM)),
                 BlocksSet.create(PControlTrigger.WARPED_NYLIUM_FADING + " trigger", this.data, set ->
                     set.add(Material.NETHERRACK)));
+        }
+        if (this.data.hasVersion(19)) {
+            this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.FROGSPAWN_LAYING_AND_SPAWNING,
+                BlocksSet.create(PControlTrigger.FROGSPAWN_LAYING_AND_SPAWNING + " trigger", this.data, set ->
+                    set.add(Material.FROGSPAWN)),
+                BlocksSet.create(PControlTrigger.FROGSPAWN_LAYING_AND_SPAWNING + " trigger", this.data, set ->
+                    set.add(this.tags.WORLD_AIR)));
         }
     }
 
