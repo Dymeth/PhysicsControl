@@ -41,10 +41,10 @@ public final class PControlTriggerInventory extends PControlInventory {
                 "%world%", world.getName())
         );
         this.data = data;
+
         this.slotByTrigger = new HashMap<>();
-        for (PControlTrigger trigger : category.getTriggers()) {
-            this.slotByTrigger.put(trigger, trigger.getSlot());
-        }
+        this.findTriggersSlots(category);
+
         ItemStack back = MaterialUtils.matchIcon("RED_WOOL", "WOOL:14");
         if (back == null) throw new IllegalArgumentException();
         ItemMeta meta = back.getItemMeta();
@@ -53,6 +53,16 @@ public final class PControlTriggerInventory extends PControlInventory {
         back.setItemMeta(meta);
         this.setItem((short) (3 * 9 + 4), back, player ->
             player.openInventory(new PControlCategoryInventory(data, world).getInventory()));
+    }
+
+    private void findTriggersSlots(@Nonnull PControlCategory category) {
+        List<Short> slots = TriggersSlots.getSlots(category);
+        List<PControlTrigger> triggers = category.getTriggers();
+        for (int i = 0; i < triggers.size(); i++) {
+            PControlTrigger trigger = triggers.get(i);
+            short slot = slots.get(i);
+            this.slotByTrigger.put(trigger, slot);
+        }
     }
 
     public void updateTriggerStack(@Nonnull PControlTrigger trigger) {
