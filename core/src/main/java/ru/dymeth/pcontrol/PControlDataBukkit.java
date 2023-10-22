@@ -21,10 +21,13 @@ import ru.dymeth.pcontrol.text.Text;
 import ru.dymeth.pcontrol.text.TextHelper;
 import ru.dymeth.pcontrol.text.adventure.AdventureTextHelper;
 import ru.dymeth.pcontrol.text.bungee.BungeeTextHelper;
-import ru.dymeth.pcontrol.util.*;
+import ru.dymeth.pcontrol.util.EntityTypeUtils;
+import ru.dymeth.pcontrol.util.FileUtils;
+import ru.dymeth.pcontrol.util.LocaleUtils;
+import ru.dymeth.pcontrol.util.ReflectionUtils;
 import ru.dymeth.pcontrol.util.metrics.Metrics;
-import ru.dymeth.pcontrol.util.update.jar.PaperPluginUpdater;
 import ru.dymeth.pcontrol.util.update.data.PluginDataUpdater;
+import ru.dymeth.pcontrol.util.update.jar.PaperPluginUpdater;
 import ru.dymeth.pcontrol.util.update.jar.PluginUpdater;
 import ru.dymeth.pcontrol.util.update.jar.SpigotPluginUpdater;
 import ru.dymeth.pcontrol.versionsadapter.VersionsAdapterLegacy;
@@ -172,10 +175,10 @@ public final class PControlDataBukkit implements PControlData {
                                             @Nonnull String hangarResourceOwner, @Nonnull String hangarResourceSlug
     ) {
         String serverVersion = this.plugin.getServer().getVersion();
-        if (serverVersion.contains("-Paper-") || serverVersion.contains("-PaperSpigot-")) {
-            return new PaperPluginUpdater(this.plugin, hangarResourceOwner, hangarResourceSlug);
-        } else {
+        if (serverVersion.contains("-Spigot-")) {
             return new SpigotPluginUpdater(this.plugin, spigotResourceId);
+        } else {
+            return new PaperPluginUpdater(this.plugin, hangarResourceOwner, hangarResourceSlug);
         }
     }
 
