@@ -2,7 +2,7 @@ package ru.dymeth.pcontrol.inventory;
 
 import org.bukkit.World;
 import ru.dymeth.pcontrol.PControlDataBukkit;
-import ru.dymeth.pcontrol.data.PControlCategory;
+import ru.dymeth.pcontrol.data.category.PControlCategory;
 
 import javax.annotation.Nonnull;
 
@@ -16,8 +16,9 @@ public class PControlCategoryInventory extends PControlInventory {
             3,
             data.getMessage("category-inventory-title", "%world%", world.getName())
         );
-        for (PControlCategory category : PControlCategory.values()) {
-            if (category == PControlCategory.TEST && !DISPLAY_TEST_CATEGORY) {
+        PControlCategory TEST_CATEGORY = data.categories().TEST;
+        for (PControlCategory category : data.categories().values()) {
+            if (category == TEST_CATEGORY && !DISPLAY_TEST_CATEGORY) {
                 continue;
             }
             this.setItem(category.getSlot(), category.getIcon(), player ->

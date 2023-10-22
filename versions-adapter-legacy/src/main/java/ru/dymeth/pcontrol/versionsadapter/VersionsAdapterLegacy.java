@@ -9,9 +9,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Attachable;
 import org.bukkit.material.Dye;
 import org.bukkit.material.MaterialData;
+import ru.dymeth.pcontrol.VersionsAdapter;
 import ru.dymeth.pcontrol.data.CustomTags;
 import ru.dymeth.pcontrol.data.PControlData;
-import ru.dymeth.pcontrol.VersionsAdapter;
 
 import javax.annotation.Nonnull;
 
@@ -20,7 +20,7 @@ public class VersionsAdapterLegacy implements VersionsAdapter {
     private final CustomTags tags;
 
     public VersionsAdapterLegacy(@Nonnull PControlData data) {
-        this.tags = data.getCustomTags();
+        this.tags = data.tags();
     }
 
     @Nonnull

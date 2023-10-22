@@ -22,4 +22,13 @@ public class ReflectionUtils {
         }
     }
 
+    public static boolean isConstructorPresent(@Nonnull Class<?> clazz, @Nonnull Class<?>... parameterTypes) {
+        try {
+            clazz.getDeclaredConstructor(parameterTypes);
+            return true;
+        } catch (NoSuchMethodException e) {
+            return false;
+        }
+    }
+
 }

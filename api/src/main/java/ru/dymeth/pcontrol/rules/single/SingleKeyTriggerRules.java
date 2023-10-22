@@ -1,7 +1,7 @@
 package ru.dymeth.pcontrol.rules.single;
 
 import ru.dymeth.pcontrol.data.PControlData;
-import ru.dymeth.pcontrol.data.PControlTrigger;
+import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
 import ru.dymeth.pcontrol.rules.TriggerRules;
 
 import javax.annotation.Nonnull;
@@ -26,7 +26,7 @@ public abstract class SingleKeyTriggerRules<T, K1> extends TriggerRules<T> {
         for (K1 key : keysSet) {
             previousTrigger = this.singleRules.put(key, trigger);
             if (previousTrigger != null) {
-                this.data.getPlugin().getLogger().warning("Changed trigger for key "
+                this.data.log().warning("Changed trigger for key "
                     + key + ": "
                     + previousTrigger + " -> " + trigger);
             }

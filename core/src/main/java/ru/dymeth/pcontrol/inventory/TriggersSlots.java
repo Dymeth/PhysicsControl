@@ -1,6 +1,6 @@
 package ru.dymeth.pcontrol.inventory;
 
-import ru.dymeth.pcontrol.data.PControlCategory;
+import ru.dymeth.pcontrol.data.category.PControlCategory;
 
 import javax.annotation.Nonnull;
 import java.util.*;

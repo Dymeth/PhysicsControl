@@ -21,21 +21,19 @@ import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.inventory.ItemStack;
 import ru.dymeth.pcontrol.PhysicsListener;
 import ru.dymeth.pcontrol.data.PControlData;
-import ru.dymeth.pcontrol.data.PControlTrigger;
+import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
 import ru.dymeth.pcontrol.rules.pair.EntityMaterialRules;
 import ru.dymeth.pcontrol.rules.pair.MaterialMaterialRules;
 import ru.dymeth.pcontrol.rules.single.EntityRules;
 import ru.dymeth.pcontrol.rules.single.MaterialRules;
 import ru.dymeth.pcontrol.rules.single.TreeRules;
-import ru.dymeth.pcontrol.set.BlocksSet;
-import ru.dymeth.pcontrol.set.TreeTypesSet;
 import ru.dymeth.pcontrol.util.ReflectionUtils;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.Collections;
 
-@SuppressWarnings({"ClassInitializerMayBeStatic", "ConcatenationWithEmptyString", "IsCancelled"})
+@SuppressWarnings({"ConcatenationWithEmptyString", "IsCancelled"})
 public final class PhysicsListenerCommon extends PhysicsListener {
 
     private static final boolean BLOCK_PHYSICS_EVENT_GET_SOURCE_BLOCK_SUPPORT
@@ -50,78 +48,78 @@ public final class PhysicsListenerCommon extends PhysicsListener {
 
     {
         if (this.data.hasVersion(0)) {
-            this.rulesBlockGrowEventTo.regSingle(PControlTrigger.SUGAR_CANE_GROWING,
+            this.rulesBlockGrowEventTo.regSingle(this.triggers.SUGAR_CANE_GROWING,
                 this.tags.SUGAR_CANE_BLOCK);
-            this.rulesBlockGrowEventTo.regSingle(PControlTrigger.CACTUS_GROWING,
-                BlocksSet.create(PControlTrigger.CACTUS_GROWING + " trigger", this.data, set ->
-                    set.add(Material.CACTUS)));
-            this.rulesBlockGrowEventTo.regSingle(PControlTrigger.WHEAT_GROWING,
+            this.rulesBlockGrowEventTo.regSingle(this.triggers.CACTUS_GROWING,
+                blocksSet(this.triggers.CACTUS_GROWING, set ->
+                    set.addPrimitive(Material.CACTUS)));
+            this.rulesBlockGrowEventTo.regSingle(this.triggers.WHEAT_GROWING,
                 this.tags.WHEAT_BLOCK);
-            this.rulesBlockGrowEventTo.regSingle(PControlTrigger.POTATOES_GROWING,
+            this.rulesBlockGrowEventTo.regSingle(this.triggers.POTATOES_GROWING,
                 this.tags.POTATO_BLOCK);
-            this.rulesBlockGrowEventTo.regSingle(PControlTrigger.CARROTS_GROWING,
+            this.rulesBlockGrowEventTo.regSingle(this.triggers.CARROTS_GROWING,
                 this.tags.CARROT_BLOCK);
-            this.rulesBlockGrowEventTo.regSingle(PControlTrigger.PUMPKINS_GROWING,
+            this.rulesBlockGrowEventTo.regSingle(this.triggers.PUMPKINS_GROWING,
                 this.tags.PUMPKIN_STEM_AND_BLOCK);
-            this.rulesBlockGrowEventTo.regSingle(PControlTrigger.MELONS_GROWING,
+            this.rulesBlockGrowEventTo.regSingle(this.triggers.MELONS_GROWING,
                 this.tags.MELON_STEM_AND_BLOCK);
-            this.rulesBlockGrowEventTo.regSingle(PControlTrigger.COCOAS_GROWING,
-                BlocksSet.create(PControlTrigger.COCOAS_GROWING + " trigger", this.data, set ->
-                    set.add(Material.COCOA)));
-            this.rulesBlockGrowEventFromTo.regPair(PControlTrigger.VINES_GROWING,
-                BlocksSet.create(PControlTrigger.VINES_GROWING + " trigger", this.data, set ->
-                    set.add(Material.VINE)),
-                BlocksSet.create(PControlTrigger.VINES_GROWING + " trigger", this.data, set ->
-                    set.add(Material.VINE)));
-            this.rulesBlockGrowEventTo.regSingle(PControlTrigger.NETHER_WARTS_GROWING,
+            this.rulesBlockGrowEventTo.regSingle(this.triggers.COCOAS_GROWING,
+                blocksSet(this.triggers.COCOAS_GROWING, set ->
+                    set.addPrimitive(Material.COCOA)));
+            this.rulesBlockGrowEventFromTo.regPair(this.triggers.VINES_GROWING,
+                blocksSet(this.triggers.VINES_GROWING, set ->
+                    set.addPrimitive(Material.VINE)),
+                blocksSet(this.triggers.VINES_GROWING, set ->
+                    set.addPrimitive(Material.VINE)));
+            this.rulesBlockGrowEventTo.regSingle(this.triggers.NETHER_WARTS_GROWING,
                 this.tags.NETHER_WART_BLOCK);
-            this.rulesBlockGrowEventTo.regSingle(PControlTrigger.BONE_MEAL_USAGE,
+            this.rulesBlockGrowEventTo.regSingle(this.triggers.BONE_MEAL_USAGE,
                 this.tags.BONE_MEAL_HERBS);
         }
         if (this.data.hasVersion(9)) {
-            this.rulesBlockGrowEventTo.regSingle(PControlTrigger.BEETROOTS_GROWING,
+            this.rulesBlockGrowEventTo.regSingle(this.triggers.BEETROOTS_GROWING,
                 this.tags.BEETROOT_BLOCK);
-            this.rulesBlockGrowEventTo.regSingle(PControlTrigger.CHORUSES_GROWING,
-                BlocksSet.create(PControlTrigger.CHORUSES_GROWING + " trigger", this.data, set ->
-                    set.add(Material.CHORUS_FLOWER)));
+            this.rulesBlockGrowEventTo.regSingle(this.triggers.CHORUSES_GROWING,
+                blocksSet(this.triggers.CHORUSES_GROWING, set ->
+                    set.addPrimitive(Material.CHORUS_FLOWER)));
         }
         if (this.data.hasVersion(13)) {
-            this.rulesBlockGrowEventTo.regSingle(PControlTrigger.TURTLES_LAYING_EGGS,
-                BlocksSet.create(PControlTrigger.TURTLES_LAYING_EGGS + " trigger", this.data, set ->
-                    set.add(Material.TURTLE_EGG)));
+            this.rulesBlockGrowEventTo.regSingle(this.triggers.TURTLES_LAYING_EGGS,
+                blocksSet(this.triggers.TURTLES_LAYING_EGGS, set ->
+                    set.addPrimitive(Material.TURTLE_EGG)));
         }
         if (this.data.hasVersion(14)) {
-            this.rulesBlockGrowEventTo.regSingle(PControlTrigger.SWEET_BERRIES_GROWING,
-                BlocksSet.create(PControlTrigger.SWEET_BERRIES_GROWING + " trigger", this.data, set ->
-                    set.add(Material.SWEET_BERRY_BUSH)));
+            this.rulesBlockGrowEventTo.regSingle(this.triggers.SWEET_BERRIES_GROWING,
+                blocksSet(this.triggers.SWEET_BERRIES_GROWING, set ->
+                    set.addPrimitive(Material.SWEET_BERRY_BUSH)));
         }
 
         if (this.data.hasVersion(17)) {
-            this.rulesBlockGrowEventTo.regSingle(PControlTrigger.AMETHYST_CLUSTERS_GROWING, // from = AIR, CAVE_AIR, WATER, etc
-                BlocksSet.create(PControlTrigger.AMETHYST_CLUSTERS_GROWING + " trigger", this.data, set ->
-                    set.add(Material.SMALL_AMETHYST_BUD)));
-            this.rulesBlockGrowEventFromTo.regPair(PControlTrigger.AMETHYST_CLUSTERS_GROWING,
-                BlocksSet.create(PControlTrigger.AMETHYST_CLUSTERS_GROWING + " trigger", this.data, set ->
-                    set.add(Material.SMALL_AMETHYST_BUD)),
-                BlocksSet.create(PControlTrigger.AMETHYST_CLUSTERS_GROWING + " trigger", this.data, set ->
-                    set.add(Material.MEDIUM_AMETHYST_BUD)));
-            this.rulesBlockGrowEventFromTo.regPair(PControlTrigger.AMETHYST_CLUSTERS_GROWING,
-                BlocksSet.create(PControlTrigger.AMETHYST_CLUSTERS_GROWING + " trigger", this.data, set ->
-                    set.add(Material.MEDIUM_AMETHYST_BUD)),
-                BlocksSet.create(PControlTrigger.AMETHYST_CLUSTERS_GROWING + " trigger", this.data, set ->
-                    set.add(Material.LARGE_AMETHYST_BUD)));
-            this.rulesBlockGrowEventFromTo.regPair(PControlTrigger.AMETHYST_CLUSTERS_GROWING,
-                BlocksSet.create(PControlTrigger.AMETHYST_CLUSTERS_GROWING + " trigger", this.data, set ->
-                    set.add(Material.LARGE_AMETHYST_BUD)),
-                BlocksSet.create(PControlTrigger.AMETHYST_CLUSTERS_GROWING + " trigger", this.data, set ->
-                    set.add(Material.AMETHYST_CLUSTER)));
+            this.rulesBlockGrowEventTo.regSingle(this.triggers.AMETHYST_CLUSTERS_GROWING, // from = AIR, CAVE_AIR, WATER, etc
+                blocksSet(this.triggers.AMETHYST_CLUSTERS_GROWING, set ->
+                    set.addPrimitive(Material.SMALL_AMETHYST_BUD)));
+            this.rulesBlockGrowEventFromTo.regPair(this.triggers.AMETHYST_CLUSTERS_GROWING,
+                blocksSet(this.triggers.AMETHYST_CLUSTERS_GROWING, set ->
+                    set.addPrimitive(Material.SMALL_AMETHYST_BUD)),
+                blocksSet(this.triggers.AMETHYST_CLUSTERS_GROWING, set ->
+                    set.addPrimitive(Material.MEDIUM_AMETHYST_BUD)));
+            this.rulesBlockGrowEventFromTo.regPair(this.triggers.AMETHYST_CLUSTERS_GROWING,
+                blocksSet(this.triggers.AMETHYST_CLUSTERS_GROWING, set ->
+                    set.addPrimitive(Material.MEDIUM_AMETHYST_BUD)),
+                blocksSet(this.triggers.AMETHYST_CLUSTERS_GROWING, set ->
+                    set.addPrimitive(Material.LARGE_AMETHYST_BUD)));
+            this.rulesBlockGrowEventFromTo.regPair(this.triggers.AMETHYST_CLUSTERS_GROWING,
+                blocksSet(this.triggers.AMETHYST_CLUSTERS_GROWING, set ->
+                    set.addPrimitive(Material.LARGE_AMETHYST_BUD)),
+                blocksSet(this.triggers.AMETHYST_CLUSTERS_GROWING, set ->
+                    set.addPrimitive(Material.AMETHYST_CLUSTER)));
         }
     }
 
     @EventHandler(ignoreCancelled = true)
     private void on(BlockGrowEvent event) {
         if (this.fertilizedBlocks.remove(event.getBlock().getLocation().toVector())) {
-            this.data.cancelIfDisabled(event, PControlTrigger.BONE_MEAL_USAGE);
+            this.data.cancelIfDisabled(event, this.triggers.BONE_MEAL_USAGE);
             return;
         }
         Material from = event.getBlock().getType();
@@ -148,116 +146,116 @@ public final class PhysicsListenerCommon extends PhysicsListener {
 
     {
         if (this.data.hasVersion(0)) {
-            this.rulesEntityChangeBlockEventFromTo.regPair(PControlTrigger.FARMLANDS_TRAMPLING,
+            this.rulesEntityChangeBlockEventFromTo.regPair(this.triggers.FARMLANDS_TRAMPLING,
                 this.tags.FARMLAND_BLOCK,
-                BlocksSet.create(PControlTrigger.FARMLANDS_TRAMPLING + " trigger", this.data, set ->
-                    set.add(Material.DIRT)));
-            this.rulesEntityChangeBlockEventTo.regSingle(PControlTrigger.IGNORED_STATE, // Redstone ore activation
+                blocksSet(this.triggers.FARMLANDS_TRAMPLING, set ->
+                    set.addPrimitive(Material.DIRT)));
+            this.rulesEntityChangeBlockEventTo.regSingle(this.triggers.IGNORED_STATE, // Redstone ore activation
                 this.tags.REDSTONE_ORE_BLOCKS);
-            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.SAND_FALLING,
+            this.rulesFallingEntityChangeBlockEventBy.regSingle(this.triggers.SAND_FALLING,
                 this.tags.SAND);
-            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.GRAVEL_FALLING,
+            this.rulesFallingEntityChangeBlockEventBy.regSingle(this.triggers.GRAVEL_FALLING,
                 this.tags.GRAVEL);
-            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.ANVILS_FALLING,
+            this.rulesFallingEntityChangeBlockEventBy.regSingle(this.triggers.ANVILS_FALLING,
                 this.tags.ANVIL);
-            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.DRAGON_EGGS_FALLING,
-                BlocksSet.create(PControlTrigger.DRAGON_EGGS_FALLING + " trigger", this.data, set ->
-                    set.add(Material.DRAGON_EGG)));
-            this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.SAND_FALLING,
+            this.rulesFallingEntityChangeBlockEventBy.regSingle(this.triggers.DRAGON_EGGS_FALLING,
+                blocksSet(this.triggers.DRAGON_EGGS_FALLING, set ->
+                    set.addPrimitive(Material.DRAGON_EGG)));
+            this.rulesFallingEntityChangeBlockEventFrom.regSingle(this.triggers.SAND_FALLING,
                 this.tags.SAND);
-            this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.GRAVEL_FALLING,
+            this.rulesFallingEntityChangeBlockEventFrom.regSingle(this.triggers.GRAVEL_FALLING,
                 this.tags.GRAVEL);
-            this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.ANVILS_FALLING,
+            this.rulesFallingEntityChangeBlockEventFrom.regSingle(this.triggers.ANVILS_FALLING,
                 this.tags.ANVIL);
-            this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.DRAGON_EGGS_FALLING,
-                BlocksSet.create(PControlTrigger.DRAGON_EGGS_FALLING + " trigger", this.data, set ->
-                    set.add(Material.DRAGON_EGG)));
-            this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.IGNORED_STATE, // On custom falling blocks fall (created by third-party plugins like WoodCutter)
+            this.rulesFallingEntityChangeBlockEventFrom.regSingle(this.triggers.DRAGON_EGGS_FALLING,
+                blocksSet(this.triggers.DRAGON_EGGS_FALLING, set ->
+                    set.addPrimitive(Material.DRAGON_EGG)));
+            this.rulesFallingEntityChangeBlockEventFrom.regSingle(this.triggers.IGNORED_STATE, // On custom falling blocks fall (created by third-party plugins like WoodCutter)
                 this.tags.WORLD_AIR);
-            this.rulesNonFallingEntityChangeBlockEventByFrom.regPair(PControlTrigger.BURNING_ARROWS_ACTIVATE_TNT,
+            this.rulesNonFallingEntityChangeBlockEventByFrom.regPair(this.triggers.BURNING_ARROWS_ACTIVATE_TNT,
                 Collections.singleton(EntityType.ARROW),
-                BlocksSet.create(PControlTrigger.BURNING_ARROWS_ACTIVATE_TNT + " trigger", this.data, set ->
-                    set.add(Material.TNT)));
-            this.rulesNonFallingEntityChangeBlockEventByFrom.regPair(PControlTrigger.ZOMBIES_BREAK_DOORS,
+                blocksSet(this.triggers.BURNING_ARROWS_ACTIVATE_TNT, set ->
+                    set.addPrimitive(Material.TNT)));
+            this.rulesNonFallingEntityChangeBlockEventByFrom.regPair(this.triggers.ZOMBIES_BREAK_DOORS,
                 Collections.singleton(EntityType.ZOMBIE),
                 this.tags.WOODEN_DOORS);
-            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.IGNORED_STATE, // Boats destroys lilies. TODO It is necessary to implement a smart system of destruction and restoration of water lilies so that there are no problems with movement
+            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(this.triggers.IGNORED_STATE, // Boats destroys lilies. TODO It is necessary to implement a smart system of destruction and restoration of water lilies so that there are no problems with movement
                 Collections.singleton(EntityType.BOAT));
-            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.SHEEPS_EATING_GRASS,
+            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(this.triggers.SHEEPS_EATING_GRASS,
                 Collections.singleton(EntityType.SHEEP));
-            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.ENDERMANS_GRIEFING,
+            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(this.triggers.ENDERMANS_GRIEFING,
                 Collections.singleton(EntityType.ENDERMAN));
-            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.WITHERS_GRIEFING,
+            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(this.triggers.WITHERS_GRIEFING,
                 Collections.singleton(EntityType.WITHER));
-            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.SILVERFISHES_HIDING_IN_BLOCKS,
+            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(this.triggers.SILVERFISHES_HIDING_IN_BLOCKS,
                 Collections.singleton(EntityType.SILVERFISH));
-            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.VILLAGERS_FARMING,
+            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(this.triggers.VILLAGERS_FARMING,
                 Collections.singleton(EntityType.VILLAGER));
         }
         if (this.data.hasVersion(8)) {
-            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.RABBITS_EATING_CARROTS,
+            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(this.triggers.RABBITS_EATING_CARROTS,
                 Collections.singleton(EntityType.RABBIT));
         }
         if (this.data.hasVersion(11)) {
-            this.rulesNonFallingEntityChangeBlockEventByFrom.regPair(PControlTrigger.ZOMBIES_BREAK_DOORS,
+            this.rulesNonFallingEntityChangeBlockEventByFrom.regPair(this.triggers.ZOMBIES_BREAK_DOORS,
                 Collections.singleton(EntityType.ZOMBIE_VILLAGER),
                 this.tags.WOODEN_DOORS);
         }
         if (this.data.hasVersion(12)) {
-            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.CONCRETE_POWDERS_FALLING,
+            this.rulesFallingEntityChangeBlockEventBy.regSingle(this.triggers.CONCRETE_POWDERS_FALLING,
                 this.tags.CONCRETE_POWDERS);
-            this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.CONCRETE_POWDERS_FALLING,
+            this.rulesFallingEntityChangeBlockEventFrom.regSingle(this.triggers.CONCRETE_POWDERS_FALLING,
                 this.tags.CONCRETE_POWDERS);
         }
         if (this.data.hasVersion(13)) {
-            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.TURTLES_LAYING_EGGS,
+            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(this.triggers.TURTLES_LAYING_EGGS,
                 Collections.singleton(EntityType.TURTLE));
         }
         if (this.data.hasVersion(14)) {
-            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.SCAFFOLDING_FALLING,
-                BlocksSet.create(PControlTrigger.SCAFFOLDING_FALLING + " trigger", this.data, set ->
-                    set.add(Material.SCAFFOLDING)));
-            this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.SCAFFOLDING_FALLING,
-                BlocksSet.create(PControlTrigger.SCAFFOLDING_FALLING + " trigger", this.data, set ->
-                    set.add(Material.SCAFFOLDING)));
-            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.RAVAGERS_DESTROY_BLOCKS,
+            this.rulesFallingEntityChangeBlockEventBy.regSingle(this.triggers.SCAFFOLDING_FALLING,
+                blocksSet(this.triggers.SCAFFOLDING_FALLING, set ->
+                    set.addPrimitive(Material.SCAFFOLDING)));
+            this.rulesFallingEntityChangeBlockEventFrom.regSingle(this.triggers.SCAFFOLDING_FALLING,
+                blocksSet(this.triggers.SCAFFOLDING_FALLING, set ->
+                    set.addPrimitive(Material.SCAFFOLDING)));
+            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(this.triggers.RAVAGERS_DESTROY_BLOCKS,
                 Collections.singleton(EntityType.RAVAGER));
-            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.FOXES_EATS_FROM_SWEET_BERRY_BUSHES,
+            this.rulesNonFallingEntityChangeBlockEventBy.regSingle(this.triggers.FOXES_EATS_FROM_SWEET_BERRY_BUSHES,
                 Collections.singleton(EntityType.FOX));
         }
         if (this.data.hasVersion(17)) {
-            this.rulesEntityChangeBlockEventFromTo.regPair(PControlTrigger.DRIPLEAFS_LOWERING,
-                BlocksSet.create(PControlTrigger.DRIPLEAFS_LOWERING + " trigger", this.data, set ->
-                    set.add(Material.BIG_DRIPLEAF)),
-                BlocksSet.create(PControlTrigger.DRIPLEAFS_LOWERING + " trigger", this.data, set ->
-                    set.add(Material.BIG_DRIPLEAF)));
-            this.rulesEntityChangeBlockEventFromTo.regPair(PControlTrigger.POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES,
-                BlocksSet.create(PControlTrigger.POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES + " trigger", this.data, set ->
-                    set.add(Material.POWDER_SNOW)),
+            this.rulesEntityChangeBlockEventFromTo.regPair(this.triggers.DRIPLEAFS_LOWERING,
+                blocksSet(this.triggers.DRIPLEAFS_LOWERING, set ->
+                    set.addPrimitive(Material.BIG_DRIPLEAF)),
+                blocksSet(this.triggers.DRIPLEAFS_LOWERING, set ->
+                    set.addPrimitive(Material.BIG_DRIPLEAF)));
+            this.rulesEntityChangeBlockEventFromTo.regPair(this.triggers.POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES,
+                blocksSet(this.triggers.POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES, set ->
+                    set.addPrimitive(Material.POWDER_SNOW)),
                 this.tags.WORLD_AIR);
-            this.rulesEntityChangeBlockEventFromTo.regPair(PControlTrigger.GLOW_BERRIES_PICKING,
-                BlocksSet.create(PControlTrigger.GLOW_BERRIES_PICKING + " trigger", this.data, set ->
-                    set.add(Material.CAVE_VINES)),
-                BlocksSet.create(PControlTrigger.GLOW_BERRIES_PICKING + " trigger", this.data, set ->
-                    set.add(Material.CAVE_VINES)));
-            this.rulesEntityChangeBlockEventFromTo.regPair(PControlTrigger.GLOW_BERRIES_PICKING,
-                BlocksSet.create(PControlTrigger.GLOW_BERRIES_PICKING + " trigger", this.data, set ->
-                    set.add(Material.CAVE_VINES_PLANT)),
-                BlocksSet.create(PControlTrigger.GLOW_BERRIES_PICKING + " trigger", this.data, set ->
-                    set.add(Material.CAVE_VINES_PLANT)));
-            this.rulesFallingEntityChangeBlockEventBy.regSingle(PControlTrigger.POINTED_DRIPSTONES_FALLING,
-                BlocksSet.create(PControlTrigger.POINTED_DRIPSTONES_FALLING + " trigger", this.data, set ->
-                    set.add(Material.POINTED_DRIPSTONE)));
-            this.rulesFallingEntityChangeBlockEventFrom.regSingle(PControlTrigger.POINTED_DRIPSTONES_FALLING,
-                BlocksSet.create(PControlTrigger.POINTED_DRIPSTONES_FALLING + " trigger", this.data, set ->
-                    set.add(Material.POINTED_DRIPSTONE)));
+            this.rulesEntityChangeBlockEventFromTo.regPair(this.triggers.GLOW_BERRIES_PICKING,
+                blocksSet(this.triggers.GLOW_BERRIES_PICKING, set ->
+                    set.addPrimitive(Material.CAVE_VINES)),
+                blocksSet(this.triggers.GLOW_BERRIES_PICKING, set ->
+                    set.addPrimitive(Material.CAVE_VINES)));
+            this.rulesEntityChangeBlockEventFromTo.regPair(this.triggers.GLOW_BERRIES_PICKING,
+                blocksSet(this.triggers.GLOW_BERRIES_PICKING, set ->
+                    set.addPrimitive(Material.CAVE_VINES_PLANT)),
+                blocksSet(this.triggers.GLOW_BERRIES_PICKING, set ->
+                    set.addPrimitive(Material.CAVE_VINES_PLANT)));
+            this.rulesFallingEntityChangeBlockEventBy.regSingle(this.triggers.POINTED_DRIPSTONES_FALLING,
+                blocksSet(this.triggers.POINTED_DRIPSTONES_FALLING, set ->
+                    set.addPrimitive(Material.POINTED_DRIPSTONE)));
+            this.rulesFallingEntityChangeBlockEventFrom.regSingle(this.triggers.POINTED_DRIPSTONES_FALLING,
+                blocksSet(this.triggers.POINTED_DRIPSTONES_FALLING, set ->
+                    set.addPrimitive(Material.POINTED_DRIPSTONE)));
         }
         if (this.data.hasVersion(19)) {
-            this.rulesEntityChangeBlockEventFromTo.regPair(PControlTrigger.FROGSPAWN_LAYING_AND_SPAWNING,
-                BlocksSet.create(PControlTrigger.FROGSPAWN_LAYING_AND_SPAWNING + " trigger", this.data, set ->
-                    set.add(this.tags.WORLD_AIR)),
-                BlocksSet.create(PControlTrigger.FROGSPAWN_LAYING_AND_SPAWNING + " trigger", this.data, set ->
-                    set.add(Material.FROGSPAWN)));
+            this.rulesEntityChangeBlockEventFromTo.regPair(this.triggers.FROGSPAWN_LAYING_AND_SPAWNING,
+                blocksSet(this.triggers.FROGSPAWN_LAYING_AND_SPAWNING, set ->
+                    set.addPrimitive(this.tags.WORLD_AIR)),
+                blocksSet(this.triggers.FROGSPAWN_LAYING_AND_SPAWNING, set ->
+                    set.addPrimitive(Material.FROGSPAWN)));
         }
     }
 
@@ -310,23 +308,23 @@ public final class PhysicsListenerCommon extends PhysicsListener {
 
     {
         if (this.data.hasVersion(0)) {
-            this.rulesBlockFromToEventFromTo.regPair(PControlTrigger.IGNORED_STATE, // Strange thing from FluidTypeFlowing
+            this.rulesBlockFromToEventFromTo.regPair(this.triggers.IGNORED_STATE, // Strange thing from FluidTypeFlowing
                 this.tags.WORLD_AIR,
                 this.tags.WORLD_AIR);
-            this.rulesBlockFromToEventFrom.regSingle(PControlTrigger.LAVA_FLOWING,
+            this.rulesBlockFromToEventFrom.regSingle(this.triggers.LAVA_FLOWING,
                 this.tags.LAVA);
-            this.rulesBlockFromToEventFrom.regSingle(PControlTrigger.WATER_FLOWING,
+            this.rulesBlockFromToEventFrom.regSingle(this.triggers.WATER_FLOWING,
                 this.tags.BLOCKS_UNDER_WATER_ONLY);
-            this.rulesBlockFromToEventFrom.regSingle(PControlTrigger.IGNORED_STATE, // Seems bug while chunks generation (water near gravity blocks?): "Action BlockFromTo (GRAVEL > GRAVEL) was detected"
+            this.rulesBlockFromToEventFrom.regSingle(this.triggers.IGNORED_STATE, // Seems bug while chunks generation (water near gravity blocks?): "Action BlockFromTo (GRAVEL > GRAVEL) was detected"
                 this.tags.NATURAL_GRAVITY_BLOCKS);
-            this.rulesBlockFromToEventFrom.regSingle(PControlTrigger.DRAGON_EGGS_TELEPORTING,
-                BlocksSet.create(PControlTrigger.DRAGON_EGGS_TELEPORTING + " trigger", this.data, set ->
-                    set.add(Material.DRAGON_EGG)));
+            this.rulesBlockFromToEventFrom.regSingle(this.triggers.DRAGON_EGGS_TELEPORTING,
+                blocksSet(this.triggers.DRAGON_EGGS_TELEPORTING, set ->
+                    set.addPrimitive(Material.DRAGON_EGG)));
         }
         if (this.data.hasVersion(13)) {
-            this.rulesBlockFromToEventFromTo.regPair(PControlTrigger.IGNORED_STATE, // Seems bug while chunks generation (kelp near caves?): "Action BlockFromTo (KELP > AIR) was detected"
-                BlocksSet.create(PControlTrigger.IGNORED_STATE + " trigger", this.data, set ->
-                    set.add(Material.KELP)),
+            this.rulesBlockFromToEventFromTo.regPair(this.triggers.IGNORED_STATE, // Seems bug while chunks generation (kelp near caves?): "Action BlockFromTo (KELP > AIR) was detected"
+                blocksSet(this.triggers.IGNORED_STATE, set ->
+                    set.addPrimitive(Material.KELP)),
                 this.tags.WORLD_AIR);
         }
     }
@@ -339,7 +337,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         PControlTrigger trigger = this.rulesBlockFromToEventFromTo.findTrigger(from, to);
         if (trigger == null) trigger = this.rulesBlockFromToEventFrom.findTrigger(from);
         if (trigger == null && this.versionsAdapter.isBlockContainsWater(event.getBlock()))
-            trigger = PControlTrigger.WATER_FLOWING;
+            trigger = this.triggers.WATER_FLOWING;
 
         if (trigger != null) {
             this.data.cancelIfDisabled(event, trigger);
@@ -353,78 +351,78 @@ public final class PhysicsListenerCommon extends PhysicsListener {
 
     {
         if (this.data.hasVersion(0)) {
-            this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.GRASS_BLOCKS_FADING,
-                BlocksSet.create(PControlTrigger.GRASS_BLOCKS_FADING + " trigger", this.data, set -> {
-                    set.add(this.tags.GRASS_BLOCK);
-                    set.add(this.tags.DIRT_PATH_BLOCK);
+            this.rulesBlockFadeEventFromTo.regPair(this.triggers.GRASS_BLOCKS_FADING,
+                blocksSet(this.triggers.GRASS_BLOCKS_FADING, set -> {
+                    set.addPrimitive(this.tags.GRASS_BLOCK);
+                    set.addPrimitive(this.tags.DIRT_PATH_BLOCK);
                 }),
-                BlocksSet.create(PControlTrigger.GRASS_BLOCKS_FADING + " trigger", this.data, set ->
-                    set.add(Material.DIRT)));
-            this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.MYCELIUM_SPREADING,
+                blocksSet(this.triggers.GRASS_BLOCKS_FADING, set ->
+                    set.addPrimitive(Material.DIRT)));
+            this.rulesBlockFadeEventFromTo.regPair(this.triggers.MYCELIUM_SPREADING,
                 this.tags.MYCELIUM_BLOCK,
-                BlocksSet.create(PControlTrigger.MYCELIUM_SPREADING + " trigger", this.data, set ->
-                    set.add(Material.DIRT)));
-            this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.FARMLANDS_DRYING,
+                blocksSet(this.triggers.MYCELIUM_SPREADING, set ->
+                    set.addPrimitive(Material.DIRT)));
+            this.rulesBlockFadeEventFromTo.regPair(this.triggers.FARMLANDS_DRYING,
                 this.tags.FARMLAND_BLOCK,
-                BlocksSet.create(PControlTrigger.FARMLANDS_DRYING + " trigger", this.data, set ->
-                    set.add(Material.DIRT)));
-            this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.SNOW_MELTING,
-                BlocksSet.create(PControlTrigger.SNOW_MELTING + " trigger", this.data, set ->
-                    set.add(Material.SNOW)),
+                blocksSet(this.triggers.FARMLANDS_DRYING, set ->
+                    set.addPrimitive(Material.DIRT)));
+            this.rulesBlockFadeEventFromTo.regPair(this.triggers.SNOW_MELTING,
+                blocksSet(this.triggers.SNOW_MELTING, set ->
+                    set.addPrimitive(Material.SNOW)),
                 this.tags.WORLD_AIR);
-            this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.ICE_MELTING,
-                BlocksSet.create(PControlTrigger.ICE_MELTING + " trigger", this.data, set ->
-                    set.add(Material.ICE)),
-                BlocksSet.create(PControlTrigger.ICE_MELTING + " trigger", this.data, set -> {
-                    set.add(this.tags.WATER);
-                    set.add(this.tags.WORLD_AIR);
+            this.rulesBlockFadeEventFromTo.regPair(this.triggers.ICE_MELTING,
+                blocksSet(this.triggers.ICE_MELTING, set ->
+                    set.addPrimitive(Material.ICE)),
+                blocksSet(this.triggers.ICE_MELTING, set -> {
+                    set.addPrimitive(this.tags.WATER);
+                    set.addPrimitive(this.tags.WORLD_AIR);
                 }));
-            this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.FIRE_SPREADING,
-                BlocksSet.create(PControlTrigger.FIRE_SPREADING + " trigger", this.data, set ->
-                    set.add(Material.FIRE)),
+            this.rulesBlockFadeEventFromTo.regPair(this.triggers.FIRE_SPREADING,
+                blocksSet(this.triggers.FIRE_SPREADING, set ->
+                    set.addPrimitive(Material.FIRE)),
                 this.tags.WORLD_AIR);
-            this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.IGNORED_STATE, // Redstone ore deactivation
+            this.rulesBlockFadeEventFromTo.regPair(this.triggers.IGNORED_STATE, // Redstone ore deactivation
                 this.tags.REDSTONE_ORE_BLOCKS,
                 this.tags.REDSTONE_ORE_BLOCKS);
-            this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.IGNORED_STATE, // Strange server action. Perhaps this is due to the fall of blocks without a base (torches for example) during generation (only in mineshafts?)
+            this.rulesBlockFadeEventFromTo.regPair(this.triggers.IGNORED_STATE, // Strange server action. Perhaps this is due to the fall of blocks without a base (torches for example) during generation (only in mineshafts?)
                 this.tags.WORLD_AIR,
                 this.tags.WORLD_AIR);
         }
         if (this.data.hasVersion(9)) {
-            this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.FROSTED_ICE_PHYSICS,
-                BlocksSet.create(PControlTrigger.FROSTED_ICE_PHYSICS + " trigger", this.data, set ->
-                    set.add(Material.FROSTED_ICE)),
+            this.rulesBlockFadeEventFromTo.regPair(this.triggers.FROSTED_ICE_PHYSICS,
+                blocksSet(this.triggers.FROSTED_ICE_PHYSICS, set ->
+                    set.addPrimitive(Material.FROSTED_ICE)),
                 this.tags.WATER);
         }
         if (this.data.hasVersion(13)) {
-            this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.CORALS_DRYING,
+            this.rulesBlockFadeEventFromTo.regPair(this.triggers.CORALS_DRYING,
                 this.tags.ALL_ALIVE_CORALS,
                 this.tags.ALL_DEAD_CORALS);
         }
         if (this.data.hasVersion(14)) {
-            this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.SCAFFOLDING_FALLING,
-                BlocksSet.create(PControlTrigger.SCAFFOLDING_FALLING + " trigger", this.data, set ->
-                    set.add(Material.SCAFFOLDING)),
+            this.rulesBlockFadeEventFromTo.regPair(this.triggers.SCAFFOLDING_FALLING,
+                blocksSet(this.triggers.SCAFFOLDING_FALLING, set ->
+                    set.addPrimitive(Material.SCAFFOLDING)),
                 this.tags.WORLD_AIR);
         }
         if (this.data.hasVersion(16)) {
-            this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.CRIMSON_NYLIUM_FADING,
-                BlocksSet.create(PControlTrigger.CRIMSON_NYLIUM_FADING + " trigger", this.data, set ->
-                    set.add(Material.CRIMSON_NYLIUM)),
-                BlocksSet.create(PControlTrigger.CRIMSON_NYLIUM_FADING + " trigger", this.data, set ->
-                    set.add(Material.NETHERRACK)));
-            this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.WARPED_NYLIUM_FADING,
-                BlocksSet.create(PControlTrigger.WARPED_NYLIUM_FADING + " trigger", this.data, set ->
-                    set.add(Material.WARPED_NYLIUM)),
-                BlocksSet.create(PControlTrigger.WARPED_NYLIUM_FADING + " trigger", this.data, set ->
-                    set.add(Material.NETHERRACK)));
+            this.rulesBlockFadeEventFromTo.regPair(this.triggers.CRIMSON_NYLIUM_FADING,
+                blocksSet(this.triggers.CRIMSON_NYLIUM_FADING, set ->
+                    set.addPrimitive(Material.CRIMSON_NYLIUM)),
+                blocksSet(this.triggers.CRIMSON_NYLIUM_FADING, set ->
+                    set.addPrimitive(Material.NETHERRACK)));
+            this.rulesBlockFadeEventFromTo.regPair(this.triggers.WARPED_NYLIUM_FADING,
+                blocksSet(this.triggers.WARPED_NYLIUM_FADING, set ->
+                    set.addPrimitive(Material.WARPED_NYLIUM)),
+                blocksSet(this.triggers.WARPED_NYLIUM_FADING, set ->
+                    set.addPrimitive(Material.NETHERRACK)));
         }
         if (this.data.hasVersion(19)) {
-            this.rulesBlockFadeEventFromTo.regPair(PControlTrigger.FROGSPAWN_LAYING_AND_SPAWNING,
-                BlocksSet.create(PControlTrigger.FROGSPAWN_LAYING_AND_SPAWNING + " trigger", this.data, set ->
-                    set.add(Material.FROGSPAWN)),
-                BlocksSet.create(PControlTrigger.FROGSPAWN_LAYING_AND_SPAWNING + " trigger", this.data, set ->
-                    set.add(this.tags.WORLD_AIR)));
+            this.rulesBlockFadeEventFromTo.regPair(this.triggers.FROGSPAWN_LAYING_AND_SPAWNING,
+                blocksSet(this.triggers.FROGSPAWN_LAYING_AND_SPAWNING, set ->
+                    set.addPrimitive(Material.FROGSPAWN)),
+                blocksSet(this.triggers.FROGSPAWN_LAYING_AND_SPAWNING, set ->
+                    set.addPrimitive(this.tags.WORLD_AIR)));
         }
     }
 
@@ -448,103 +446,103 @@ public final class PhysicsListenerCommon extends PhysicsListener {
 
     {
         if (this.data.hasVersion(0)) {
-            this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.GRASS_SPREADING,
-                BlocksSet.create(PControlTrigger.GRASS_SPREADING + " trigger", this.data, set ->
-                    set.add(Material.DIRT)),
+            this.rulesBlockSpreadEventFromTo.regPair(this.triggers.GRASS_SPREADING,
+                blocksSet(this.triggers.GRASS_SPREADING, set ->
+                    set.addPrimitive(Material.DIRT)),
                 this.tags.GRASS_BLOCK);
-            this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.MYCELIUM_SPREADING,
-                BlocksSet.create(PControlTrigger.MYCELIUM_SPREADING + " trigger", this.data, set ->
-                    set.add(Material.DIRT)),
+            this.rulesBlockSpreadEventFromTo.regPair(this.triggers.MYCELIUM_SPREADING,
+                blocksSet(this.triggers.MYCELIUM_SPREADING, set ->
+                    set.addPrimitive(Material.DIRT)),
                 this.tags.MYCELIUM_BLOCK);
-            this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.VINES_GROWING,
-                BlocksSet.create(PControlTrigger.VINES_GROWING + " trigger", this.data, set -> {
-                    set.add(Material.VINE);
-                    set.add(this.tags.WORLD_AIR);
+            this.rulesBlockSpreadEventFromTo.regPair(this.triggers.VINES_GROWING,
+                blocksSet(this.triggers.VINES_GROWING, set -> {
+                    set.addPrimitive(Material.VINE);
+                    set.addPrimitive(this.tags.WORLD_AIR);
                 }),
-                BlocksSet.create(PControlTrigger.VINES_GROWING + " trigger", this.data, set ->
-                    set.add(Material.VINE)));
-            this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.LITTLE_MUSHROOMS_SPREADING,
+                blocksSet(this.triggers.VINES_GROWING, set ->
+                    set.addPrimitive(Material.VINE)));
+            this.rulesBlockSpreadEventFromTo.regPair(this.triggers.LITTLE_MUSHROOMS_SPREADING,
                 this.tags.WORLD_AIR,
                 this.tags.LITTLE_MUSHROOMS);
-            this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.FIRE_SPREADING,
+            this.rulesBlockSpreadEventFromTo.regPair(this.triggers.FIRE_SPREADING,
                 this.tags.WORLD_AIR,
-                BlocksSet.create(PControlTrigger.FIRE_SPREADING + " trigger", this.data, set ->
-                    set.add(Material.FIRE)));
+                blocksSet(this.triggers.FIRE_SPREADING, set ->
+                    set.addPrimitive(Material.FIRE)));
         }
         if (this.data.hasVersion(9)) {
-            this.rulesBlockSpreadEventTo.regSingle(PControlTrigger.CHORUSES_GROWING,
-                BlocksSet.create(PControlTrigger.CHORUSES_GROWING + " trigger", this.data, set ->
-                    set.add(Material.CHORUS_FLOWER)));
+            this.rulesBlockSpreadEventTo.regSingle(this.triggers.CHORUSES_GROWING,
+                blocksSet(this.triggers.CHORUSES_GROWING, set ->
+                    set.addPrimitive(Material.CHORUS_FLOWER)));
         }
         if (this.data.hasVersion(13)) {
-            this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.KELPS_GROWING,
+            this.rulesBlockSpreadEventFromTo.regPair(this.triggers.KELPS_GROWING,
                 this.tags.WATER,
-                BlocksSet.create(PControlTrigger.KELPS_GROWING + " trigger", this.data, set ->
-                    set.add(Material.KELP)));
+                blocksSet(this.triggers.KELPS_GROWING, set ->
+                    set.addPrimitive(Material.KELP)));
         }
         if (this.data.hasVersion(14)) {
-            this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.BAMBOO_GROWING,
+            this.rulesBlockSpreadEventFromTo.regPair(this.triggers.BAMBOO_GROWING,
                 this.tags.WORLD_AIR,
-                BlocksSet.create(PControlTrigger.BAMBOO_GROWING + " trigger", this.data, set ->
-                    set.add(Material.BAMBOO)));
+                blocksSet(this.triggers.BAMBOO_GROWING, set ->
+                    set.addPrimitive(Material.BAMBOO)));
         }
         if (this.data.hasVersion(16)) {
-            this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.WEEPING_VINES_GROWING,
+            this.rulesBlockSpreadEventFromTo.regPair(this.triggers.WEEPING_VINES_GROWING,
                 this.tags.WORLD_AIR,
-                BlocksSet.create(PControlTrigger.WEEPING_VINES_GROWING + " trigger", this.data, set ->
-                    set.add(Material.WEEPING_VINES)));
-            this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.TWISTING_VINES_GROWING,
+                blocksSet(this.triggers.WEEPING_VINES_GROWING, set ->
+                    set.addPrimitive(Material.WEEPING_VINES)));
+            this.rulesBlockSpreadEventFromTo.regPair(this.triggers.TWISTING_VINES_GROWING,
                 this.tags.WORLD_AIR,
-                BlocksSet.create(PControlTrigger.TWISTING_VINES_GROWING + " trigger", this.data, set ->
-                    set.add(Material.TWISTING_VINES)));
+                blocksSet(this.triggers.TWISTING_VINES_GROWING, set ->
+                    set.addPrimitive(Material.TWISTING_VINES)));
         }
         if (this.data.hasVersion(17)) {
-            this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.GLOW_BERRIES_GROWING,
-                BlocksSet.create(PControlTrigger.GLOW_BERRIES_GROWING + " trigger", this.data, set -> {
-                    set.add(Material.CAVE_VINES);
-                    set.add(this.tags.WORLD_AIR);
+            this.rulesBlockSpreadEventFromTo.regPair(this.triggers.GLOW_BERRIES_GROWING,
+                blocksSet(this.triggers.GLOW_BERRIES_GROWING, set -> {
+                    set.addPrimitive(Material.CAVE_VINES);
+                    set.addPrimitive(this.tags.WORLD_AIR);
                 }),
-                BlocksSet.create(PControlTrigger.GLOW_BERRIES_GROWING + " trigger", this.data, set ->
-                    set.add(Material.CAVE_VINES)));
-            this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.POINTED_DRIPSTONES_GROWING,
-                BlocksSet.create(PControlTrigger.POINTED_DRIPSTONES_GROWING + " trigger", this.data, set -> {
-                    set.add(Material.POINTED_DRIPSTONE);
-                    set.add(this.tags.WORLD_AIR);
+                blocksSet(this.triggers.GLOW_BERRIES_GROWING, set ->
+                    set.addPrimitive(Material.CAVE_VINES)));
+            this.rulesBlockSpreadEventFromTo.regPair(this.triggers.POINTED_DRIPSTONES_GROWING,
+                blocksSet(this.triggers.POINTED_DRIPSTONES_GROWING, set -> {
+                    set.addPrimitive(Material.POINTED_DRIPSTONE);
+                    set.addPrimitive(this.tags.WORLD_AIR);
                 }),
-                BlocksSet.create(PControlTrigger.POINTED_DRIPSTONES_GROWING + " trigger", this.data, set ->
-                    set.add(Material.POINTED_DRIPSTONE)));
-            this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.IGNORED_STATE, // BONE_MEAL_USAGE
+                blocksSet(this.triggers.POINTED_DRIPSTONES_GROWING, set ->
+                    set.addPrimitive(Material.POINTED_DRIPSTONE)));
+            this.rulesBlockSpreadEventFromTo.regPair(this.triggers.IGNORED_STATE, // BONE_MEAL_USAGE
                 this.tags.WORLD_AIR,
-                BlocksSet.create(PControlTrigger.IGNORED_STATE + " trigger", this.data, set ->
-                    set.add(Material.HANGING_ROOTS)));
-            this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.IGNORED_STATE, // BONE_MEAL_USAGE
-                BlocksSet.create(PControlTrigger.IGNORED_STATE + " trigger", this.data, set -> {
-                    set.add(Material.GLOW_LICHEN);
-                    set.add(this.tags.WORLD_AIR);
+                blocksSet(this.triggers.IGNORED_STATE, set ->
+                    set.addPrimitive(Material.HANGING_ROOTS)));
+            this.rulesBlockSpreadEventFromTo.regPair(this.triggers.IGNORED_STATE, // BONE_MEAL_USAGE
+                blocksSet(this.triggers.IGNORED_STATE, set -> {
+                    set.addPrimitive(Material.GLOW_LICHEN);
+                    set.addPrimitive(this.tags.WORLD_AIR);
                 }),
-                BlocksSet.create(PControlTrigger.IGNORED_STATE + " trigger", this.data, set ->
-                    set.add(Material.GLOW_LICHEN)));
-            this.rulesBlockSpreadEventTo.regSingle(PControlTrigger.AMETHYST_CLUSTERS_GROWING, // from = AIR, CAVE_AIR, WATER, etc
-                BlocksSet.create(PControlTrigger.AMETHYST_CLUSTERS_GROWING + " trigger", this.data, set ->
-                    set.add(Material.SMALL_AMETHYST_BUD)));
-            this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.AMETHYST_CLUSTERS_GROWING,
-                BlocksSet.create(PControlTrigger.AMETHYST_CLUSTERS_GROWING + " trigger", this.data, set ->
-                    set.add(Material.SMALL_AMETHYST_BUD)),
-                BlocksSet.create(PControlTrigger.AMETHYST_CLUSTERS_GROWING + " trigger", this.data, set ->
-                    set.add(Material.MEDIUM_AMETHYST_BUD)));
-            this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.AMETHYST_CLUSTERS_GROWING,
-                BlocksSet.create(PControlTrigger.AMETHYST_CLUSTERS_GROWING + " trigger", this.data, set ->
-                    set.add(Material.MEDIUM_AMETHYST_BUD)),
-                BlocksSet.create(PControlTrigger.AMETHYST_CLUSTERS_GROWING + " trigger", this.data, set ->
-                    set.add(Material.LARGE_AMETHYST_BUD)));
-            this.rulesBlockSpreadEventFromTo.regPair(PControlTrigger.AMETHYST_CLUSTERS_GROWING,
-                BlocksSet.create(PControlTrigger.AMETHYST_CLUSTERS_GROWING + " trigger", this.data, set ->
-                    set.add(Material.LARGE_AMETHYST_BUD)),
-                BlocksSet.create(PControlTrigger.AMETHYST_CLUSTERS_GROWING + " trigger", this.data, set ->
-                    set.add(Material.AMETHYST_CLUSTER)));
+                blocksSet(this.triggers.IGNORED_STATE, set ->
+                    set.addPrimitive(Material.GLOW_LICHEN)));
+            this.rulesBlockSpreadEventTo.regSingle(this.triggers.AMETHYST_CLUSTERS_GROWING, // from = AIR, CAVE_AIR, WATER, etc
+                blocksSet(this.triggers.AMETHYST_CLUSTERS_GROWING, set ->
+                    set.addPrimitive(Material.SMALL_AMETHYST_BUD)));
+            this.rulesBlockSpreadEventFromTo.regPair(this.triggers.AMETHYST_CLUSTERS_GROWING,
+                blocksSet(this.triggers.AMETHYST_CLUSTERS_GROWING, set ->
+                    set.addPrimitive(Material.SMALL_AMETHYST_BUD)),
+                blocksSet(this.triggers.AMETHYST_CLUSTERS_GROWING, set ->
+                    set.addPrimitive(Material.MEDIUM_AMETHYST_BUD)));
+            this.rulesBlockSpreadEventFromTo.regPair(this.triggers.AMETHYST_CLUSTERS_GROWING,
+                blocksSet(this.triggers.AMETHYST_CLUSTERS_GROWING, set ->
+                    set.addPrimitive(Material.MEDIUM_AMETHYST_BUD)),
+                blocksSet(this.triggers.AMETHYST_CLUSTERS_GROWING, set ->
+                    set.addPrimitive(Material.LARGE_AMETHYST_BUD)));
+            this.rulesBlockSpreadEventFromTo.regPair(this.triggers.AMETHYST_CLUSTERS_GROWING,
+                blocksSet(this.triggers.AMETHYST_CLUSTERS_GROWING, set ->
+                    set.addPrimitive(Material.LARGE_AMETHYST_BUD)),
+                blocksSet(this.triggers.AMETHYST_CLUSTERS_GROWING, set ->
+                    set.addPrimitive(Material.AMETHYST_CLUSTER)));
         }
         if (this.data.hasVersion(19)) {
-            this.rulesBlockSpreadEventTo.regSingle(PControlTrigger.SCULKS_SPREADING,
+            this.rulesBlockSpreadEventTo.regSingle(this.triggers.SCULKS_SPREADING,
                 Arrays.asList(Material.SCULK, Material.SCULK_VEIN));
         }
     }
@@ -568,35 +566,35 @@ public final class PhysicsListenerCommon extends PhysicsListener {
 
     {
         if (this.data.hasVersion(0)) {
-            this.rulesEntityInteractEventMaterial.regSingle(PControlTrigger.FARMLANDS_TRAMPLING,
+            this.rulesEntityInteractEventMaterial.regSingle(this.triggers.FARMLANDS_TRAMPLING,
                 this.tags.FARMLAND_BLOCK);
-            this.rulesEntityInteractEventMaterial.regSingle(PControlTrigger.IGNORED_STATE, // Redstone activators
+            this.rulesEntityInteractEventMaterial.regSingle(this.triggers.IGNORED_STATE, // Redstone activators
                 this.tags.REDSTONE_PASSIVE_INPUTS);
-            this.rulesEntityInteractEventMaterial.regSingle(PControlTrigger.IGNORED_STATE, // Redstone ore activation
+            this.rulesEntityInteractEventMaterial.regSingle(this.triggers.IGNORED_STATE, // Redstone ore activation
                 this.tags.REDSTONE_ORE_BLOCKS);
         }
         if (this.data.hasVersion(13)) {
-            this.rulesEntityInteractEventMaterial.regSingle(PControlTrigger.TURTLE_EGGS_TRAMPLING,
-                BlocksSet.create(PControlTrigger.TURTLE_EGGS_TRAMPLING + " trigger", this.data, set ->
-                    set.add(Material.TURTLE_EGG)));
+            this.rulesEntityInteractEventMaterial.regSingle(this.triggers.TURTLE_EGGS_TRAMPLING,
+                blocksSet(this.triggers.TURTLE_EGGS_TRAMPLING, set ->
+                    set.addPrimitive(Material.TURTLE_EGG)));
         }
         if (this.data.hasVersion(17)) {
-            this.rulesEntityInteractEventMaterial.regSingle(PControlTrigger.IGNORED_STATE, // Control by DRIPLEAFS_LOWERING
-                BlocksSet.create(PControlTrigger.IGNORED_STATE + " trigger", this.data, set ->
-                    set.add(Material.BIG_DRIPLEAF)));
-            this.rulesEntityInteractEventMaterial.regSingle(PControlTrigger.IGNORED_STATE, // Any entities stay on block
-                BlocksSet.create(PControlTrigger.IGNORED_STATE + " trigger", this.data, set ->
-                    set.add(Material.SCULK_SENSOR)));
+            this.rulesEntityInteractEventMaterial.regSingle(this.triggers.IGNORED_STATE, // Control by DRIPLEAFS_LOWERING
+                blocksSet(this.triggers.IGNORED_STATE, set ->
+                    set.addPrimitive(Material.BIG_DRIPLEAF)));
+            this.rulesEntityInteractEventMaterial.regSingle(this.triggers.IGNORED_STATE, // Any entities stay on block
+                blocksSet(this.triggers.IGNORED_STATE, set ->
+                    set.addPrimitive(Material.SCULK_SENSOR)));
         }
         if (this.data.hasVersion(19)) {
-            this.rulesEntityInteractEventMaterial.regSingle(PControlTrigger.IGNORED_STATE, // Players stay on block
-                BlocksSet.create(PControlTrigger.IGNORED_STATE + " trigger", this.data, set ->
-                    set.add(Material.SCULK_SHRIEKER)));
+            this.rulesEntityInteractEventMaterial.regSingle(this.triggers.IGNORED_STATE, // Players stay on block
+                blocksSet(this.triggers.IGNORED_STATE, set ->
+                    set.addPrimitive(Material.SCULK_SHRIEKER)));
         }
         if (this.data.hasVersion(20)) {
-            this.rulesEntityInteractEventMaterial.regSingle(PControlTrigger.IGNORED_STATE, // Any entities stay on block
-                BlocksSet.create(PControlTrigger.IGNORED_STATE + " trigger", this.data, set ->
-                    set.add(Material.CALIBRATED_SCULK_SENSOR)));
+            this.rulesEntityInteractEventMaterial.regSingle(this.triggers.IGNORED_STATE, // Any entities stay on block
+                blocksSet(this.triggers.IGNORED_STATE, set ->
+                    set.addPrimitive(Material.CALIBRATED_SCULK_SENSOR)));
         }
     }
 
@@ -634,22 +632,22 @@ public final class PhysicsListenerCommon extends PhysicsListener {
 
     {
         if (this.data.hasVersion(0)) {
-            this.rulesEntityBlockFormEventFromTo.regPair(PControlTrigger.SNOW_GOLEMS_CREATE_SNOW,
+            this.rulesEntityBlockFormEventFromTo.regPair(this.triggers.SNOW_GOLEMS_CREATE_SNOW,
                 this.tags.WORLD_AIR,
-                BlocksSet.create(PControlTrigger.SNOW_GOLEMS_CREATE_SNOW + " trigger", this.data, set ->
-                    set.add(Material.SNOW)));
+                blocksSet(this.triggers.SNOW_GOLEMS_CREATE_SNOW, set ->
+                    set.addPrimitive(Material.SNOW)));
         }
         if (this.data.hasVersion(9)) {
-            this.rulesEntityBlockFormEventFromTo.regPair(PControlTrigger.FROSTED_ICE_PHYSICS,
+            this.rulesEntityBlockFormEventFromTo.regPair(this.triggers.FROSTED_ICE_PHYSICS,
                 this.tags.WATER,
-                BlocksSet.create(PControlTrigger.FROSTED_ICE_PHYSICS + " trigger", this.data, set ->
-                    set.add(Material.FROSTED_ICE)));
+                blocksSet(this.triggers.FROSTED_ICE_PHYSICS, set ->
+                    set.addPrimitive(Material.FROSTED_ICE)));
         }
         if (this.data.hasVersion(14)) {
-            this.rulesEntityBlockFormEventFromTo.regPair(PControlTrigger.WITHER_CREATE_WITHER_ROSE_BLOCKS,
+            this.rulesEntityBlockFormEventFromTo.regPair(this.triggers.WITHER_CREATE_WITHER_ROSE_BLOCKS,
                 this.tags.WORLD_AIR,
-                BlocksSet.create(PControlTrigger.WITHER_CREATE_WITHER_ROSE_BLOCKS + " trigger", this.data, set ->
-                    set.add(Material.WITHER_ROSE)));
+                blocksSet(this.triggers.WITHER_CREATE_WITHER_ROSE_BLOCKS, set ->
+                    set.addPrimitive(Material.WITHER_ROSE)));
         }
     }
 
@@ -671,40 +669,41 @@ public final class PhysicsListenerCommon extends PhysicsListener {
     private final TreeRules rulesStructureGrowEventTo = new TreeRules(this.data);
 
     {
-        PControlTrigger.BONE_MEAL_USAGE.markAvailable();
-        this.rulesStructureGrowEventTo.regSingle(PControlTrigger.TREES_GROWING,
-            TreeTypesSet.create(PControlTrigger.TREES_GROWING + " trigger", this.data, set -> {
-                set.add(TreeType.TREE);
-                set.add(TreeType.BIG_TREE);
-                set.add(TreeType.REDWOOD);
-                set.add(TreeType.TALL_REDWOOD);
-                set.add(TreeType.BIRCH);
-                set.add(TreeType.JUNGLE);
-                set.add(TreeType.SMALL_JUNGLE);
-                set.add(TreeType.COCOA_TREE);
-                set.add(TreeType.JUNGLE_BUSH);
-                set.add(TreeType.SWAMP);
-                set.add(TreeType.ACACIA);
-                set.add(TreeType.DARK_OAK);
-                set.add(TreeType.MEGA_REDWOOD);
-                set.add(TreeType.TALL_BIRCH);
+        this.triggers.BONE_MEAL_USAGE.markAvailable();
+        this.rulesStructureGrowEventTo.regSingle(this.triggers.TREES_GROWING,
+            treesSet(this.triggers.TREES_GROWING, set -> {
+                set.addPrimitive(TreeType.TREE);
+                set.addPrimitive(TreeType.TREE);
+                set.addPrimitive(TreeType.BIG_TREE);
+                set.addPrimitive(TreeType.REDWOOD);
+                set.addPrimitive(TreeType.TALL_REDWOOD);
+                set.addPrimitive(TreeType.BIRCH);
+                set.addPrimitive(TreeType.JUNGLE);
+                set.addPrimitive(TreeType.SMALL_JUNGLE);
+                set.addPrimitive(TreeType.COCOA_TREE);
+                set.addPrimitive(TreeType.JUNGLE_BUSH);
+                set.addPrimitive(TreeType.SWAMP);
+                set.addPrimitive(TreeType.ACACIA);
+                set.addPrimitive(TreeType.DARK_OAK);
+                set.addPrimitive(TreeType.MEGA_REDWOOD);
+                set.addPrimitive(TreeType.TALL_BIRCH);
             }));
-        this.rulesStructureGrowEventTo.regSingle(PControlTrigger.GIANT_MUSHROOMS_GROWING,
-            TreeTypesSet.create(PControlTrigger.GIANT_MUSHROOMS_GROWING + " trigger", this.data, set -> {
-                set.add(TreeType.RED_MUSHROOM);
-                set.add(TreeType.BROWN_MUSHROOM);
+        this.rulesStructureGrowEventTo.regSingle(this.triggers.GIANT_MUSHROOMS_GROWING,
+            treesSet(this.triggers.GIANT_MUSHROOMS_GROWING, set -> {
+                set.addPrimitive(TreeType.RED_MUSHROOM);
+                set.addPrimitive(TreeType.BROWN_MUSHROOM);
             }));
         if (this.data.hasVersion(9)) {
-            this.rulesStructureGrowEventTo.regSingle(PControlTrigger.CHORUSES_GROWING,
-                TreeTypesSet.create(PControlTrigger.CHORUSES_GROWING + " trigger", this.data,
-                    set -> set.add(TreeType.CHORUS_PLANT)));
+            this.rulesStructureGrowEventTo.regSingle(this.triggers.CHORUSES_GROWING,
+                treesSet(this.triggers.CHORUSES_GROWING,
+                    set -> set.addPrimitive(TreeType.CHORUS_PLANT)));
         }
     }
 
     @EventHandler(ignoreCancelled = true)
     private void on(StructureGrowEvent event) {
         if (event.getPlayer() != null) {
-            this.data.cancelIfDisabled(event, PControlTrigger.BONE_MEAL_USAGE);
+            this.data.cancelIfDisabled(event, this.triggers.BONE_MEAL_USAGE);
             return;
         }
         Material from = event.getLocation().getBlock().getType();
@@ -721,22 +720,22 @@ public final class PhysicsListenerCommon extends PhysicsListener {
 
 
     {
-        PControlTrigger.PLAYERS_FLINT_USAGE.markAvailable();
-        PControlTrigger.FIRE_SPREADING.markAvailable();
+        this.triggers.PLAYERS_FLINT_USAGE.markAvailable();
+        this.triggers.FIRE_SPREADING.markAvailable();
     }
 
     @EventHandler(ignoreCancelled = true)
     private void on(BlockIgniteEvent event) {
         if (event.getCause() == BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL) {
-            this.data.cancelIfDisabled(event, PControlTrigger.PLAYERS_FLINT_USAGE);
+            this.data.cancelIfDisabled(event, this.triggers.PLAYERS_FLINT_USAGE);
         } else {
-            this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
+            this.data.cancelIfDisabled(event, this.triggers.FIRE_SPREADING);
         }
     }
 
     {
         if (this.data.hasVersion(11)) { // ProjectileHitEvent.getHitBlock() since 1.11
-            PControlTrigger.BLOCK_HIT_PROJECTILES_REMOVING.markAvailable();
+            this.triggers.BLOCK_HIT_PROJECTILES_REMOVING.markAvailable();
         }
     }
 
@@ -746,30 +745,30 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         if (event.getHitBlock() == null) return; // Since 1.11
         Entity entity = event.getEntity();
         if (!this.data.getRemovableProjectileTypes().contains(entity.getType())) return;
-        if (!this.data.isActionAllowed(entity.getWorld(), PControlTrigger.BLOCK_HIT_PROJECTILES_REMOVING)) return;
+        if (!this.data.isActionAllowed(entity.getWorld(), this.triggers.BLOCK_HIT_PROJECTILES_REMOVING)) return;
         entity.remove();
     }
 
     {
-        PControlTrigger.FIRE_SPREADING.markAvailable();
+        this.triggers.FIRE_SPREADING.markAvailable();
     }
 
     @EventHandler(ignoreCancelled = true)
     private void on(BlockBurnEvent event) {
-        this.data.cancelIfDisabled(event, PControlTrigger.FIRE_SPREADING);
+        this.data.cancelIfDisabled(event, this.triggers.FIRE_SPREADING);
     }
 
     {
-        PControlTrigger.LEAVES_DECAY.markAvailable();
+        this.triggers.LEAVES_DECAY.markAvailable();
     }
 
     @EventHandler(ignoreCancelled = true)
     private void on(LeavesDecayEvent event) {
-        this.data.cancelIfDisabled(event, PControlTrigger.LEAVES_DECAY);
+        this.data.cancelIfDisabled(event, this.triggers.LEAVES_DECAY);
     }
 
     {
-        PControlTrigger.BONE_MEAL_USAGE.markAvailable();
+        this.triggers.BONE_MEAL_USAGE.markAvailable();
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
@@ -784,7 +783,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         if (usedItem == null) return;
         if (!this.versionsAdapter.isBoneMealItem(usedItem)) return;
 
-        this.data.cancelIfDisabled(event, targetBlock.getWorld(), PControlTrigger.BONE_MEAL_USAGE);
+        this.data.cancelIfDisabled(event, targetBlock.getWorld(), this.triggers.BONE_MEAL_USAGE);
         if (event.useItemInHand() == Event.Result.DENY) return;
         this.fertilizedBlocks.add(targetBlock.getLocation().toVector());
     }
@@ -793,29 +792,29 @@ public final class PhysicsListenerCommon extends PhysicsListener {
 
     {
         if (BLOCK_PHYSICS_EVENT_GET_SOURCE_BLOCK_SUPPORT || !this.data.hasVersion(13)) {
-            this.rulesBlockPhysicsEventFrom.regSingle(PControlTrigger.SAPLINGS_DESTROYING,
-                BlocksSet.create(PControlTrigger.SAPLINGS_DESTROYING + " trigger", this.data, set ->
-                    set.add(this.tags.SAPLINGS)));
-            this.rulesBlockPhysicsEventFrom.regSingle(PControlTrigger.LADDERS_DESTROYING,
-                BlocksSet.create(PControlTrigger.LADDERS_DESTROYING + " trigger", this.data, set ->
-                    set.add(this.tags.LADDERS)));
-            this.rulesBlockPhysicsEventFrom.regSingle(PControlTrigger.SIGNS_DESTROYING,
-                BlocksSet.create(PControlTrigger.SIGNS_DESTROYING + " trigger", this.data, set ->
-                    set.add(this.tags.SIGNS)));
-            this.rulesBlockPhysicsEventFrom.regSingle(PControlTrigger.RAILS_DESTROYING,
-                BlocksSet.create(PControlTrigger.RAILS_DESTROYING + " trigger", this.data, set ->
-                    set.add(this.tags.RAILS)));
-            this.rulesBlockPhysicsEventFrom.regSingle(PControlTrigger.TORCHES_DESTROYING,
-                BlocksSet.create(PControlTrigger.TORCHES_DESTROYING + " trigger", this.data, set ->
-                    set.add(this.tags.TORCHES)));
-            this.rulesBlockPhysicsEventFrom.regSingle(PControlTrigger.REDSTONE_TORCHES_DESTROYING,
-                BlocksSet.create(PControlTrigger.REDSTONE_TORCHES_DESTROYING + " trigger", this.data, set ->
-                    set.add(this.tags.REDSTONE_TORCHES)));
+            this.rulesBlockPhysicsEventFrom.regSingle(this.triggers.SAPLINGS_DESTROYING,
+                blocksSet(this.triggers.SAPLINGS_DESTROYING, set ->
+                    set.addPrimitive(this.tags.SAPLINGS)));
+            this.rulesBlockPhysicsEventFrom.regSingle(this.triggers.LADDERS_DESTROYING,
+                blocksSet(this.triggers.LADDERS_DESTROYING, set ->
+                    set.addPrimitive(this.tags.LADDERS)));
+            this.rulesBlockPhysicsEventFrom.regSingle(this.triggers.SIGNS_DESTROYING,
+                blocksSet(this.triggers.SIGNS_DESTROYING, set ->
+                    set.addPrimitive(this.tags.SIGNS)));
+            this.rulesBlockPhysicsEventFrom.regSingle(this.triggers.RAILS_DESTROYING,
+                blocksSet(this.triggers.RAILS_DESTROYING, set ->
+                    set.addPrimitive(this.tags.RAILS)));
+            this.rulesBlockPhysicsEventFrom.regSingle(this.triggers.TORCHES_DESTROYING,
+                blocksSet(this.triggers.TORCHES_DESTROYING, set ->
+                    set.addPrimitive(this.tags.TORCHES)));
+            this.rulesBlockPhysicsEventFrom.regSingle(this.triggers.REDSTONE_TORCHES_DESTROYING,
+                blocksSet(this.triggers.REDSTONE_TORCHES_DESTROYING, set ->
+                    set.addPrimitive(this.tags.REDSTONE_TORCHES)));
         }
         if (this.data.hasVersion(16)) {
-            this.rulesBlockPhysicsEventFrom.regSingle(PControlTrigger.SOUL_TORCHES_DESTROYING,
-                BlocksSet.create(PControlTrigger.SOUL_TORCHES_DESTROYING + " trigger", this.data, set ->
-                    set.add(this.tags.SOUL_TORCHES)));
+            this.rulesBlockPhysicsEventFrom.regSingle(this.triggers.SOUL_TORCHES_DESTROYING,
+                blocksSet(this.triggers.SOUL_TORCHES_DESTROYING, set ->
+                    set.addPrimitive(this.tags.SOUL_TORCHES)));
         }
     }
 

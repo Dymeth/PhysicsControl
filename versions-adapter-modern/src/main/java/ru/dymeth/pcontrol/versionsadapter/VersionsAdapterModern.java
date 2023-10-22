@@ -8,9 +8,9 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Waterlogged;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.inventory.ItemStack;
+import ru.dymeth.pcontrol.VersionsAdapter;
 import ru.dymeth.pcontrol.data.CustomTags;
 import ru.dymeth.pcontrol.data.PControlData;
-import ru.dymeth.pcontrol.VersionsAdapter;
 
 import javax.annotation.Nonnull;
 
@@ -19,7 +19,7 @@ public class VersionsAdapterModern implements VersionsAdapter {
     private final CustomTags tags;
 
     public VersionsAdapterModern(@Nonnull PControlData data) {
-        this.tags = data.getCustomTags();
+        this.tags = data.tags();
     }
 
     @Nonnull

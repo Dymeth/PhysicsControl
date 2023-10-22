@@ -9,11 +9,9 @@ import java.util.Set;
 public abstract class CustomSet<T> {
     private static final boolean PREVENT_DUPLICATES = false;
 
-    final Class<T> clazz;
     private final Set<T> elements;
 
-    public CustomSet(@Nonnull Class<T> clazz, @Nonnull Set<T> elements) {
-        this.clazz = clazz;
+    public CustomSet(@Nonnull Set<T> elements) {
         this.elements = elements;
     }
 

@@ -6,6 +6,7 @@ import ru.dymeth.pcontrol.set.BlocksSet;
 
 import javax.annotation.Nonnull;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public final class CustomTags {
 
@@ -55,385 +56,390 @@ public final class CustomTags {
 
     @SuppressWarnings("CodeBlock2Expr")
     public CustomTags(@Nonnull PControlData data) {
-        WORLD_AIR = BlocksSet.create("WORLD_AIR", data, set -> {
-            set.add(Material.AIR);
+        WORLD_AIR = blocksSet(data, "WORLD_AIR", set -> {
+            set.addPrimitive(Material.AIR);
             if (data.hasVersion(13)) {
-                set.add(Material.CAVE_AIR);
+                set.addPrimitive(Material.CAVE_AIR);
             }
         });
-        WOODEN_DOORS = BlocksSet.create("WOODEN_DOORS", data, set -> {
+        WOODEN_DOORS = blocksSet(data, "WOODEN_DOORS", set -> {
             if (!data.hasVersion(13)) {
                 set.add("WOODEN_DOOR");
-                set.add(Material.ACACIA_DOOR);
-                set.add(Material.BIRCH_DOOR);
-                set.add(Material.DARK_OAK_DOOR);
-                set.add(Material.JUNGLE_DOOR);
-                set.add(Material.SPRUCE_FENCE);
+                set.addPrimitive(Material.ACACIA_DOOR);
+                set.addPrimitive(Material.BIRCH_DOOR);
+                set.addPrimitive(Material.DARK_OAK_DOOR);
+                set.addPrimitive(Material.JUNGLE_DOOR);
+                set.addPrimitive(Material.SPRUCE_FENCE);
             } else {
-                set.add(Tag.WOODEN_DOORS.getValues());
+                set.addPrimitive(Tag.WOODEN_DOORS.getValues());
             }
         });
-        PRESSURE_PLATES = BlocksSet.create("PRESSURE_PLATES", data, set -> {
+        PRESSURE_PLATES = blocksSet(data, "PRESSURE_PLATES", set -> {
             if (!data.hasVersion(13)) {
                 set.add("STONE_PLATE");
                 set.add("GOLD_PLATE");
                 set.add("IRON_PLATE");
                 set.add("WOOD_PLATE");
             } else {
-                set.add(Material.STONE_PRESSURE_PLATE);
-                set.add(Material.LIGHT_WEIGHTED_PRESSURE_PLATE);
-                set.add(Material.HEAVY_WEIGHTED_PRESSURE_PLATE);
-                set.add(Tag.WOODEN_PRESSURE_PLATES.getValues());
+                set.addPrimitive(Material.STONE_PRESSURE_PLATE);
+                set.addPrimitive(Material.LIGHT_WEIGHTED_PRESSURE_PLATE);
+                set.addPrimitive(Material.HEAVY_WEIGHTED_PRESSURE_PLATE);
+                set.addPrimitive(Tag.WOODEN_PRESSURE_PLATES.getValues());
             }
             if (data.hasVersion(16)) {
-                set.add(Material.POLISHED_BLACKSTONE_PRESSURE_PLATE);
+                set.addPrimitive(Material.POLISHED_BLACKSTONE_PRESSURE_PLATE);
             }
         });
-        REDSTONE_PASSIVE_INPUTS = BlocksSet.create("REDSTONE_PASSIVE_INPUTS", data, set -> {
-            set.add(Material.TRIPWIRE_HOOK);
-            set.add(Material.TRIPWIRE);
-            set.add(this.PRESSURE_PLATES);
+        REDSTONE_PASSIVE_INPUTS = blocksSet(data, "REDSTONE_PASSIVE_INPUTS", set -> {
+            set.addPrimitive(Material.TRIPWIRE_HOOK);
+            set.addPrimitive(Material.TRIPWIRE);
+            set.addPrimitive(this.PRESSURE_PLATES);
             if (!data.hasVersion(13)) {
                 set.add("WOOD_BUTTON");
-                set.add(Material.STONE_BUTTON);
+                set.addPrimitive(Material.STONE_BUTTON);
             } else {
-                set.add(Tag.BUTTONS.getValues());
+                set.addPrimitive(Tag.BUTTONS.getValues());
             }
         });
-        REDSTONE_ORE_BLOCKS = BlocksSet.create("REDSTONE_ORE_BLOCKS", data, set -> {
-            set.add(Material.REDSTONE_ORE);
+        REDSTONE_ORE_BLOCKS = blocksSet(data, "REDSTONE_ORE_BLOCKS", set -> {
+            set.addPrimitive(Material.REDSTONE_ORE);
             if (!data.hasVersion(13)) {
                 set.add("GLOWING_REDSTONE_ORE");
             }
             if (data.hasVersion(17)) {
-                set.add(Material.DEEPSLATE_REDSTONE_ORE);
+                set.addPrimitive(Material.DEEPSLATE_REDSTONE_ORE);
             }
         });
-        WATER = BlocksSet.create("WATER", data, set -> {
-            set.add(Material.WATER);
+        WATER = blocksSet(data, "WATER", set -> {
+            set.addPrimitive(Material.WATER);
             if (!data.hasVersion(13)) {
                 set.add("STATIONARY_WATER");
             }
         });
-        LAVA = BlocksSet.create("LAVA", data, set -> {
-            set.add(Material.LAVA);
+        LAVA = blocksSet(data, "LAVA", set -> {
+            set.addPrimitive(Material.LAVA);
             if (!data.hasVersion(13)) {
                 set.add("STATIONARY_LAVA");
             }
         });
-        SAND = BlocksSet.create("SAND", data, set -> {
+        SAND = blocksSet(data, "SAND", set -> {
             if (!data.hasVersion(13)) {
-                set.add(Material.SAND);
+                set.addPrimitive(Material.SAND);
             } else {
-                set.add(Tag.SAND.getValues());
+                set.addPrimitive(Tag.SAND.getValues());
             }
         });
-        GRAVEL = BlocksSet.create("GRAVEL", data, set -> {
-            set.add(Material.GRAVEL);
+        GRAVEL = blocksSet(data, "GRAVEL", set -> {
+            set.addPrimitive(Material.GRAVEL);
             if (data.hasVersion(20)) {
-                set.add(Material.SUSPICIOUS_GRAVEL);
+                set.addPrimitive(Material.SUSPICIOUS_GRAVEL);
             }
         });
-        ANVIL = BlocksSet.create("ANVIL", data, set -> {
+        ANVIL = blocksSet(data, "ANVIL", set -> {
             if (!data.hasVersion(13)) {
-                set.add(Material.ANVIL);
+                set.addPrimitive(Material.ANVIL);
             } else {
-                set.add(Tag.ANVIL.getValues());
+                set.addPrimitive(Tag.ANVIL.getValues());
             }
         });
-        CONCRETE_POWDERS = BlocksSet.create("CONCRETE_POWDERS", data, set -> {
+        CONCRETE_POWDERS = blocksSet(data, "CONCRETE_POWDERS", set -> {
             if (data.hasVersion(12)) {
                 if (!data.hasVersion(13)) {
                     set.add("CONCRETE_POWDER");
                 } else {
-                    set.add(Material.BLACK_CONCRETE_POWDER);
-                    set.add(Material.BLUE_CONCRETE_POWDER);
-                    set.add(Material.BROWN_CONCRETE_POWDER);
-                    set.add(Material.CYAN_CONCRETE_POWDER);
-                    set.add(Material.GRAY_CONCRETE_POWDER);
-                    set.add(Material.GREEN_CONCRETE_POWDER);
-                    set.add(Material.LIGHT_BLUE_CONCRETE_POWDER);
-                    set.add(Material.LIGHT_GRAY_CONCRETE_POWDER);
-                    set.add(Material.LIME_CONCRETE_POWDER);
-                    set.add(Material.MAGENTA_CONCRETE_POWDER);
-                    set.add(Material.ORANGE_CONCRETE_POWDER);
-                    set.add(Material.PINK_CONCRETE_POWDER);
-                    set.add(Material.PURPLE_CONCRETE_POWDER);
-                    set.add(Material.RED_CONCRETE_POWDER);
-                    set.add(Material.WHITE_CONCRETE_POWDER);
-                    set.add(Material.YELLOW_CONCRETE_POWDER);
+                    set.addPrimitive(Material.BLACK_CONCRETE_POWDER);
+                    set.addPrimitive(Material.BLUE_CONCRETE_POWDER);
+                    set.addPrimitive(Material.BROWN_CONCRETE_POWDER);
+                    set.addPrimitive(Material.CYAN_CONCRETE_POWDER);
+                    set.addPrimitive(Material.GRAY_CONCRETE_POWDER);
+                    set.addPrimitive(Material.GREEN_CONCRETE_POWDER);
+                    set.addPrimitive(Material.LIGHT_BLUE_CONCRETE_POWDER);
+                    set.addPrimitive(Material.LIGHT_GRAY_CONCRETE_POWDER);
+                    set.addPrimitive(Material.LIME_CONCRETE_POWDER);
+                    set.addPrimitive(Material.MAGENTA_CONCRETE_POWDER);
+                    set.addPrimitive(Material.ORANGE_CONCRETE_POWDER);
+                    set.addPrimitive(Material.PINK_CONCRETE_POWDER);
+                    set.addPrimitive(Material.PURPLE_CONCRETE_POWDER);
+                    set.addPrimitive(Material.RED_CONCRETE_POWDER);
+                    set.addPrimitive(Material.WHITE_CONCRETE_POWDER);
+                    set.addPrimitive(Material.YELLOW_CONCRETE_POWDER);
                 }
             }
         });
-        GRAVITY_BLOCKS = BlocksSet.create("GRAVITY_BLOCKS", data, set -> {
+        GRAVITY_BLOCKS = blocksSet(data, "GRAVITY_BLOCKS", set -> {
             set.add(Material::hasGravity);
             if (!data.hasVersion(13)) {
-                set.add(Material.DRAGON_EGG);
+                set.addPrimitive(Material.DRAGON_EGG);
             }
             if (data.hasVersion(14)) {
-                set.add(Material.SCAFFOLDING);
+                set.addPrimitive(Material.SCAFFOLDING);
             }
         });
-        NATURAL_GRAVITY_BLOCKS = BlocksSet.create("GRAVITY_BLOCKS", data, set -> {
-            set.add(this.SAND);
-            set.add(this.GRAVEL);
+        NATURAL_GRAVITY_BLOCKS = blocksSet(data, "GRAVITY_BLOCKS", set -> {
+            set.addPrimitive(this.SAND);
+            set.addPrimitive(this.GRAVEL);
         });
-        BONE_MEAL_HERBS = BlocksSet.create("BONE_MEAL_HERBS", data, set -> {
+        BONE_MEAL_HERBS = blocksSet(data, "BONE_MEAL_HERBS", set -> {
             if (!data.hasVersion(13)) {
                 set.add("LONG_GRASS");
                 set.add("YELLOW_FLOWER");
                 set.add("RED_ROSE");
             } else {
-                set.add(Material.GRASS);
-                set.add(Material.DANDELION);
-                set.add(Material.POPPY);
-                set.add(Material.BLUE_ORCHID);
-                set.add(Material.ALLIUM);
-                set.add(Material.AZURE_BLUET);
-                set.add(Material.RED_TULIP);
-                set.add(Material.ORANGE_TULIP);
-                set.add(Material.WHITE_TULIP);
-                set.add(Material.PINK_TULIP);
-                set.add(Material.OXEYE_DAISY);
-                set.add(Material.SUNFLOWER);
-                set.add(Material.LILAC);
-                set.add(Material.ROSE_BUSH);
-                set.add(Material.PEONY);
+                set.addPrimitive(Material.GRASS);
+                set.addPrimitive(Material.DANDELION);
+                set.addPrimitive(Material.POPPY);
+                set.addPrimitive(Material.BLUE_ORCHID);
+                set.addPrimitive(Material.ALLIUM);
+                set.addPrimitive(Material.AZURE_BLUET);
+                set.addPrimitive(Material.RED_TULIP);
+                set.addPrimitive(Material.ORANGE_TULIP);
+                set.addPrimitive(Material.WHITE_TULIP);
+                set.addPrimitive(Material.PINK_TULIP);
+                set.addPrimitive(Material.OXEYE_DAISY);
+                set.addPrimitive(Material.SUNFLOWER);
+                set.addPrimitive(Material.LILAC);
+                set.addPrimitive(Material.ROSE_BUSH);
+                set.addPrimitive(Material.PEONY);
             }
             if (data.hasVersion(14)) {
-                set.add(Material.CORNFLOWER);
-                set.add(Material.LILY_OF_THE_VALLEY);
+                set.addPrimitive(Material.CORNFLOWER);
+                set.addPrimitive(Material.LILY_OF_THE_VALLEY);
             }
         });
-        LITTLE_MUSHROOMS = BlocksSet.create("LITTLE_MUSHROOMS", data, set -> {
-            set.add(Material.RED_MUSHROOM);
-            set.add(Material.BROWN_MUSHROOM);
+        LITTLE_MUSHROOMS = blocksSet(data, "LITTLE_MUSHROOMS", set -> {
+            set.addPrimitive(Material.RED_MUSHROOM);
+            set.addPrimitive(Material.BROWN_MUSHROOM);
         });
-        BLOCKS_UNDER_WATER_ONLY = BlocksSet.create("UNDERWATER_BLOCKS_ONLY", data, set -> {
-            set.add(this.WATER);
+        BLOCKS_UNDER_WATER_ONLY = blocksSet(data, "UNDERWATER_BLOCKS_ONLY", set -> {
+            set.addPrimitive(this.WATER);
             if (data.hasVersion(13)) {
-                set.add(Material.BUBBLE_COLUMN);
-                set.add(Material.KELP_PLANT);
-                set.add(Material.TALL_SEAGRASS);
-                set.add(Material.SEAGRASS);
+                set.addPrimitive(Material.BUBBLE_COLUMN);
+                set.addPrimitive(Material.KELP_PLANT);
+                set.addPrimitive(Material.TALL_SEAGRASS);
+                set.addPrimitive(Material.SEAGRASS);
             }
         });
-        GRASS_BLOCK = BlocksSet.create("GRASS_BLOCK", data, set -> {
+        GRASS_BLOCK = blocksSet(data, "GRASS_BLOCK", set -> {
             if (!data.hasVersion(13)) {
-                set.add(Material.GRASS);
+                set.addPrimitive(Material.GRASS);
             } else {
-                set.add(Material.GRASS_BLOCK);
+                set.addPrimitive(Material.GRASS_BLOCK);
             }
         });
-        DIRT_PATH_BLOCK = BlocksSet.create("DIRT_PATH_BLOCK", data, set -> {
+        DIRT_PATH_BLOCK = blocksSet(data, "DIRT_PATH_BLOCK", set -> {
             if (data.hasVersion(9)) {
                 if (!data.hasVersion(17)) {
                     set.add("GRASS_PATH");
                 } else {
-                    set.add(Material.DIRT_PATH);
+                    set.addPrimitive(Material.DIRT_PATH);
                 }
             }
         });
-        FARMLAND_BLOCK = BlocksSet.create("FARMLAND_BLOCK", data, set -> {
+        FARMLAND_BLOCK = blocksSet(data, "FARMLAND_BLOCK", set -> {
             if (!data.hasVersion(13)) {
                 set.add("SOIL");
             } else {
-                set.add(Material.FARMLAND);
+                set.addPrimitive(Material.FARMLAND);
             }
         });
-        MYCELIUM_BLOCK = BlocksSet.create("MYCELIUM_BLOCK", data, set -> {
+        MYCELIUM_BLOCK = blocksSet(data, "MYCELIUM_BLOCK", set -> {
             if (!data.hasVersion(13)) {
                 set.add("MYCEL");
             } else {
-                set.add(Material.MYCELIUM);
+                set.addPrimitive(Material.MYCELIUM);
             }
         });
-        SUGAR_CANE_BLOCK = BlocksSet.create("SUGAR_CANE_BLOCK", data, set -> {
+        SUGAR_CANE_BLOCK = blocksSet(data, "SUGAR_CANE_BLOCK", set -> {
             if (!data.hasVersion(13)) {
                 set.add("SUGAR_CANE_BLOCK");
             } else {
-                set.add(Material.SUGAR_CANE);
+                set.addPrimitive(Material.SUGAR_CANE);
             }
         });
-        NETHER_WART_BLOCK = BlocksSet.create("NETHER_WART_BLOCK", data, set -> {
+        NETHER_WART_BLOCK = blocksSet(data, "NETHER_WART_BLOCK", set -> {
             if (!data.hasVersion(13)) {
                 set.add("NETHER_WARTS");
             } else {
-                set.add(Material.NETHER_WART);
+                set.addPrimitive(Material.NETHER_WART);
             }
         });
-        WHEAT_BLOCK = BlocksSet.create("WHEAT_BLOCK", data, set -> {
+        WHEAT_BLOCK = blocksSet(data, "WHEAT_BLOCK", set -> {
             if (!data.hasVersion(13)) {
                 set.add("CROPS");
             } else {
-                set.add(Material.WHEAT);
+                set.addPrimitive(Material.WHEAT);
             }
         });
-        POTATO_BLOCK = BlocksSet.create("POTATO_BLOCK", data, set -> {
+        POTATO_BLOCK = blocksSet(data, "POTATO_BLOCK", set -> {
             if (!data.hasVersion(13)) {
                 set.add("POTATO");
             } else {
-                set.add(Material.POTATOES);
+                set.addPrimitive(Material.POTATOES);
             }
         });
-        CARROT_BLOCK = BlocksSet.create("CARROT_BLOCK", data, set -> {
+        CARROT_BLOCK = blocksSet(data, "CARROT_BLOCK", set -> {
             if (!data.hasVersion(13)) {
                 set.add("CARROT");
             } else {
-                set.add(Material.CARROTS);
+                set.addPrimitive(Material.CARROTS);
             }
         });
-        BEETROOT_BLOCK = BlocksSet.create("BEETROOT_BLOCK", data, set -> {
+        BEETROOT_BLOCK = blocksSet(data, "BEETROOT_BLOCK", set -> {
             if (!data.hasVersion(13)) {
                 if (data.hasVersion(9)) {
                     set.add("BEETROOT_BLOCK");
                 }
             } else {
-                set.add(Material.BEETROOTS);
+                set.addPrimitive(Material.BEETROOTS);
             }
         });
-        PUMPKIN_STEM_AND_BLOCK = BlocksSet.create("PUMPKIN_STEM_AND_BLOCK", data, set -> {
-            set.add(Material.PUMPKIN_STEM);
-            set.add(Material.PUMPKIN);
+        PUMPKIN_STEM_AND_BLOCK = blocksSet(data, "PUMPKIN_STEM_AND_BLOCK", set -> {
+            set.addPrimitive(Material.PUMPKIN_STEM);
+            set.addPrimitive(Material.PUMPKIN);
         });
-        MELON_STEM_AND_BLOCK = BlocksSet.create("MELON_STEM_AND_BLOCK", data, set -> {
-            set.add(Material.MELON_STEM);
+        MELON_STEM_AND_BLOCK = blocksSet(data, "MELON_STEM_AND_BLOCK", set -> {
+            set.addPrimitive(Material.MELON_STEM);
             if (!data.hasVersion(13)) {
                 set.add("MELON_BLOCK");
             } else {
-                set.add(Material.MELON);
+                set.addPrimitive(Material.MELON);
             }
         });
-        FENCES = BlocksSet.create("FENCES", data, set -> {
+        FENCES = blocksSet(data, "FENCES", set -> {
             if (!data.hasVersion(14)) {
-                set.add(Material.ACACIA_FENCE);
-                set.add(Material.BIRCH_FENCE);
-                set.add(Material.DARK_OAK_FENCE);
-                set.add(Material.JUNGLE_FENCE);
-                set.add(Material.SPRUCE_FENCE);
+                set.addPrimitive(Material.ACACIA_FENCE);
+                set.addPrimitive(Material.BIRCH_FENCE);
+                set.addPrimitive(Material.DARK_OAK_FENCE);
+                set.addPrimitive(Material.JUNGLE_FENCE);
+                set.addPrimitive(Material.SPRUCE_FENCE);
                 if (!data.hasVersion(13)) {
                     set.add("FENCE");
                     set.add("NETHER_FENCE");
                     // set.add("IRON_FENCE");
                 } else {
-                    set.add(Material.OAK_FENCE);
-                    set.add(Material.NETHER_BRICK_FENCE);
+                    set.addPrimitive(Material.OAK_FENCE);
+                    set.addPrimitive(Material.NETHER_BRICK_FENCE);
                     // set.add(Material.IRON_BARS);
                 }
             } else {
                 // set.add(Material.IRON_BARS);
-                set.add(Tag.FENCES.getValues());
+                set.addPrimitive(Tag.FENCES.getValues());
             }
         });
-        SAPLINGS = BlocksSet.create("SAPLINGS", data, set -> {
+        SAPLINGS = blocksSet(data, "SAPLINGS", set -> {
             if (!data.hasVersion(13)) {
                 set.add("SAPLING");
             } else {
-                set.add(Tag.SAPLINGS.getValues());
+                set.addPrimitive(Tag.SAPLINGS.getValues());
             }
         });
-        LADDERS = BlocksSet.create("LADDERS", data, set -> {
-            set.add(Material.LADDER);
+        LADDERS = blocksSet(data, "LADDERS", set -> {
+            set.addPrimitive(Material.LADDER);
         });
-        SIGNS = BlocksSet.create("SIGNS", data, set -> {
+        SIGNS = blocksSet(data, "SIGNS", set -> {
             if (!data.hasVersion(14)) {
                 set.add("SIGN");
                 set.add("SIGN_POST");
                 set.add("WALL_SIGN");
             } else {
-                set.add(Tag.STANDING_SIGNS.getValues());
-                set.add(Tag.WALL_SIGNS.getValues());
-                set.add(Tag.SIGNS.getValues());
+                set.addPrimitive(Tag.STANDING_SIGNS.getValues());
+                set.addPrimitive(Tag.WALL_SIGNS.getValues());
+                set.addPrimitive(Tag.SIGNS.getValues());
             }
             if (data.hasVersion(20)) {
-                set.add(Tag.CEILING_HANGING_SIGNS.getValues());
-                set.add(Tag.WALL_HANGING_SIGNS.getValues());
-                set.add(Tag.ALL_HANGING_SIGNS.getValues());
-                set.add(Tag.ALL_SIGNS.getValues());
+                set.addPrimitive(Tag.CEILING_HANGING_SIGNS.getValues());
+                set.addPrimitive(Tag.WALL_HANGING_SIGNS.getValues());
+                set.addPrimitive(Tag.ALL_HANGING_SIGNS.getValues());
+                set.addPrimitive(Tag.ALL_SIGNS.getValues());
             }
         });
-        RAILS = BlocksSet.create("RAILS", data, set -> {
-            set.add(Material.ACTIVATOR_RAIL);
-            set.add(Material.DETECTOR_RAIL);
-            set.add(Material.POWERED_RAIL);
+        RAILS = blocksSet(data, "RAILS", set -> {
+            set.addPrimitive(Material.ACTIVATOR_RAIL);
+            set.addPrimitive(Material.DETECTOR_RAIL);
+            set.addPrimitive(Material.POWERED_RAIL);
             if (!data.hasVersion(13)) {
                 set.add("RAILS");
             } else {
-                set.add(Material.RAIL);
+                set.addPrimitive(Material.RAIL);
             }
         });
-        TORCHES = BlocksSet.create("TORCHES", data, set -> {
-            set.add(Material.TORCH);
+        TORCHES = blocksSet(data, "TORCHES", set -> {
+            set.addPrimitive(Material.TORCH);
             if (data.hasVersion(13)) {
-                set.add(Material.TORCH);
-                set.add(Material.WALL_TORCH);
+                set.addPrimitive(Material.TORCH);
+                set.addPrimitive(Material.WALL_TORCH);
             }
         });
-        REDSTONE_TORCHES = BlocksSet.create("REDSTONE_TORCHES", data, set -> {
+        REDSTONE_TORCHES = blocksSet(data, "REDSTONE_TORCHES", set -> {
             if (!data.hasVersion(13)) {
                 set.add("REDSTONE_TORCH_ON");
                 set.add("REDSTONE_TORCH_OFF");
             } else {
-                set.add(Material.REDSTONE_TORCH);
-                set.add(Material.REDSTONE_WALL_TORCH);
+                set.addPrimitive(Material.REDSTONE_TORCH);
+                set.addPrimitive(Material.REDSTONE_WALL_TORCH);
             }
         });
-        SOUL_TORCHES = BlocksSet.create("SOUL_TORCHES", data, set -> {
+        SOUL_TORCHES = blocksSet(data, "SOUL_TORCHES", set -> {
             if (data.hasVersion(16)) {
-                set.add(Material.SOUL_TORCH);
-                set.add(Material.SOUL_WALL_TORCH);
+                set.addPrimitive(Material.SOUL_TORCH);
+                set.addPrimitive(Material.SOUL_WALL_TORCH);
             }
         });
-        ALL_ALIVE_CORALS = BlocksSet.create("ALL_ALIVE_CORALS", data, set -> {
+        ALL_ALIVE_CORALS = blocksSet(data, "ALL_ALIVE_CORALS", set -> {
             if (data.hasVersion(13)) {
-                set.add(Tag.CORAL_BLOCKS.getValues());
-                set.add(Tag.WALL_CORALS.getValues());
-                set.add(Tag.CORALS.getValues()); // Contains Tag.CORAL_PLANTS
+                set.addPrimitive(Tag.CORAL_BLOCKS.getValues());
+                set.addPrimitive(Tag.WALL_CORALS.getValues());
+                set.addPrimitive(Tag.CORALS.getValues()); // Contains Tag.CORAL_PLANTS
             }
         });
-        DEAD_CORAL_PLANTS = BlocksSet.create("DEAD_CORAL_PLANTS", data, set -> {
+        DEAD_CORAL_PLANTS = blocksSet(data, "DEAD_CORAL_PLANTS", set -> {
             if (data.hasVersion(13)) {
-                set.add(Material.DEAD_TUBE_CORAL);
-                set.add(Material.DEAD_BRAIN_CORAL);
-                set.add(Material.DEAD_BUBBLE_CORAL);
-                set.add(Material.DEAD_FIRE_CORAL);
-                set.add(Material.DEAD_HORN_CORAL);
+                set.addPrimitive(Material.DEAD_TUBE_CORAL);
+                set.addPrimitive(Material.DEAD_BRAIN_CORAL);
+                set.addPrimitive(Material.DEAD_BUBBLE_CORAL);
+                set.addPrimitive(Material.DEAD_FIRE_CORAL);
+                set.addPrimitive(Material.DEAD_HORN_CORAL);
             }
         });
-        DEAD_CORALS = BlocksSet.create("DEAD_CORALS", data, set -> {
+        DEAD_CORALS = blocksSet(data, "DEAD_CORALS", set -> {
             if (data.hasVersion(13)) {
-                set.add(Material.DEAD_TUBE_CORAL_FAN);
-                set.add(Material.DEAD_BRAIN_CORAL_FAN);
-                set.add(Material.DEAD_BUBBLE_CORAL_FAN);
-                set.add(Material.DEAD_FIRE_CORAL_FAN);
-                set.add(Material.DEAD_HORN_CORAL_FAN);
-                set.add(this.DEAD_CORAL_PLANTS);
+                set.addPrimitive(Material.DEAD_TUBE_CORAL_FAN);
+                set.addPrimitive(Material.DEAD_BRAIN_CORAL_FAN);
+                set.addPrimitive(Material.DEAD_BUBBLE_CORAL_FAN);
+                set.addPrimitive(Material.DEAD_FIRE_CORAL_FAN);
+                set.addPrimitive(Material.DEAD_HORN_CORAL_FAN);
+                set.addPrimitive(this.DEAD_CORAL_PLANTS);
             }
         });
-        DEAD_WALL_CORALS = BlocksSet.create("DEAD_WALL_CORALS", data, set -> {
+        DEAD_WALL_CORALS = blocksSet(data, "DEAD_WALL_CORALS", set -> {
             if (data.hasVersion(13)) {
-                set.add(Material.DEAD_TUBE_CORAL_WALL_FAN);
-                set.add(Material.DEAD_BRAIN_CORAL_WALL_FAN);
-                set.add(Material.DEAD_BUBBLE_CORAL_WALL_FAN);
-                set.add(Material.DEAD_FIRE_CORAL_WALL_FAN);
-                set.add(Material.DEAD_HORN_CORAL_WALL_FAN);
+                set.addPrimitive(Material.DEAD_TUBE_CORAL_WALL_FAN);
+                set.addPrimitive(Material.DEAD_BRAIN_CORAL_WALL_FAN);
+                set.addPrimitive(Material.DEAD_BUBBLE_CORAL_WALL_FAN);
+                set.addPrimitive(Material.DEAD_FIRE_CORAL_WALL_FAN);
+                set.addPrimitive(Material.DEAD_HORN_CORAL_WALL_FAN);
             }
         });
-        DEAD_CORAL_BLOCKS = BlocksSet.create("DEAD_CORAL_BLOCKS", data, set -> {
+        DEAD_CORAL_BLOCKS = blocksSet(data, "DEAD_CORAL_BLOCKS", set -> {
             if (data.hasVersion(13)) {
-                set.add(Material.DEAD_TUBE_CORAL_BLOCK);
-                set.add(Material.DEAD_BRAIN_CORAL_BLOCK);
-                set.add(Material.DEAD_BUBBLE_CORAL_BLOCK);
-                set.add(Material.DEAD_FIRE_CORAL_BLOCK);
-                set.add(Material.DEAD_HORN_CORAL_BLOCK);
+                set.addPrimitive(Material.DEAD_TUBE_CORAL_BLOCK);
+                set.addPrimitive(Material.DEAD_BRAIN_CORAL_BLOCK);
+                set.addPrimitive(Material.DEAD_BUBBLE_CORAL_BLOCK);
+                set.addPrimitive(Material.DEAD_FIRE_CORAL_BLOCK);
+                set.addPrimitive(Material.DEAD_HORN_CORAL_BLOCK);
             }
         });
-        ALL_DEAD_CORALS = BlocksSet.create("ALL_DEAD_CORALS", data, set -> {
+        ALL_DEAD_CORALS = blocksSet(data, "ALL_DEAD_CORALS", set -> {
             if (data.hasVersion(13)) {
-                set.add(this.DEAD_CORAL_BLOCKS);
-                set.add(this.DEAD_WALL_CORALS);
-                set.add(this.DEAD_CORALS); // Contains this.DEAD_CORAL_PLANTS
+                set.addPrimitive(this.DEAD_CORAL_BLOCKS);
+                set.addPrimitive(this.DEAD_WALL_CORALS);
+                set.addPrimitive(this.DEAD_CORALS); // Contains this.DEAD_CORAL_PLANTS
             }
         });
+    }
+
+    @Nonnull
+    public Set<Material> blocksSet(@Nonnull PControlData data, @Nonnull String setName, @Nonnull Consumer<BlocksSet> consumer) {
+        return BlocksSet.createPrimitive(setName, data.log(), consumer);
     }
 }

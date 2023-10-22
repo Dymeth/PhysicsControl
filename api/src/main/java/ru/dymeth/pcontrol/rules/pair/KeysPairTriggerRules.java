@@ -1,7 +1,7 @@
 package ru.dymeth.pcontrol.rules.pair;
 
 import ru.dymeth.pcontrol.data.PControlData;
-import ru.dymeth.pcontrol.data.PControlTrigger;
+import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
 import ru.dymeth.pcontrol.rules.TriggerRules;
 
 import javax.annotation.Nonnull;
@@ -29,7 +29,7 @@ public abstract class KeysPairTriggerRules<T, K1, K2> extends TriggerRules<T> {
             for (K2 secondKey : secondKeysSet) {
                 previousTrigger = map.put(secondKey, trigger);
                 if (previousTrigger != null) {
-                    this.data.getPlugin().getLogger().warning("Changed trigger for keys pair "
+                    this.data.log().warning("Changed trigger for keys pair "
                         + firstKey + " and " + secondKey + ": "
                         + previousTrigger + " -> " + trigger);
                 }

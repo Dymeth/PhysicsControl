@@ -25,7 +25,7 @@ public abstract class PControlInventory implements InventoryHolder {
     PControlInventory(@Nonnull PControlDataBukkit data, @Nonnull World world, int rows, @Nonnull Text title) {
         this.world = world;
         this.inventory = data.getTextHelper().createInventory(
-            data.getPlugin().getServer(), this, rows * 9, title);
+            data.server(), this, rows * 9, title);
         this.slotActions = new HashMap<>();
     }
 

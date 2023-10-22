@@ -7,9 +7,11 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.plugin.Plugin;
 import ru.dymeth.pcontrol.data.CustomTags;
-import ru.dymeth.pcontrol.data.PControlCategory;
 import ru.dymeth.pcontrol.data.PControlData;
-import ru.dymeth.pcontrol.data.PControlTrigger;
+import ru.dymeth.pcontrol.data.category.CategoriesRegistry;
+import ru.dymeth.pcontrol.data.category.PControlCategory;
+import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
+import ru.dymeth.pcontrol.data.trigger.TriggersRegistry;
 import ru.dymeth.pcontrol.inventory.PControlInventory;
 import ru.dymeth.pcontrol.inventory.PControlTriggerInventory;
 import ru.dymeth.pcontrol.text.CommonColor;
@@ -41,11 +43,13 @@ public final class PControlDataBukkit implements PControlData {
     private final Map<PControlCategory, String> categoriesNames = new HashMap<>();
     private final Map<PControlTrigger, String> triggersNames = new HashMap<>();
 
-    private final Map<World, Map<PControlTrigger, Boolean>> triggers = new HashMap<>();
+    private final Map<World, Map<PControlTrigger, Boolean>> states = new HashMap<>();
     private final Map<World, Map<PControlCategory, PControlTriggerInventory>> inventories = new HashMap<>();
     private Metrics metrics = null;
     private String langKey = null;
     private final CustomTags customTags;
+    private final CategoriesRegistry categories;
+    private final TriggersRegistry triggers;
     private final VersionsAdapter versionsAdapter;
     private final TextHelper textHelper;
 
@@ -102,6 +106,8 @@ public final class PControlDataBukkit implements PControlData {
             "TRIDENT");
 
         this.customTags = new CustomTags(this);
+        this.categories = new CategoriesRegistry(this);
+        this.triggers = new TriggersRegistry(this);
 
         if (this.hasVersion(13)) {
             this.versionsAdapter = new VersionsAdapterModern(this);
@@ -183,22 +189,13 @@ public final class PControlDataBukkit implements PControlData {
         this.langKey = LocaleUtils.prepareLangKey(this.getClass(), this.plugin.getLogger(), config.getString("language"));
     }
 
-    @Nullable
-    private static <T extends Enum<T>> T getEnum(@Nonnull Class<T> enumType, @Nonnull String key) {
-        try {
-            return Enum.valueOf(enumType, key);
-        } catch (IllegalArgumentException ex) {
-            return null;
-        }
-    }
-
     private void reloadLocale() {
 
         Function<String, String> messageProcessor = msg ->
             msg.replace("%plugin%", this.plugin.getName());
 
         LocaleUtils.reloadLocale(this.plugin, this.langKey,
-            key -> getEnum(PControlCategory.class, key), messageProcessor,
+            this.categories::valueOf, messageProcessor,
             "categories.yml", this.categoriesNames);
 
         LocaleUtils.reloadLocale(this.plugin, this.langKey,
@@ -206,18 +203,18 @@ public final class PControlDataBukkit implements PControlData {
             "messages.yml", this.messages);
 
         LocaleUtils.reloadLocale(this.plugin, this.langKey,
-            key -> getEnum(PControlTrigger.class, key), messageProcessor,
+            this.triggers::valueOf, messageProcessor,
             "triggers.yml", this.triggersNames);
 
-        for (PControlCategory category : PControlCategory.values()) {
+        for (PControlCategory category : this.categories.values()) {
             if (this.categoriesNames.containsKey(category)) continue;
             this.categoriesNames.put(category, category.name());
-            if (category == PControlCategory.TEST) continue;
+            if (category == this.categories.TEST) continue;
             this.plugin.getLogger().warning("Unable to load name of category " + category);
         }
-        for (PControlTrigger trigger : PControlTrigger.values()) {
+        for (PControlTrigger trigger : this.triggers.values()) {
             if (this.triggersNames.containsKey(trigger)) continue;
-            if (trigger == PControlTrigger.IGNORED_STATE) continue;
+            if (trigger == this.triggers.IGNORED_STATE) continue;
             this.triggersNames.put(trigger, trigger.name());
             this.plugin.getLogger().warning("Unable to load name of trigger " + trigger);
         }
@@ -231,7 +228,7 @@ public final class PControlDataBukkit implements PControlData {
 
     void unloadData() {
         this.messages.clear();
-        this.triggers.clear();
+        this.states.clear();
         this.plugin.getServer().getOnlinePlayers().forEach(player -> {
             InventoryHolder holder = player.getOpenInventory().getTopInventory().getHolder();
             if (!(holder instanceof PControlInventory)) return;
@@ -283,8 +280,8 @@ public final class PControlDataBukkit implements PControlData {
             try {
                 PControlTrigger trigger;
                 try {
-                    trigger = PControlTrigger.valueOf(key.toUpperCase().replace(" ", "_"));
-                    if (trigger == PControlTrigger.IGNORED_STATE) throw new IllegalArgumentException();
+                    trigger = this.triggers.valueOf(key.toUpperCase().replace(" ", "_"));
+                    if (trigger == this.triggers.IGNORED_STATE) throw new IllegalArgumentException();
                 } catch (IllegalArgumentException e) {
                     throw new IllegalArgumentException("Unknown trigger type");
                 }
@@ -302,10 +299,10 @@ public final class PControlDataBukkit implements PControlData {
             }
         }
 
-        Map<PControlTrigger, Boolean> memoryTriggers = this.triggers.computeIfAbsent(world, k -> new HashMap<>());
+        Map<PControlTrigger, Boolean> memoryTriggers = this.states.computeIfAbsent(world, k -> new HashMap<>());
         Map<PControlCategory, PControlTriggerInventory> inventories = this.inventories.computeIfAbsent(world, world1 -> {
             Map<PControlCategory, PControlTriggerInventory> result = new HashMap<>();
-            for (PControlCategory category : PControlCategory.values()) {
+            for (PControlCategory category : this.categories.values()) {
                 category.prepareIcon(this);
                 result.put(category, new PControlTriggerInventory(this, category, world));
             }
@@ -314,7 +311,7 @@ public final class PControlDataBukkit implements PControlData {
 
         boolean firstInit = configTriggers.isEmpty();
         boolean changed = false;
-        for (PControlTrigger trigger : PControlTrigger.values()) {
+        for (PControlTrigger trigger : this.triggers.values()) {
             Boolean memoryValue = memoryTriggers.get(trigger);
             Boolean configValue = configTriggers.get(trigger);
             boolean currentValue;
@@ -323,7 +320,7 @@ public final class PControlDataBukkit implements PControlData {
             } else {
                 currentValue = memoryValue == null ? trigger.getDefaultValue() : memoryValue;
             }
-            if ((configValue == null || configValue != currentValue) && trigger != PControlTrigger.IGNORED_STATE) {
+            if ((configValue == null || configValue != currentValue) && trigger != this.triggers.IGNORED_STATE) {
                 worldConfig.set(trigger.name(), currentValue);
                 changed = true;
                 if (!firstInit) {
@@ -345,7 +342,7 @@ public final class PControlDataBukkit implements PControlData {
     }
 
     void unloadWorldData(@Nonnull World world) {
-        this.triggers.remove(world);
+        this.states.remove(world);
         this.inventories.remove(world);
     }
 
@@ -356,7 +353,7 @@ public final class PControlDataBukkit implements PControlData {
 
     @Override
     public void cancelIfDisabled(@Nonnull Cancellable event, @Nonnull World world, @Nonnull PControlTrigger trigger) {
-        if (trigger == PControlTrigger.IGNORED_STATE) return;
+        if (trigger == this.triggers.IGNORED_STATE) return;
         if (!this.getWorldTriggers(world).getOrDefault(trigger, false)) {
             event.setCancelled(true);
         }
@@ -364,12 +361,12 @@ public final class PControlDataBukkit implements PControlData {
 
     @Override
     public boolean isActionAllowed(@Nonnull World world, @Nonnull PControlTrigger trigger) {
-        if (trigger == PControlTrigger.IGNORED_STATE) throw new IllegalArgumentException();
+        if (trigger == this.triggers.IGNORED_STATE) throw new IllegalArgumentException();
         return this.getWorldTriggers(world).getOrDefault(trigger, false);
     }
 
     public void switchTrigger(@Nonnull World world, @Nonnull PControlTrigger trigger) {
-        if (trigger == PControlTrigger.IGNORED_STATE) return;
+        if (trigger == this.triggers.IGNORED_STATE) return;
         Map<PControlTrigger, Boolean> worldTriggers = this.getWorldTriggers(world);
         worldTriggers.put(trigger, !worldTriggers.get(trigger));
         this.updateWorldData(world, false);
@@ -377,7 +374,7 @@ public final class PControlDataBukkit implements PControlData {
 
     @Nonnull
     private Map<PControlTrigger, Boolean> getWorldTriggers(@Nonnull World world) {
-        Map<PControlTrigger, Boolean> worldTriggers = this.triggers.get(world);
+        Map<PControlTrigger, Boolean> worldTriggers = this.states.get(world);
         if (worldTriggers == null) {
             throw new IllegalArgumentException("Synchronisation error. World " + world.getName() + " not found in cache");
         }
@@ -394,16 +391,31 @@ public final class PControlDataBukkit implements PControlData {
     }
 
     @Nonnull
-    public CustomTags getCustomTags() {
+    @Override
+    public CustomTags tags() {
         return this.customTags;
     }
 
     @Nonnull
+    @Override
+    public CategoriesRegistry categories() {
+        return this.categories;
+    }
+
+    @Nonnull
+    @Override
+    public TriggersRegistry triggers() {
+        return this.triggers;
+    }
+
+    @Nonnull
+    @Override
     public VersionsAdapter getVersionsAdapter() {
         return this.versionsAdapter;
     }
 
     @Nonnull
+    @Override
     public TextHelper getTextHelper() {
         return this.textHelper;
     }

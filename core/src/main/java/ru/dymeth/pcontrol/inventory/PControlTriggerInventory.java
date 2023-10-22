@@ -8,13 +8,13 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import ru.dymeth.pcontrol.PControlDataBukkit;
-import ru.dymeth.pcontrol.data.PControlCategory;
-import ru.dymeth.pcontrol.data.PControlTrigger;
+import ru.dymeth.pcontrol.data.category.PControlCategory;
+import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
 import ru.dymeth.pcontrol.text.CommonColor;
 import ru.dymeth.pcontrol.text.CommonDecoration;
 import ru.dymeth.pcontrol.text.Text;
 import ru.dymeth.pcontrol.text.TextHelper;
-import ru.dymeth.pcontrol.util.MaterialUtils;
+import ru.dymeth.pcontrol.util.PCMaterial;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -27,6 +27,7 @@ public final class PControlTriggerInventory extends PControlInventory {
     private static final boolean WARN_ON_SET_ICONS_FOR_UNAVAILABLE_TRIGGERS = false;
     private static final ItemStack DISALLOWED_TRIGGER = new ItemStack(Material.BARRIER);
     private static final ItemStack WRONG_ICON_TRIGGER = new ItemStack(Material.PAPER);
+    private static final PCMaterial BACK_ITEM_MATERIAL = PCMaterial.ofLegacyOrModern("WOOL:14", "RED_WOOL");
 
     private final PControlDataBukkit data;
     private final Map<PControlTrigger, Short> slotByTrigger;
@@ -45,13 +46,7 @@ public final class PControlTriggerInventory extends PControlInventory {
         this.slotByTrigger = new HashMap<>();
         this.findTriggersSlots(category);
 
-        ItemStack back = MaterialUtils.matchIcon("RED_WOOL", "WOOL:14");
-        if (back == null) throw new IllegalArgumentException();
-        ItemMeta meta = back.getItemMeta();
-        if (meta == null) throw new IllegalArgumentException();
-        data.getTextHelper().setStackName(meta, data.getMessage("select-another-category-item"));
-        back.setItemMeta(meta);
-        this.setItem((short) (3 * 9 + 4), back, player ->
+        this.setItem((short) (3 * 9 + 4), this.createBackStack(), player ->
             player.openInventory(new PControlCategoryInventory(data, world).getInventory()));
     }
 
@@ -65,21 +60,31 @@ public final class PControlTriggerInventory extends PControlInventory {
         }
     }
 
+    @Nonnull
+    private ItemStack createBackStack() {
+        ItemStack back = BACK_ITEM_MATERIAL.createStack(1);
+        ItemMeta meta = back.getItemMeta();
+        if (meta == null) throw new IllegalStateException();
+        this.data.getTextHelper().setStackName(meta, this.data.getMessage("select-another-category-item"));
+        back.setItemMeta(meta);
+        return back;
+    }
+
     public void updateTriggerStack(@Nonnull PControlTrigger trigger) {
-        if (trigger == PControlTrigger.IGNORED_STATE) return;
+        if (trigger == this.data.triggers().IGNORED_STATE) return;
         boolean available = trigger.isAvailable();
         boolean enabled = this.data.isActionAllowed(this.world, trigger);
 
         ItemStack icon = trigger.getIcon();
         if (available) {
             if (icon == null) {
-                this.data.getPlugin().getLogger().warning(
+                this.data.log().warning(
                     "Unable to find icon of trigger " + trigger);
                 icon = WRONG_ICON_TRIGGER;
             }
         } else {
             if (icon != null && WARN_ON_SET_ICONS_FOR_UNAVAILABLE_TRIGGERS) {
-                this.data.getPlugin().getLogger().warning(
+                this.data.log().warning(
                     "Set icon for unavailable trigger " + trigger + ": " + icon.getType());
             }
             icon = DISALLOWED_TRIGGER;
@@ -126,7 +131,7 @@ public final class PControlTriggerInventory extends PControlInventory {
     }
 
     public void switchTrigger(@Nonnull CommandSender sender, @Nonnull PControlTrigger trigger) {
-        if (trigger == PControlTrigger.IGNORED_STATE) return;
+        if (trigger == this.data.triggers().IGNORED_STATE) return;
         if (!trigger.isAvailable()) {
             return;
         }

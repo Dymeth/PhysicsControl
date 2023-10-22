@@ -1,52 +1,46 @@
-package ru.dymeth.pcontrol.data;
+package ru.dymeth.pcontrol.data.category;
 
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import ru.dymeth.pcontrol.data.PControlData;
+import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
 import ru.dymeth.pcontrol.text.CommonColor;
 import ru.dymeth.pcontrol.text.Text;
 import ru.dymeth.pcontrol.text.TextHelper;
-import ru.dymeth.pcontrol.util.MaterialUtils;
+import ru.dymeth.pcontrol.util.PCMaterial;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
-public enum PControlCategory {
-    MOBS_INTERACTIONS(
-        1, 4, "ZOMBIE_HEAD", "SKULL_ITEM:2"),
-    ENTITIES_INTERACTIONS(
-        1, 5, "PLAYER_HEAD", "SKULL_ITEM:3"),
-    BUILDING(
-        1, 6, "LADDER"),
+public class PControlCategory {
 
-    LIQUIDS(
-        2, 3, "WATER_BUCKET"),
-    GRAVITY_BLOCKS(
-        2, 4, "SAND"),
-    WORLD_DESTRUCTION(
-        2, 5, "OAK_LEAVES", "LEAVES"),
-    GROWING_BLOCKS_AND_SMALL_PLANTS(
-        2, 6, "MELON"),
-    VINES_AND_TALL_STRUCTURES(
-        2, 7, "BIRCH_SAPLING", "SAPLING:2"),
-
-    SETTINGS(
-        3, 5, "COMMAND_BLOCK", "COMMAND"),
-    TEST(
-        3, 9, "OAK_SIGN", "SIGN");
-
+    private final String name;
     private final short slot;
     private final ItemStack icon;
     private final List<PControlTrigger> triggers = new ArrayList<>();
 
-    PControlCategory(int row, int column, @Nonnull String... iconVariants) {
+    PControlCategory(@Nonnull String name, int row, int column, @Nonnull Set<PCMaterial> icons) {
+        this.name = name;
+
         this.slot = (short) ((row - 1) * 9 + column - 1);
-        this.icon = MaterialUtils.matchIcon(iconVariants);
+
+        if (icons.isEmpty()) {
+            this.icon = null;
+        } else {
+            if (icons.size() != 1) {
+                new IllegalArgumentException(
+                    "Multiple icons found for category " + this + ": " + icons
+                ).printStackTrace();
+            }
+            this.icon = icons.iterator().next().createStack(1);
+        }
     }
 
-    void addTrigger(@Nonnull PControlTrigger trigger) {
+    public void addTrigger(@Nonnull PControlTrigger trigger) {
         this.triggers.add(trigger);
     }
 
@@ -78,6 +72,11 @@ public enum PControlCategory {
         this.icon.setItemMeta(meta);
     }
 
+    @Nonnull
+    public String name() {
+        return this.name;
+    }
+
     public short getSlot() {
         return this.slot;
     }
@@ -86,5 +85,11 @@ public enum PControlCategory {
     public ItemStack getIcon() {
         if (this.icon == null) throw new IllegalArgumentException("Unable to find icon of category " + this);
         return this.icon;
+    }
+
+    @Override
+    @Nonnull
+    public String toString() {
+        return this.name;
     }
 }

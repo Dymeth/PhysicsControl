@@ -15,8 +15,7 @@ import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import ru.dymeth.pcontrol.data.PControlCategory;
-import ru.dymeth.pcontrol.data.PControlTrigger;
+import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
 import ru.dymeth.pcontrol.inventory.PControlCategoryInventory;
 import ru.dymeth.pcontrol.inventory.PControlInventory;
 import ru.dymeth.pcontrol.listener.MoistureChangeEventListener;
@@ -42,7 +41,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
 
         this.reg("org.bukkit.event.block.MoistureChangeEvent", () -> new MoistureChangeEventListener(this.data));
 
-        for (PControlTrigger trigger : PControlCategory.SETTINGS.getTriggers()) {
+        for (PControlTrigger trigger : this.data.categories().SETTINGS.getTriggers()) {
             trigger.markAvailable();
         }
 
@@ -121,7 +120,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         }
         if (args.length != 5) return;
 
-        World world = this.data.getPlugin().getServer().getWorld(args[1]);
+        World world = this.data.server().getWorld(args[1]);
         if (world == null) return;
 
         int x;
@@ -147,7 +146,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
                 this.data.getMessage("world-or-key-not-specified").send(sender);
                 return;
             }
-            world = this.data.getPlugin().getServer().getWorld(args[0]);
+            world = this.data.server().getWorld(args[0]);
             if (world == null) {
                 this.data.getMessage("world-not-found", "%world%", args[0]).send(sender);
                 return;
@@ -155,8 +154,8 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         }
         String key = join("_", 1, args).toUpperCase();
         try {
-            PControlTrigger trigger = PControlTrigger.valueOf(key);
-            if (trigger == PControlTrigger.IGNORED_STATE) throw new IllegalArgumentException();
+            PControlTrigger trigger = this.data.triggers().valueOf(key);
+            if (trigger == this.data.triggers().IGNORED_STATE) throw new IllegalArgumentException();
             this.data.getInventory(trigger.getCategory(), world).switchTrigger(sender, trigger);
         } catch (IllegalArgumentException e) {
             this.data.getMessage("key-not-found", "%key%", key).send(sender);

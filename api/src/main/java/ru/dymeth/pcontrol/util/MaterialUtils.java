@@ -1,7 +1,6 @@
 package ru.dymeth.pcontrol.util;
 
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -22,13 +21,13 @@ public class MaterialUtils {
     }
 
     @Nonnull
-    public static Set<Material> matchItemMaterials(@Nullable Consumer<String> onFail, @Nonnull String... names) {
-        return matchMaterials(material -> isItemMaterial(material, false), onFail, names);
+    public static Set<PCMaterial> getItemMaterials(@Nullable Consumer<String> onFail, @Nonnull String... names) {
+        return getMaterials(material -> material.isItemMaterial(false), onFail, names);
     }
 
     @Nonnull
-    public static Set<Material> matchBlockMaterials(@Nullable Consumer<String> onFail, @Nonnull String... names) {
-        return matchMaterials(material -> isBlockMaterial(material, false), onFail, names);
+    public static Set<PCMaterial> getBlockMaterials(@Nullable Consumer<String> onFail, @Nonnull String... names) {
+        return getMaterials(material -> material.isBlockMaterial(false), onFail, names);
     }
 
     public static boolean isItemMaterial(@Nullable Material material, boolean allowAir) {
@@ -52,46 +51,24 @@ public class MaterialUtils {
     }
 
     @Nonnull
-    public static Set<Material> matchMaterials(@Nonnull Predicate<Material> filter, @Nullable Consumer<String> onFail, @Nonnull String... names) {
-        Set<Material> result = new HashSet<>();
+    public static Set<PCMaterial> getMaterials(@Nonnull Predicate<PCMaterial> filter,
+                                               @Nullable Consumer<String> onFail,
+                                               @Nonnull String... names
+    ) {
+        Set<PCMaterial> result = new HashSet<>();
         for (String name : names) {
-            Material material = Material.matchMaterial(name);
-            if (!isAirMaterial(material) && !isLegacyMaterial(material) && filter.test(material)) {
+            PCMaterial material = PCMaterial.getMaterial(name);
+            if (material != null
+                && !material.isAirMaterial()
+                && !material.isLegacyMaterial()
+                && filter.test(material)
+            ) {
                 result.add(material);
             } else if (onFail != null) {
                 onFail.accept(name);
             }
         }
         return result;
-    }
-
-    @Nullable
-    public static ItemStack matchIcon(@Nonnull String... iconVariants) {
-        for (String iconVariant : iconVariants) {
-            try {
-                Byte data;
-                int damageSplitter = iconVariant.indexOf(':');
-                if (damageSplitter >= 0) {
-                    data = Byte.parseByte(iconVariant.substring(damageSplitter + 1));
-                    iconVariant = iconVariant.substring(0, damageSplitter);
-                } else {
-                    data = null;
-                }
-                Material iconMaterial = Material.matchMaterial(iconVariant);
-
-                if (!isItemMaterial(iconMaterial, false)) continue;
-
-                if (data == null) {
-                    return new ItemStack(iconMaterial);
-                } else {
-                    //noinspection deprecation
-                    return new ItemStack(iconMaterial, 1, (short) 0, data);
-                }
-            } catch (Throwable t) {
-                t.printStackTrace();
-            }
-        }
-        return null;
     }
 
 }

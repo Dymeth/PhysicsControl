@@ -1,7 +1,7 @@
 package ru.dymeth.pcontrol.rules;
 
 import ru.dymeth.pcontrol.data.PControlData;
-import ru.dymeth.pcontrol.data.PControlTrigger;
+import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
 
 import javax.annotation.Nonnull;
 
@@ -26,12 +26,11 @@ public abstract class TriggerRules<T> {
             TOTAL_RULES_REGISTERED += rulesAdded;
             trigger.markAvailable();
             if (LOG_TRIGGERS_REGISTRATIONS) {
-                this.data.getPlugin().getLogger().info("Trigger " + trigger
+                this.data.log().info("Trigger " + trigger
                     + " registered " + rulesAdded + " rules");
             }
         } else {
-            this.data.getPlugin().getLogger().warning("Trigger " + trigger.name()
-                + " is unavailable at current server version");
+            this.data.log().warning("Trigger " + trigger + " is unavailable at current server version");
         }
 
         //noinspection unchecked

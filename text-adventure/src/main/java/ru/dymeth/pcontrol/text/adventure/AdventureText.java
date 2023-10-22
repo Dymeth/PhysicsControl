@@ -32,7 +32,6 @@ public class AdventureText implements Text {
 
     @Nonnull
     @Override
-    // TODO Support for non-plain-text components
     public List<Text> split(@Nonnull @RegExp String regex) {
         List<Text> result = new ArrayList<>();
         for (Component element : ComponentSplit.split(this.component, regex)) {
