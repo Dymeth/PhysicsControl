@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -28,13 +29,15 @@ import java.util.StringJoiner;
 import java.util.function.Supplier;
 
 public final class PhysicsControl extends JavaPlugin implements Listener {
-    @SuppressWarnings("FieldCanBeLocal")
-    private final String resourceId = "%%__RESOURCE__%%";
     private PControlDataBukkit data;
 
     @Override
     public void onEnable() {
-        this.data = new PControlDataBukkit(this, this.resourceId);
+        this.data = new PControlDataBukkit(this,
+            72124,
+            "Dymeth", "PhysicsControl",
+            15320
+        );
 
         this.getServer().getPluginManager().registerEvents(this, this);
         this.getServer().getPluginManager().registerEvents(new PhysicsListenerCommon(this.data), this);
@@ -77,6 +80,10 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
                 this.reload(sender, args);
                 return true;
             }
+            case "update": {
+                this.update(sender, args);
+                return true;
+            }
             case "tp": {
                 this.teleport(sender, args);
                 return true;
@@ -109,6 +116,14 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         this.data.getMessage("config-reloaded").send(sender);
     }
 
+    private void update(@Nonnull CommandSender sender, @Nonnull String[] args) {
+        if (!(sender instanceof ConsoleCommandSender) || !sender.hasPermission("physicscontrol.update")) {
+            this.data.getMessage("bad-perms-reload").send(sender);
+            return;
+        }
+        this.data.updatePlugin();
+    }
+
     private void teleport(@Nonnull CommandSender sender, @Nonnull String[] args) {
         if (!sender.isOp() && !sender.hasPermission("minecraft.command.tp")) {
             this.data.getMessage("bad-perms-reload").send(sender);
@@ -123,9 +138,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         World world = this.data.server().getWorld(args[1]);
         if (world == null) return;
 
-        int x;
-        int y;
-        int z;
+        int x, y, z;
         try {
             x = Integer.parseInt(args[2]);
             y = Integer.parseInt(args[3]);

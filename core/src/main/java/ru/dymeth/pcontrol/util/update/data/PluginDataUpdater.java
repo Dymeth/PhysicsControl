@@ -1,9 +1,11 @@
-package ru.dymeth.pcontrol.util;
+package ru.dymeth.pcontrol.util.update.data;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
+import ru.dymeth.pcontrol.util.FileUtils;
+import ru.dymeth.pcontrol.util.SneakyThrowsSupplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -16,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
-public class PluginUpdater {
+public class PluginDataUpdater {
     @SuppressWarnings("unused")
     @Nullable
     private String updateAndReturnNewVersion(@Nonnull String previousVersion) {
@@ -163,7 +165,7 @@ public class PluginUpdater {
 
     private final Plugin plugin;
 
-    public PluginUpdater(@Nonnull Plugin plugin) {
+    public PluginDataUpdater(@Nonnull Plugin plugin) {
         this.plugin = plugin;
         String currentVersion = this.getCurrentVersion();
         File versionFile = this.getVersionFile();

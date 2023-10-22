@@ -6,6 +6,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.event.Cancellable;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 import ru.dymeth.pcontrol.data.CustomTags;
 import ru.dymeth.pcontrol.data.PControlData;
 import ru.dymeth.pcontrol.data.category.CategoriesRegistry;
@@ -21,6 +22,11 @@ import ru.dymeth.pcontrol.text.TextHelper;
 import ru.dymeth.pcontrol.text.adventure.AdventureTextHelper;
 import ru.dymeth.pcontrol.text.bungee.BungeeTextHelper;
 import ru.dymeth.pcontrol.util.*;
+import ru.dymeth.pcontrol.util.metrics.Metrics;
+import ru.dymeth.pcontrol.util.update.jar.PaperPluginUpdater;
+import ru.dymeth.pcontrol.util.update.data.PluginDataUpdater;
+import ru.dymeth.pcontrol.util.update.jar.PluginUpdater;
+import ru.dymeth.pcontrol.util.update.jar.SpigotPluginUpdater;
 import ru.dymeth.pcontrol.versionsadapter.VersionsAdapterLegacy;
 import ru.dymeth.pcontrol.versionsadapter.VersionsAdapterModern;
 
@@ -34,8 +40,9 @@ import java.util.Set;
 import java.util.function.Function;
 
 public final class PControlDataBukkit implements PControlData {
-    private final Plugin plugin;
-    private final int resourceId;
+    private final JavaPlugin plugin;
+    private final PluginUpdater pluginUpdater;
+    private final int metricsServiceId;
     private final short serverVersion;
     private final Set<EntityType> removableProjectileTypes;
 
@@ -53,19 +60,17 @@ public final class PControlDataBukkit implements PControlData {
     private final VersionsAdapter versionsAdapter;
     private final TextHelper textHelper;
 
-    PControlDataBukkit(@Nonnull Plugin plugin, @Nonnull String resourceIdString) {
+    PControlDataBukkit(@Nonnull JavaPlugin plugin,
+                       int spigotResourceId,
+                       @Nonnull String hangarResourceOwner, @Nonnull String hangarResourceSlug,
+                       int metricsServiceId
+    ) {
         this.plugin = plugin;
-
-        int resourceId;
-        try {
-            resourceId = Integer.parseInt(resourceIdString);
-        } catch (NumberFormatException ex) {
-            resourceId = 72124;
-        }
-        this.resourceId = resourceId;
+        this.pluginUpdater = this.initPluginUpdater(spigotResourceId, hangarResourceOwner, hangarResourceSlug);
+        this.metricsServiceId = metricsServiceId;
 
         try {
-            new PluginUpdater(plugin);
+            new PluginDataUpdater(plugin);
         } catch (Throwable t) {
             this.plugin.getLogger().warning("Unable to update config from previous plugin version:");
             t.printStackTrace();
@@ -137,56 +142,54 @@ public final class PControlDataBukkit implements PControlData {
 
     public void reloadConfigs() {
         this.unloadData();
-        this.reloadConfig();
+
+        File configFile = FileUtils.createConfigFileIfNotExist(this.plugin,
+            "config.yml", "config.yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+
+        if (config.getBoolean("check-for-updates", true)) {
+            this.pluginUpdater.startRegularChecking();
+        }
+        if (config.getBoolean("metrics", true)) {
+            this.initMetrics();
+        }
+        this.initLangKey(config.getString("language"));
+
         this.reloadLocale();
         this.reloadTriggers();
     }
 
-    private void reloadConfig() {
-        File configFile = FileUtils.createConfigFileIfNotExist(this.plugin,
-            "config.yml",
-            "config.yml"
-        );
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
-
-        if (config.getBoolean("check-for-updates", true)) {
-            this.plugin.getLogger().info("Checking for updates...");
-            new UpdateChecker(this.plugin, this.resourceId).getVersionAsync(newVersion -> {
-                if (newVersion == null) {
-                    this.plugin.getLogger().info("Unable to check for updates");
-                    return;
-                }
-                String oldVersion = this.plugin.getDescription().getVersion();
-                if (oldVersion.equals(newVersion)) return;
-                this.plugin.getLogger().warning("There is a new update available: "
-                    + newVersion + " (current version is " + oldVersion + ")");
-            });
+    public void updatePlugin() {
+        if (this.pluginUpdater == null) {
+            this.plugin.getLogger().severe("Plugin updates checking disabled in config");
+            return;
         }
+        this.pluginUpdater.startPluginUpdating();
+    }
 
-        if (config.getBoolean("metrics", true)) {
-            if (this.metrics == null) {
-                try {
-                    this.metrics = new Metrics(this.plugin, 15320);
-                } catch (Throwable t) {
-                    this.plugin.getLogger().warning("Unable to init metrics:");
-                    t.printStackTrace();
-                }
-            }
+    @Nonnull
+    private PluginUpdater initPluginUpdater(int spigotResourceId,
+                                            @Nonnull String hangarResourceOwner, @Nonnull String hangarResourceSlug
+    ) {
+        String serverVersion = this.plugin.getServer().getVersion();
+        if (serverVersion.contains("-Paper-") || serverVersion.contains("-PaperSpigot-")) {
+            return new PaperPluginUpdater(this.plugin, hangarResourceOwner, hangarResourceSlug);
         } else {
-            if (this.metrics != null) {
-                this.metrics = null;
-                // Unable to shutdown metrics to disable data sending:
-
-                // [Dymeth#0909] — 28/05/2022
-                // Can I suggest PR with metrics shutdown feature?
-
-                // [Bastian#0310] — 29/05/2022
-                // I don't think it's worth it. Especially since it wouldn't work with plugins that use an older bStats version.
-                // So you then have some plugins that respond to config changes and some plugins that ignore it.
-            }
+            return new SpigotPluginUpdater(this.plugin, spigotResourceId);
         }
+    }
 
-        this.langKey = LocaleUtils.prepareLangKey(this.getClass(), this.plugin.getLogger(), config.getString("language"));
+    private void initMetrics() {
+        try {
+            this.metrics = new Metrics(this.plugin, this.metricsServiceId);
+        } catch (Throwable t) {
+            this.plugin.getLogger().warning("Unable to init metrics:");
+            t.printStackTrace();
+        }
+    }
+
+    private void initLangKey(@Nullable String rawLangKey) {
+        this.langKey = LocaleUtils.prepareLangKey(this.getClass(), this.plugin.getLogger(), rawLangKey);
     }
 
     private void reloadLocale() {
@@ -227,6 +230,11 @@ public final class PControlDataBukkit implements PControlData {
     }
 
     void unloadData() {
+        this.pluginUpdater.stopRegularChecking();
+        if (this.metrics != null) {
+            this.metrics.shutdown();
+            this.metrics = null;
+        }
         this.messages.clear();
         this.states.clear();
         this.plugin.getServer().getOnlinePlayers().forEach(player -> {
