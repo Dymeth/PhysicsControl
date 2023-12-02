@@ -771,7 +771,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         this.triggers.BONE_MEAL_USAGE.markAvailable();
     }
 
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     private void onBoneMeal(PlayerInteractEvent event) {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         Block targetBlock = event.getClickedBlock();
