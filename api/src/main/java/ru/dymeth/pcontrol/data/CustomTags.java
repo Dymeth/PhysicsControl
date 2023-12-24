@@ -182,10 +182,15 @@ public final class CustomTags {
         BONE_MEAL_HERBS = blocksSet(data, "BONE_MEAL_HERBS", set -> {
             if (!data.hasVersion(1, 13, 0)) {
                 set.add("LONG_GRASS");
+            } else if (!data.hasVersion(1, 20, 3)) {
+                set.add("GRASS");
+            } else {
+                set.addPrimitive(Material.SHORT_GRASS);
+            }
+            if (!data.hasVersion(1, 13, 0)) {
                 set.add("YELLOW_FLOWER");
                 set.add("RED_ROSE");
             } else {
-                set.addPrimitive(Material.GRASS);
                 set.addPrimitive(Material.DANDELION);
                 set.addPrimitive(Material.POPPY);
                 set.addPrimitive(Material.BLUE_ORCHID);
@@ -221,7 +226,7 @@ public final class CustomTags {
         });
         GRASS_BLOCK = blocksSet(data, "GRASS_BLOCK", set -> {
             if (!data.hasVersion(1, 13, 0)) {
-                set.addPrimitive(Material.GRASS);
+                set.add("GRASS");
             } else {
                 set.addPrimitive(Material.GRASS_BLOCK);
             }
