@@ -31,14 +31,14 @@ public class CategoriesRegistry {
         this.data = data;
 
         MOBS_INTERACTIONS = reg("MOBS_INTERACTIONS", 1, 4, set -> {
-            if (!data.hasVersion(13)) {
+            if (!data.hasVersion(1, 13, 0)) {
                 set.add("SKULL_ITEM:2");
             } else {
                 set.addPrimitive(Material.ZOMBIE_HEAD);
             }
         });
         ENTITIES_INTERACTIONS = reg("ENTITIES_INTERACTIONS", 1, 5, set -> {
-            if (!data.hasVersion(13)) {
+            if (!data.hasVersion(1, 13, 0)) {
                 set.add("SKULL_ITEM:3");
             } else {
                 set.addPrimitive(Material.PLAYER_HEAD);
@@ -54,7 +54,7 @@ public class CategoriesRegistry {
             set.addPrimitive(Material.SAND);
         });
         WORLD_DESTRUCTION = reg("WORLD_DESTRUCTION", 2, 5, set -> {
-            if (!data.hasVersion(13)) {
+            if (!data.hasVersion(1, 13, 0)) {
                 set.add("LEAVES");
             } else {
                 set.addPrimitive(Material.OAK_LEAVES);
@@ -64,21 +64,21 @@ public class CategoriesRegistry {
             set.addPrimitive(Material.MELON);
         });
         VINES_AND_TALL_STRUCTURES = reg("VINES_AND_TALL_STRUCTURES", 2, 7, set -> {
-            if (!data.hasVersion(13)) {
+            if (!data.hasVersion(1, 13, 0)) {
                 set.add("SAPLING:2");
             } else {
                 set.addPrimitive(Material.BIRCH_SAPLING);
             }
         });
         SETTINGS = reg("SETTINGS", 3, 5, set -> {
-            if (!data.hasVersion(13)) {
+            if (!data.hasVersion(1, 13, 0)) {
                 set.add("COMMAND");
             } else {
                 set.addPrimitive(Material.COMMAND_BLOCK);
             }
         });
         TEST = reg("TEST", 3, 9, set -> {
-            if (!data.hasVersion(14)) {
+            if (!data.hasVersion(1, 14, 0)) {
                 set.add("SIGN");
             } else {
                 set.addPrimitive(Material.OAK_SIGN);

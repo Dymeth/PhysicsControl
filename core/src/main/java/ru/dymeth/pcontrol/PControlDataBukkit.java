@@ -21,10 +21,7 @@ import ru.dymeth.pcontrol.text.Text;
 import ru.dymeth.pcontrol.text.TextHelper;
 import ru.dymeth.pcontrol.text.adventure.AdventureTextHelper;
 import ru.dymeth.pcontrol.text.bungee.BungeeTextHelper;
-import ru.dymeth.pcontrol.util.EntityTypeUtils;
-import ru.dymeth.pcontrol.util.FileUtils;
-import ru.dymeth.pcontrol.util.LocaleUtils;
-import ru.dymeth.pcontrol.util.ReflectionUtils;
+import ru.dymeth.pcontrol.util.*;
 import ru.dymeth.pcontrol.util.metrics.Metrics;
 import ru.dymeth.pcontrol.util.update.data.PluginDataUpdater;
 import ru.dymeth.pcontrol.util.update.jar.PaperPluginUpdater;
@@ -46,7 +43,7 @@ public final class PControlDataBukkit implements PControlData {
     private final JavaPlugin plugin;
     private final PluginUpdater pluginUpdater;
     private final int metricsServiceId;
-    private final short serverVersion;
+    private final MinecraftVersion serverVersion;
     private final Set<EntityType> removableProjectileTypes;
 
     private final Map<String, String> messages = new HashMap<>();
@@ -79,33 +76,8 @@ public final class PControlDataBukkit implements PControlData {
             t.printStackTrace();
         }
 
-        String serverVersion = "unknown";
-        try {
-            serverVersion = plugin.getServer().getClass().getName().split("\\.")[3];
-            String[] versionArgs = serverVersion.split("_");
-
-            if (versionArgs.length != 3) {
-                throw new IllegalArgumentException("Wrong version format: " + Arrays.toString(versionArgs));
-            }
-            if (!versionArgs[0].equals("v1")) {
-                throw new IllegalArgumentException("Wrong primary version: " + versionArgs[0]);
-            }
-            try {
-                this.serverVersion = Short.parseShort(versionArgs[1]);
-            } catch (NumberFormatException ex) {
-                throw new IllegalArgumentException("Non-numeric server version: " + versionArgs[1]);
-            }
-            if (!this.hasVersion(8)) {
-                throw new IllegalArgumentException("Too old version: " + this.serverVersion);
-            }
-            if (this.serverVersion == 13 && !versionArgs[2].equals("R2")) {
-                throw new IllegalArgumentException("1.13.0 and 1.13.1 are unsupported");
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException("Unsupported server version (" + serverVersion + "). "
-                + "It must be Spigot 1.8-1.12.2 or 1.13.2 and newer", e);
-        }
+        this.serverVersion = new MinecraftVersion(plugin);
+        this.validateServerVersions();
 
         this.removableProjectileTypes = EntityTypeUtils.matchEntityTypes(null,
             "ARROW",
@@ -117,7 +89,7 @@ public final class PControlDataBukkit implements PControlData {
         this.categories = new CategoriesRegistry(this);
         this.triggers = new TriggersRegistry(this);
 
-        if (this.hasVersion(13)) {
+        if (this.hasVersion(1, 13, 0)) {
             this.versionsAdapter = new VersionsAdapterModern(this);
         } else {
             this.versionsAdapter = new VersionsAdapterLegacy(this);
@@ -128,6 +100,27 @@ public final class PControlDataBukkit implements PControlData {
             this.textHelper = new AdventureTextHelper();
         } else {
             this.textHelper = new BungeeTextHelper();
+        }
+    }
+
+    private void validateServerVersions() {
+        try {
+            if (!this.serverVersion.hasVersion(1, 0, 0)
+                || this.serverVersion.hasVersion(2, 0, 0)
+            ) {
+                throw new IllegalArgumentException("Wrong major version");
+            }
+            if (!this.serverVersion.hasVersion(1, 8, 0)) {
+                throw new IllegalArgumentException("Too old version. Minimal is 1.8");
+            }
+            if (this.serverVersion.hasVersion(1, 13, 0)
+                && !this.serverVersion.hasVersion(1, 13, 2)
+            ) {
+                throw new IllegalArgumentException("1.13.0 and 1.13.1 are unsupported, use 1.13.2");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Unsupported server version (" + this.serverVersion + "). "
+                + "It must be Spigot 1.8-1.12.2 or 1.13.2 and newer", e);
         }
     }
 
@@ -358,8 +351,8 @@ public final class PControlDataBukkit implements PControlData {
     }
 
     @Override
-    public boolean hasVersion(int version) {
-        return this.serverVersion >= version;
+    public boolean hasVersion(int majorVersion, int minorVersion, int patchVersion) {
+        return this.serverVersion.hasVersion(majorVersion, minorVersion, patchVersion);
     }
 
     @Override

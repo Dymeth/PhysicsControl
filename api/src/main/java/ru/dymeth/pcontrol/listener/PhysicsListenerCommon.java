@@ -47,7 +47,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
     private final MaterialRules rulesBlockGrowEventTo = new MaterialRules(this.data);
 
     {
-        if (this.data.hasVersion(0)) {
+        if (this.data.hasVersion(1, 0, 0)) {
             this.rulesBlockGrowEventTo.regSingle(this.triggers.SUGAR_CANE_GROWING,
                 this.tags.SUGAR_CANE_BLOCK);
             this.rulesBlockGrowEventTo.regSingle(this.triggers.CACTUS_GROWING,
@@ -76,25 +76,25 @@ public final class PhysicsListenerCommon extends PhysicsListener {
             this.rulesBlockGrowEventTo.regSingle(this.triggers.BONE_MEAL_USAGE,
                 this.tags.BONE_MEAL_HERBS);
         }
-        if (this.data.hasVersion(9)) {
+        if (this.data.hasVersion(1, 9, 0)) {
             this.rulesBlockGrowEventTo.regSingle(this.triggers.BEETROOTS_GROWING,
                 this.tags.BEETROOT_BLOCK);
             this.rulesBlockGrowEventTo.regSingle(this.triggers.CHORUSES_GROWING,
                 blocksSet(this.triggers.CHORUSES_GROWING, set ->
                     set.addPrimitive(Material.CHORUS_FLOWER)));
         }
-        if (this.data.hasVersion(13)) {
+        if (this.data.hasVersion(1, 13, 0)) {
             this.rulesBlockGrowEventTo.regSingle(this.triggers.TURTLES_LAYING_EGGS,
                 blocksSet(this.triggers.TURTLES_LAYING_EGGS, set ->
                     set.addPrimitive(Material.TURTLE_EGG)));
         }
-        if (this.data.hasVersion(14)) {
+        if (this.data.hasVersion(1, 14, 0)) {
             this.rulesBlockGrowEventTo.regSingle(this.triggers.SWEET_BERRIES_GROWING,
                 blocksSet(this.triggers.SWEET_BERRIES_GROWING, set ->
                     set.addPrimitive(Material.SWEET_BERRY_BUSH)));
         }
 
-        if (this.data.hasVersion(17)) {
+        if (this.data.hasVersion(1, 17, 0)) {
             this.rulesBlockGrowEventTo.regSingle(this.triggers.AMETHYST_CLUSTERS_GROWING, // from = AIR, CAVE_AIR, WATER, etc
                 blocksSet(this.triggers.AMETHYST_CLUSTERS_GROWING, set ->
                     set.addPrimitive(Material.SMALL_AMETHYST_BUD)));
@@ -145,7 +145,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
     private final EntityRules rulesNonFallingEntityChangeBlockEventBy = new EntityRules(this.data);
 
     {
-        if (this.data.hasVersion(0)) {
+        if (this.data.hasVersion(1, 0, 0)) {
             this.rulesEntityChangeBlockEventFromTo.regPair(this.triggers.FARMLANDS_TRAMPLING,
                 this.tags.FARMLAND_BLOCK,
                 blocksSet(this.triggers.FARMLANDS_TRAMPLING, set ->
@@ -192,26 +192,26 @@ public final class PhysicsListenerCommon extends PhysicsListener {
             this.rulesNonFallingEntityChangeBlockEventBy.regSingle(this.triggers.VILLAGERS_FARMING,
                 Collections.singleton(EntityType.VILLAGER));
         }
-        if (this.data.hasVersion(8)) {
+        if (this.data.hasVersion(1, 8, 0)) {
             this.rulesNonFallingEntityChangeBlockEventBy.regSingle(this.triggers.RABBITS_EATING_CARROTS,
                 Collections.singleton(EntityType.RABBIT));
         }
-        if (this.data.hasVersion(11)) {
+        if (this.data.hasVersion(1, 11, 0)) {
             this.rulesNonFallingEntityChangeBlockEventByFrom.regPair(this.triggers.ZOMBIES_BREAK_DOORS,
                 Collections.singleton(EntityType.ZOMBIE_VILLAGER),
                 this.tags.WOODEN_DOORS);
         }
-        if (this.data.hasVersion(12)) {
+        if (this.data.hasVersion(1, 12, 0)) {
             this.rulesFallingEntityChangeBlockEventBy.regSingle(this.triggers.CONCRETE_POWDERS_FALLING,
                 this.tags.CONCRETE_POWDERS);
             this.rulesFallingEntityChangeBlockEventFrom.regSingle(this.triggers.CONCRETE_POWDERS_FALLING,
                 this.tags.CONCRETE_POWDERS);
         }
-        if (this.data.hasVersion(13)) {
+        if (this.data.hasVersion(1, 13, 0)) {
             this.rulesNonFallingEntityChangeBlockEventBy.regSingle(this.triggers.TURTLES_LAYING_EGGS,
                 Collections.singleton(EntityType.TURTLE));
         }
-        if (this.data.hasVersion(14)) {
+        if (this.data.hasVersion(1, 14, 0)) {
             this.rulesFallingEntityChangeBlockEventBy.regSingle(this.triggers.SCAFFOLDING_FALLING,
                 blocksSet(this.triggers.SCAFFOLDING_FALLING, set ->
                     set.addPrimitive(Material.SCAFFOLDING)));
@@ -223,7 +223,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
             this.rulesNonFallingEntityChangeBlockEventBy.regSingle(this.triggers.FOXES_EATS_FROM_SWEET_BERRY_BUSHES,
                 Collections.singleton(EntityType.FOX));
         }
-        if (this.data.hasVersion(17)) {
+        if (this.data.hasVersion(1, 17, 0)) {
             this.rulesEntityChangeBlockEventFromTo.regPair(this.triggers.DRIPLEAFS_LOWERING,
                 blocksSet(this.triggers.DRIPLEAFS_LOWERING, set ->
                     set.addPrimitive(Material.BIG_DRIPLEAF)),
@@ -250,7 +250,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
                 blocksSet(this.triggers.POINTED_DRIPSTONES_FALLING, set ->
                     set.addPrimitive(Material.POINTED_DRIPSTONE)));
         }
-        if (this.data.hasVersion(19)) {
+        if (this.data.hasVersion(1, 19, 0)) {
             this.rulesEntityChangeBlockEventFromTo.regPair(this.triggers.FROGSPAWN_LAYING_AND_SPAWNING,
                 blocksSet(this.triggers.FROGSPAWN_LAYING_AND_SPAWNING, set ->
                     set.addPrimitive(this.tags.WORLD_AIR)),
@@ -298,7 +298,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         }
 
         // Prevent client bug with disappearing blocks on start falling (fixed on paper 1.16.5, spigot 1.19.4 and client 1.18.2)
-        if (event.isCancelled() && updateBlockOnCancel && !this.data.hasVersion(19)) {
+        if (event.isCancelled() && updateBlockOnCancel && !this.data.hasVersion(1, 19, 4)) {
             event.getBlock().getState().update(false, false);
         }
     }
@@ -307,7 +307,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
     private final MaterialRules rulesBlockFromToEventFrom = new MaterialRules(this.data);
 
     {
-        if (this.data.hasVersion(0)) {
+        if (this.data.hasVersion(1, 0, 0)) {
             this.rulesBlockFromToEventFromTo.regPair(this.triggers.IGNORED_STATE, // Strange thing from FluidTypeFlowing
                 this.tags.WORLD_AIR,
                 this.tags.WORLD_AIR);
@@ -321,7 +321,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
                 blocksSet(this.triggers.DRAGON_EGGS_TELEPORTING, set ->
                     set.addPrimitive(Material.DRAGON_EGG)));
         }
-        if (this.data.hasVersion(13)) {
+        if (this.data.hasVersion(1, 13, 0)) {
             this.rulesBlockFromToEventFromTo.regPair(this.triggers.IGNORED_STATE, // Seems bug while chunks generation (kelp near caves?): "Action BlockFromTo (KELP > AIR) was detected"
                 blocksSet(this.triggers.IGNORED_STATE, set ->
                     set.addPrimitive(Material.KELP)),
@@ -350,7 +350,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
     private final MaterialRules rulesBlockFadeEventTo = new MaterialRules(this.data);
 
     {
-        if (this.data.hasVersion(0)) {
+        if (this.data.hasVersion(1, 0, 0)) {
             this.rulesBlockFadeEventFromTo.regPair(this.triggers.GRASS_BLOCKS_FADING,
                 blocksSet(this.triggers.GRASS_BLOCKS_FADING, set -> {
                     set.addPrimitive(this.tags.GRASS_BLOCK);
@@ -388,24 +388,24 @@ public final class PhysicsListenerCommon extends PhysicsListener {
                 this.tags.WORLD_AIR,
                 this.tags.WORLD_AIR);
         }
-        if (this.data.hasVersion(9)) {
+        if (this.data.hasVersion(1, 9, 0)) {
             this.rulesBlockFadeEventFromTo.regPair(this.triggers.FROSTED_ICE_PHYSICS,
                 blocksSet(this.triggers.FROSTED_ICE_PHYSICS, set ->
                     set.addPrimitive(Material.FROSTED_ICE)),
                 this.tags.WATER);
         }
-        if (this.data.hasVersion(13)) {
+        if (this.data.hasVersion(1, 13, 0)) {
             this.rulesBlockFadeEventFromTo.regPair(this.triggers.CORALS_DRYING,
                 this.tags.ALL_ALIVE_CORALS,
                 this.tags.ALL_DEAD_CORALS);
         }
-        if (this.data.hasVersion(14)) {
+        if (this.data.hasVersion(1, 14, 0)) {
             this.rulesBlockFadeEventFromTo.regPair(this.triggers.SCAFFOLDING_FALLING,
                 blocksSet(this.triggers.SCAFFOLDING_FALLING, set ->
                     set.addPrimitive(Material.SCAFFOLDING)),
                 this.tags.WORLD_AIR);
         }
-        if (this.data.hasVersion(16)) {
+        if (this.data.hasVersion(1, 16, 0)) {
             this.rulesBlockFadeEventFromTo.regPair(this.triggers.CRIMSON_NYLIUM_FADING,
                 blocksSet(this.triggers.CRIMSON_NYLIUM_FADING, set ->
                     set.addPrimitive(Material.CRIMSON_NYLIUM)),
@@ -417,7 +417,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
                 blocksSet(this.triggers.WARPED_NYLIUM_FADING, set ->
                     set.addPrimitive(Material.NETHERRACK)));
         }
-        if (this.data.hasVersion(19)) {
+        if (this.data.hasVersion(1, 19, 0)) {
             this.rulesBlockFadeEventFromTo.regPair(this.triggers.FROGSPAWN_LAYING_AND_SPAWNING,
                 blocksSet(this.triggers.FROGSPAWN_LAYING_AND_SPAWNING, set ->
                     set.addPrimitive(Material.FROGSPAWN)),
@@ -445,7 +445,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
     private final MaterialRules rulesBlockSpreadEventTo = new MaterialRules(this.data);
 
     {
-        if (this.data.hasVersion(0)) {
+        if (this.data.hasVersion(1, 0, 0)) {
             this.rulesBlockSpreadEventFromTo.regPair(this.triggers.GRASS_SPREADING,
                 blocksSet(this.triggers.GRASS_SPREADING, set ->
                     set.addPrimitive(Material.DIRT)),
@@ -469,24 +469,24 @@ public final class PhysicsListenerCommon extends PhysicsListener {
                 blocksSet(this.triggers.FIRE_SPREADING, set ->
                     set.addPrimitive(Material.FIRE)));
         }
-        if (this.data.hasVersion(9)) {
+        if (this.data.hasVersion(1, 9, 0)) {
             this.rulesBlockSpreadEventTo.regSingle(this.triggers.CHORUSES_GROWING,
                 blocksSet(this.triggers.CHORUSES_GROWING, set ->
                     set.addPrimitive(Material.CHORUS_FLOWER)));
         }
-        if (this.data.hasVersion(13)) {
+        if (this.data.hasVersion(1, 13, 0)) {
             this.rulesBlockSpreadEventFromTo.regPair(this.triggers.KELPS_GROWING,
                 this.tags.WATER,
                 blocksSet(this.triggers.KELPS_GROWING, set ->
                     set.addPrimitive(Material.KELP)));
         }
-        if (this.data.hasVersion(14)) {
+        if (this.data.hasVersion(1, 14, 0)) {
             this.rulesBlockSpreadEventFromTo.regPair(this.triggers.BAMBOO_GROWING,
                 this.tags.WORLD_AIR,
                 blocksSet(this.triggers.BAMBOO_GROWING, set ->
                     set.addPrimitive(Material.BAMBOO)));
         }
-        if (this.data.hasVersion(16)) {
+        if (this.data.hasVersion(1, 16, 0)) {
             this.rulesBlockSpreadEventFromTo.regPair(this.triggers.WEEPING_VINES_GROWING,
                 this.tags.WORLD_AIR,
                 blocksSet(this.triggers.WEEPING_VINES_GROWING, set ->
@@ -496,7 +496,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
                 blocksSet(this.triggers.TWISTING_VINES_GROWING, set ->
                     set.addPrimitive(Material.TWISTING_VINES)));
         }
-        if (this.data.hasVersion(17)) {
+        if (this.data.hasVersion(1, 17, 0)) {
             this.rulesBlockSpreadEventFromTo.regPair(this.triggers.GLOW_BERRIES_GROWING,
                 blocksSet(this.triggers.GLOW_BERRIES_GROWING, set -> {
                     set.addPrimitive(Material.CAVE_VINES);
@@ -541,7 +541,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
                 blocksSet(this.triggers.AMETHYST_CLUSTERS_GROWING, set ->
                     set.addPrimitive(Material.AMETHYST_CLUSTER)));
         }
-        if (this.data.hasVersion(19)) {
+        if (this.data.hasVersion(1, 19, 0)) {
             this.rulesBlockSpreadEventTo.regSingle(this.triggers.SCULKS_SPREADING,
                 Arrays.asList(Material.SCULK, Material.SCULK_VEIN));
         }
@@ -565,7 +565,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
     private final MaterialRules rulesEntityInteractEventMaterial = new MaterialRules(this.data);
 
     {
-        if (this.data.hasVersion(0)) {
+        if (this.data.hasVersion(1, 0, 0)) {
             this.rulesEntityInteractEventMaterial.regSingle(this.triggers.FARMLANDS_TRAMPLING,
                 this.tags.FARMLAND_BLOCK);
             this.rulesEntityInteractEventMaterial.regSingle(this.triggers.IGNORED_STATE, // Redstone activators
@@ -573,12 +573,12 @@ public final class PhysicsListenerCommon extends PhysicsListener {
             this.rulesEntityInteractEventMaterial.regSingle(this.triggers.IGNORED_STATE, // Redstone ore activation
                 this.tags.REDSTONE_ORE_BLOCKS);
         }
-        if (this.data.hasVersion(13)) {
+        if (this.data.hasVersion(1, 13, 0)) {
             this.rulesEntityInteractEventMaterial.regSingle(this.triggers.TURTLE_EGGS_TRAMPLING,
                 blocksSet(this.triggers.TURTLE_EGGS_TRAMPLING, set ->
                     set.addPrimitive(Material.TURTLE_EGG)));
         }
-        if (this.data.hasVersion(17)) {
+        if (this.data.hasVersion(1, 17, 0)) {
             this.rulesEntityInteractEventMaterial.regSingle(this.triggers.IGNORED_STATE, // Control by DRIPLEAFS_LOWERING
                 blocksSet(this.triggers.IGNORED_STATE, set ->
                     set.addPrimitive(Material.BIG_DRIPLEAF)));
@@ -586,12 +586,12 @@ public final class PhysicsListenerCommon extends PhysicsListener {
                 blocksSet(this.triggers.IGNORED_STATE, set ->
                     set.addPrimitive(Material.SCULK_SENSOR)));
         }
-        if (this.data.hasVersion(19)) {
+        if (this.data.hasVersion(1, 19, 0)) {
             this.rulesEntityInteractEventMaterial.regSingle(this.triggers.IGNORED_STATE, // Players stay on block
                 blocksSet(this.triggers.IGNORED_STATE, set ->
                     set.addPrimitive(Material.SCULK_SHRIEKER)));
         }
-        if (this.data.hasVersion(20)) {
+        if (this.data.hasVersion(1, 20, 0)) {
             this.rulesEntityInteractEventMaterial.regSingle(this.triggers.IGNORED_STATE, // Any entities stay on block
                 blocksSet(this.triggers.IGNORED_STATE, set ->
                     set.addPrimitive(Material.CALIBRATED_SCULK_SENSOR)));
@@ -631,19 +631,19 @@ public final class PhysicsListenerCommon extends PhysicsListener {
     private final MaterialRules rulesEntityBlockFormEventTo = new MaterialRules(this.data);
 
     {
-        if (this.data.hasVersion(0)) {
+        if (this.data.hasVersion(1, 0, 0)) {
             this.rulesEntityBlockFormEventFromTo.regPair(this.triggers.SNOW_GOLEMS_CREATE_SNOW,
                 this.tags.WORLD_AIR,
                 blocksSet(this.triggers.SNOW_GOLEMS_CREATE_SNOW, set ->
                     set.addPrimitive(Material.SNOW)));
         }
-        if (this.data.hasVersion(9)) {
+        if (this.data.hasVersion(1, 9, 0)) {
             this.rulesEntityBlockFormEventFromTo.regPair(this.triggers.FROSTED_ICE_PHYSICS,
                 this.tags.WATER,
                 blocksSet(this.triggers.FROSTED_ICE_PHYSICS, set ->
                     set.addPrimitive(Material.FROSTED_ICE)));
         }
-        if (this.data.hasVersion(14)) {
+        if (this.data.hasVersion(1, 14, 0)) {
             this.rulesEntityBlockFormEventFromTo.regPair(this.triggers.WITHER_CREATE_WITHER_ROSE_BLOCKS,
                 this.tags.WORLD_AIR,
                 blocksSet(this.triggers.WITHER_CREATE_WITHER_ROSE_BLOCKS, set ->
@@ -693,7 +693,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
                 set.addPrimitive(TreeType.RED_MUSHROOM);
                 set.addPrimitive(TreeType.BROWN_MUSHROOM);
             }));
-        if (this.data.hasVersion(9)) {
+        if (this.data.hasVersion(1, 9, 0)) {
             this.rulesStructureGrowEventTo.regSingle(this.triggers.CHORUSES_GROWING,
                 treesSet(this.triggers.CHORUSES_GROWING,
                     set -> set.addPrimitive(TreeType.CHORUS_PLANT)));
@@ -734,14 +734,14 @@ public final class PhysicsListenerCommon extends PhysicsListener {
     }
 
     {
-        if (this.data.hasVersion(11)) { // ProjectileHitEvent.getHitBlock() since 1.11
+        if (this.data.hasVersion(1, 11, 0)) { // ProjectileHitEvent.getHitBlock() since 1.11
             this.triggers.BLOCK_HIT_PROJECTILES_REMOVING.markAvailable();
         }
     }
 
     @EventHandler(ignoreCancelled = true)
     private void on(ProjectileHitEvent event) {
-        if (!this.data.hasVersion(11)) return;
+        if (!this.data.hasVersion(1, 11, 0)) return;
         if (event.getHitBlock() == null) return; // Since 1.11
         Entity entity = event.getEntity();
         if (!this.data.getRemovableProjectileTypes().contains(entity.getType())) return;
@@ -791,7 +791,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
     private final MaterialRules rulesBlockPhysicsEventFrom = new MaterialRules(this.data);
 
     {
-        if (BLOCK_PHYSICS_EVENT_GET_SOURCE_BLOCK_SUPPORT || !this.data.hasVersion(13)) {
+        if (BLOCK_PHYSICS_EVENT_GET_SOURCE_BLOCK_SUPPORT || !this.data.hasVersion(1, 13, 0)) {
             this.rulesBlockPhysicsEventFrom.regSingle(this.triggers.SAPLINGS_DESTROYING,
                 blocksSet(this.triggers.SAPLINGS_DESTROYING, set ->
                     set.addPrimitive(this.tags.SAPLINGS)));
@@ -811,7 +811,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
                 blocksSet(this.triggers.REDSTONE_TORCHES_DESTROYING, set ->
                     set.addPrimitive(this.tags.REDSTONE_TORCHES)));
         }
-        if (this.data.hasVersion(16)) {
+        if (this.data.hasVersion(1, 16, 0)) {
             this.rulesBlockPhysicsEventFrom.regSingle(this.triggers.SOUL_TORCHES_DESTROYING,
                 blocksSet(this.triggers.SOUL_TORCHES_DESTROYING, set ->
                     set.addPrimitive(this.tags.SOUL_TORCHES)));
@@ -822,7 +822,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
     private void modernListener(BlockPhysicsEvent event) {
         Block block = event.getBlock();
 
-        if (!this.data.hasVersion(13)) {
+        if (!this.data.hasVersion(1, 13, 0)) {
             if (PhysicsListener.DEBUG_BLOCK_PHYSICS_EVENT) {
                 this.debugAction(event, block.getLocation(), ""
                     + "block=" + block.getType() + ";"

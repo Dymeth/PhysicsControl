@@ -128,7 +128,7 @@ public class TriggersRegistry {
             });
         CONCRETE_POWDERS_FALLING = reg("CONCRETE_POWDERS_FALLING",
             categories.GRAVITY_BLOCKS, false, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("CONCRETE_POWDER:5");
                 } else {
                     set.addPrimitive(Material.LIME_CONCRETE_POWDER);
@@ -136,13 +136,13 @@ public class TriggersRegistry {
             });
         SCAFFOLDING_FALLING = reg("SCAFFOLDING_FALLING",
             categories.GRAVITY_BLOCKS, false, true, set -> {
-                if (this.data.hasVersion(14)) {
+                if (this.data.hasVersion(1, 14, 0)) {
                     set.addPrimitive(Material.SCAFFOLDING);
                 }
             });
         POINTED_DRIPSTONES_FALLING = reg("POINTED_DRIPSTONES_FALLING",
             categories.GRAVITY_BLOCKS, false, true, set -> {
-                if (this.data.hasVersion(17)) {
+                if (this.data.hasVersion(1, 17, 0)) {
                     set.addPrimitive(Material.POINTED_DRIPSTONE);
                 }
             });
@@ -162,7 +162,7 @@ public class TriggersRegistry {
             });
         SIGNS_DESTROYING = reg("SIGNS_DESTROYING",
             categories.BUILDING, false, true, set -> {
-                if (!this.data.hasVersion(14)) {
+                if (!this.data.hasVersion(1, 14, 0)) {
                     set.add("SIGN");
                 } else {
                     set.addPrimitive(Material.OAK_SIGN);
@@ -170,7 +170,7 @@ public class TriggersRegistry {
             });
         RAILS_DESTROYING = reg("RAILS_DESTROYING",
             categories.BUILDING, false, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("RAILS");
                 } else {
                     set.addPrimitive(Material.RAIL);
@@ -182,7 +182,7 @@ public class TriggersRegistry {
             });
         REDSTONE_TORCHES_DESTROYING = reg("REDSTONE_TORCHES_DESTROYING",
             categories.BUILDING, false, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("REDSTONE_TORCH_ON");
                 } else {
                     set.addPrimitive(Material.REDSTONE_TORCH);
@@ -190,13 +190,13 @@ public class TriggersRegistry {
             });
         SOUL_TORCHES_DESTROYING = reg("SOUL_TORCHES_DESTROYING",
             categories.BUILDING, false, true, set -> {
-                if (this.data.hasVersion(16)) {
+                if (this.data.hasVersion(1, 16, 0)) {
                     set.addPrimitive(Material.SOUL_TORCH);
                 }
             });
         SAPLINGS_DESTROYING = reg("SAPLINGS_DESTROYING",
             categories.BUILDING, false, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("SAPLING");
                 } else {
                     set.addPrimitive(Material.OAK_SAPLING);
@@ -205,7 +205,7 @@ public class TriggersRegistry {
 
         RABBITS_EATING_CARROTS = reg("RABBITS_EATING_CARROTS",
             categories.MOBS_INTERACTIONS, false, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("CARROT_ITEM");
                 } else {
                     set.addPrimitive(Material.CARROT);
@@ -217,7 +217,7 @@ public class TriggersRegistry {
             });
         SHEEPS_EATING_GRASS = reg("SHEEPS_EATING_GRASS",
             categories.MOBS_INTERACTIONS, false, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("WOOL");
                 } else {
                     set.addPrimitive(Material.WHITE_WOOL);
@@ -229,7 +229,7 @@ public class TriggersRegistry {
             });
         SILVERFISHES_HIDING_IN_BLOCKS = reg("SILVERFISHES_HIDING_IN_BLOCKS",
             categories.MOBS_INTERACTIONS, false, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("MONSTER_EGGS:4");
                 } else {
                     set.addPrimitive(Material.INFESTED_CRACKED_STONE_BRICKS);
@@ -237,7 +237,7 @@ public class TriggersRegistry {
             });
         ZOMBIES_BREAK_DOORS = reg("ZOMBIES_BREAK_DOORS",
             categories.MOBS_INTERACTIONS, false, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("SKULL_ITEM:2");
                 } else {
                     set.addPrimitive(Material.ZOMBIE_HEAD);
@@ -249,7 +249,7 @@ public class TriggersRegistry {
             });
         WITHERS_GRIEFING = reg("WITHERS_GRIEFING",
             categories.MOBS_INTERACTIONS, false, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("SKULL_ITEM:1");
                 } else {
                     set.addPrimitive(Material.WITHER_SKELETON_SKULL);
@@ -257,31 +257,31 @@ public class TriggersRegistry {
             });
         TURTLES_LAYING_EGGS = reg("TURTLES_LAYING_EGGS",
             categories.MOBS_INTERACTIONS, false, true, set -> {
-                if (this.data.hasVersion(13)) {
+                if (this.data.hasVersion(1, 13, 0)) {
                     set.addPrimitive(Material.TURTLE_EGG);
                 }
             });
         FROGSPAWN_LAYING_AND_SPAWNING = reg("FROGSPAWN_LAYING_AND_SPAWNING",
             categories.MOBS_INTERACTIONS, false, true, set -> {
-                if (this.data.hasVersion(19)) {
+                if (this.data.hasVersion(1, 19, 0)) {
                     set.addPrimitive(Material.FROGSPAWN);
                 }
             });
         WITHER_CREATE_WITHER_ROSE_BLOCKS = reg("WITHER_CREATE_WITHER_ROSE_BLOCKS",
             categories.MOBS_INTERACTIONS, false, true, set -> {
-                if (this.data.hasVersion(14)) {
+                if (this.data.hasVersion(1, 14, 0)) {
                     set.addPrimitive(Material.WITHER_ROSE);
                 }
             });
         FOXES_EATS_FROM_SWEET_BERRY_BUSHES = reg("FOXES_EATS_FROM_SWEET_BERRY_BUSHES",
             categories.MOBS_INTERACTIONS, false, true, set -> {
-                if (this.data.hasVersion(14)) {
+                if (this.data.hasVersion(1, 14, 0)) {
                     set.addPrimitive(Material.SWEET_BERRIES);
                 }
             });
         RAVAGERS_DESTROY_BLOCKS = reg("RAVAGERS_DESTROY_BLOCKS",
             categories.MOBS_INTERACTIONS, false, true, set -> {
-                if (this.data.hasVersion(14)) {
+                if (this.data.hasVersion(1, 14, 0)) {
                     set.addPrimitive(Material.RAVAGER_SPAWN_EGG);
                 }
             });
@@ -292,7 +292,7 @@ public class TriggersRegistry {
             });
         FARMLANDS_TRAMPLING = reg("FARMLANDS_TRAMPLING",
             categories.ENTITIES_INTERACTIONS, false, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("SOIL");
                 } else {
                     set.addPrimitive(Material.FARMLAND);
@@ -304,7 +304,7 @@ public class TriggersRegistry {
             });
         BONE_MEAL_USAGE = reg("BONE_MEAL_USAGE",
             categories.ENTITIES_INTERACTIONS, false, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("INK_SACK:15");
                 } else {
                     set.addPrimitive(Material.BONE_MEAL);
@@ -324,25 +324,25 @@ public class TriggersRegistry {
             });
         TURTLE_EGGS_TRAMPLING = reg("TURTLE_EGGS_TRAMPLING",
             categories.ENTITIES_INTERACTIONS, false, true, set -> {
-                if (this.data.hasVersion(13)) {
+                if (this.data.hasVersion(1, 13, 0)) {
                     set.addPrimitive(Material.TURTLE_EGG);
                 }
             });
         DRIPLEAFS_LOWERING = reg("DRIPLEAFS_LOWERING",
             categories.ENTITIES_INTERACTIONS, false, true, set -> {
-                if (this.data.hasVersion(17)) {
+                if (this.data.hasVersion(1, 17, 0)) {
                     set.addPrimitive(Material.BIG_DRIPLEAF);
                 }
             });
         POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES = reg("POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES",
             categories.ENTITIES_INTERACTIONS, false, true, set -> {
-                if (this.data.hasVersion(17)) {
+                if (this.data.hasVersion(1, 17, 0)) {
                     set.addPrimitive(Material.POWDER_SNOW_BUCKET);
                 }
             });
         GLOW_BERRIES_PICKING = reg("GLOW_BERRIES_PICKING",
             categories.ENTITIES_INTERACTIONS, false, true, set -> {
-                if (this.data.hasVersion(17)) {
+                if (this.data.hasVersion(1, 17, 0)) {
                     set.addPrimitive(Material.GLOW_BERRIES);
                 }
             });
@@ -357,7 +357,7 @@ public class TriggersRegistry {
             });
         FARMLANDS_DRYING = reg("FARMLANDS_DRYING",
             categories.WORLD_DESTRUCTION, true, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("SOIL");
                 } else {
                     set.addPrimitive(Material.FARMLAND);
@@ -369,7 +369,7 @@ public class TriggersRegistry {
             });
         LEAVES_DECAY = reg("LEAVES_DECAY",
             categories.WORLD_DESTRUCTION, true, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("LEAVES");
                 } else {
                     set.addPrimitive(Material.OAK_LEAVES);
@@ -377,7 +377,7 @@ public class TriggersRegistry {
             });
         GRASS_BLOCKS_FADING = reg("GRASS_BLOCKS_FADING",
             categories.WORLD_DESTRUCTION, true, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("GRASS");
                 } else {
                     set.addPrimitive(Material.GRASS_BLOCK);
@@ -385,32 +385,32 @@ public class TriggersRegistry {
             });
         CORALS_DRYING = reg("CORALS_DRYING",
             categories.WORLD_DESTRUCTION, true, true, set -> {
-                if (this.data.hasVersion(13)) {
+                if (this.data.hasVersion(1, 13, 0)) {
                     set.addPrimitive(Material.FIRE_CORAL);
                 }
             });
         CRIMSON_NYLIUM_FADING = reg("CRIMSON_NYLIUM_FADING",
             categories.WORLD_DESTRUCTION, true, true, set -> {
-                if (this.data.hasVersion(16)) {
+                if (this.data.hasVersion(1, 16, 0)) {
                     set.addPrimitive(Material.CRIMSON_NYLIUM);
                 }
             });
         WARPED_NYLIUM_FADING = reg("WARPED_NYLIUM_FADING",
             categories.WORLD_DESTRUCTION, true, true, set -> {
-                if (this.data.hasVersion(16)) {
+                if (this.data.hasVersion(1, 16, 0)) {
                     set.addPrimitive(Material.WARPED_NYLIUM);
                 }
             });
         SCULKS_SPREADING = reg("SCULKS_SPREADING",
             categories.WORLD_DESTRUCTION, true, true, set -> {
-                if (this.data.hasVersion(19)) {
+                if (this.data.hasVersion(1, 19, 0)) {
                     set.addPrimitive(Material.SCULK);
                 }
             });
 
         GRASS_SPREADING = reg("GRASS_SPREADING",
             categories.GROWING_BLOCKS_AND_SMALL_PLANTS, true, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("GRASS");
                 } else {
                     set.addPrimitive(Material.GRASS_BLOCK);
@@ -418,7 +418,7 @@ public class TriggersRegistry {
             });
         MYCELIUM_SPREADING = reg("MYCELIUM_SPREADING",
             categories.GROWING_BLOCKS_AND_SMALL_PLANTS, true, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("MYCEL");
                 } else {
                     set.addPrimitive(Material.MYCELIUM);
@@ -434,7 +434,7 @@ public class TriggersRegistry {
             });
         MELONS_GROWING = reg("MELONS_GROWING",
             categories.GROWING_BLOCKS_AND_SMALL_PLANTS, true, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("MELON_BLOCK");
                 } else {
                     set.addPrimitive(Material.MELON);
@@ -442,7 +442,7 @@ public class TriggersRegistry {
             });
         NETHER_WARTS_GROWING = reg("NETHER_WARTS_GROWING",
             categories.GROWING_BLOCKS_AND_SMALL_PLANTS, true, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("NETHER_STALK");
                 } else {
                     set.addPrimitive(Material.NETHER_WART);
@@ -450,7 +450,7 @@ public class TriggersRegistry {
             });
         COCOAS_GROWING = reg("COCOAS_GROWING",
             categories.GROWING_BLOCKS_AND_SMALL_PLANTS, true, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("INK_SACK:3");
                 } else {
                     set.addPrimitive(Material.COCOA_BEANS);
@@ -462,7 +462,7 @@ public class TriggersRegistry {
             });
         POTATOES_GROWING = reg("POTATOES_GROWING",
             categories.GROWING_BLOCKS_AND_SMALL_PLANTS, true, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("POTATO_ITEM");
                 } else {
                     set.addPrimitive(Material.POTATO);
@@ -470,7 +470,7 @@ public class TriggersRegistry {
             });
         CARROTS_GROWING = reg("CARROTS_GROWING",
             categories.GROWING_BLOCKS_AND_SMALL_PLANTS, true, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("CARROT_ITEM");
                 } else {
                     set.addPrimitive(Material.CARROT);
@@ -478,19 +478,19 @@ public class TriggersRegistry {
             });
         BEETROOTS_GROWING = reg("BEETROOTS_GROWING",
             categories.GROWING_BLOCKS_AND_SMALL_PLANTS, true, true, set -> {
-                if (this.data.hasVersion(9)) {
+                if (this.data.hasVersion(1, 9, 0)) {
                     set.addPrimitive(Material.BEETROOT);
                 }
             });
         SWEET_BERRIES_GROWING = reg("SWEET_BERRIES_GROWING",
             categories.GROWING_BLOCKS_AND_SMALL_PLANTS, true, true, set -> {
-                if (this.data.hasVersion(14)) {
+                if (this.data.hasVersion(1, 14, 0)) {
                     set.addPrimitive(Material.SWEET_BERRIES);
                 }
             });
         AMETHYST_CLUSTERS_GROWING = reg("AMETHYST_CLUSTERS_GROWING",
             categories.GROWING_BLOCKS_AND_SMALL_PLANTS, true, true, set -> {
-                if (this.data.hasVersion(17)) {
+                if (this.data.hasVersion(1, 17, 0)) {
                     set.addPrimitive(Material.AMETHYST_CLUSTER);
                 }
             });
@@ -505,7 +505,7 @@ public class TriggersRegistry {
             });
         TREES_GROWING = reg("TREES_GROWING",
             categories.VINES_AND_TALL_STRUCTURES, true, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("SAPLING:2");
                 } else {
                     set.addPrimitive(Material.BIRCH_SAPLING);
@@ -517,7 +517,7 @@ public class TriggersRegistry {
             });
         GIANT_MUSHROOMS_GROWING = reg("GIANT_MUSHROOMS_GROWING",
             categories.VINES_AND_TALL_STRUCTURES, true, true, set -> {
-                if (!this.data.hasVersion(13)) {
+                if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("HUGE_MUSHROOM_2");
                 } else {
                     set.addPrimitive(Material.RED_MUSHROOM_BLOCK);
@@ -525,43 +525,43 @@ public class TriggersRegistry {
             });
         CHORUSES_GROWING = reg("CHORUSES_GROWING",
             categories.VINES_AND_TALL_STRUCTURES, true, true, set -> {
-                if (this.data.hasVersion(9)) {
+                if (this.data.hasVersion(1, 9, 0)) {
                     set.addPrimitive(Material.CHORUS_FLOWER);
                 }
             });
         KELPS_GROWING = reg("KELPS_GROWING",
             categories.VINES_AND_TALL_STRUCTURES, true, true, set -> {
-                if (this.data.hasVersion(13)) {
+                if (this.data.hasVersion(1, 13, 0)) {
                     set.addPrimitive(Material.KELP);
                 }
             });
         BAMBOO_GROWING = reg("BAMBOO_GROWING",
             categories.VINES_AND_TALL_STRUCTURES, true, true, set -> {
-                if (this.data.hasVersion(14)) {
+                if (this.data.hasVersion(1, 14, 0)) {
                     set.addPrimitive(Material.BAMBOO);
                 }
             });
         WEEPING_VINES_GROWING = reg("WEEPING_VINES_GROWING",
             categories.VINES_AND_TALL_STRUCTURES, true, true, set -> {
-                if (this.data.hasVersion(16)) {
+                if (this.data.hasVersion(1, 16, 0)) {
                     set.addPrimitive(Material.WEEPING_VINES);
                 }
             });
         TWISTING_VINES_GROWING = reg("TWISTING_VINES_GROWING",
             categories.VINES_AND_TALL_STRUCTURES, true, true, set -> {
-                if (this.data.hasVersion(16)) {
+                if (this.data.hasVersion(1, 16, 0)) {
                     set.addPrimitive(Material.TWISTING_VINES);
                 }
             });
         POINTED_DRIPSTONES_GROWING = reg("POINTED_DRIPSTONES_GROWING",
             categories.VINES_AND_TALL_STRUCTURES, true, true, set -> {
-                if (this.data.hasVersion(17)) {
+                if (this.data.hasVersion(1, 17, 0)) {
                     set.addPrimitive(Material.POINTED_DRIPSTONE);
                 }
             });
         GLOW_BERRIES_GROWING = reg("GLOW_BERRIES_GROWING",
             categories.VINES_AND_TALL_STRUCTURES, true, true, set -> {
-                if (this.data.hasVersion(17)) {
+                if (this.data.hasVersion(1, 17, 0)) {
                     set.addPrimitive(Material.GLOW_BERRIES);
                 }
             });

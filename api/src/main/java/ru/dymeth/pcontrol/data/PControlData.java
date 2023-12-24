@@ -46,7 +46,7 @@ public interface PControlData {
     @Nonnull
     String getCategoryName(@Nonnull PControlCategory category);
 
-    boolean hasVersion(int version);
+    boolean hasVersion(int majorVersion, int minorVersion, int patchVersion);
 
     default <E extends BlockEvent & Cancellable> void cancelIfDisabled(@Nonnull E event, @Nonnull PControlTrigger trigger) {
         this.cancelIfDisabled(event, event.getBlock().getWorld(), trigger);
