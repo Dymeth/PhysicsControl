@@ -55,6 +55,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         this.data.reloadConfigs();
     }
 
+    @SuppressWarnings("SameParameterValue")
     private void reg(@Nonnull String eventClassName, @Nonnull Supplier<Listener> listenerCreator) {
         if (ReflectionUtils.isClassPresent(eventClassName)) {
             this.getServer().getPluginManager().registerEvents(listenerCreator.get(), this);
@@ -72,16 +73,16 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, @Nonnull Command command, @Nonnull String label, @Nonnull String[] args) {
         if (args.length == 0) {
-            this.openGui(sender, args);
+            this.openGui(sender);
             return true;
         }
         switch (args[0].toLowerCase()) {
             case "reload": {
-                this.reload(sender, args);
+                this.reload(sender);
                 return true;
             }
             case "update": {
-                this.update(sender, args);
+                this.update(sender);
                 return true;
             }
             case "tp": {
@@ -95,7 +96,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         }
     }
 
-    private void openGui(@Nonnull CommandSender sender, @Nonnull String[] args) {
+    private void openGui(@Nonnull CommandSender sender) {
         if (!(sender instanceof Player)) {
             this.data.getMessage("only-players-menu").send(sender);
             return;
@@ -107,7 +108,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         ((Player) sender).openInventory(new PControlCategoryInventory(this.data, ((Player) sender).getWorld()).getInventory());
     }
 
-    private void reload(@Nonnull CommandSender sender, @Nonnull String[] args) {
+    private void reload(@Nonnull CommandSender sender) {
         if (!sender.isOp() && !sender.hasPermission("physicscontrol.reload")) {
             this.data.getMessage("bad-perms-reload").send(sender);
             return;
@@ -116,7 +117,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         this.data.getMessage("config-reloaded").send(sender);
     }
 
-    private void update(@Nonnull CommandSender sender, @Nonnull String[] args) {
+    private void update(@Nonnull CommandSender sender) {
         if (!(sender instanceof ConsoleCommandSender) || !sender.hasPermission("physicscontrol.update")) {
             this.data.getMessage("bad-perms-reload").send(sender);
             return;
