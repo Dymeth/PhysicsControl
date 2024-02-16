@@ -21,7 +21,10 @@ import ru.dymeth.pcontrol.text.Text;
 import ru.dymeth.pcontrol.text.TextHelper;
 import ru.dymeth.pcontrol.text.adventure.AdventureTextHelper;
 import ru.dymeth.pcontrol.text.bungee.BungeeTextHelper;
-import ru.dymeth.pcontrol.util.*;
+import ru.dymeth.pcontrol.util.EntityTypeUtils;
+import ru.dymeth.pcontrol.util.FileUtils;
+import ru.dymeth.pcontrol.util.LocaleUtils;
+import ru.dymeth.pcontrol.util.MinecraftVersion;
 import ru.dymeth.pcontrol.util.metrics.Metrics;
 import ru.dymeth.pcontrol.util.update.data.PluginDataUpdater;
 import ru.dymeth.pcontrol.util.update.jar.PaperPluginUpdater;
@@ -95,8 +98,7 @@ public final class PControlDataBukkit implements PControlData {
             this.versionsAdapter = new VersionsAdapterLegacy(this);
         }
 
-        if (ReflectionUtils.isClassPresent(
-            "net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer")) {
+        if (TextHelper.isAdventureFullySupported()) {
             this.textHelper = new AdventureTextHelper();
         } else {
             this.textHelper = new BungeeTextHelper();
