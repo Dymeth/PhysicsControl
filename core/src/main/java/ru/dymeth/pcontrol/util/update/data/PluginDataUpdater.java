@@ -22,9 +22,8 @@ public class PluginDataUpdater {
     @SuppressWarnings("unused")
     @Nullable
     private String updateAndReturnNewVersion(@Nonnull String previousVersion) {
-        if (previousVersion.toLowerCase().contains("beta")) {
-            return "1.0.0";
-        }
+        if (previousVersion.toLowerCase().contains("beta")) return "1.0.0";
+
         String currentVersion = this.getCurrentVersion();
         int[] argsPrevious = parseVersion(previousVersion);
         int[] argsCurrent = parseVersion(currentVersion);
@@ -32,21 +31,19 @@ public class PluginDataUpdater {
             if (argsPrevious[i] < argsCurrent[i]) break;
             if (argsPrevious[i] > argsCurrent[i]) return null;
         }
+
         int majorVersion = argsPrevious[0];
         int minorVersion = argsPrevious[1];
         int patchVersion = argsPrevious[2];
-        if (majorVersion == 1 && minorVersion == 0) {
-            this.updateTo_1_1_0();
-            return "1.1.0";
-        }
-        if (majorVersion == 1 && minorVersion == 1) {
-            this.updateTo_1_2_0();
-            return "1.2.0";
-        }
+
+        if (majorVersion == 1 && minorVersion == 0) return this.updateTo_1_1_0();
+        if (majorVersion == 1 && minorVersion == 1) return this.updateTo_1_2_0();
+
         return currentVersion;
     }
 
-    private void updateTo_1_1_0() {
+    @Nonnull
+    private String updateTo_1_1_0() {
         File oldFile = new File(this.plugin.getDataFolder(), "config.yml");
         if (oldFile.isFile()) {
             ConfigurationSection oldConfig = YamlConfiguration.loadConfiguration(oldFile);
@@ -71,9 +68,11 @@ public class PluginDataUpdater {
             //noinspection ResultOfMethodCallIgnored
             oldFile.delete();
         }
+        return "1.1.0";
     }
 
-    private void updateTo_1_2_0() {
+    @Nonnull
+    private String updateTo_1_2_0() {
         File oldMessagesFile = new File(this.plugin.getDataFolder(), "messages.yml");
         File langDir = new File(this.plugin.getDataFolder(), "lang");
         File newMessagesFile = new File(langDir, "messages.yml");
@@ -132,6 +131,7 @@ public class PluginDataUpdater {
                 throw new RuntimeException("Unable to patch config file " + configFile, e);
             }
         }
+        return "1.2.0";
     }
 
     private static <T> boolean updateValue(@Nonnull ConfigurationSection section,
