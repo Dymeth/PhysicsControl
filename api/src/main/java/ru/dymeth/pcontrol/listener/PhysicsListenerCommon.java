@@ -150,6 +150,21 @@ public final class PhysicsListenerCommon extends PhysicsListener {
                 this.tags.FARMLAND_BLOCK,
                 blocksSet(this.triggers.FARMLANDS_TRAMPLING, set ->
                     set.addPrimitive(Material.DIRT)));
+            this.rulesEntityChangeBlockEventFromTo.regPair(this.triggers.END_PORTAL_FRAMES_FILLING,
+                blocksSet(this.triggers.END_PORTAL_FRAMES_FILLING, set -> {
+                    if (!this.data.hasVersion(1, 13, 0)) {
+                        set.add("ENDER_PORTAL_FRAME");
+                    } else {
+                        set.addPrimitive(Material.END_PORTAL_FRAME);
+                    }
+                }),
+                blocksSet(this.triggers.END_PORTAL_FRAMES_FILLING, set -> {
+                    if (!this.data.hasVersion(1, 13, 0)) {
+                        set.add("ENDER_PORTAL_FRAME");
+                    } else {
+                        set.addPrimitive(Material.END_PORTAL_FRAME);
+                    }
+                }));
             this.rulesEntityChangeBlockEventTo.regSingle(this.triggers.IGNORED_STATE, // Redstone ore activation
                 this.tags.REDSTONE_ORE_BLOCKS);
             this.rulesFallingEntityChangeBlockEventBy.regSingle(this.triggers.SAND_FALLING,
@@ -572,6 +587,8 @@ public final class PhysicsListenerCommon extends PhysicsListener {
                 this.tags.REDSTONE_PASSIVE_INPUTS);
             this.rulesEntityInteractEventMaterial.regSingle(this.triggers.IGNORED_STATE, // Redstone ore activation
                 this.tags.REDSTONE_ORE_BLOCKS);
+            this.rulesEntityInteractEventMaterial.regSingle(this.triggers.END_PORTAL_FRAMES_FILLING,
+                this.tags.END_PORTAL_FRAMES);
         }
         if (this.data.hasVersion(1, 13, 0)) {
             this.rulesEntityInteractEventMaterial.regSingle(this.triggers.TURTLE_EGGS_TRAMPLING,
@@ -600,10 +617,16 @@ public final class PhysicsListenerCommon extends PhysicsListener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     private void on(PlayerInteractEvent event) {
-        if (event.getAction() != Action.PHYSICAL) return;
-        if (event.getBlockFace() != BlockFace.SELF) return;
-        if (event.getClickedBlock() == null) return;
-        this.handleInteraction(event, event.getClickedBlock(), event.getPlayer());
+        Block clickedBlock = event.getClickedBlock();
+        if (clickedBlock == null) return;
+        if (event.getAction() == Action.PHYSICAL) {
+            if (event.getBlockFace() != BlockFace.SELF) return;
+            this.handleInteraction(event, clickedBlock, event.getPlayer());
+        } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (this.tags.END_PORTAL_FRAMES.contains(clickedBlock.getType())) {
+                this.data.cancelIfDisabled(event, clickedBlock.getWorld(), this.triggers.END_PORTAL_FRAMES_FILLING);
+            }
+        }
     }
 
     @EventHandler(ignoreCancelled = true)

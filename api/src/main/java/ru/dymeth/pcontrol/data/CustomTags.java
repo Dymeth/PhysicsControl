@@ -52,7 +52,8 @@ public final class CustomTags {
         DEAD_CORALS,
         DEAD_WALL_CORALS,
         DEAD_CORAL_BLOCKS,
-        ALL_DEAD_CORALS;
+        ALL_DEAD_CORALS,
+        END_PORTAL_FRAMES;
 
     @SuppressWarnings("CodeBlock2Expr")
     public CustomTags(@Nonnull PControlData data) {
@@ -439,6 +440,13 @@ public final class CustomTags {
                 set.addPrimitive(this.DEAD_CORAL_BLOCKS);
                 set.addPrimitive(this.DEAD_WALL_CORALS);
                 set.addPrimitive(this.DEAD_CORALS); // Contains this.DEAD_CORAL_PLANTS
+            }
+        });
+        END_PORTAL_FRAMES = blocksSet(data, "END_PORTAL_FRAMES", set -> {
+            if (!data.hasVersion(1, 13, 0)) {
+                set.add("ENDER_PORTAL_FRAME");
+            } else {
+                set.addPrimitive(Material.END_PORTAL_FRAME);
             }
         });
     }

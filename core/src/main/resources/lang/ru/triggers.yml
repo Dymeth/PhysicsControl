@@ -30,6 +30,7 @@ RAVAGERS_DESTROY_BLOCKS: "Разрушение блоков разорителя
 BURNING_ARROWS_ACTIVATE_TNT: "Активация динамита горящими стрелами"
 FARMLANDS_TRAMPLING: "Затаптывание грядок"
 PLAYERS_FLINT_USAGE: "Использование огнива игроками"
+END_PORTAL_FRAMES_FILLING: "Заполнение рамок портала в Край"
 BONE_MEAL_USAGE: "Использование костной муки"
 DRAGON_EGGS_TELEPORTING: "Телепортация яиц Дракона Края"
 FROSTED_ICE_PHYSICS: "Физика подмороженного льда"

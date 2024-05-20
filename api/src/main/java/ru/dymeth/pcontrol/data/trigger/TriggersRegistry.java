@@ -54,6 +54,7 @@ public class TriggersRegistry {
     BURNING_ARROWS_ACTIVATE_TNT,
         FARMLANDS_TRAMPLING,
         PLAYERS_FLINT_USAGE,
+        END_PORTAL_FRAMES_FILLING,
         BONE_MEAL_USAGE,
         DRAGON_EGGS_TELEPORTING,
         FROSTED_ICE_PHYSICS,
@@ -301,6 +302,14 @@ public class TriggersRegistry {
         PLAYERS_FLINT_USAGE = reg("PLAYERS_FLINT_USAGE",
             categories.ENTITIES_INTERACTIONS, false, true, set -> {
                 set.addPrimitive(Material.FLINT_AND_STEEL);
+            });
+        END_PORTAL_FRAMES_FILLING = reg("END_PORTAL_FRAMES_FILLING",
+            categories.ENTITIES_INTERACTIONS, false, true, set -> {
+                if (!this.data.hasVersion(1, 13, 0)) {
+                    set.add("ENDER_PORTAL_FRAME");
+                } else {
+                    set.addPrimitive(Material.END_PORTAL_FRAME);
+                }
             });
         BONE_MEAL_USAGE = reg("BONE_MEAL_USAGE",
             categories.ENTITIES_INTERACTIONS, false, true, set -> {
