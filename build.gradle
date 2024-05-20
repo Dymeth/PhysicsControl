@@ -2,16 +2,25 @@ plugins {
     id 'java'
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
-
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
 
 allprojects {
+    int javaVersion = 8
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+        options.release = javaVersion
+    }
+
+    java {
+        sourceCompatibility = JavaVersion.toVersion(javaVersion)
+        targetCompatibility = JavaVersion.toVersion(javaVersion)
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(javaVersion))
+        }
+    }
+
     repositories {
         mavenCentral()
         maven { url 'https://repo.aikar.co/nexus/content/repositories/aikar' }
@@ -36,9 +45,6 @@ allprojects {
 subprojects {
     apply plugin: 'java'
 
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-
     jar {
         from {
             configurations.shade.collect { it.isDirectory() ? it : zipTree(it) }
@@ -49,7 +55,4 @@ subprojects {
 
 repositories {
     mavenCentral()
-}
-
-dependencies {
 }
