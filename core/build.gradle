@@ -22,5 +22,5 @@ dependencies {
 
 jar {
     destinationDirectory = file('..\\build')
-    archiveName 'PhysicsControl.jar'
+    archiveFileName.set("PhysicsControl.jar")
 }
