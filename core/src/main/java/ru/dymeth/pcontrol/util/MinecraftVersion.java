@@ -17,13 +17,18 @@ public class MinecraftVersion {
         try {
             String[] sections = this.getMinecraftVersion(plugin.getServer()).split("\\.");
 
-            if (sections.length != 3) {
+            if (sections.length < 2 || sections.length > 3) {
                 throw new IllegalArgumentException("Wrong sections amount: " + Arrays.toString(sections));
             }
 
             this.serverMajorVersion = this.parseVersionSection(sections[0], "major");
             this.serverMinorVersion = this.parseVersionSection(sections[1], "minor");
-            this.serverPatchVersion = this.parseVersionSection(sections[2], "patch");
+            this.serverPatchVersion = sections.length == 2 ? 0 : this.parseVersionSection(sections[2], "patch");
+
+            if (this.serverMajorVersion != 1) {
+                throw new IllegalArgumentException("Unsupported major version: " + this.serverMajorVersion);
+            }
+
         } catch (Exception e) {
             throw new RuntimeException("Unsupported server version", e);
         }
