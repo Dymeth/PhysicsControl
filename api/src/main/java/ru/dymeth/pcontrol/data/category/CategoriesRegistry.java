@@ -13,10 +13,10 @@ public class CategoriesRegistry {
 
     public final PControlCategory
         MOBS_INTERACTIONS,
+        PLAYERS_INTERACTIONS,
         ENTITIES_INTERACTIONS,
         BUILDING,
-        LIQUIDS,
-        GRAVITY_BLOCKS,
+        GRAVITY_AND_LIQUIDS,
         WORLD_DESTRUCTION,
         GROWING_BLOCKS_AND_SMALL_PLANTS,
         VINES_AND_TALL_STRUCTURES,
@@ -37,20 +37,20 @@ public class CategoriesRegistry {
                 set.addPrimitive(Material.ZOMBIE_HEAD);
             }
         });
-        ENTITIES_INTERACTIONS = reg("ENTITIES_INTERACTIONS", 1, 5, set -> {
+        PLAYERS_INTERACTIONS = reg("PLAYERS_INTERACTIONS", 1, 5, set -> {
             if (!data.hasVersion(1, 13, 0)) {
                 set.add("SKULL_ITEM:3");
             } else {
                 set.addPrimitive(Material.PLAYER_HEAD);
             }
         });
-        BUILDING = reg("BUILDING", 1, 6, set -> {
+        ENTITIES_INTERACTIONS = reg("ENTITIES_INTERACTIONS", 1, 6, set -> {
+            set.addPrimitive(Material.ARROW);
+        });
+        BUILDING = reg("BUILDING", 2, 3, set -> {
             set.addPrimitive(Material.LADDER);
         });
-        LIQUIDS = reg("LIQUIDS", 2, 3, set -> {
-            set.addPrimitive(Material.WATER_BUCKET);
-        });
-        GRAVITY_BLOCKS = reg("GRAVITY_BLOCKS", 2, 4, set -> {
+        GRAVITY_AND_LIQUIDS = reg("GRAVITY_AND_LIQUIDS", 2, 4, set -> {
             set.addPrimitive(Material.SAND);
         });
         WORLD_DESTRUCTION = reg("WORLD_DESTRUCTION", 2, 5, set -> {

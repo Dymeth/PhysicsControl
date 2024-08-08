@@ -38,6 +38,7 @@ public class PluginDataUpdater {
 
         if (majorVersion == 1 && minorVersion == 0) return this.updateTo_1_1_0();
         if (majorVersion == 1 && minorVersion == 1) return this.updateTo_1_2_0();
+        if (majorVersion == 1 && minorVersion == 2) return this.updateTo_1_3_0();
 
         return currentVersion;
     }
@@ -132,6 +133,30 @@ public class PluginDataUpdater {
             }
         }
         return "1.2.0";
+    }
+
+    @Nonnull
+    private String updateTo_1_3_0() {
+        File categoriesFile = new File(this.plugin.getDataFolder(), "categories.yml");
+        try {
+            YamlConfiguration categoriesConfig = YamlConfiguration.loadConfiguration(categoriesFile);
+
+            String oldMsg1 = categoriesConfig.getString("LIQUIDS", "").trim();
+            categoriesConfig.set("LIQUIDS", null);
+
+            String oldMsg2 = categoriesConfig.getString("GRAVITY_BLOCKS", "").trim();
+            categoriesConfig.set("GRAVITY_BLOCKS", null);
+
+            if (!oldMsg1.isEmpty() && !oldMsg2.isEmpty()) {
+                String newMessage = oldMsg1 + " & " + oldMsg2;
+                categoriesConfig.set("GRAVITY_AND_LIQUIDS", newMessage);
+            }
+
+            categoriesConfig.save(categoriesFile);
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to patch file " + categoriesFile.getAbsolutePath(), e);
+        }
+        return "1.3.0";
     }
 
     private static <T> boolean updateValue(@Nonnull ConfigurationSection section,

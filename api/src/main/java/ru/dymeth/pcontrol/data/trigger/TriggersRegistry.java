@@ -18,26 +18,7 @@ public class TriggersRegistry {
     private final PControlTrigger[] allValues;
 
     public final PControlTrigger
-        GRAVEL_FALLING,
-        SAND_FALLING,
-        ANVILS_FALLING,
-        DRAGON_EGGS_FALLING,
-        CONCRETE_POWDERS_FALLING,
-        SCAFFOLDING_FALLING,
-        POINTED_DRIPSTONES_FALLING,
-
-    WATER_FLOWING,
-        LAVA_FLOWING,
-
-    LADDERS_DESTROYING,
-        SIGNS_DESTROYING,
-        RAILS_DESTROYING,
-        TORCHES_DESTROYING,
-        REDSTONE_TORCHES_DESTROYING,
-        SOUL_TORCHES_DESTROYING,
-        SAPLINGS_DESTROYING,
-
-    RABBITS_EATING_CARROTS,
+        RABBITS_EATING_CARROTS,
         VILLAGERS_FARMING,
         SHEEPS_EATING_GRASS,
         SNOW_GOLEMS_CREATE_SNOW,
@@ -51,18 +32,37 @@ public class TriggersRegistry {
         FOXES_EATS_FROM_SWEET_BERRY_BUSHES,
         RAVAGERS_DESTROY_BLOCKS,
 
-    BURNING_ARROWS_ACTIVATE_TNT,
-        FARMLANDS_TRAMPLING,
-        PLAYERS_FLINT_USAGE,
+    PLAYERS_FLINT_USAGE,
         END_PORTAL_FRAMES_FILLING,
         BONE_MEAL_USAGE,
+        GLOW_BERRIES_PICKING,
+
+    BURNING_ARROWS_ACTIVATE_TNT,
+        FARMLANDS_TRAMPLING,
         DRAGON_EGGS_TELEPORTING,
         FROSTED_ICE_PHYSICS,
         BLOCK_HIT_PROJECTILES_REMOVING,
         TURTLE_EGGS_TRAMPLING,
         DRIPLEAFS_LOWERING,
         POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES,
-        GLOW_BERRIES_PICKING,
+
+    LADDERS_DESTROYING,
+        SIGNS_DESTROYING,
+        RAILS_DESTROYING,
+        TORCHES_DESTROYING,
+        REDSTONE_TORCHES_DESTROYING,
+        SOUL_TORCHES_DESTROYING,
+        SAPLINGS_DESTROYING,
+
+    GRAVEL_FALLING,
+        SAND_FALLING,
+        ANVILS_FALLING,
+        DRAGON_EGGS_FALLING,
+        CONCRETE_POWDERS_FALLING,
+        SCAFFOLDING_FALLING,
+        POINTED_DRIPSTONES_FALLING,
+        WATER_FLOWING,
+        LAVA_FLOWING,
 
     FIRE_SPREADING,
         SNOW_MELTING,
@@ -110,99 +110,6 @@ public class TriggersRegistry {
     public TriggersRegistry(@Nonnull PControlData data) {
         this.data = data;
         CategoriesRegistry categories = data.categories();
-
-        GRAVEL_FALLING = reg("GRAVEL_FALLING",
-            categories.GRAVITY_BLOCKS, false, true, set -> {
-                set.addPrimitive(Material.GRAVEL);
-            });
-        SAND_FALLING = reg("SAND_FALLING",
-            categories.GRAVITY_BLOCKS, false, true, set -> {
-                set.addPrimitive(Material.SAND);
-            });
-        ANVILS_FALLING = reg("ANVILS_FALLING",
-            categories.GRAVITY_BLOCKS, false, true, set -> {
-                set.addPrimitive(Material.ANVIL);
-            });
-        DRAGON_EGGS_FALLING = reg("DRAGON_EGGS_FALLING",
-            categories.GRAVITY_BLOCKS, false, true, set -> {
-                set.addPrimitive(Material.DRAGON_EGG);
-            });
-        CONCRETE_POWDERS_FALLING = reg("CONCRETE_POWDERS_FALLING",
-            categories.GRAVITY_BLOCKS, false, true, set -> {
-                if (!this.data.hasVersion(1, 13, 0)) {
-                    set.add("CONCRETE_POWDER:5");
-                } else {
-                    set.addPrimitive(Material.LIME_CONCRETE_POWDER);
-                }
-            });
-        SCAFFOLDING_FALLING = reg("SCAFFOLDING_FALLING",
-            categories.GRAVITY_BLOCKS, false, true, set -> {
-                if (this.data.hasVersion(1, 14, 0)) {
-                    set.addPrimitive(Material.SCAFFOLDING);
-                }
-            });
-        POINTED_DRIPSTONES_FALLING = reg("POINTED_DRIPSTONES_FALLING",
-            categories.GRAVITY_BLOCKS, false, true, set -> {
-                if (this.data.hasVersion(1, 17, 0)) {
-                    set.addPrimitive(Material.POINTED_DRIPSTONE);
-                }
-            });
-
-        WATER_FLOWING = reg("WATER_FLOWING",
-            categories.LIQUIDS, false, true, set -> {
-                set.addPrimitive(Material.WATER_BUCKET);
-            });
-        LAVA_FLOWING = reg("LAVA_FLOWING",
-            categories.LIQUIDS, false, true, set -> {
-                set.addPrimitive(Material.LAVA_BUCKET);
-            });
-
-        LADDERS_DESTROYING = reg("LADDERS_DESTROYING",
-            categories.BUILDING, false, true, set -> {
-                set.addPrimitive(Material.LADDER);
-            });
-        SIGNS_DESTROYING = reg("SIGNS_DESTROYING",
-            categories.BUILDING, false, true, set -> {
-                if (!this.data.hasVersion(1, 14, 0)) {
-                    set.add("SIGN");
-                } else {
-                    set.addPrimitive(Material.OAK_SIGN);
-                }
-            });
-        RAILS_DESTROYING = reg("RAILS_DESTROYING",
-            categories.BUILDING, false, true, set -> {
-                if (!this.data.hasVersion(1, 13, 0)) {
-                    set.add("RAILS");
-                } else {
-                    set.addPrimitive(Material.RAIL);
-                }
-            });
-        TORCHES_DESTROYING = reg("TORCHES_DESTROYING",
-            categories.BUILDING, false, true, set -> {
-                set.addPrimitive(Material.TORCH);
-            });
-        REDSTONE_TORCHES_DESTROYING = reg("REDSTONE_TORCHES_DESTROYING",
-            categories.BUILDING, false, true, set -> {
-                if (!this.data.hasVersion(1, 13, 0)) {
-                    set.add("REDSTONE_TORCH_ON");
-                } else {
-                    set.addPrimitive(Material.REDSTONE_TORCH);
-                }
-            });
-        SOUL_TORCHES_DESTROYING = reg("SOUL_TORCHES_DESTROYING",
-            categories.BUILDING, false, true, set -> {
-                if (this.data.hasVersion(1, 16, 0)) {
-                    set.addPrimitive(Material.SOUL_TORCH);
-                }
-            });
-        SAPLINGS_DESTROYING = reg("SAPLINGS_DESTROYING",
-            categories.BUILDING, false, true, set -> {
-                if (!this.data.hasVersion(1, 13, 0)) {
-                    set.add("SAPLING");
-                } else {
-                    set.addPrimitive(Material.OAK_SAPLING);
-                }
-            });
 
         RABBITS_EATING_CARROTS = reg("RABBITS_EATING_CARROTS",
             categories.MOBS_INTERACTIONS, false, true, set -> {
@@ -287,6 +194,33 @@ public class TriggersRegistry {
                 }
             });
 
+        PLAYERS_FLINT_USAGE = reg("PLAYERS_FLINT_USAGE",
+            categories.PLAYERS_INTERACTIONS, false, true, set -> {
+                set.addPrimitive(Material.FLINT_AND_STEEL);
+            });
+        END_PORTAL_FRAMES_FILLING = reg("END_PORTAL_FRAMES_FILLING",
+            categories.PLAYERS_INTERACTIONS, false, true, set -> {
+                if (!this.data.hasVersion(1, 13, 0)) {
+                    set.add("ENDER_PORTAL_FRAME");
+                } else {
+                    set.addPrimitive(Material.END_PORTAL_FRAME);
+                }
+            });
+        BONE_MEAL_USAGE = reg("BONE_MEAL_USAGE",
+            categories.PLAYERS_INTERACTIONS, false, true, set -> {
+                if (!this.data.hasVersion(1, 13, 0)) {
+                    set.add("INK_SACK:15");
+                } else {
+                    set.addPrimitive(Material.BONE_MEAL);
+                }
+            });
+        GLOW_BERRIES_PICKING = reg("GLOW_BERRIES_PICKING",
+            categories.PLAYERS_INTERACTIONS, false, true, set -> {
+                if (this.data.hasVersion(1, 17, 0)) {
+                    set.addPrimitive(Material.GLOW_BERRIES);
+                }
+            });
+
         BURNING_ARROWS_ACTIVATE_TNT = reg("BURNING_ARROWS_ACTIVATE_TNT",
             categories.ENTITIES_INTERACTIONS, false, true, set -> {
                 set.addPrimitive(Material.TNT);
@@ -297,26 +231,6 @@ public class TriggersRegistry {
                     set.add("SOIL");
                 } else {
                     set.addPrimitive(Material.FARMLAND);
-                }
-            });
-        PLAYERS_FLINT_USAGE = reg("PLAYERS_FLINT_USAGE",
-            categories.ENTITIES_INTERACTIONS, false, true, set -> {
-                set.addPrimitive(Material.FLINT_AND_STEEL);
-            });
-        END_PORTAL_FRAMES_FILLING = reg("END_PORTAL_FRAMES_FILLING",
-            categories.ENTITIES_INTERACTIONS, false, true, set -> {
-                if (!this.data.hasVersion(1, 13, 0)) {
-                    set.add("ENDER_PORTAL_FRAME");
-                } else {
-                    set.addPrimitive(Material.END_PORTAL_FRAME);
-                }
-            });
-        BONE_MEAL_USAGE = reg("BONE_MEAL_USAGE",
-            categories.ENTITIES_INTERACTIONS, false, true, set -> {
-                if (!this.data.hasVersion(1, 13, 0)) {
-                    set.add("INK_SACK:15");
-                } else {
-                    set.addPrimitive(Material.BONE_MEAL);
                 }
             });
         DRAGON_EGGS_TELEPORTING = reg("DRAGON_EGGS_TELEPORTING",
@@ -349,11 +263,97 @@ public class TriggersRegistry {
                     set.addPrimitive(Material.POWDER_SNOW_BUCKET);
                 }
             });
-        GLOW_BERRIES_PICKING = reg("GLOW_BERRIES_PICKING",
-            categories.ENTITIES_INTERACTIONS, false, true, set -> {
-                if (this.data.hasVersion(1, 17, 0)) {
-                    set.addPrimitive(Material.GLOW_BERRIES);
+
+        LADDERS_DESTROYING = reg("LADDERS_DESTROYING",
+            categories.BUILDING, false, true, set -> {
+                set.addPrimitive(Material.LADDER);
+            });
+        SIGNS_DESTROYING = reg("SIGNS_DESTROYING",
+            categories.BUILDING, false, true, set -> {
+                if (!this.data.hasVersion(1, 14, 0)) {
+                    set.add("SIGN");
+                } else {
+                    set.addPrimitive(Material.OAK_SIGN);
                 }
+            });
+        RAILS_DESTROYING = reg("RAILS_DESTROYING",
+            categories.BUILDING, false, true, set -> {
+                if (!this.data.hasVersion(1, 13, 0)) {
+                    set.add("RAILS");
+                } else {
+                    set.addPrimitive(Material.RAIL);
+                }
+            });
+        TORCHES_DESTROYING = reg("TORCHES_DESTROYING",
+            categories.BUILDING, false, true, set -> {
+                set.addPrimitive(Material.TORCH);
+            });
+        REDSTONE_TORCHES_DESTROYING = reg("REDSTONE_TORCHES_DESTROYING",
+            categories.BUILDING, false, true, set -> {
+                if (!this.data.hasVersion(1, 13, 0)) {
+                    set.add("REDSTONE_TORCH_ON");
+                } else {
+                    set.addPrimitive(Material.REDSTONE_TORCH);
+                }
+            });
+        SOUL_TORCHES_DESTROYING = reg("SOUL_TORCHES_DESTROYING",
+            categories.BUILDING, false, true, set -> {
+                if (this.data.hasVersion(1, 16, 0)) {
+                    set.addPrimitive(Material.SOUL_TORCH);
+                }
+            });
+        SAPLINGS_DESTROYING = reg("SAPLINGS_DESTROYING",
+            categories.BUILDING, false, true, set -> {
+                if (!this.data.hasVersion(1, 13, 0)) {
+                    set.add("SAPLING");
+                } else {
+                    set.addPrimitive(Material.OAK_SAPLING);
+                }
+            });
+
+        GRAVEL_FALLING = reg("GRAVEL_FALLING",
+            categories.GRAVITY_AND_LIQUIDS, false, true, set -> {
+                set.addPrimitive(Material.GRAVEL);
+            });
+        SAND_FALLING = reg("SAND_FALLING",
+            categories.GRAVITY_AND_LIQUIDS, false, true, set -> {
+                set.addPrimitive(Material.SAND);
+            });
+        ANVILS_FALLING = reg("ANVILS_FALLING",
+            categories.GRAVITY_AND_LIQUIDS, false, true, set -> {
+                set.addPrimitive(Material.ANVIL);
+            });
+        DRAGON_EGGS_FALLING = reg("DRAGON_EGGS_FALLING",
+            categories.GRAVITY_AND_LIQUIDS, false, true, set -> {
+                set.addPrimitive(Material.DRAGON_EGG);
+            });
+        CONCRETE_POWDERS_FALLING = reg("CONCRETE_POWDERS_FALLING",
+            categories.GRAVITY_AND_LIQUIDS, false, true, set -> {
+                if (!this.data.hasVersion(1, 13, 0)) {
+                    set.add("CONCRETE_POWDER:5");
+                } else {
+                    set.addPrimitive(Material.LIME_CONCRETE_POWDER);
+                }
+            });
+        SCAFFOLDING_FALLING = reg("SCAFFOLDING_FALLING",
+            categories.GRAVITY_AND_LIQUIDS, false, true, set -> {
+                if (this.data.hasVersion(1, 14, 0)) {
+                    set.addPrimitive(Material.SCAFFOLDING);
+                }
+            });
+        POINTED_DRIPSTONES_FALLING = reg("POINTED_DRIPSTONES_FALLING",
+            categories.GRAVITY_AND_LIQUIDS, false, true, set -> {
+                if (this.data.hasVersion(1, 17, 0)) {
+                    set.addPrimitive(Material.POINTED_DRIPSTONE);
+                }
+            });
+        WATER_FLOWING = reg("WATER_FLOWING",
+            categories.GRAVITY_AND_LIQUIDS, false, true, set -> {
+                set.addPrimitive(Material.WATER_BUCKET);
+            });
+        LAVA_FLOWING = reg("LAVA_FLOWING",
+            categories.GRAVITY_AND_LIQUIDS, false, true, set -> {
+                set.addPrimitive(Material.LAVA_BUCKET);
             });
 
         FIRE_SPREADING = reg("FIRE_SPREADING",
