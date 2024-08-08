@@ -13,9 +13,7 @@ import java.io.File;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 
 public class PluginDataUpdater {
@@ -161,9 +159,98 @@ public class PluginDataUpdater {
         return "1.3.0";
     }
 
+    private void renameTriggers(@Nonnull String... oldToNewNames) {
+        if (oldToNewNames.length % 2 != 0) {
+            throw new IllegalArgumentException("Wrong arguments amount");
+        }
+
+        Map<String, String> oldToNewNamesMap = new HashMap<>();
+        for (int i = 0; i < oldToNewNames.length; ) {
+            oldToNewNamesMap.put(oldToNewNames[i++], oldToNewNames[i++]);
+        }
+        if (oldToNewNamesMap.isEmpty()) {
+            return;
+        }
+
+        Set<String> renamedTriggers = new HashSet<>();
+
+        {
+            for (File triggersFile : getAllTriggersFiles()) {
+                try {
+                    YamlConfiguration triggersConfig = YamlConfiguration.loadConfiguration(triggersFile);
+
+                    boolean someUpdated = false;
+                    for (Map.Entry<String, String> entry : oldToNewNamesMap.entrySet()) {
+                        String oldKey = entry.getKey();
+                        String newKey = entry.getValue();
+                        if (!triggersConfig.contains(oldKey)) continue;
+                        Object value = triggersConfig.get(oldKey);
+                        triggersConfig.set(oldKey, null);
+                        triggersConfig.set(newKey, value);
+                        renamedTriggers.add(oldKey);
+                        someUpdated = true;
+                    }
+
+                    if (someUpdated) triggersConfig.save(triggersFile);
+                } catch (Exception e) {
+                    throw new RuntimeException("Unable to patch file " + triggersFile.getAbsolutePath(), e);
+                }
+            }
+        }
+
+        this.renameTriggers0(this.getLangFile("triggers.yml"), oldToNewNamesMap, renamedTriggers);
+
+        for (String oldKey : renamedTriggers) {
+            this.plugin.getLogger().warning("Trigger renamed: " + oldKey + " -> " + oldToNewNamesMap.get(oldKey));
+        }
+    }
+
     @Nonnull
     private File getLangFile(@Nonnull String name) {
         return new File(new File(this.plugin.getDataFolder(), "lang"), name);
+    }
+
+    private void renameTriggers0(@Nonnull File triggersFile,
+                                 @Nonnull Map<String, String> oldToNewNamesMap,
+                                 @Nonnull Set<String> renamedTriggers
+    ) {
+        if (!triggersFile.isFile()) return;
+        try {
+            YamlConfiguration triggersConfig = YamlConfiguration.loadConfiguration(triggersFile);
+
+            boolean someUpdated = false;
+            for (Map.Entry<String, String> entry : oldToNewNamesMap.entrySet()) {
+                String oldKey = entry.getKey();
+                String newKey = entry.getValue();
+                if (!triggersConfig.contains(oldKey)) continue;
+                Object value = triggersConfig.get(oldKey);
+                triggersConfig.set(oldKey, null);
+                triggersConfig.set(newKey, value);
+                renamedTriggers.add(oldKey);
+                someUpdated = true;
+            }
+
+            if (someUpdated) triggersConfig.save(triggersFile);
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to patch file " + triggersFile.getAbsolutePath(), e);
+        }
+    }
+
+    @Nonnull
+    private List<File> getAllTriggersFiles() {
+        List<File> result = new ArrayList<>();
+        File worldsDir = new File(this.plugin.getDataFolder(), "triggers");
+        File[] files = worldsDir.listFiles();
+        if (files == null) {
+            this.plugin.getLogger().warning("Unable to read directory files list: " + worldsDir.getAbsolutePath());
+        } else {
+            for (File triggersFile : files) {
+                if (!triggersFile.isFile()) continue;
+                if (!triggersFile.getName().endsWith(".yml")) continue;
+                result.add(triggersFile);
+            }
+        }
+        return result;
     }
 
     private static <T> boolean updateValue(@Nonnull ConfigurationSection section,
