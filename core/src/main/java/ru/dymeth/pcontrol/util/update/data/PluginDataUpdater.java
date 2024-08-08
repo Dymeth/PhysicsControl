@@ -75,11 +75,10 @@ public class PluginDataUpdater {
     @Nonnull
     private String updateTo_1_2_0() {
         File oldMessagesFile = new File(this.plugin.getDataFolder(), "messages.yml");
-        File langDir = new File(this.plugin.getDataFolder(), "lang");
-        File newMessagesFile = new File(langDir, "messages.yml");
+        File newMessagesFile = this.getLangFile("messages.yml");
         if (oldMessagesFile.isFile() && !newMessagesFile.exists()) {
             //noinspection ResultOfMethodCallIgnored
-            langDir.mkdirs();
+            newMessagesFile.getParentFile().mkdirs();
             try {
                 Files.move(oldMessagesFile.toPath(), newMessagesFile.toPath());
                 //noinspection ResultOfMethodCallIgnored
@@ -137,26 +136,34 @@ public class PluginDataUpdater {
 
     @Nonnull
     private String updateTo_1_3_0() {
-        File categoriesFile = new File(this.plugin.getDataFolder(), "categories.yml");
-        try {
-            YamlConfiguration categoriesConfig = YamlConfiguration.loadConfiguration(categoriesFile);
+        File categoriesFile = this.getLangFile("categories.yml");
+        if (categoriesFile.isFile()) {
+            try {
+                YamlConfiguration categoriesConfig = YamlConfiguration.loadConfiguration(categoriesFile);
 
-            String oldMsg1 = categoriesConfig.getString("LIQUIDS", "").trim();
-            categoriesConfig.set("LIQUIDS", null);
+                String oldMsg1 = categoriesConfig.getString("LIQUIDS", "").trim();
+                categoriesConfig.set("LIQUIDS", null);
 
-            String oldMsg2 = categoriesConfig.getString("GRAVITY_BLOCKS", "").trim();
-            categoriesConfig.set("GRAVITY_BLOCKS", null);
+                String oldMsg2 = categoriesConfig.getString("GRAVITY_BLOCKS", "").trim();
+                categoriesConfig.set("GRAVITY_BLOCKS", null);
 
-            if (!oldMsg1.isEmpty() && !oldMsg2.isEmpty()) {
-                String newMessage = oldMsg1 + " & " + oldMsg2;
-                categoriesConfig.set("GRAVITY_AND_LIQUIDS", newMessage);
+                if (!oldMsg1.isEmpty() && !oldMsg2.isEmpty()) {
+                    String newMessage = oldMsg1 + " & " + oldMsg2;
+                    categoriesConfig.set("GRAVITY_AND_LIQUIDS", newMessage);
+                }
+
+                categoriesConfig.save(categoriesFile);
+            } catch (Exception e) {
+                throw new RuntimeException("Unable to patch file " + categoriesFile.getAbsolutePath(), e);
             }
-
-            categoriesConfig.save(categoriesFile);
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to patch file " + categoriesFile.getAbsolutePath(), e);
         }
+
         return "1.3.0";
+    }
+
+    @Nonnull
+    private File getLangFile(@Nonnull String name) {
+        return new File(new File(this.plugin.getDataFolder(), "lang"), name);
     }
 
     private static <T> boolean updateValue(@Nonnull ConfigurationSection section,
