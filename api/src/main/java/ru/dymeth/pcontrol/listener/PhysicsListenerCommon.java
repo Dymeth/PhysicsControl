@@ -806,7 +806,9 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         if (usedItem == null) return;
         if (!this.versionsAdapter.isBoneMealItem(usedItem)) return;
 
-        this.data.cancelIfDisabled(event, targetBlock.getWorld(), this.triggers.PLAYERS_BONE_MEAL_USAGE);
+        if (!this.data.isActionAllowed(targetBlock.getWorld(), this.triggers.PLAYERS_BONE_MEAL_USAGE)) {
+            event.setUseItemInHand(Event.Result.DENY);
+        }
         if (event.useItemInHand() == Event.Result.DENY) return;
         this.fertilizedBlocks.add(targetBlock.getLocation().toVector());
     }

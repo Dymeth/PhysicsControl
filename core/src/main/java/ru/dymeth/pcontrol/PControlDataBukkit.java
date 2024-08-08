@@ -360,7 +360,7 @@ public final class PControlDataBukkit implements PControlData {
     @Override
     public void cancelIfDisabled(@Nonnull Cancellable event, @Nonnull World world, @Nonnull PControlTrigger trigger) {
         if (trigger == this.triggers.IGNORED_STATE) return;
-        if (!this.getWorldTriggers(world).getOrDefault(trigger, false)) {
+        if (!this.isActionAllowed(world, trigger)) {
             event.setCancelled(true);
         }
     }
