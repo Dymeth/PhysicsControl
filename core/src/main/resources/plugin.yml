@@ -9,3 +9,4 @@ commands:
         description: 'Basic PhysicsControl plugin command'
         aliases: ["pcontrol", "physicsc", "pc"]
 author: Dymeth
+folia-supported: true
