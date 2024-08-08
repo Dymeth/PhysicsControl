@@ -1,3 +1,9 @@
-check-for-updates: true # Automatically check for new versions
-metrics: true # Send info to https://bstats.org/plugin/bukkit/PhysicsControl
-language: "auto" # Available: auto (use system lang), en, ru, etc. Full list: https://spigotmc.org/resources/72124
+# Automatically check for new versions
+check-for-updates: true
+
+# Send info to https://bstats.org/plugin/bukkit/PhysicsControl
+metrics: true
+
+# Plugin language: auto (use system lang), en, ru, etc
+# Full list: https://github.com/Dymeth/PhysicsControl/tree/master/core/src/main/resources/lang
+language: "auto"
