@@ -73,7 +73,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
                     set.addPrimitive(Material.VINE)));
             this.rulesBlockGrowEventTo.regSingle(this.triggers.NETHER_WARTS_GROWING,
                 this.tags.NETHER_WART_BLOCK);
-            this.rulesBlockGrowEventTo.regSingle(this.triggers.BONE_MEAL_USAGE,
+            this.rulesBlockGrowEventTo.regSingle(this.triggers.PLAYERS_BONE_MEAL_USAGE,
                 this.tags.BONE_MEAL_HERBS);
         }
         if (this.data.hasVersion(1, 9, 0)) {
@@ -119,7 +119,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
     @EventHandler(ignoreCancelled = true)
     private void on(BlockGrowEvent event) {
         if (this.fertilizedBlocks.remove(event.getBlock().getLocation().toVector())) {
-            this.data.cancelIfDisabled(event, this.triggers.BONE_MEAL_USAGE);
+            this.data.cancelIfDisabled(event, this.triggers.PLAYERS_BONE_MEAL_USAGE);
             return;
         }
         Material from = event.getBlock().getType();
@@ -692,7 +692,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
     private final TreeRules rulesStructureGrowEventTo = new TreeRules(this.data);
 
     {
-        this.triggers.BONE_MEAL_USAGE.markAvailable();
+        this.triggers.PLAYERS_BONE_MEAL_USAGE.markAvailable();
         this.rulesStructureGrowEventTo.regSingle(this.triggers.TREES_GROWING,
             treesSet(this.triggers.TREES_GROWING, set -> {
                 set.addPrimitive(TreeType.TREE);
@@ -726,7 +726,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
     @EventHandler(ignoreCancelled = true)
     private void on(StructureGrowEvent event) {
         if (event.getPlayer() != null) {
-            this.data.cancelIfDisabled(event, this.triggers.BONE_MEAL_USAGE);
+            this.data.cancelIfDisabled(event, this.triggers.PLAYERS_BONE_MEAL_USAGE);
             return;
         }
         Material from = event.getLocation().getBlock().getType();
@@ -791,7 +791,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
     }
 
     {
-        this.triggers.BONE_MEAL_USAGE.markAvailable();
+        this.triggers.PLAYERS_BONE_MEAL_USAGE.markAvailable();
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
@@ -806,7 +806,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         if (usedItem == null) return;
         if (!this.versionsAdapter.isBoneMealItem(usedItem)) return;
 
-        this.data.cancelIfDisabled(event, targetBlock.getWorld(), this.triggers.BONE_MEAL_USAGE);
+        this.data.cancelIfDisabled(event, targetBlock.getWorld(), this.triggers.PLAYERS_BONE_MEAL_USAGE);
         if (event.useItemInHand() == Event.Result.DENY) return;
         this.fertilizedBlocks.add(targetBlock.getLocation().toVector());
     }

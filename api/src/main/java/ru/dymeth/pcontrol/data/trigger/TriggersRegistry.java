@@ -34,7 +34,7 @@ public class TriggersRegistry {
 
     PLAYERS_FLINT_USAGE,
         END_PORTAL_FRAMES_FILLING,
-        BONE_MEAL_USAGE,
+        PLAYERS_BONE_MEAL_USAGE,
         GLOW_BERRIES_PICKING,
 
     BURNING_ARROWS_ACTIVATE_TNT,
@@ -206,7 +206,7 @@ public class TriggersRegistry {
                     set.addPrimitive(Material.END_PORTAL_FRAME);
                 }
             });
-        BONE_MEAL_USAGE = reg("BONE_MEAL_USAGE",
+        PLAYERS_BONE_MEAL_USAGE = reg("PLAYERS_BONE_MEAL_USAGE",
             categories.PLAYERS_INTERACTIONS, false, true, set -> {
                 if (!this.data.hasVersion(1, 13, 0)) {
                     set.add("INK_SACK:15");

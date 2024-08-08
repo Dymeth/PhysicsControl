@@ -31,7 +31,7 @@ BURNING_ARROWS_ACTIVATE_TNT: "Активация динамита горящим
 FARMLANDS_TRAMPLING: "Затаптывание грядок"
 PLAYERS_FLINT_USAGE: "Использование огнива игроками"
 END_PORTAL_FRAMES_FILLING: "Заполнение рамок портала в Край"
-BONE_MEAL_USAGE: "Использование костной муки"
+PLAYERS_BONE_MEAL_USAGE: "Использование костной муки игроками"
 DRAGON_EGGS_TELEPORTING: "Телепортация яиц Дракона Края"
 FROSTED_ICE_PHYSICS: "Физика подмороженного льда"
 BLOCK_HIT_PROJECTILES_REMOVING: "Удаление сущностей, попавших в блоки"

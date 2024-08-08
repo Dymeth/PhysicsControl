@@ -156,6 +156,10 @@ public class PluginDataUpdater {
             }
         }
 
+        this.renameTriggers(
+            "BONE_MEAL_USAGE", "PLAYERS_BONE_MEAL_USAGE"
+        );
+
         return "1.3.0";
     }
 
