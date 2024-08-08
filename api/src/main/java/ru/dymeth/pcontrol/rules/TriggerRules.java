@@ -27,7 +27,7 @@ public abstract class TriggerRules<T> {
             trigger.markAvailable();
             if (LOG_TRIGGERS_REGISTRATIONS) {
                 this.data.log().info("Trigger " + trigger
-                    + " registered " + rulesAdded + " rules");
+                    + " registered with " + rulesAdded + " " + (rulesAdded == 1 ? "rule" : "rules"));
             }
         } else {
             this.data.log().warning("Trigger " + trigger + " is unavailable at current server version");
