@@ -36,7 +36,7 @@ public class VersionsAdapterModern implements VersionsAdapter {
     @Override
     public boolean isBlockContainsWater(@Nonnull Block block) {
         return (block.getBlockData() instanceof Waterlogged && ((Waterlogged) block.getBlockData()).isWaterlogged())
-            || this.tags.BLOCKS_UNDER_WATER_ONLY.contains(block.getType());
+            || this.tags.blocks_under_water_only.contains(block.getType());
     }
 
     @Override

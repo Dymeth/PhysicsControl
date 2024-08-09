@@ -67,15 +67,16 @@ public class TypesSetsParser {
                 if (args.length < 1 || args.length > 2) {
                     throw new IllegalArgumentException("Wrong element format: " + elementRaw);
                 }
-                String elementOrTagName = args[0];
 
-                if (args.length > 1 && !this.isVersionSupported(args[1])) continue;
+                if (args.length > 1 && !this.isVersionSupported(args[0])) continue;
+
+                String elementOrTagName = args[args.length - 1];
 
                 if (elementOrTagName.startsWith("#")) {
 
                     Collection<E> values;
 
-                    elementOrTagName = elementOrTagName.substring("#".length());
+                    elementOrTagName = elementOrTagName.substring("#".length()).toLowerCase();
                     if (elementOrTagName.startsWith(CUSTOM_TAG_PREFIX)) { // custom
                         elementOrTagName = elementOrTagName.substring(CUSTOM_TAG_PREFIX.length());
 
@@ -105,7 +106,7 @@ public class TypesSetsParser {
 
                     set.addPrimitive(values);
                 } else {
-                    set.add(elementOrTagName);
+                    set.add(elementOrTagName.toUpperCase());
                 }
             }
         };
@@ -117,10 +118,22 @@ public class TypesSetsParser {
         if (supported != null) return supported;
 
         String[] args = version.split("-");
-        if (args.length != 2) throw new IllegalArgumentException("Wrong version format: " + version);
 
-        String min = args[0];
-        String max = args[1];
+        String min;
+        String max;
+        if (args.length == 1) {
+            min = args[0];
+            if (!min.endsWith("+")) {
+                throw new IllegalArgumentException("Wrong version format (#1): " + version);
+            }
+            min = min.substring(0, min.length() - "+".length());
+            max = "*";
+        } else if (args.length == 2) {
+            min = args[0];
+            max = args[1];
+        } else {
+            throw new IllegalArgumentException("Wrong version format (#2): " + version);
+        }
 
         if (!min.equals("*") && !this.hasVersion(min, true)) supported = false;
         else if (!max.equals("*") && this.hasVersion(max, false)) supported = false;
@@ -134,7 +147,7 @@ public class TypesSetsParser {
     private boolean hasVersion(@Nonnull String version, @Nullable Boolean resultIfCurrentVersion) {
         String[] args = version.split("\\.");
         if (args.length < 2 || args.length > 3) {
-            throw new IllegalArgumentException("Wrong version format: " + version);
+            throw new IllegalArgumentException("Wrong version format (#3): " + version);
         }
         try {
             int majorVersion = Integer.parseInt(args[0]);
@@ -146,7 +159,7 @@ public class TypesSetsParser {
             }
             return this.data.hasVersion(majorVersion, minorVersion, patchVersion);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Wrong version format: " + version);
+            throw new IllegalArgumentException("Wrong version format (#4): " + version);
         }
     }
 }

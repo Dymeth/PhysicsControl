@@ -36,7 +36,7 @@ public class VersionsAdapterLegacy implements VersionsAdapter {
 
     @Override
     public boolean isBlockContainsWater(@Nonnull Block block) {
-        return this.tags.BLOCKS_UNDER_WATER_ONLY.contains(block.getType());
+        return this.tags.blocks_under_water_only.contains(block.getType());
     }
 
     @Override
