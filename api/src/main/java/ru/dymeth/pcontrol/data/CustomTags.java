@@ -72,7 +72,7 @@ public final class CustomTags {
                 set.addPrimitive(Material.JUNGLE_DOOR);
                 set.addPrimitive(Material.SPRUCE_DOOR);
             } else {
-                set.addPrimitive(Tag.WOODEN_DOORS.getValues());
+                set.addPrimitive(Tag.WOODEN_DOORS);
             }
         });
         PRESSURE_PLATES = blocksSet(data, "PRESSURE_PLATES", set -> {
@@ -85,7 +85,7 @@ public final class CustomTags {
                 set.addPrimitive(Material.STONE_PRESSURE_PLATE);
                 set.addPrimitive(Material.LIGHT_WEIGHTED_PRESSURE_PLATE);
                 set.addPrimitive(Material.HEAVY_WEIGHTED_PRESSURE_PLATE);
-                set.addPrimitive(Tag.WOODEN_PRESSURE_PLATES.getValues());
+                set.addPrimitive(Tag.WOODEN_PRESSURE_PLATES);
             }
             if (data.hasVersion(1, 16, 0)) {
                 set.addPrimitive(Material.POLISHED_BLACKSTONE_PRESSURE_PLATE);
@@ -99,7 +99,7 @@ public final class CustomTags {
                 set.add("WOOD_BUTTON");
                 set.addPrimitive(Material.STONE_BUTTON);
             } else {
-                set.addPrimitive(Tag.BUTTONS.getValues());
+                set.addPrimitive(Tag.BUTTONS);
             }
         });
         REDSTONE_ORE_BLOCKS = blocksSet(data, "REDSTONE_ORE_BLOCKS", set -> {
@@ -127,7 +127,7 @@ public final class CustomTags {
             if (!data.hasVersion(1, 13, 0)) {
                 set.addPrimitive(Material.SAND);
             } else {
-                set.addPrimitive(Tag.SAND.getValues());
+                set.addPrimitive(Tag.SAND);
             }
         });
         GRAVEL = blocksSet(data, "GRAVEL", set -> {
@@ -140,7 +140,7 @@ public final class CustomTags {
             if (!data.hasVersion(1, 13, 0)) {
                 set.addPrimitive(Material.ANVIL);
             } else {
-                set.addPrimitive(Tag.ANVIL.getValues());
+                set.addPrimitive(Tag.ANVIL);
             }
         });
         CONCRETE_POWDERS = blocksSet(data, "CONCRETE_POWDERS", set -> {
@@ -329,14 +329,14 @@ public final class CustomTags {
                 }
             } else {
                 // set.add(Material.IRON_BARS);
-                set.addPrimitive(Tag.FENCES.getValues());
+                set.addPrimitive(Tag.FENCES);
             }
         });
         SAPLINGS = blocksSet(data, "SAPLINGS", set -> {
             if (!data.hasVersion(1, 13, 0)) {
                 set.add("SAPLING");
             } else {
-                set.addPrimitive(Tag.SAPLINGS.getValues());
+                set.addPrimitive(Tag.SAPLINGS);
             }
         });
         LADDERS = blocksSet(data, "LADDERS", set -> {
@@ -348,15 +348,15 @@ public final class CustomTags {
                 set.add("SIGN_POST");
                 set.add("WALL_SIGN");
             } else {
-                set.addPrimitive(Tag.STANDING_SIGNS.getValues());
-                set.addPrimitive(Tag.WALL_SIGNS.getValues());
-                set.addPrimitive(Tag.SIGNS.getValues());
+                set.addPrimitive(Tag.STANDING_SIGNS);
+                set.addPrimitive(Tag.WALL_SIGNS);
+                set.addPrimitive(Tag.SIGNS);
             }
             if (data.hasVersion(1, 20, 0)) {
-                set.addPrimitive(Tag.CEILING_HANGING_SIGNS.getValues());
-                set.addPrimitive(Tag.WALL_HANGING_SIGNS.getValues());
-                set.addPrimitive(Tag.ALL_HANGING_SIGNS.getValues());
-                set.addPrimitive(Tag.ALL_SIGNS.getValues());
+                set.addPrimitive(Tag.CEILING_HANGING_SIGNS);
+                set.addPrimitive(Tag.WALL_HANGING_SIGNS);
+                set.addPrimitive(Tag.ALL_HANGING_SIGNS);
+                set.addPrimitive(Tag.ALL_SIGNS);
             }
         });
         RAILS = blocksSet(data, "RAILS", set -> {
@@ -392,9 +392,9 @@ public final class CustomTags {
         });
         ALL_ALIVE_CORALS = blocksSet(data, "ALL_ALIVE_CORALS", set -> {
             if (data.hasVersion(1, 13, 0)) {
-                set.addPrimitive(Tag.CORAL_BLOCKS.getValues());
-                set.addPrimitive(Tag.WALL_CORALS.getValues());
-                set.addPrimitive(Tag.CORALS.getValues()); // Contains Tag.CORAL_PLANTS
+                set.addPrimitive(Tag.CORAL_BLOCKS);
+                set.addPrimitive(Tag.WALL_CORALS);
+                set.addPrimitive(Tag.CORALS); // Contains Tag.CORAL_PLANTS
             }
         });
         DEAD_CORAL_PLANTS = blocksSet(data, "DEAD_CORAL_PLANTS", set -> {

@@ -3,6 +3,7 @@ package ru.dymeth.pcontrol.set.material;
 import org.bukkit.Material;
 import ru.dymeth.pcontrol.set.CustomEnumSet;
 import ru.dymeth.pcontrol.set.CustomSet;
+import ru.dymeth.pcontrol.set.KeyedEnumSet;
 import ru.dymeth.pcontrol.util.MaterialUtils;
 import ru.dymeth.pcontrol.util.PCMaterial;
 
@@ -18,7 +19,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
-public final class ItemTypesSet extends CustomEnumSet<Material, PCMaterial> {
+public final class ItemTypesSet extends KeyedEnumSet<Material, PCMaterial> {
 
     @Nonnull
     public static Set<Material> createPrimitive(boolean allowAir, @Nonnull String setName, @Nonnull Logger logger, @Nonnull Consumer<ItemTypesSet> consumer) {
