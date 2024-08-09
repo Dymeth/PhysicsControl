@@ -357,6 +357,11 @@ public final class PControlDataBukkit implements PControlData {
     }
 
     @Override
+    public boolean isVersion(int majorVersion, int minorVersion, int patchVersion) {
+        return this.serverVersion.isVersion(majorVersion, minorVersion, patchVersion);
+    }
+
+    @Override
     public void cancelIfDisabled(@Nonnull Cancellable event, @Nonnull World world, @Nonnull PControlTrigger trigger) {
         if (trigger == this.triggers.IGNORED_STATE) return;
         if (!this.isActionAllowed(world, trigger)) {
