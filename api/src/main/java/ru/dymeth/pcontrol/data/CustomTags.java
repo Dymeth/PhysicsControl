@@ -176,7 +176,7 @@ public final class CustomTags {
                 set.addPrimitive(Material.SCAFFOLDING);
             }
         });
-        NATURAL_GRAVITY_BLOCKS = blocksSet(data, "GRAVITY_BLOCKS", set -> {
+        NATURAL_GRAVITY_BLOCKS = blocksSet(data, "NATURAL_GRAVITY_BLOCKS", set -> {
             set.addPrimitive(this.SAND);
             set.addPrimitive(this.GRAVEL);
         });
