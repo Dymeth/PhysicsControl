@@ -1,29 +1,21 @@
 package ru.dymeth.pcontrol;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.TreeType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.EntityType;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 import org.bukkit.util.Vector;
 import ru.dymeth.pcontrol.data.CustomTags;
 import ru.dymeth.pcontrol.data.PControlData;
-import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
 import ru.dymeth.pcontrol.data.trigger.TriggersRegistry;
-import ru.dymeth.pcontrol.set.BlocksSet;
-import ru.dymeth.pcontrol.set.EntityTypesSet;
-import ru.dymeth.pcontrol.set.TreeTypesSet;
 import ru.dymeth.pcontrol.text.CommonColor;
 import ru.dymeth.pcontrol.text.Text;
 
 import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Consumer;
 
 public abstract class PhysicsListener implements Listener {
     protected static final BlockFace[] NSWE_FACES = new BlockFace[]{
@@ -89,20 +81,5 @@ public abstract class PhysicsListener implements Listener {
     @Nonnull
     private String genOffsetMsg(int oX, int oY, int oZ) {
         return "offset=" + (oX < 0 ? oX : " " + oX) + " " + (oY < 0 ? oY : " " + oY) + " " + (oZ < 0 ? oZ : " " + oZ) + ";";
-    }
-
-    @Nonnull
-    protected Set<Material> blocksSet(@Nonnull PControlTrigger trigger, @Nonnull Consumer<BlocksSet> consumer) {
-        return BlocksSet.createPrimitive(trigger + " trigger", this.data.log(), consumer);
-    }
-
-    @Nonnull
-    protected Set<EntityType> entitiesSet(@Nonnull PControlTrigger trigger, @Nonnull Consumer<EntityTypesSet> consumer) {
-        return EntityTypesSet.create(trigger + " trigger", this.data.log(), consumer);
-    }
-
-    @Nonnull
-    protected Set<TreeType> treesSet(@Nonnull PControlTrigger trigger, @Nonnull Consumer<TreeTypesSet> consumer) {
-        return TreeTypesSet.create(trigger + " trigger", this.data.log(), consumer);
     }
 }

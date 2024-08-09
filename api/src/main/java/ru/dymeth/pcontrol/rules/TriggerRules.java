@@ -1,9 +1,18 @@
 package ru.dymeth.pcontrol.rules;
 
+import org.bukkit.Material;
+import org.bukkit.TreeType;
+import org.bukkit.entity.EntityType;
 import ru.dymeth.pcontrol.data.PControlData;
 import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
+import ru.dymeth.pcontrol.set.material.BlockTypesSet;
+import ru.dymeth.pcontrol.set.EntityTypesSet;
+import ru.dymeth.pcontrol.set.material.ItemTypesSet;
+import ru.dymeth.pcontrol.set.TreeTypesSet;
 
 import javax.annotation.Nonnull;
+import java.util.Set;
+import java.util.function.Consumer;
 
 public abstract class TriggerRules<T> {
 
@@ -35,5 +44,25 @@ public abstract class TriggerRules<T> {
 
         //noinspection unchecked
         return (T) this;
+    }
+
+    @Nonnull
+    protected Set<Material> blocksSet(boolean allowAir, @Nonnull PControlTrigger trigger, @Nonnull Consumer<BlockTypesSet> consumer) {
+        return BlockTypesSet.createPrimitive(allowAir, trigger + " trigger", this.data.log(), consumer);
+    }
+
+    @Nonnull
+    protected Set<Material> itemsSet(boolean allowAir, @Nonnull PControlTrigger trigger, @Nonnull Consumer<ItemTypesSet> consumer) {
+        return ItemTypesSet.createPrimitive(allowAir, trigger + " trigger", this.data.log(), consumer);
+    }
+
+    @Nonnull
+    protected Set<EntityType> entitiesSet(@Nonnull PControlTrigger trigger, @Nonnull Consumer<EntityTypesSet> consumer) {
+        return EntityTypesSet.create(trigger + " trigger", this.data.log(), consumer);
+    }
+
+    @Nonnull
+    protected Set<TreeType> treesSet(@Nonnull PControlTrigger trigger, @Nonnull Consumer<TreeTypesSet> consumer) {
+        return TreeTypesSet.create(trigger + " trigger", this.data.log(), consumer);
     }
 }

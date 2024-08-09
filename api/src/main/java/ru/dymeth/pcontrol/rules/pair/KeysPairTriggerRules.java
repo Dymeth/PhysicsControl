@@ -18,9 +18,9 @@ public abstract class KeysPairTriggerRules<T, K1, K2> extends TriggerRules<T> {
     }
 
     @Nonnull
-    public T regPair(@Nonnull PControlTrigger trigger,
-                     @Nonnull Iterable<K1> firstKeysSet,
-                     @Nonnull Iterable<K2> secondKeysSet
+    protected T regPair(@Nonnull PControlTrigger trigger,
+                        @Nonnull Iterable<K1> firstKeysSet,
+                        @Nonnull Iterable<K2> secondKeysSet
     ) {
         int rulesAdded = 0;
         PControlTrigger previousTrigger;

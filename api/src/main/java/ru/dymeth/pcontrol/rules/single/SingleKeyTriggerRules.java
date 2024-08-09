@@ -18,8 +18,8 @@ public abstract class SingleKeyTriggerRules<T, K1> extends TriggerRules<T> {
     }
 
     @Nonnull
-    public T regSingle(@Nonnull PControlTrigger trigger,
-                       @Nonnull Iterable<K1> keysSet
+    protected T regSingle(@Nonnull PControlTrigger trigger,
+                          @Nonnull Iterable<K1> keysSet
     ) {
         int rulesAdded = 0;
         PControlTrigger previousTrigger;

@@ -2,7 +2,7 @@ package ru.dymeth.pcontrol.data.category;
 
 import org.bukkit.Material;
 import ru.dymeth.pcontrol.data.PControlData;
-import ru.dymeth.pcontrol.set.ItemsSet;
+import ru.dymeth.pcontrol.set.material.ItemTypesSet;
 
 import javax.annotation.Nonnull;
 import java.util.LinkedHashMap;
@@ -95,11 +95,11 @@ public class CategoriesRegistry {
     @Nonnull
     private PControlCategory reg(@Nonnull String categoryName,
                                  int row, int column,
-                                 @Nonnull Consumer<ItemsSet> iconConsumer
+                                 @Nonnull Consumer<ItemTypesSet> iconConsumer
     ) {
         PControlCategory result = new PControlCategory(categoryName,
             row, column,
-            ItemsSet.create(categoryName + " category icon", this.data.log(), iconConsumer)
+            ItemTypesSet.create(false, categoryName + " category icon", this.data.log(), iconConsumer)
         );
         this.valuesByName.put(categoryName, result);
         return result;

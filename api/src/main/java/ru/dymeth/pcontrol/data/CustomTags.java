@@ -2,7 +2,7 @@ package ru.dymeth.pcontrol.data;
 
 import org.bukkit.Material;
 import org.bukkit.Tag;
-import ru.dymeth.pcontrol.set.BlocksSet;
+import ru.dymeth.pcontrol.set.material.BlockTypesSet;
 
 import javax.annotation.Nonnull;
 import java.util.Set;
@@ -452,7 +452,7 @@ public final class CustomTags {
     }
 
     @Nonnull
-    public Set<Material> blocksSet(@Nonnull PControlData data, @Nonnull String setName, @Nonnull Consumer<BlocksSet> consumer) {
-        return BlocksSet.createPrimitive(setName, data.log(), consumer);
+    private Set<Material> blocksSet(@Nonnull PControlData data, @Nonnull String setName, @Nonnull Consumer<BlockTypesSet> consumer) {
+        return BlockTypesSet.createPrimitive(true, setName, data.log(), consumer);
     }
 }

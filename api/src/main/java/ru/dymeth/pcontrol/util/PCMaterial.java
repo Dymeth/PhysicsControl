@@ -134,6 +134,10 @@ public class PCMaterial {
         return MaterialUtils.isBlockMaterial(this.material, allowAir);
     }
 
+    public boolean isValidMaterial(boolean allowAir) {
+        return MaterialUtils.isValidMaterial(this.material, allowAir);
+    }
+
     public boolean isAirMaterial() {
         return MaterialUtils.isAirMaterial(this.material);
     }

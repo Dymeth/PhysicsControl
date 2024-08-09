@@ -41,6 +41,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.logging.Level;
 
 public final class PControlDataBukkit implements PControlData {
     private final JavaPlugin plugin;
@@ -75,8 +76,7 @@ public final class PControlDataBukkit implements PControlData {
         try {
             new PluginDataUpdater(plugin);
         } catch (Throwable t) {
-            this.plugin.getLogger().warning("Unable to update config from previous plugin version:");
-            t.printStackTrace();
+            this.plugin.getLogger().log(Level.WARNING, "Unable to update config from previous plugin version", t);
         }
 
         this.serverVersion = new MinecraftVersion(plugin);
@@ -181,8 +181,7 @@ public final class PControlDataBukkit implements PControlData {
         try {
             this.metrics = new Metrics(this.plugin, this.metricsServiceId);
         } catch (Throwable t) {
-            this.plugin.getLogger().warning("Unable to init metrics:");
-            t.printStackTrace();
+            this.plugin.getLogger().log(Level.WARNING, "Unable to init metrics", t);
         }
     }
 

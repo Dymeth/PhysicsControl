@@ -21,13 +21,18 @@ public class MaterialUtils {
     }
 
     @Nonnull
-    public static Set<PCMaterial> getItemMaterials(@Nullable Consumer<String> onFail, @Nonnull String... names) {
-        return getMaterials(material -> material.isItemMaterial(false), onFail, names);
+    public static Set<PCMaterial> getItemMaterials(boolean allowAir, @Nullable Consumer<String> onFail, @Nonnull String... names) {
+        return getMaterials(material -> material.isItemMaterial(allowAir), onFail, names);
     }
 
     @Nonnull
-    public static Set<PCMaterial> getBlockMaterials(@Nullable Consumer<String> onFail, @Nonnull String... names) {
-        return getMaterials(material -> material.isBlockMaterial(false), onFail, names);
+    public static Set<PCMaterial> getBlockMaterials(boolean allowAir, @Nullable Consumer<String> onFail, @Nonnull String... names) {
+        return getMaterials(material -> material.isBlockMaterial(allowAir), onFail, names);
+    }
+
+    @Nonnull
+    public static Set<PCMaterial> getValidMaterials(boolean allowAir, @Nullable Consumer<String> onFail, @Nonnull String... names) {
+        return getMaterials(material -> material.isValidMaterial(allowAir), onFail, names);
     }
 
     public static boolean isItemMaterial(@Nullable Material material, boolean allowAir) {
@@ -39,6 +44,11 @@ public class MaterialUtils {
     public static boolean isBlockMaterial(@Nullable Material material, boolean allowAir) {
         if (material == null || isLegacyMaterial(material)) return false;
         if (!material.isBlock()) return false;
+        return allowAir || !isAirMaterial(material);
+    }
+
+    public static boolean isValidMaterial(@Nullable Material material, boolean allowAir) {
+        if (material == null || isLegacyMaterial(material)) return false;
         return allowAir || !isAirMaterial(material);
     }
 

@@ -4,7 +4,7 @@ import org.bukkit.Material;
 import ru.dymeth.pcontrol.data.PControlData;
 import ru.dymeth.pcontrol.data.category.CategoriesRegistry;
 import ru.dymeth.pcontrol.data.category.PControlCategory;
-import ru.dymeth.pcontrol.set.ItemsSet;
+import ru.dymeth.pcontrol.set.material.ItemTypesSet;
 
 import javax.annotation.Nonnull;
 import java.util.LinkedHashMap;
@@ -599,11 +599,11 @@ public class TriggersRegistry {
     @Nonnull
     private PControlTrigger reg(@Nonnull String triggerName,
                                 @Nonnull PControlCategory category, boolean realtime, boolean defaults,
-                                @Nonnull Consumer<ItemsSet> iconConsumer
+                                @Nonnull Consumer<ItemTypesSet> iconConsumer
     ) {
         PControlTrigger result = new PControlTrigger(triggerName,
             category, realtime, defaults,
-            ItemsSet.create(triggerName + " trigger icon", this.data.log(), iconConsumer)
+            ItemTypesSet.create(false, triggerName + " trigger icon", this.data.log(), iconConsumer)
         );
         category.addTrigger(result);
         this.valuesByName.put(triggerName, result);
