@@ -36,10 +36,7 @@ import ru.dymeth.pcontrol.versionsadapter.VersionsAdapterModern;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.logging.Level;
 
@@ -403,30 +400,30 @@ public final class PControlDataBukkit implements PControlData {
     @Nonnull
     @Override
     public CustomTags tags() {
-        return this.customTags;
+        return Objects.requireNonNull(this.customTags, "Custom tags not initialized yet");
     }
 
     @Nonnull
     @Override
     public CategoriesRegistry categories() {
-        return this.categories;
+        return Objects.requireNonNull(this.categories, "Categories not initialized yet");
     }
 
     @Nonnull
     @Override
     public TriggersRegistry triggers() {
-        return this.triggers;
+        return Objects.requireNonNull(this.triggers, "Triggers not initialized yet");
     }
 
     @Nonnull
     @Override
     public VersionsAdapter getVersionsAdapter() {
-        return this.versionsAdapter;
+        return Objects.requireNonNull(this.versionsAdapter, "Versions adapter not initialized yet");
     }
 
     @Nonnull
     @Override
     public TextHelper getTextHelper() {
-        return this.textHelper;
+        return Objects.requireNonNull(this.textHelper, "Text helper adapter not initialized yet");
     }
 }
