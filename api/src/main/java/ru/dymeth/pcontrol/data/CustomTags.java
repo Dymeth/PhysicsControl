@@ -70,7 +70,7 @@ public final class CustomTags {
                 set.addPrimitive(Material.BIRCH_DOOR);
                 set.addPrimitive(Material.DARK_OAK_DOOR);
                 set.addPrimitive(Material.JUNGLE_DOOR);
-                set.addPrimitive(Material.SPRUCE_FENCE);
+                set.addPrimitive(Material.SPRUCE_DOOR);
             } else {
                 set.addPrimitive(Tag.WOODEN_DOORS.getValues());
             }
