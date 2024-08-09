@@ -372,7 +372,6 @@ public final class CustomTags {
         TORCHES = blocksSet(data, "TORCHES", set -> {
             set.addPrimitive(Material.TORCH);
             if (data.hasVersion(1, 13, 0)) {
-                set.addPrimitive(Material.TORCH);
                 set.addPrimitive(Material.WALL_TORCH);
             }
         });
