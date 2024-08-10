@@ -10,17 +10,17 @@ import org.bukkit.material.Attachable;
 import org.bukkit.material.Dye;
 import org.bukkit.material.MaterialData;
 import ru.dymeth.pcontrol.VersionsAdapter;
-import ru.dymeth.pcontrol.data.CustomTags;
 import ru.dymeth.pcontrol.data.PControlData;
 
 import javax.annotation.Nonnull;
+import java.util.Set;
 
 public class VersionsAdapterLegacy implements VersionsAdapter {
 
-    private final CustomTags tags;
+    private final Set<Material> blocksUnderWaterOnly;
 
     public VersionsAdapterLegacy(@Nonnull PControlData data) {
-        this.tags = data.getCustomTags();
+        this.blocksUnderWaterOnly = data.getCustomTags().getTag("blocks_under_water_only", Material.class);
     }
 
     @Nonnull
@@ -36,7 +36,7 @@ public class VersionsAdapterLegacy implements VersionsAdapter {
 
     @Override
     public boolean isBlockContainsWater(@Nonnull Block block) {
-        return this.tags.blocks_under_water_only.contains(block.getType());
+        return this.blocksUnderWaterOnly.contains(block.getType());
     }
 
     @Override

@@ -13,7 +13,6 @@ import ru.dymeth.pcontrol.util.ReflectionUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,50 +63,54 @@ public class TypesSetsParser {
     ) {
         return set -> {
             for (String elementRaw : elements) {
-                String[] args = elementRaw.split(" ");
-                if (args.length < 1 || args.length > (parseVersion ? 2 : 1)) {
-                    throw new IllegalArgumentException("Wrong element format: " + elementRaw);
-                }
-
-                if (parseVersion && args.length > 1 && !this.isVersionSupported(args[0])) continue;
-
-                String elementOrTagName = args[args.length - 1];
-
-                if (elementOrTagName.startsWith("#")) {
-
-                    Collection<E> values;
-
-                    elementOrTagName = elementOrTagName.substring("#".length()).toLowerCase();
-                    if (elementOrTagName.startsWith(CUSTOM_TAG_PREFIX)) { // custom
-                        elementOrTagName = elementOrTagName.substring(CUSTOM_TAG_PREFIX.length());
-
-                        values = this.tags.getTag(elementOrTagName, typeClass);
-                        if (values == null) {
-                            throw new IllegalArgumentException("Plugin tag \"" + elementOrTagName + "\" not found for element: " + elementRaw);
-                        }
-                    } else { // bukkit
-                        if (!this.bukkitTagsSupported) {
-                            throw new IllegalArgumentException("Tags in unsupported on current server version");
-                        }
-
-                        if (!Keyed.class.isAssignableFrom(typeClass)) {
-                            throw new IllegalArgumentException("Class " + typeClass + " isn't supported vanilla tags");
-                        }
-                        //noinspection unchecked
-                        Class<? extends Keyed> keyedClass = (Class<? extends Keyed>) typeClass;
-                        Tag<? extends Keyed> tag = Bukkit.getTag(tagRegistryName, NamespacedKey.minecraft(elementOrTagName.toLowerCase()), keyedClass);
-                        if (tag == null) {
-                            throw new IllegalArgumentException("Bukkit tag \"" + elementOrTagName + "\" not found for element: " + elementRaw);
-                        }
-                        //noinspection unchecked
-                        values = tag.getValues().stream()
-                            .map(keyed -> (E) keyed)
-                            .collect(Collectors.toList());
+                try {
+                    String[] args = elementRaw.split(" ");
+                    if (args.length < 1 || args.length > (parseVersion ? 2 : 1)) {
+                        throw new IllegalArgumentException("Wrong element format");
                     }
 
-                    set.addPrimitive(values);
-                } else {
-                    set.add(elementOrTagName.toUpperCase());
+                    if (parseVersion && args.length > 1 && !this.isVersionSupported(args[0])) continue;
+
+                    String elementOrTagName = args[args.length - 1];
+
+                    if (!elementOrTagName.startsWith("#")) {
+                        set.add(elementOrTagName.toUpperCase());
+                        continue;
+                    }
+
+                    elementOrTagName = elementOrTagName.substring("#".length()).toLowerCase();
+                    if (elementOrTagName.startsWith(CUSTOM_TAG_PREFIX)) {
+                        // plugin tags
+
+                        elementOrTagName = elementOrTagName.substring(CUSTOM_TAG_PREFIX.length());
+
+                        set.addPrimitive(this.tags.getTag(elementOrTagName, typeClass));
+                        continue;
+                    }
+
+                    // bukkit tags
+
+                    if (!this.bukkitTagsSupported) {
+                        throw new IllegalArgumentException("Tags in unsupported on current server version");
+                    }
+
+                    if (!Keyed.class.isAssignableFrom(typeClass)) {
+                        throw new IllegalArgumentException("Class isn't supported vanilla tags: " + typeClass.getName());
+                    }
+
+                    //noinspection unchecked
+                    Class<? extends Keyed> keyedClass = (Class<? extends Keyed>) typeClass;
+                    Tag<? extends Keyed> tag = Bukkit.getTag(tagRegistryName, NamespacedKey.minecraft(elementOrTagName.toLowerCase()), keyedClass);
+                    if (tag == null) {
+                        throw new IllegalArgumentException("Bukkit tag not found: " + elementOrTagName);
+                    }
+
+                    //noinspection unchecked
+                    set.addPrimitive(tag.getValues().stream()
+                        .map(keyed -> (E) keyed)
+                        .collect(Collectors.toList()));
+                } catch (Throwable t) {
+                    throw new RuntimeException("Unable to parse element \"" + elementRaw + "\"", t);
                 }
             }
         };

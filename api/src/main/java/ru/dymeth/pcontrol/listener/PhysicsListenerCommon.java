@@ -34,6 +34,7 @@ import ru.dymeth.pcontrol.util.ReflectionUtils;
 import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public final class PhysicsListenerCommon extends PhysicsListener {
 
@@ -254,6 +255,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
 
     private final MaterialRules rulesPlayerInteractEventMaterial = new MaterialRules(
         this.data, PlayerInteractEvent.class, "material");
+    private final Set<Material> tagEndPortalFrames = this.data.getCustomTags().getTag("end_portal_frames", Material.class);
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     private void on(PlayerInteractEvent event) {
@@ -263,7 +265,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
             if (event.getBlockFace() != BlockFace.SELF) return;
             this.handleInteraction(this.rulesPlayerInteractEventMaterial, event, clickedBlock, event.getPlayer());
         } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (this.tags.end_portal_frames.contains(clickedBlock.getType())) {
+            if (this.tagEndPortalFrames.contains(clickedBlock.getType())) {
                 this.data.cancelIfDisabled(event, clickedBlock.getWorld(), this.triggers.END_PORTAL_FRAMES_FILLING);
             }
         }
@@ -271,10 +273,11 @@ public final class PhysicsListenerCommon extends PhysicsListener {
 
     private final MaterialRules rulesEntityInteractEventMaterial = new MaterialRules(
         this.data, EntityInteractEvent.class, "material");
+    private final Set<Material> tagWoodenDoors = this.data.getCustomTags().getTag("wooden_doors", Material.class);
 
     @EventHandler(ignoreCancelled = true)
     private void on(EntityInteractEvent event) {
-        if (event.getEntityType() == EntityType.VILLAGER && this.tags.wooden_doors.contains(event.getBlock().getType())) {
+        if (event.getEntityType() == EntityType.VILLAGER && this.tagWoodenDoors.contains(event.getBlock().getType())) {
             return;
         }
         this.handleInteraction(this.rulesEntityInteractEventMaterial, event, event.getBlock(), event.getEntity());
