@@ -39,9 +39,10 @@ public class MaterialRules extends SingleKeyTriggerRules<MaterialRules, Material
 
     @Override
     public void parse(@Nonnull ConfigurationSection section) {
+        PControlTrigger trigger = this.parseTrigger(section);
         this.regSingle(
-            this.parseTrigger(section),
-            this.parseBlockTypes(section, this.configKey, true)
+            trigger,
+            this.parseBlockTypes(trigger, section, this.configKey, true)
         );
     }
 }

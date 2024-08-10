@@ -39,9 +39,10 @@ public class TreeRules extends SingleKeyTriggerRules<TreeRules, TreeType> {
 
     @Override
     public void parse(@Nonnull ConfigurationSection section) {
+        PControlTrigger trigger = this.parseTrigger(section);
         this.regSingle(
-            this.parseTrigger(section),
-            this.parseTreeTypes(section, this.configKey)
+            trigger,
+            this.parseTreeTypes(trigger, section, this.configKey)
         );
     }
 }

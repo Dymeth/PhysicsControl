@@ -39,9 +39,10 @@ public class EntityRules extends SingleKeyTriggerRules<EntityRules, EntityType> 
 
     @Override
     public void parse(@Nonnull ConfigurationSection section) {
+        PControlTrigger trigger = this.parseTrigger(section);
         this.regSingle(
-            this.parseTrigger(section),
-            this.parseEntityTypes(section, this.configKey)
+            trigger,
+            this.parseEntityTypes(trigger, section, this.configKey)
         );
     }
 }

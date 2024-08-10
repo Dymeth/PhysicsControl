@@ -68,10 +68,10 @@ public abstract class TriggerRules<T> {
     }
 
     @Nonnull
-    protected Set<Material> parseBlockTypes(@Nonnull ConfigurationSection section, @Nonnull String configKey, boolean allowAir) {
+    protected Set<Material> parseBlockTypes(@Nonnull PControlTrigger trigger, @Nonnull ConfigurationSection section, @Nonnull String configKey, boolean allowAir) {
         return BlockTypesSet.createPrimitive(
             allowAir,
-            "config list \"" + configKey + "\"",
+            "trigger \"" + trigger.name() + "\", list \"" + configKey + "\"",
             this.data.log(),
             this.data.getTypesSetsParser().createBlockTypesParser(listOf(section, configKey), false)
         );
@@ -87,9 +87,9 @@ public abstract class TriggerRules<T> {
     }
 
     @Nonnull
-    protected Set<EntityType> parseEntityTypes(@Nonnull ConfigurationSection section, @Nonnull String configKey) {
+    protected Set<EntityType> parseEntityTypes(@Nonnull PControlTrigger trigger, @Nonnull ConfigurationSection section, @Nonnull String configKey) {
         return EntityTypesSet.createPrimitive(
-            "config list \"" + configKey + "\"",
+            "trigger \"" + trigger.name() + "\", list \"" + configKey + "\"",
             this.data.log(),
             this.data.getTypesSetsParser().createEntityTypesParser(listOf(section, configKey), false)
         );
@@ -106,10 +106,10 @@ public abstract class TriggerRules<T> {
     }
 
     @Nonnull
-    protected Set<Material> parseItemTypes(@Nonnull ConfigurationSection section, @Nonnull String configKey, boolean allowAir) {
+    protected Set<Material> parseItemTypes(@Nonnull PControlTrigger trigger, @Nonnull ConfigurationSection section, @Nonnull String configKey, boolean allowAir) {
         return ItemTypesSet.createPrimitive(
             allowAir,
-            "config list \"" + configKey + "\"",
+            "trigger \"" + trigger.name() + "\", list \"" + configKey + "\"",
             this.data.log(),
             this.data.getTypesSetsParser().createItemTypesParser(listOf(section, configKey), false)
         );
@@ -125,9 +125,9 @@ public abstract class TriggerRules<T> {
     }
 
     @Nonnull
-    protected Set<TreeType> parseTreeTypes(@Nonnull ConfigurationSection section, @Nonnull String configKey) {
+    protected Set<TreeType> parseTreeTypes(@Nonnull PControlTrigger trigger, @Nonnull ConfigurationSection section, @Nonnull String configKey) {
         return TreeTypesSet.createPrimitive(
-            "config list \"" + configKey + "\"",
+            "trigger \"" + trigger.name() + "\", list \"" + configKey + "\"",
             this.data.log(),
             this.data.getTypesSetsParser().createTreeTypesParser(listOf(section, configKey), false)
         );

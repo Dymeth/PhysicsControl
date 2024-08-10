@@ -71,10 +71,11 @@ public class EntityMaterialRules extends KeysPairTriggerRules<EntityMaterialRule
 
     @Override
     public void parse(@Nonnull ConfigurationSection section) {
+        PControlTrigger trigger = this.parseTrigger(section);
         this.regPair(
-            this.parseTrigger(section),
-            this.parseEntityTypes(section, this.configKey1),
-            this.parseBlockTypes(section, this.configKey2, true)
+            trigger,
+            this.parseEntityTypes(trigger, section, this.configKey1),
+            this.parseBlockTypes(trigger, section, this.configKey2, true)
         );
     }
 }
