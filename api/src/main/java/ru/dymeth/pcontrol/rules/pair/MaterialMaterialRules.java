@@ -2,6 +2,7 @@ package ru.dymeth.pcontrol.rules.pair;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.event.Event;
 import ru.dymeth.pcontrol.data.PControlData;
 import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
 import ru.dymeth.pcontrol.set.material.BlockTypesSet;
@@ -13,8 +14,12 @@ public class MaterialMaterialRules extends KeysPairTriggerRules<MaterialMaterial
     private final @Nonnull String configKey1;
     private final @Nonnull String configKey2;
 
-    public MaterialMaterialRules(@Nonnull PControlData data, @Nonnull String configKey1, @Nonnull String configKey2) {
-        super(data, configKey1, configKey2);
+    public MaterialMaterialRules(@Nonnull PControlData data,
+                                 @Nonnull Class<? extends Event> eventClass,
+                                 @Nonnull String configKey1,
+                                 @Nonnull String configKey2
+    ) {
+        super(data, eventClass, configKey1, configKey2);
         this.configKey1 = configKey1;
         this.configKey2 = configKey2;
     }

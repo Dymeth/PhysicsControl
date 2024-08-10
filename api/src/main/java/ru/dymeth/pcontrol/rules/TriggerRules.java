@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.TreeType;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.EntityType;
+import org.bukkit.event.Event;
 import ru.dymeth.pcontrol.data.PControlData;
 import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
 import ru.dymeth.pcontrol.set.EntityTypesSet;
@@ -27,12 +28,22 @@ public abstract class TriggerRules<T> {
         return TOTAL_RULES_REGISTERED;
     }
 
-    protected final PControlData data;
+    protected final @Nonnull PControlData data;
+    private final @Nonnull Class<? extends Event> eventClass;
     private final @Nonnull List<String> parameterNames;
 
-    protected TriggerRules(@Nonnull PControlData data, @Nonnull String... parameterNames) {
+    protected TriggerRules(@Nonnull PControlData data,
+                           @Nonnull Class<? extends Event> eventClass,
+                           @Nonnull String... parameterNames
+    ) {
         this.data = data;
+        this.eventClass = eventClass;
         this.parameterNames = Arrays.asList(parameterNames);
+    }
+
+    @Nonnull
+    public Class<? extends Event> getEventClass() {
+        return this.eventClass;
     }
 
     @Nonnull
@@ -154,4 +165,6 @@ public abstract class TriggerRules<T> {
         if (triggerName == null) throw new IllegalArgumentException("Trigger name not found");
         return this.data.getTriggersRegisty().valueOf(triggerName);
     }
+
+    public abstract void unregisterAll();
 }

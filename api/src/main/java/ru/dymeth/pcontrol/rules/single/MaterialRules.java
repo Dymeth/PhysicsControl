@@ -2,6 +2,7 @@ package ru.dymeth.pcontrol.rules.single;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.event.Event;
 import ru.dymeth.pcontrol.data.PControlData;
 import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
 import ru.dymeth.pcontrol.set.material.BlockTypesSet;
@@ -12,8 +13,11 @@ import java.util.function.Consumer;
 public class MaterialRules extends SingleKeyTriggerRules<MaterialRules, Material> {
     private final @Nonnull String configKey;
 
-    public MaterialRules(@Nonnull PControlData data, @Nonnull String configKey) {
-        super(data, configKey);
+    public MaterialRules(@Nonnull PControlData data,
+                         @Nonnull Class<? extends Event> eventClass,
+                         @Nonnull String configKey
+    ) {
+        super(data, eventClass, configKey);
         this.configKey = configKey;
     }
 

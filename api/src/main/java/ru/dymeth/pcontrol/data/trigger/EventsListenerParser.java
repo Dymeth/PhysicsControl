@@ -21,12 +21,11 @@ public class EventsListenerParser {
         this.data = data;
     }
 
-    public void registerParser(@Nonnull Class<? extends Event> eventClass,
-                               @Nonnull TriggerRules<?> trigger
-    ) {
+    public void registerParser(@Nonnull TriggerRules<?> trigger) {
         List<String> parameterNames = trigger.getParameterNames();
         if (parameterNames.isEmpty()) throw new IllegalArgumentException("No parameter names provided");
 
+        Class<? extends Event> eventClass = trigger.getEventClass();
         List<TriggerRules<?>> listeners = this.registeredRules
             .computeIfAbsent(eventClass, aClass -> new ArrayList<>());
         if (this.getTrigger(listeners, parameterNames) != null) {
