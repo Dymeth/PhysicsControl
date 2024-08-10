@@ -88,7 +88,7 @@ bone_meal_herbs:
 little_mushrooms:
   - 'red_mushroom'
   - 'brown_mushroom'
-underwater_blocks_only:
+blocks_under_water_only:
   - '#physicscontrol_water'
   - '1.13+ bubble_column'
   - '1.13+ kelp_plant'

@@ -27,30 +27,30 @@ public class TypesSetsParser {
     private final @Nonnull CustomTags tags;
     private final boolean bukkitTagsSupported;
 
-    public TypesSetsParser(@Nonnull PControlData data, @Nonnull CustomTags tags) {
+    public TypesSetsParser(@Nonnull PControlData data) {
         this.data = data;
-        this.tags = tags;
+        this.tags = data.getCustomTags();
         this.bukkitTagsSupported = ReflectionUtils.isClassPresent("org.bukkit.Tag");
     }
 
     @Nonnull
-    public Consumer<BlockTypesSet> createBlockTypesParser(@Nonnull List<String> elements) {
-        return this.createSetConsumer(elements, "blocks", Material.class);
+    public Consumer<BlockTypesSet> createBlockTypesParser(@Nonnull List<String> elements, boolean parseVersion) {
+        return this.createSetConsumer(elements, "blocks", Material.class, parseVersion);
     }
 
     @Nonnull
-    public Consumer<EntityTypesSet> createEntityTypesParser(@Nonnull List<String> elements) {
-        return this.createSetConsumer(elements, "entity_types", EntityType.class);
+    public Consumer<EntityTypesSet> createEntityTypesParser(@Nonnull List<String> elements, boolean parseVersion) {
+        return this.createSetConsumer(elements, "entity_types", EntityType.class, parseVersion);
     }
 
     @Nonnull
-    public Consumer<ItemTypesSet> createItemTypesParser(@Nonnull List<String> elements) {
-        return this.createSetConsumer(elements, "items", Material.class);
+    public Consumer<ItemTypesSet> createItemTypesParser(@Nonnull List<String> elements, boolean parseVersion) {
+        return this.createSetConsumer(elements, "items", Material.class, parseVersion);
     }
 
     @Nonnull
-    public Consumer<TreeTypesSet> createTreeTypesParser(@Nonnull List<String> elements) {
-        return this.createSetConsumer(elements, "tree_types", TreeType.class);
+    public Consumer<TreeTypesSet> createTreeTypesParser(@Nonnull List<String> elements, boolean parseVersion) {
+        return this.createSetConsumer(elements, "tree_types", TreeType.class, parseVersion);
     }
 
     private final Map<String, Boolean> supportedVersionsCache = new HashMap<>();
@@ -59,16 +59,17 @@ public class TypesSetsParser {
     private <E extends Enum<E>, T extends CustomEnumSet<E, ?>> Consumer<T> createSetConsumer(
         @Nonnull List<String> elements,
         @Nonnull String tagRegistryName,
-        @Nonnull Class<E> typeClass
+        @Nonnull Class<E> typeClass,
+        boolean parseVersion
     ) {
         return set -> {
             for (String elementRaw : elements) {
                 String[] args = elementRaw.split(" ");
-                if (args.length < 1 || args.length > 2) {
+                if (args.length < 1 || args.length > (parseVersion ? 2 : 1)) {
                     throw new IllegalArgumentException("Wrong element format: " + elementRaw);
                 }
 
-                if (args.length > 1 && !this.isVersionSupported(args[0])) continue;
+                if (parseVersion && args.length > 1 && !this.isVersionSupported(args[0])) continue;
 
                 String elementOrTagName = args[args.length - 1];
 
@@ -82,7 +83,7 @@ public class TypesSetsParser {
 
                         values = this.tags.getTag(elementOrTagName, typeClass);
                         if (values == null) {
-                            throw new IllegalArgumentException("Tag \"" + elementOrTagName + "\" not found for element: " + elementRaw);
+                            throw new IllegalArgumentException("Plugin tag \"" + elementOrTagName + "\" not found for element: " + elementRaw);
                         }
                     } else { // bukkit
                         if (!this.bukkitTagsSupported) {
@@ -96,7 +97,7 @@ public class TypesSetsParser {
                         Class<? extends Keyed> keyedClass = (Class<? extends Keyed>) typeClass;
                         Tag<? extends Keyed> tag = Bukkit.getTag(tagRegistryName, NamespacedKey.minecraft(elementOrTagName.toLowerCase()), keyedClass);
                         if (tag == null) {
-                            throw new IllegalArgumentException("Tag \"" + elementOrTagName + "\" not found for element: " + elementRaw);
+                            throw new IllegalArgumentException("Bukkit tag \"" + elementOrTagName + "\" not found for element: " + elementRaw);
                         }
                         //noinspection unchecked
                         values = tag.getValues().stream()

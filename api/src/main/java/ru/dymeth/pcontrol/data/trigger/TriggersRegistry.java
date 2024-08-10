@@ -109,7 +109,7 @@ public class TriggersRegistry {
 
     public TriggersRegistry(@Nonnull PControlData data) {
         this.data = data;
-        CategoriesRegistry categories = data.categories();
+        CategoriesRegistry categories = data.getCategoriesRegistry();
 
         RABBITS_EATING_CARROTS = reg("RABBITS_EATING_CARROTS",
             categories.MOBS_INTERACTIONS, false, true, set -> {
@@ -616,7 +616,7 @@ public class TriggersRegistry {
     }
 
     @Nonnull
-    public PControlTrigger valueOf(String name) {
+    public PControlTrigger valueOf(@Nonnull String name) {
         PControlTrigger result = this.valuesByName.get(name);
         if (result == null) throw new IllegalArgumentException(name);
         return result;

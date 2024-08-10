@@ -13,8 +13,8 @@ public abstract class KeysPairTriggerRules<T, K1, K2> extends TriggerRules<T> {
 
     private final Map<K1, Map<K2, PControlTrigger>> pairRules = new HashMap<>();
 
-    protected KeysPairTriggerRules(@Nonnull PControlData data) {
-        super(data);
+    protected KeysPairTriggerRules(@Nonnull PControlData data, @Nonnull String configKey1, @Nonnull String configKey2) {
+        super(data, configKey1, configKey2);
     }
 
     @Nonnull

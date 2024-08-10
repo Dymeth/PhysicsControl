@@ -20,7 +20,7 @@ public class VersionsAdapterLegacy implements VersionsAdapter {
     private final CustomTags tags;
 
     public VersionsAdapterLegacy(@Nonnull PControlData data) {
-        this.tags = data.tags();
+        this.tags = data.getCustomTags();
     }
 
     @Nonnull

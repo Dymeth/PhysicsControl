@@ -13,8 +13,8 @@ public abstract class SingleKeyTriggerRules<T, K1> extends TriggerRules<T> {
 
     private final Map<K1, PControlTrigger> singleRules = new HashMap<>();
 
-    protected SingleKeyTriggerRules(@Nonnull PControlData data) {
-        super(data);
+    protected SingleKeyTriggerRules(@Nonnull PControlData data, @Nonnull String configKey) {
+        super(data, configKey);
     }
 
     @Nonnull

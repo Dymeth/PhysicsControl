@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public final class TreeTypesSet extends CustomEnumSet<TreeType, TreeType> {
 
     @Nonnull
-    public static Set<TreeType> create(@Nonnull String setName, @Nonnull Logger logger, @Nonnull Consumer<TreeTypesSet> consumer) {
+    public static Set<TreeType> createPrimitive(@Nonnull String setName, @Nonnull Logger logger, @Nonnull Consumer<TreeTypesSet> consumer) {
         TreeTypesSet result = new TreeTypesSet();
         try {
             consumer.accept(result);

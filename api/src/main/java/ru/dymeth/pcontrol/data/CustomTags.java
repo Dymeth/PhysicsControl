@@ -5,7 +5,6 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import ru.dymeth.pcontrol.set.material.BlockTypesSet;
-import ru.dymeth.pcontrol.set.parser.TypesSetsParser;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -18,7 +17,7 @@ import java.util.function.Consumer;
 
 public final class CustomTags {
 
-    private final TypesSetsParser parser;
+    private final PControlData data;
     private final ConfigurationSection config;
     private final Map<String, Set<Material>> materialTagsByName = new HashMap<>();
 
@@ -28,7 +27,7 @@ public final class CustomTags {
         gravity_blocks;
 
     // Config tags
-    public final Set<Material>
+    public Set<Material>
         wooden_doors,
         pressure_plates,
         redstone_passive_inputs,
@@ -72,7 +71,7 @@ public final class CustomTags {
         end_portal_frames;
 
     public CustomTags(@Nonnull PControlData data) {
-        this.parser = new TypesSetsParser(data, this);
+        this.data = data;
 
         InputStream configStream = data.getPlugin().getResource("logics/tags.yml");
         if (configStream == null) {
@@ -80,13 +79,13 @@ public final class CustomTags {
         }
         this.config = YamlConfiguration.loadConfiguration(new InputStreamReader(configStream, Charsets.UTF_8));
 
-        world_air = initBlocksSet(data, "world_air", set -> {
+        this.world_air = initBlocksSet("world_air", set -> {
             set.addPrimitive(Material.AIR);
             if (data.hasVersion(1, 13, 0)) {
                 set.addPrimitive(Material.CAVE_AIR);
             }
         });
-        gravity_blocks = initBlocksSet(data, "gravity_blocks", set -> {
+        this.gravity_blocks = initBlocksSet("gravity_blocks", set -> {
             set.add(Material::hasGravity);
             if (!data.hasVersion(1, 13, 0)) {
                 set.addPrimitive(Material.DRAGON_EGG);
@@ -95,62 +94,64 @@ public final class CustomTags {
                 set.addPrimitive(Material.SCAFFOLDING);
             }
         });
+    }
 
-        wooden_doors = parseBlocksSet(data, "wooden_doors");
-        pressure_plates = parseBlocksSet(data, "pressure_plates");
-        redstone_passive_inputs = parseBlocksSet(data, "redstone_passive_inputs");
-        redstone_ore_blocks = parseBlocksSet(data, "redstone_ore_blocks");
-        water = parseBlocksSet(data, "water");
-        lava = parseBlocksSet(data, "lava");
-        sand = parseBlocksSet(data, "sand");
-        gravel = parseBlocksSet(data, "gravel");
-        anvil = parseBlocksSet(data, "anvil");
-        concrete_powders = parseBlocksSet(data, "concrete_powders");
-        natural_gravity_blocks = parseBlocksSet(data, "natural_gravity_blocks");
-        bone_meal_herbs = parseBlocksSet(data, "bone_meal_herbs");
-        little_mushrooms = parseBlocksSet(data, "little_mushrooms");
-        blocks_under_water_only = parseBlocksSet(data, "underwater_blocks_only");
-        grass_block = parseBlocksSet(data, "grass_block");
-        dirt_path_block = parseBlocksSet(data, "dirt_path_block");
-        farmland_block = parseBlocksSet(data, "farmland_block");
-        mycelium_block = parseBlocksSet(data, "mycelium_block");
-        sugar_cane_block = parseBlocksSet(data, "sugar_cane_block");
-        nether_wart_block = parseBlocksSet(data, "nether_wart_block");
-        wheat_block = parseBlocksSet(data, "wheat_block");
-        potato_block = parseBlocksSet(data, "potato_block");
-        carrot_block = parseBlocksSet(data, "carrot_block");
-        beetroot_block = parseBlocksSet(data, "beetroot_block");
-        pumpkin_stem_and_block = parseBlocksSet(data, "pumpkin_stem_and_block");
-        melon_stem_and_block = parseBlocksSet(data, "melon_stem_and_block");
-        fences = parseBlocksSet(data, "fences");
-        saplings = parseBlocksSet(data, "saplings");
-        ladders = parseBlocksSet(data, "ladders");
-        signs = parseBlocksSet(data, "signs");
-        rails = parseBlocksSet(data, "rails");
-        torches = parseBlocksSet(data, "torches");
-        redstone_torches = parseBlocksSet(data, "redstone_torches");
-        soul_torches = parseBlocksSet(data, "soul_torches");
-        all_alive_corals = parseBlocksSet(data, "all_alive_corals");
-        dead_coral_plants = parseBlocksSet(data, "dead_coral_plants");
-        dead_corals = parseBlocksSet(data, "dead_corals");
-        dead_wall_corals = parseBlocksSet(data, "dead_wall_corals");
-        dead_coral_blocks = parseBlocksSet(data, "dead_coral_blocks");
-        all_dead_corals = parseBlocksSet(data, "all_dead_corals");
-        end_portal_frames = parseBlocksSet(data, "end_portal_frames");
+    public void parseTags() {
+        this.wooden_doors = parseBlocksSet("wooden_doors");
+        this.pressure_plates = parseBlocksSet("pressure_plates");
+        this.redstone_passive_inputs = parseBlocksSet("redstone_passive_inputs");
+        this.redstone_ore_blocks = parseBlocksSet("redstone_ore_blocks");
+        this.water = parseBlocksSet("water");
+        this.lava = parseBlocksSet("lava");
+        this.sand = parseBlocksSet("sand");
+        this.gravel = parseBlocksSet("gravel");
+        this.anvil = parseBlocksSet("anvil");
+        this.concrete_powders = parseBlocksSet("concrete_powders");
+        this.natural_gravity_blocks = parseBlocksSet("natural_gravity_blocks");
+        this.bone_meal_herbs = parseBlocksSet("bone_meal_herbs");
+        this.little_mushrooms = parseBlocksSet("little_mushrooms");
+        this.blocks_under_water_only = parseBlocksSet("blocks_under_water_only");
+        this.grass_block = parseBlocksSet("grass_block");
+        this.dirt_path_block = parseBlocksSet("dirt_path_block");
+        this.farmland_block = parseBlocksSet("farmland_block");
+        this.mycelium_block = parseBlocksSet("mycelium_block");
+        this.sugar_cane_block = parseBlocksSet("sugar_cane_block");
+        this.nether_wart_block = parseBlocksSet("nether_wart_block");
+        this.wheat_block = parseBlocksSet("wheat_block");
+        this.potato_block = parseBlocksSet("potato_block");
+        this.carrot_block = parseBlocksSet("carrot_block");
+        this.beetroot_block = parseBlocksSet("beetroot_block");
+        this.pumpkin_stem_and_block = parseBlocksSet("pumpkin_stem_and_block");
+        this.melon_stem_and_block = parseBlocksSet("melon_stem_and_block");
+        this.fences = parseBlocksSet("fences");
+        this.saplings = parseBlocksSet("saplings");
+        this.ladders = parseBlocksSet("ladders");
+        this.signs = parseBlocksSet("signs");
+        this.rails = parseBlocksSet("rails");
+        this.torches = parseBlocksSet("torches");
+        this.redstone_torches = parseBlocksSet("redstone_torches");
+        this.soul_torches = parseBlocksSet("soul_torches");
+        this.all_alive_corals = parseBlocksSet("all_alive_corals");
+        this.dead_coral_plants = parseBlocksSet("dead_coral_plants");
+        this.dead_corals = parseBlocksSet("dead_corals");
+        this.dead_wall_corals = parseBlocksSet("dead_wall_corals");
+        this.dead_coral_blocks = parseBlocksSet("dead_coral_blocks");
+        this.all_dead_corals = parseBlocksSet("all_dead_corals");
+        this.end_portal_frames = parseBlocksSet("end_portal_frames");
     }
 
     @Nonnull
-    private Set<Material> initBlocksSet(@Nonnull PControlData data, @Nonnull String tagName, @Nonnull Consumer<BlockTypesSet> consumer) {
-        return this.registerMaterialTag(tagName, BlockTypesSet.createPrimitive(true, tagName, data.log(), consumer));
+    private Set<Material> initBlocksSet(@Nonnull String tagName, @Nonnull Consumer<BlockTypesSet> consumer) {
+        return this.registerMaterialTag(tagName, BlockTypesSet.createPrimitive(true, tagName, this.data.log(), consumer));
     }
 
     @Nonnull
-    private Set<Material> parseBlocksSet(@Nonnull PControlData data, @Nonnull String tagName) {
+    private Set<Material> parseBlocksSet(@Nonnull String tagName) {
         return this.registerMaterialTag(tagName, BlockTypesSet.createPrimitive(
             true,
             tagName,
-            data.log(),
-            this.parser.createBlockTypesParser(this.config.getStringList(tagName))
+            this.data.log(),
+            this.data.getTypesSetsParser().createBlockTypesParser(this.config.getStringList(tagName), true)
         ));
     }
 

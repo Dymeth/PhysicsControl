@@ -19,7 +19,7 @@ public class VersionsAdapterModern implements VersionsAdapter {
     private final CustomTags tags;
 
     public VersionsAdapterModern(@Nonnull PControlData data) {
-        this.tags = data.tags();
+        this.tags = data.getCustomTags();
     }
 
     @Nonnull

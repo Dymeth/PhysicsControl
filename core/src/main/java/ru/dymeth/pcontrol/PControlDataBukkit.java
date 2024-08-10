@@ -15,6 +15,7 @@ import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
 import ru.dymeth.pcontrol.data.trigger.TriggersRegistry;
 import ru.dymeth.pcontrol.inventory.PControlInventory;
 import ru.dymeth.pcontrol.inventory.PControlTriggerInventory;
+import ru.dymeth.pcontrol.set.parser.TypesSetsParser;
 import ru.dymeth.pcontrol.text.CommonColor;
 import ru.dymeth.pcontrol.text.NullText;
 import ru.dymeth.pcontrol.text.Text;
@@ -55,6 +56,7 @@ public final class PControlDataBukkit implements PControlData {
     private final Map<World, Map<PControlCategory, PControlTriggerInventory>> inventories = new HashMap<>();
     private Metrics metrics = null;
     private String langKey = null;
+    private final TypesSetsParser typesSetsParser;
     private final CustomTags customTags;
     private final CategoriesRegistry categories;
     private final TriggersRegistry triggers;
@@ -86,6 +88,8 @@ public final class PControlDataBukkit implements PControlData {
             "TRIDENT");
 
         this.customTags = new CustomTags(this);
+        this.typesSetsParser = new TypesSetsParser(this);
+        this.customTags.parseTags();
         this.categories = new CategoriesRegistry(this);
         this.triggers = new TriggersRegistry(this);
 
@@ -399,20 +403,26 @@ public final class PControlDataBukkit implements PControlData {
 
     @Nonnull
     @Override
-    public CustomTags tags() {
+    public TypesSetsParser getTypesSetsParser() {
+        return Objects.requireNonNull(this.typesSetsParser, "Type sets parser not initialized yet");
+    }
+
+    @Nonnull
+    @Override
+    public CustomTags getCustomTags() {
         return Objects.requireNonNull(this.customTags, "Custom tags not initialized yet");
     }
 
     @Nonnull
     @Override
-    public CategoriesRegistry categories() {
-        return Objects.requireNonNull(this.categories, "Categories not initialized yet");
+    public CategoriesRegistry getCategoriesRegistry() {
+        return Objects.requireNonNull(this.categories, "Categories registry not initialized yet");
     }
 
     @Nonnull
     @Override
-    public TriggersRegistry triggers() {
-        return Objects.requireNonNull(this.triggers, "Triggers not initialized yet");
+    public TriggersRegistry getTriggersRegisty() {
+        return Objects.requireNonNull(this.triggers, "Triggers registry not initialized yet");
     }
 
     @Nonnull

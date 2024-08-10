@@ -13,6 +13,7 @@ import ru.dymeth.pcontrol.data.category.CategoriesRegistry;
 import ru.dymeth.pcontrol.data.category.PControlCategory;
 import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
 import ru.dymeth.pcontrol.data.trigger.TriggersRegistry;
+import ru.dymeth.pcontrol.set.parser.TypesSetsParser;
 import ru.dymeth.pcontrol.text.Text;
 import ru.dymeth.pcontrol.text.TextHelper;
 
@@ -69,17 +70,20 @@ public interface PControlData {
     void announce(@Nullable World world, @Nonnull Text text);
 
     @Nonnull
-    CustomTags tags();
+    CustomTags getCustomTags();
 
     @Nonnull
-    CategoriesRegistry categories();
+    CategoriesRegistry getCategoriesRegistry();
 
     @Nonnull
-    TriggersRegistry triggers();
+    TriggersRegistry getTriggersRegisty();
 
     @Nonnull
     VersionsAdapter getVersionsAdapter();
 
     @Nonnull
     TextHelper getTextHelper();
+
+    @Nonnull
+    TypesSetsParser getTypesSetsParser();
 }

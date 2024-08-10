@@ -21,7 +21,11 @@ import java.util.stream.Collectors;
 public final class BlockTypesSet extends KeyedEnumSet<Material, PCMaterial> {
 
     @Nonnull
-    public static Set<Material> createPrimitive(boolean allowAir, @Nonnull String setName, @Nonnull Logger logger, @Nonnull Consumer<BlockTypesSet> consumer) {
+    public static Set<Material> createPrimitive(boolean allowAir,
+                                                @Nonnull String setName,
+                                                @Nonnull Logger logger,
+                                                @Nonnull Consumer<BlockTypesSet> consumer
+    ) {
         return create(allowAir, setName, logger, consumer)
             .stream()
             .map(PCMaterial::getType)
@@ -29,7 +33,11 @@ public final class BlockTypesSet extends KeyedEnumSet<Material, PCMaterial> {
     }
 
     @Nonnull
-    public static Set<PCMaterial> create(boolean allowAir, @Nonnull String setName, @Nonnull Logger logger, @Nonnull Consumer<BlockTypesSet> consumer) {
+    public static Set<PCMaterial> create(boolean allowAir,
+                                         @Nonnull String setName,
+                                         @Nonnull Logger logger,
+                                         @Nonnull Consumer<BlockTypesSet> consumer
+    ) {
         BlockTypesSet result = new BlockTypesSet(allowAir);
         try {
             consumer.accept(result);
