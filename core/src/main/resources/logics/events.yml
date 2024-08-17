@@ -397,59 +397,63 @@ org/bukkit/event/block/BlockSpreadEvent:
 org/bukkit/event/player/PlayerInteractEvent:
   1:
     trigger: "FARMLANDS_TRAMPLING"
-    material: "#physicscontrol_farmland_block"
+    physical-material: "#physicscontrol_farmland_block"
   2:
     trigger: "IGNORED_STATE" # Redstone activators
-    material: "#physicscontrol_redstone_passive_inputs"
+    physical-material: "#physicscontrol_redstone_passive_inputs"
   3:
     trigger: "IGNORED_STATE" # Redstone ore activation
-    material: "#physicscontrol_redstone_ore_blocks"
+    physical-material: "#physicscontrol_redstone_ore_blocks"
   4:
+    trigger: "END_PORTAL_FRAMES_FILLING"
+    right-clicked-material: "#physicscontrol_end_portal_frames"
+  5:
     trigger: "TURTLE_EGGS_TRAMPLING"
     min-version: "1.13"
-    material: "turtle_egg"
-  5:
+    physical-material: "turtle_egg"
+  6:
     trigger: "IGNORED_STATE" # Control by DRIPLEAFS_LOWERING
     min-version: "1.17"
-    material: "big_dripleaf"
-  6:
-    trigger: "IGNORED_STATE"
-    min-version: "1.17"
-    material: "sculk_sensor"
+    physical-material: "big_dripleaf"
   7:
     trigger: "IGNORED_STATE"
-    min-version: "1.20"
-    material: "calibrated_sculk_sensor"
+    min-version: "1.17"
+    physical-material: "sculk_sensor"
   8:
-    trigger: "END_PORTAL_FRAMES_FILLING"
-    material: "#physicscontrol_end_portal_frames"
+    trigger: "IGNORED_STATE"
+    min-version: "1.20"
+    physical-material: "calibrated_sculk_sensor"
   9:
     trigger: "IGNORED_STATE"
     min-version: "1.19"
-    material: "sculk_shrieker"
+    physical-material: "sculk_shrieker"
 org/bukkit/event/entity/EntityInteractEvent:
   1:
+    trigger: "IGNORED_STATE"
+    interacted-by: "villager"
+    material: "#physicscontrol_wooden_doors"
+  2:
     trigger: "FARMLANDS_TRAMPLING"
     material: "#physicscontrol_farmland_block"
-  2:
+  3:
     trigger: "IGNORED_STATE" # Redstone activators
     material: "#physicscontrol_redstone_passive_inputs"
-  3:
+  4:
     trigger: "IGNORED_STATE" # Redstone ore activation
     material: "#physicscontrol_redstone_ore_blocks"
-  4:
+  5:
     trigger: "TURTLE_EGGS_TRAMPLING"
     min-version: "1.13"
     material: "turtle_egg"
-  5:
+  6:
     trigger: "IGNORED_STATE" # Control by DRIPLEAFS_LOWERING
     min-version: "1.17"
     material: "big_dripleaf"
-  6:
+  7:
     trigger: "IGNORED_STATE"
     min-version: "1.17"
     material: "sculk_sensor"
-  7:
+  8:
     trigger: "IGNORED_STATE"
     min-version: "1.20"
     material: "calibrated_sculk_sensor"

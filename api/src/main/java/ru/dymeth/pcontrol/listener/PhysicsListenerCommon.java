@@ -32,9 +32,9 @@ import ru.dymeth.pcontrol.rules.single.TreeRules;
 import ru.dymeth.pcontrol.util.ReflectionUtils;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 public final class PhysicsListenerCommon extends PhysicsListener {
 
@@ -73,8 +73,10 @@ public final class PhysicsListenerCommon extends PhysicsListener {
             this.rulesBlockSpreadEventTo,
 
             this.rulesEntityInteractEventMaterial,
+            this.rulesEntityInteractEventEntityMaterial,
 
-            this.rulesPlayerInteractEventMaterial,
+            this.rulesPlayerInteractEventPhysicalMaterial,
+            this.rulesPlayerInteractEventClickedMaterial,
 
             this.rulesEntityBlockFormEventFromTo,
             this.rulesEntityBlockFormEventTo,
@@ -253,9 +255,10 @@ public final class PhysicsListenerCommon extends PhysicsListener {
     }
 
 
-    private final MaterialRules rulesPlayerInteractEventMaterial = new MaterialRules(
-        this.data, PlayerInteractEvent.class, "material");
-    private final Set<Material> tagEndPortalFrames = this.data.getCustomTags().getTag("end_portal_frames", Material.class);
+    private final MaterialRules rulesPlayerInteractEventPhysicalMaterial = new MaterialRules(
+        this.data, PlayerInteractEvent.class, "physical-material");
+    private final MaterialRules rulesPlayerInteractEventClickedMaterial = new MaterialRules(
+        this.data, PlayerInteractEvent.class, "right-clicked-material");
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     private void on(PlayerInteractEvent event) {
@@ -263,31 +266,42 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         if (clickedBlock == null) return;
         if (event.getAction() == Action.PHYSICAL) {
             if (event.getBlockFace() != BlockFace.SELF) return;
-            this.handleInteraction(this.rulesPlayerInteractEventMaterial, event, clickedBlock, event.getPlayer());
+            this.handleInteraction(
+                null, this.rulesPlayerInteractEventPhysicalMaterial,
+                event, clickedBlock, event.getPlayer()
+            );
         } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (this.tagEndPortalFrames.contains(clickedBlock.getType())) {
-                this.data.cancelIfDisabled(event, clickedBlock.getWorld(), this.triggers.END_PORTAL_FRAMES_FILLING);
+            Material clickedType = clickedBlock.getType();
+            PControlTrigger trigger = this.rulesPlayerInteractEventClickedMaterial.findTrigger(clickedType);
+            if (trigger != null) {
+                World world = clickedBlock.getWorld();
+                this.data.cancelIfDisabled(event, world, trigger);
             }
         }
     }
 
+
     private final MaterialRules rulesEntityInteractEventMaterial = new MaterialRules(
         this.data, EntityInteractEvent.class, "material");
-    private final Set<Material> tagWoodenDoors = this.data.getCustomTags().getTag("wooden_doors", Material.class);
+    private final EntityMaterialRules rulesEntityInteractEventEntityMaterial = new EntityMaterialRules(
+        this.data, EntityInteractEvent.class, "interacted-by", "material");
 
     @EventHandler(ignoreCancelled = true)
     private void on(EntityInteractEvent event) {
-        if (event.getEntityType() == EntityType.VILLAGER && this.tagWoodenDoors.contains(event.getBlock().getType())) {
-            return;
-        }
-        this.handleInteraction(this.rulesEntityInteractEventMaterial, event, event.getBlock(), event.getEntity());
+        this.handleInteraction(
+            this.rulesEntityInteractEventEntityMaterial, this.rulesEntityInteractEventMaterial,
+            event, event.getBlock(), event.getEntity()
+        );
     }
 
-    private void handleInteraction(@Nonnull MaterialRules rules, @Nonnull Cancellable event, @Nonnull Block source, @Nonnull Entity entity) {
+    private void handleInteraction(@Nullable EntityMaterialRules rules1, @Nonnull MaterialRules rules2,
+                                   @Nonnull Cancellable event, @Nonnull Block source, @Nonnull Entity entity
+    ) {
         World world = source.getWorld();
         Material material = source.getType();
 
-        PControlTrigger trigger = rules.findTrigger(material);
+        PControlTrigger trigger = rules1 == null ? null : rules1.findTrigger(entity.getType(), material);
+        if (trigger == null) trigger = rules2.findTrigger(material);
 
         if (trigger != null) {
             this.data.cancelIfDisabled(event, world, trigger);
