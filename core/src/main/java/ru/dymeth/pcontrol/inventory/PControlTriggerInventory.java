@@ -3,7 +3,6 @@ package ru.dymeth.pcontrol.inventory;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -122,7 +121,7 @@ public final class PControlTriggerInventory extends PControlInventory {
         helper.setStackLore(meta, lore);
 
         if (available && enabled) {
-            meta.addEnchant(Enchantment.DURABILITY, 1, true);
+            this.data.getVersionsAdapter().setItemMetaGlowing(meta);
         }
         meta.addItemFlags(ItemFlag.values());
         icon.setItemMeta(meta);

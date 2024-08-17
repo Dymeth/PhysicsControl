@@ -31,8 +31,9 @@ import ru.dymeth.pcontrol.util.update.data.PluginDataUpdater;
 import ru.dymeth.pcontrol.util.update.jar.PaperPluginUpdater;
 import ru.dymeth.pcontrol.util.update.jar.PluginUpdater;
 import ru.dymeth.pcontrol.util.update.jar.SpigotPluginUpdater;
-import ru.dymeth.pcontrol.versionsadapter.VersionsAdapterLegacy;
-import ru.dymeth.pcontrol.versionsadapter.VersionsAdapterModern;
+import ru.dymeth.pcontrol.versionsadapter.VersionsAdapter_1_13;
+import ru.dymeth.pcontrol.versionsadapter.VersionsAdapter_1_8;
+import ru.dymeth.pcontrol.versionsadapter.VersionsAdapter_1_20_5;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -92,17 +93,23 @@ public final class PControlDataBukkit implements PControlData {
         this.customTags.parseTags();
         this.categories = new CategoriesRegistry(this);
         this.triggers = new TriggersRegistry(this);
-
-        if (this.hasVersion(1, 13, 0)) {
-            this.versionsAdapter = new VersionsAdapterModern(this);
-        } else {
-            this.versionsAdapter = new VersionsAdapterLegacy(this);
-        }
+        this.versionsAdapter = this.createVersionsAdapter();
 
         if (TextHelper.isAdventureFullySupported()) {
             this.textHelper = new AdventureTextHelper();
         } else {
             this.textHelper = new BungeeTextHelper();
+        }
+    }
+
+    @Nonnull
+    private VersionsAdapter createVersionsAdapter() {
+        if (!this.hasVersion(1, 13, 0)) {
+            return new VersionsAdapter_1_8(this);
+        } else if (!this.hasVersion(1, 20, 5)) {
+            return new VersionsAdapter_1_13(this);
+        } else {
+            return new VersionsAdapter_1_20_5(this);
         }
     }
 
@@ -116,14 +123,16 @@ public final class PControlDataBukkit implements PControlData {
             if (!this.serverVersion.hasVersion(1, 8, 0)) {
                 throw new IllegalArgumentException("Too old version. Minimal is 1.8");
             }
+            // Legacy complex materials like WOOL no more present in 1.13-1.13.1, but Spigot still have no Tag class.
+            // Therefore, there is no easy way to get material sets in 1.13-1.13.1
             if (this.serverVersion.hasVersion(1, 13, 0)
                 && !this.serverVersion.hasVersion(1, 13, 2)
             ) {
-                throw new IllegalArgumentException("1.13.0 and 1.13.1 are unsupported, use 1.13.2");
+                throw new IllegalArgumentException("1.13(.0) and 1.13.1 are unsupported");
             }
         } catch (Exception e) {
             throw new RuntimeException("Unsupported server version (" + this.serverVersion + "). "
-                + "It must be Spigot 1.8-1.12.2 or 1.13.2 and newer", e);
+                + "It must be 1.8-1.12.2 or 1.13.2 and newer", e);
         }
     }
 

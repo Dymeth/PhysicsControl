@@ -57,8 +57,9 @@ api/target/
 common/target/
 text-adventure/target/
 text-bungee/target/
-versions-adapter-legacy/target/
-versions-adapter-modern/target/
+versions-adapter-1_8-1_12_2/target/
+versions-adapter-1_13-1_20_4/target/
+versions-adapter-1_20_5-and-more/target/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
