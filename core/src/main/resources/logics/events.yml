@@ -1,0 +1,521 @@
+org/bukkit/event/block/BlockGrowEvent:
+  1:
+    trigger: "SUGAR_CANE_GROWING"
+    to: "#physicscontrol_sugar_cane_block"
+  2:
+    trigger: "CACTUS_GROWING"
+    to: "cactus"
+  3:
+    trigger: "WHEAT_GROWING"
+    to: "#physicscontrol_wheat_block"
+  4:
+    trigger: "POTATOES_GROWING"
+    to: "#physicscontrol_potato_block"
+  5:
+    trigger: "CARROTS_GROWING"
+    to: "#physicscontrol_carrot_block"
+  6:
+    trigger: "PUMPKINS_GROWING"
+    to: "#physicscontrol_pumpkin_stem_and_block"
+  7:
+    trigger: "MELONS_GROWING"
+    to: "#physicscontrol_melon_stem_and_block"
+  8:
+    trigger: "COCOAS_GROWING"
+    to: "cocoa"
+  9:
+    trigger: "VINES_GROWING"
+    from: "vine"
+    to: "vine"
+  10:
+    trigger: "NETHER_WARTS_GROWING"
+    to: "#physicscontrol_nether_wart_block"
+  11:
+    trigger: "PLAYERS_BONE_MEAL_USAGE"
+    to: "#physicscontrol_bone_meal_herbs"
+  12:
+    trigger: "BEETROOTS_GROWING"
+    min-version: "1.9"
+    to: "#physicscontrol_beetroot_block"
+  13:
+    trigger: "CHORUSES_GROWING"
+    min-version: "1.9"
+    to: "chorus_flower"
+  14:
+    trigger: "TURTLES_LAYING_EGGS"
+    min-version: "1.13"
+    to: "turtle_egg"
+  15:
+    trigger: "SWEET_BERRIES_GROWING"
+    min-version: "1.14"
+    to: "sweet_berry_bush"
+  16:
+    trigger: "AMETHYST_CLUSTERS_GROWING" # from = AIR, CAVE_AIR, WATER, etc
+    min-version: "1.17"
+    to: "small_amethyst_bud"
+  17:
+    trigger: "AMETHYST_CLUSTERS_GROWING"
+    min-version: "1.17"
+    from: "small_amethyst_bud"
+    to: "medium_amethyst_bud"
+  18:
+    trigger: "AMETHYST_CLUSTERS_GROWING"
+    min-version: "1.17"
+    from: "medium_amethyst_bud"
+    to: "large_amethyst_bud"
+  19:
+    trigger: "AMETHYST_CLUSTERS_GROWING"
+    min-version: "1.17"
+    from: "large_amethyst_bud"
+    to: "amethyst_cluster"
+org/bukkit/event/entity/EntityChangeBlockEvent:
+  1:
+    trigger: "FARMLANDS_TRAMPLING"
+    from: "#physicscontrol_farmland_block"
+    to: "dirt"
+  2:
+    trigger: "END_PORTAL_FRAMES_FILLING"
+    from:
+      - "ender_portal_frame"
+      - "end_portal_frame"
+    to:
+      - "ender_portal_frame"
+      - "end_portal_frame"
+  3:
+    trigger: "IGNORED_STATE" # Redstone ore activation
+    to: "#physicscontrol_redstone_ore_blocks"
+  4:
+    trigger: "SAND_FALLING"
+    falling-by: "#physicscontrol_sand"
+  5:
+    trigger: "GRAVEL_FALLING"
+    falling-by: "#physicscontrol_gravel"
+  6:
+    trigger: "ANVILS_FALLING"
+    falling-by: "#physicscontrol_anvil"
+  7:
+    trigger: "DRAGON_EGGS_FALLING"
+    falling-by: "dragon_egg"
+  8:
+    trigger: "SAND_FALLING"
+    falling-from: "#physicscontrol_sand"
+  9:
+    trigger: "GRAVEL_FALLING"
+    falling-from: "#physicscontrol_gravel"
+  10:
+    trigger: "ANVILS_FALLING"
+    falling-from: "#physicscontrol_anvil"
+  11:
+    trigger: "DRAGON_EGGS_FALLING"
+    falling-from: "dragon_egg"
+  12:
+    trigger: "IGNORED_STATE" # On custom falling blocks fall (created by third-party plugins like WoodCutter)
+    falling-from: "#physicscontrol_world_air"
+  13:
+    trigger: "BURNING_ARROWS_ACTIVATE_TNT"
+    non-falling-by: "arrow"
+    non-falling-from: "tnt"
+  14:
+    trigger: "ZOMBIES_BREAK_DOORS"
+    non-falling-by: "zombie"
+    non-falling-from: "#physicscontrol_wooden_doors"
+  15:
+    trigger: "IGNORED_STATE" # Boats destroys lilies
+    non-falling-by: "boat"
+  16:
+    trigger: "SHEEPS_EATING_GRASS"
+    non-falling-by: "sheep"
+  17:
+    trigger: "ENDERMANS_GRIEFING"
+    non-falling-by: "enderman"
+  18:
+    trigger: "WITHERS_GRIEFING"
+    non-falling-by: "wither"
+  19:
+    trigger: "SILVERFISHES_HIDING_IN_BLOCKS"
+    non-falling-by: "silverfish"
+  20:
+    trigger: "VILLAGERS_FARMING"
+    non-falling-by: "villager"
+  21:
+    trigger: "RABBITS_EATING_CARROTS"
+    min-version: "1.8"
+    non-falling-by: "rabbit"
+  22:
+    trigger: "ZOMBIES_BREAK_DOORS"
+    min-version: "1.11"
+    non-falling-by: "zombie_villager"
+    non-falling-from: "#physicscontrol_wooden_doors"
+  23:
+    trigger: "CONCRETE_POWDERS_FALLING"
+    min-version: "1.12"
+    falling-by: "#physicscontrol_concrete_powders"
+  24:
+    trigger: "CONCRETE_POWDERS_FALLING"
+    min-version: "1.12"
+    falling-from: "#physicscontrol_concrete_powders"
+  25:
+    trigger: "TURTLES_LAYING_EGGS"
+    min-version: "1.13"
+    non-falling-by: "turtle"
+  26:
+    trigger: "SCAFFOLDING_FALLING"
+    min-version: "1.14"
+    falling-by: "scaffolding"
+  27:
+    trigger: "SCAFFOLDING_FALLING"
+    min-version: "1.14"
+    falling-from: "scaffolding"
+  28:
+    trigger: "RAVAGERS_DESTROY_BLOCKS"
+    min-version: "1.14"
+    non-falling-by: "ravager"
+  29:
+    trigger: "FOXES_EATS_FROM_SWEET_BERRY_BUSHES"
+    min-version: "1.14"
+    non-falling-by: "fox"
+  30:
+    trigger: "DRIPLEAFS_LOWERING"
+    min-version: "1.17"
+    from: "big_dripleaf"
+    to: "big_dripleaf"
+  31:
+    trigger: "POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES"
+    min-version: "1.17"
+    from: "powder_snow"
+    to: "#physicscontrol_world_air"
+  32:
+    trigger: "GLOW_BERRIES_PICKING"
+    min-version: "1.17"
+    from: "cave_vines"
+    to: "cave_vines"
+  33:
+    trigger: "GLOW_BERRIES_PICKING"
+    min-version: "1.17"
+    from: "cave_vines_plant"
+    to: "cave_vines_plant"
+  34:
+    trigger: "POINTED_DRIPSTONES_FALLING"
+    min-version: "1.17"
+    falling-by: "pointed_dripstone"
+  35:
+    trigger: "POINTED_DRIPSTONES_FALLING"
+    min-version: "1.17"
+    falling-from: "pointed_dripstone"
+  36:
+    trigger: "FROGSPAWN_LAYING_AND_SPAWNING"
+    min-version: "1.19"
+    from: "#physicscontrol_world_air"
+    to: "frogspawn"
+org/bukkit/event/block/BlockFromToEvent:
+  1:
+    trigger: "IGNORED_STATE" # Strange thing from FluidTypeFlowing
+    from: "#physicscontrol_world_air"
+    to: "#physicscontrol_world_air"
+  2:
+    trigger: "LAVA_FLOWING"
+    from: "#physicscontrol_lava"
+  3:
+    trigger: "WATER_FLOWING"
+    from: "#physicscontrol_blocks_under_water_only"
+  4:
+    trigger: "IGNORED_STATE" # Seems bug while chunks generation (water near gravity blocks?): "Action BlockFromTo (GRAVEL > GRAVEL) was detected"
+    from: "#physicscontrol_natural_gravity_blocks"
+  5:
+    trigger: "DRAGON_EGGS_TELEPORTING"
+    from: "dragon_egg"
+  6:
+    trigger: "IGNORED_STATE" # Seems bug while chunks generation (kelp near caves?): "Action BlockFromTo (KELP > AIR) was detected"
+    min-version: "1.13"
+    from: "kelp"
+    to: "#physicscontrol_world_air"
+org/bukkit/event/block/BlockFadeEvent:
+  1:
+    trigger: "GRASS_BLOCKS_FADING"
+    from:
+      - "#physicscontrol_grass_block"
+      - "#physicscontrol_dirt_path_block"
+    to: "dirt"
+  2:
+    trigger: "MYCELIUM_SPREADING"
+    from: "#physicscontrol_mycelium_block"
+    to: "dirt"
+  3:
+    trigger: "FARMLANDS_DRYING"
+    from: "#physicscontrol_farmland_block"
+    to: "dirt"
+  4:
+    trigger: "SNOW_MELTING"
+    from: "snow"
+    to: "#physicscontrol_world_air"
+  5:
+    trigger: "ICE_MELTING"
+    from: "ice"
+    to:
+      - "#physicscontrol_water"
+      - "#physicscontrol_world_air"
+  6:
+    trigger: "FIRE_SPREADING"
+    from: "fire"
+    to: "#physicscontrol_world_air"
+  7:
+    trigger: "IGNORED_STATE" # Redstone ore deactivation
+    from: "#physicscontrol_redstone_ore_blocks"
+    to: "#physicscontrol_redstone_ore_blocks"
+  8:
+    trigger: "IGNORED_STATE" # Strange server action. Perhaps this is due to the fall of blocks without a base (torches for example) during generation (only in mineshafts?)
+    from: "#physicscontrol_world_air"
+    to: "#physicscontrol_world_air"
+  9:
+    trigger: "FROSTED_ICE_PHYSICS"
+    min-version: "1.9"
+    from: "frosted_ice"
+    to: "#physicscontrol_water"
+  10:
+    trigger: "CORALS_DRYING"
+    min-version: "1.13"
+    from: "#physicscontrol_all_alive_corals"
+    to: "#physicscontrol_all_dead_corals"
+  11:
+    trigger: "SCAFFOLDING_FALLING"
+    min-version: "1.14"
+    from: "scaffolding"
+    to: "#physicscontrol_world_air"
+  12:
+    trigger: "CRIMSON_NYLIUM_FADING"
+    min-version: "1.16"
+    from: "crimson_nylium"
+    to: "netherrack"
+  13:
+    trigger: "WARPED_NYLIUM_FADING"
+    min-version: "1.16"
+    from: "warped_nylium"
+    to: "netherrack"
+  14:
+    trigger: "FROGSPAWN_LAYING_AND_SPAWNING"
+    min-version: "1.19"
+    from: "frogspawn"
+    to: "#physicscontrol_world_air"
+org/bukkit/event/block/BlockSpreadEvent:
+  1:
+    trigger: "GRASS_SPREADING"
+    from: "dirt"
+    to: "#physicscontrol_grass_block"
+  2:
+    trigger: "MYCELIUM_SPREADING"
+    from: "dirt"
+    to: "#physicscontrol_mycelium_block"
+  3:
+    trigger: "VINES_GROWING"
+    from:
+      - "vine"
+      - "#physicscontrol_world_air"
+    to: "vine"
+  4:
+    trigger: "LITTLE_MUSHROOMS_SPREADING"
+    from: "#physicscontrol_world_air"
+    to: "#physicscontrol_little_mushrooms"
+  5:
+    trigger: "FIRE_SPREADING"
+    from: "#physicscontrol_world_air"
+    to: "fire"
+  6:
+    trigger: "CHORUSES_GROWING"
+    min-version: "1.9"
+    to: "chorus_flower"
+  7:
+    trigger: "KELPS_GROWING"
+    min-version: "1.13"
+    from: "#physicscontrol_water"
+    to: "kelp"
+  8:
+    trigger: "BAMBOO_GROWING"
+    min-version: "1.14"
+    from: "#physicscontrol_world_air"
+    to: "bamboo"
+  9:
+    trigger: "WEEPING_VINES_GROWING"
+    min-version: "1.16"
+    from: "#physicscontrol_world_air"
+    to: "weeping_vines"
+  10:
+    trigger: "TWISTING_VINES_GROWING"
+    min-version: "1.16"
+    from: "#physicscontrol_world_air"
+    to: "twisting_vines"
+  11:
+    trigger: "GLOW_BERRIES_GROWING"
+    min-version: "1.17"
+    from:
+      - "cave_vines"
+      - "#physicscontrol_world_air"
+    to: "cave_vines"
+  12:
+    trigger: "POINTED_DRIPSTONES_GROWING"
+    min-version: "1.17"
+    from:
+      - "pointed_dripstone"
+      - "#physicscontrol_world_air"
+    to: "pointed_dripstone"
+  13:
+    trigger: "IGNORED_STATE" # BONE_MEAL_USAGE
+    min-version: "1.17"
+    from: "#physicscontrol_world_air"
+    to: "hanging_roots"
+  14:
+    trigger: "IGNORED_STATE" # BONE_MEAL_USAGE
+    min-version: "1.17"
+    from:
+      - "glow_lichen"
+      - "#physicscontrol_world_air"
+    to: "glow_lichen"
+  15:
+    trigger: "AMETHYST_CLUSTERS_GROWING" # from = AIR, CAVE_AIR, WATER, etc
+    min-version: "1.17"
+    to: "small_amethyst_bud"
+  16:
+    trigger: "AMETHYST_CLUSTERS_GROWING"
+    min-version: "1.17"
+    from: "small_amethyst_bud"
+    to: "medium_amethyst_bud"
+  17:
+    trigger: "AMETHYST_CLUSTERS_GROWING"
+    min-version: "1.17"
+    from: "medium_amethyst_bud"
+    to: "large_amethyst_bud"
+  18:
+    trigger: "AMETHYST_CLUSTERS_GROWING"
+    min-version: "1.17"
+    from: "large_amethyst_bud"
+    to: "amethyst_cluster"
+  19:
+    trigger: "SCULKS_SPREADING"
+    min-version: "1.19"
+    to:
+    - "sculk"
+    - "sculk_vein"
+org/bukkit/event/player/PlayerInteractEvent:
+  1:
+    trigger: "FARMLANDS_TRAMPLING"
+    material: "#physicscontrol_farmland_block"
+  2:
+    trigger: "IGNORED_STATE" # Redstone activators
+    material: "#physicscontrol_redstone_passive_inputs"
+  3:
+    trigger: "IGNORED_STATE" # Redstone ore activation
+    material: "#physicscontrol_redstone_ore_blocks"
+  4:
+    trigger: "TURTLE_EGGS_TRAMPLING"
+    min-version: "1.13"
+    material: "turtle_egg"
+  5:
+    trigger: "IGNORED_STATE" # Control by DRIPLEAFS_LOWERING
+    min-version: "1.17"
+    material: "big_dripleaf"
+  6:
+    trigger: "IGNORED_STATE"
+    min-version: "1.17"
+    material: "sculk_sensor"
+  7:
+    trigger: "IGNORED_STATE"
+    min-version: "1.20"
+    material: "calibrated_sculk_sensor"
+  8:
+    trigger: "END_PORTAL_FRAMES_FILLING"
+    material: "#physicscontrol_end_portal_frames"
+  9:
+    trigger: "IGNORED_STATE"
+    min-version: "1.19"
+    material: "sculk_shrieker"
+org/bukkit/event/entity/EntityInteractEvent:
+  1:
+    trigger: "FARMLANDS_TRAMPLING"
+    material: "#physicscontrol_farmland_block"
+  2:
+    trigger: "IGNORED_STATE" # Redstone activators
+    material: "#physicscontrol_redstone_passive_inputs"
+  3:
+    trigger: "IGNORED_STATE" # Redstone ore activation
+    material: "#physicscontrol_redstone_ore_blocks"
+  4:
+    trigger: "TURTLE_EGGS_TRAMPLING"
+    min-version: "1.13"
+    material: "turtle_egg"
+  5:
+    trigger: "IGNORED_STATE" # Control by DRIPLEAFS_LOWERING
+    min-version: "1.17"
+    material: "big_dripleaf"
+  6:
+    trigger: "IGNORED_STATE"
+    min-version: "1.17"
+    material: "sculk_sensor"
+  7:
+    trigger: "IGNORED_STATE"
+    min-version: "1.20"
+    material: "calibrated_sculk_sensor"
+org/bukkit/event/block/EntityBlockFormEvent:
+  1:
+    trigger: "SNOW_GOLEMS_CREATE_SNOW"
+    from: "#physicscontrol_world_air"
+    to: "snow"
+  2:
+    trigger: "FROSTED_ICE_PHYSICS"
+    min-version: "1.9"
+    from: "#physicscontrol_water"
+    to: "frosted_ice"
+  3:
+    trigger: "WITHER_CREATE_WITHER_ROSE_BLOCKS"
+    min-version: "1.14"
+    from: "#physicscontrol_world_air"
+    to: "wither_rose"
+org/bukkit/event/world/StructureGrowEvent:
+  1:
+    trigger: "TREES_GROWING"
+    to:
+      - "tree"
+      - "tree"
+      - "big_tree"
+      - "redwood"
+      - "tall_redwood"
+      - "birch"
+      - "jungle"
+      - "small_jungle"
+      - "cocoa_tree"
+      - "jungle_bush"
+      - "swamp"
+      - "acacia"
+      - "dark_oak"
+      - "mega_redwood"
+      - "tall_birch"
+  2:
+    trigger: "GIANT_MUSHROOMS_GROWING"
+    to:
+      - "red_mushroom"
+      - "brown_mushroom"
+  3:
+    trigger: "CHORUSES_GROWING"
+    min-version: "1.9"
+    to: "chorus_plant"
+org/bukkit/event/block/BlockPhysicsEvent:
+  1:
+    trigger: "SAPLINGS_DESTROYING"
+    from: "#physicscontrol_saplings"
+  2:
+    trigger: "LADDERS_DESTROYING"
+    from: "#physicscontrol_ladders"
+  3:
+    trigger: "SIGNS_DESTROYING"
+    from: "#physicscontrol_signs"
+  4:
+    trigger: "RAILS_DESTROYING"
+    from: "#physicscontrol_rails"
+  5:
+    trigger: "TORCHES_DESTROYING"
+    from: "#physicscontrol_torches"
+  6:
+    trigger: "REDSTONE_TORCHES_DESTROYING"
+    from: "#physicscontrol_redstone_torches"
+  7:
+    trigger: "SOUL_TORCHES_DESTROYING"
+    min-version: "1.16"
+    from: "#physicscontrol_soul_torches"

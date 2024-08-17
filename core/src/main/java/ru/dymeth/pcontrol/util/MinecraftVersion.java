@@ -104,4 +104,14 @@ public class MinecraftVersion {
 
         return true;
     }
+
+    @SuppressWarnings("RedundantIfStatement")
+    public boolean isVersion(int majorVersion, int minorVersion, int patchVersion) {
+
+        if (this.serverMajorVersion != majorVersion) return false;
+        if (this.serverMinorVersion != minorVersion) return false;
+        if (this.serverPatchVersion != patchVersion) return false;
+
+        return true;
+    }
 }

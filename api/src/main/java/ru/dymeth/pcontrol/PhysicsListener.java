@@ -34,8 +34,8 @@ public abstract class PhysicsListener implements Listener {
 
     protected PhysicsListener(@Nonnull PControlData data) {
         this.data = data;
-        this.tags = data.tags();
-        this.triggers = data.triggers();
+        this.tags = data.getCustomTags();
+        this.triggers = data.getTriggersRegisty();
         this.versionsAdapter = data.getVersionsAdapter();
         this.fertilizedBlocks = new HashSet<>();
         data.server().getScheduler().runTaskTimer(data.getPlugin(), this.fertilizedBlocks::clear, 1L, 1L);

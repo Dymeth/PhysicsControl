@@ -9,10 +9,10 @@ import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 @SuppressWarnings("unused")
-public final class EntityTypesSet extends CustomEnumSet<EntityType, EntityType> {
+public final class EntityTypesSet extends KeyedEnumSet<EntityType, EntityType> {
 
     @Nonnull
-    public static Set<EntityType> create(@Nonnull String setName, @Nonnull Logger logger, @Nonnull Consumer<EntityTypesSet> consumer) {
+    public static Set<EntityType> createPrimitive(@Nonnull String setName, @Nonnull Logger logger, @Nonnull Consumer<EntityTypesSet> consumer) {
         EntityTypesSet result = new EntityTypesSet();
         try {
             consumer.accept(result);

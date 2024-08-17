@@ -15,6 +15,7 @@ import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
 import ru.dymeth.pcontrol.data.trigger.TriggersRegistry;
 import ru.dymeth.pcontrol.inventory.PControlInventory;
 import ru.dymeth.pcontrol.inventory.PControlTriggerInventory;
+import ru.dymeth.pcontrol.set.parser.TypesSetsParser;
 import ru.dymeth.pcontrol.text.CommonColor;
 import ru.dymeth.pcontrol.text.NullText;
 import ru.dymeth.pcontrol.text.Text;
@@ -36,10 +37,7 @@ import ru.dymeth.pcontrol.versionsadapter.VersionsAdapterModern;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.logging.Level;
 
@@ -58,6 +56,7 @@ public final class PControlDataBukkit implements PControlData {
     private final Map<World, Map<PControlCategory, PControlTriggerInventory>> inventories = new HashMap<>();
     private Metrics metrics = null;
     private String langKey = null;
+    private final TypesSetsParser typesSetsParser;
     private final CustomTags customTags;
     private final CategoriesRegistry categories;
     private final TriggersRegistry triggers;
@@ -89,6 +88,8 @@ public final class PControlDataBukkit implements PControlData {
             "TRIDENT");
 
         this.customTags = new CustomTags(this);
+        this.typesSetsParser = new TypesSetsParser(this);
+        this.customTags.parseTags();
         this.categories = new CategoriesRegistry(this);
         this.triggers = new TriggersRegistry(this);
 
@@ -357,6 +358,11 @@ public final class PControlDataBukkit implements PControlData {
     }
 
     @Override
+    public boolean isVersion(int majorVersion, int minorVersion, int patchVersion) {
+        return this.serverVersion.isVersion(majorVersion, minorVersion, patchVersion);
+    }
+
+    @Override
     public void cancelIfDisabled(@Nonnull Cancellable event, @Nonnull World world, @Nonnull PControlTrigger trigger) {
         if (trigger == this.triggers.IGNORED_STATE) return;
         if (!this.isActionAllowed(world, trigger)) {
@@ -397,31 +403,37 @@ public final class PControlDataBukkit implements PControlData {
 
     @Nonnull
     @Override
-    public CustomTags tags() {
-        return this.customTags;
+    public TypesSetsParser getTypesSetsParser() {
+        return Objects.requireNonNull(this.typesSetsParser, "Type sets parser not initialized yet");
     }
 
     @Nonnull
     @Override
-    public CategoriesRegistry categories() {
-        return this.categories;
+    public CustomTags getCustomTags() {
+        return Objects.requireNonNull(this.customTags, "Custom tags not initialized yet");
     }
 
     @Nonnull
     @Override
-    public TriggersRegistry triggers() {
-        return this.triggers;
+    public CategoriesRegistry getCategoriesRegistry() {
+        return Objects.requireNonNull(this.categories, "Categories registry not initialized yet");
+    }
+
+    @Nonnull
+    @Override
+    public TriggersRegistry getTriggersRegisty() {
+        return Objects.requireNonNull(this.triggers, "Triggers registry not initialized yet");
     }
 
     @Nonnull
     @Override
     public VersionsAdapter getVersionsAdapter() {
-        return this.versionsAdapter;
+        return Objects.requireNonNull(this.versionsAdapter, "Versions adapter not initialized yet");
     }
 
     @Nonnull
     @Override
     public TextHelper getTextHelper() {
-        return this.textHelper;
+        return Objects.requireNonNull(this.textHelper, "Text helper adapter not initialized yet");
     }
 }

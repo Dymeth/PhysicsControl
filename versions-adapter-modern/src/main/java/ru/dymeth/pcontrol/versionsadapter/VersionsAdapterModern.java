@@ -9,17 +9,17 @@ import org.bukkit.block.data.Waterlogged;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.inventory.ItemStack;
 import ru.dymeth.pcontrol.VersionsAdapter;
-import ru.dymeth.pcontrol.data.CustomTags;
 import ru.dymeth.pcontrol.data.PControlData;
 
 import javax.annotation.Nonnull;
+import java.util.Set;
 
 public class VersionsAdapterModern implements VersionsAdapter {
 
-    private final CustomTags tags;
+    private final Set<Material> blocksUnderWaterOnly;
 
     public VersionsAdapterModern(@Nonnull PControlData data) {
-        this.tags = data.tags();
+        this.blocksUnderWaterOnly = data.getCustomTags().getTag("blocks_under_water_only", Material.class);
     }
 
     @Nonnull
@@ -36,7 +36,7 @@ public class VersionsAdapterModern implements VersionsAdapter {
     @Override
     public boolean isBlockContainsWater(@Nonnull Block block) {
         return (block.getBlockData() instanceof Waterlogged && ((Waterlogged) block.getBlockData()).isWaterlogged())
-            || this.tags.BLOCKS_UNDER_WATER_ONLY.contains(block.getType());
+            || this.blocksUnderWaterOnly.contains(block.getType());
     }
 
     @Override

@@ -16,8 +16,8 @@ public class PControlCategoryInventory extends PControlInventory {
             3,
             data.getMessage("category-inventory-title", "%world%", world.getName())
         );
-        PControlCategory TEST_CATEGORY = data.categories().TEST;
-        for (PControlCategory category : data.categories().values()) {
+        PControlCategory TEST_CATEGORY = data.getCategoriesRegistry().TEST;
+        for (PControlCategory category : data.getCategoriesRegistry().values()) {
             if (category == TEST_CATEGORY && !DISPLAY_TEST_CATEGORY) {
                 continue;
             }

@@ -39,18 +39,18 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
             15320
         );
 
-        this.getServer().getPluginManager().registerEvents(this, this);
-        this.getServer().getPluginManager().registerEvents(new PhysicsListenerCommon(this.data), this);
-
-        this.reg("org.bukkit.event.block.MoistureChangeEvent", () -> new MoistureChangeEventListener(this.data));
-
-        for (PControlTrigger trigger : this.data.categories().SETTINGS.getTriggers()) {
+        for (PControlTrigger trigger : this.data.getCategoriesRegistry().SETTINGS.getTriggers()) {
             trigger.markAvailable();
         }
 
         if (TriggerRules.LOG_TRIGGERS_REGISTRATIONS) {
             this.getLogger().info("Total rules registered: " + TriggerRules.getTotalRulesRegistered());
         }
+
+        this.getServer().getPluginManager().registerEvents(this, this);
+        this.getServer().getPluginManager().registerEvents(new PhysicsListenerCommon(this.data), this);
+
+        this.reg("org.bukkit.event.block.MoistureChangeEvent", () -> new MoistureChangeEventListener(this.data));
 
         this.data.reloadConfigs();
     }
@@ -168,8 +168,8 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         }
         String key = join("_", 1, args).toUpperCase();
         try {
-            PControlTrigger trigger = this.data.triggers().valueOf(key);
-            if (trigger == this.data.triggers().IGNORED_STATE) throw new IllegalArgumentException();
+            PControlTrigger trigger = this.data.getTriggersRegisty().valueOf(key);
+            if (trigger == this.data.getTriggersRegisty().IGNORED_STATE) throw new IllegalArgumentException();
             this.data.getInventory(trigger.getCategory(), world).switchTrigger(sender, trigger);
         } catch (IllegalArgumentException e) {
             this.data.getMessage("key-not-found", "%key%", key).send(sender);

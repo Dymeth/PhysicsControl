@@ -1,5 +1,6 @@
 package ru.dymeth.pcontrol.rules.pair;
 
+import org.bukkit.event.Event;
 import ru.dymeth.pcontrol.data.PControlData;
 import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
 import ru.dymeth.pcontrol.rules.TriggerRules;
@@ -13,8 +14,12 @@ public abstract class KeysPairTriggerRules<T, K1, K2> extends TriggerRules<T> {
 
     private final Map<K1, Map<K2, PControlTrigger>> pairRules = new HashMap<>();
 
-    protected KeysPairTriggerRules(@Nonnull PControlData data) {
-        super(data);
+    protected KeysPairTriggerRules(@Nonnull PControlData data,
+                                   @Nonnull Class<? extends Event> eventClass,
+                                   @Nonnull String configKey1,
+                                   @Nonnull String configKey2
+    ) {
+        super(data, eventClass, configKey1, configKey2);
     }
 
     @Nonnull
@@ -43,5 +48,10 @@ public abstract class KeysPairTriggerRules<T, K1, K2> extends TriggerRules<T> {
     public PControlTrigger findTrigger(@Nonnull K1 firstKey, @Nonnull K2 secondKey) {
         Map<K2, PControlTrigger> map = this.pairRules.get(firstKey);
         return map == null ? null : map.get(secondKey);
+    }
+
+    @Override
+    public void unregisterAll() {
+        this.pairRules.clear();
     }
 }

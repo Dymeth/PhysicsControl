@@ -1,5 +1,6 @@
 package ru.dymeth.pcontrol.rules.single;
 
+import org.bukkit.event.Event;
 import ru.dymeth.pcontrol.data.PControlData;
 import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
 import ru.dymeth.pcontrol.rules.TriggerRules;
@@ -13,8 +14,11 @@ public abstract class SingleKeyTriggerRules<T, K1> extends TriggerRules<T> {
 
     private final Map<K1, PControlTrigger> singleRules = new HashMap<>();
 
-    protected SingleKeyTriggerRules(@Nonnull PControlData data) {
-        super(data);
+    protected SingleKeyTriggerRules(@Nonnull PControlData data,
+                                    @Nonnull Class<? extends Event> eventClass,
+                                    @Nonnull String configKey
+    ) {
+        super(data, eventClass, configKey);
     }
 
     @Nonnull
@@ -38,5 +42,10 @@ public abstract class SingleKeyTriggerRules<T, K1> extends TriggerRules<T> {
     @Nullable
     public PControlTrigger findTrigger(@Nonnull K1 key) {
         return this.singleRules.get(key);
+    }
+
+    @Override
+    public void unregisterAll() {
+        this.singleRules.clear();
     }
 }

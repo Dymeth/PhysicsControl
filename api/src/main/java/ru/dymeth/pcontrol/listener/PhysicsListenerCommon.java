@@ -21,7 +21,9 @@ import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.inventory.ItemStack;
 import ru.dymeth.pcontrol.PhysicsListener;
 import ru.dymeth.pcontrol.data.PControlData;
+import ru.dymeth.pcontrol.data.trigger.EventsListenerParser;
 import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
+import ru.dymeth.pcontrol.rules.TriggerRules;
 import ru.dymeth.pcontrol.rules.pair.EntityMaterialRules;
 import ru.dymeth.pcontrol.rules.pair.MaterialMaterialRules;
 import ru.dymeth.pcontrol.rules.single.EntityRules;
@@ -31,90 +33,80 @@ import ru.dymeth.pcontrol.util.ReflectionUtils;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
-@SuppressWarnings({"ConcatenationWithEmptyString", "IsCancelled"})
 public final class PhysicsListenerCommon extends PhysicsListener {
-
-    private static final boolean BLOCK_PHYSICS_EVENT_GET_SOURCE_BLOCK_SUPPORT
-        = ReflectionUtils.isMethodPresent(BlockPhysicsEvent.class, "getSourceBlock");
 
     public PhysicsListenerCommon(@Nonnull PControlData data) {
         super(data);
+
+        EventsListenerParser parser = new EventsListenerParser(this.data);
+        for (TriggerRules<?> rules : this.getAllTriggersRules()) {
+            parser.registerParser(rules);
+        }
+        parser.parseAllEvents();
+        this.unregisterUnavailableTriggers();
+        this.forceTriggersAvailable();
     }
 
-    private final MaterialMaterialRules rulesBlockGrowEventFromTo = new MaterialMaterialRules(this.data);
-    private final MaterialRules rulesBlockGrowEventTo = new MaterialRules(this.data);
+    @Nonnull
+    private List<TriggerRules<?>> getAllTriggersRules() {
+        return Arrays.asList(
+            this.rulesBlockGrowEventFromTo,
+            this.rulesBlockGrowEventTo,
 
-    {
+            this.rulesEntityChangeBlockEventFromTo,
+            this.rulesEntityChangeBlockEventTo,
+            this.rulesFallingEntityChangeBlockEventBy,
+            this.rulesFallingEntityChangeBlockEventFrom,
+            this.rulesNonFallingEntityChangeBlockEventByFrom,
+            this.rulesNonFallingEntityChangeBlockEventBy,
+
+            this.rulesBlockFromToEventFromTo,
+            this.rulesBlockFromToEventFrom,
+
+            this.rulesBlockFadeEventFromTo,
+            this.rulesBlockFadeEventTo,
+
+            this.rulesBlockSpreadEventFromTo,
+            this.rulesBlockSpreadEventTo,
+
+            this.rulesEntityInteractEventMaterial,
+
+            this.rulesPlayerInteractEventMaterial,
+
+            this.rulesEntityBlockFormEventFromTo,
+            this.rulesEntityBlockFormEventTo,
+
+            this.rulesStructureGrowEventTo,
+
+            this.rulesBlockPhysicsEventFrom
+        );
+    }
+
+    private void unregisterUnavailableTriggers() {
+        if (!this.legacyBlockPhysicsEvent && !this.modernBlockPhysicsEvent) {
+            this.rulesBlockPhysicsEventFrom.unregisterAll();
+        }
+    }
+
+    private void forceTriggersAvailable() {
         if (this.data.hasVersion(1, 0, 0)) {
-            this.rulesBlockGrowEventTo.reg(this.triggers.SUGAR_CANE_GROWING,
-                this.tags.SUGAR_CANE_BLOCK);
-            this.rulesBlockGrowEventTo.reg(this.triggers.CACTUS_GROWING,
-                set ->
-                    set.addPrimitive(Material.CACTUS));
-            this.rulesBlockGrowEventTo.reg(this.triggers.WHEAT_GROWING,
-                this.tags.WHEAT_BLOCK);
-            this.rulesBlockGrowEventTo.reg(this.triggers.POTATOES_GROWING,
-                this.tags.POTATO_BLOCK);
-            this.rulesBlockGrowEventTo.reg(this.triggers.CARROTS_GROWING,
-                this.tags.CARROT_BLOCK);
-            this.rulesBlockGrowEventTo.reg(this.triggers.PUMPKINS_GROWING,
-                this.tags.PUMPKIN_STEM_AND_BLOCK);
-            this.rulesBlockGrowEventTo.reg(this.triggers.MELONS_GROWING,
-                this.tags.MELON_STEM_AND_BLOCK);
-            this.rulesBlockGrowEventTo.reg(this.triggers.COCOAS_GROWING,
-                set ->
-                    set.addPrimitive(Material.COCOA));
-            this.rulesBlockGrowEventFromTo.reg(this.triggers.VINES_GROWING,
-                from ->
-                    from.addPrimitive(Material.VINE),
-                to ->
-                    to.addPrimitive(Material.VINE));
-            this.rulesBlockGrowEventTo.reg(this.triggers.NETHER_WARTS_GROWING,
-                this.tags.NETHER_WART_BLOCK);
-            this.rulesBlockGrowEventTo.reg(this.triggers.PLAYERS_BONE_MEAL_USAGE,
-                this.tags.BONE_MEAL_HERBS);
+            this.triggers.PLAYERS_FLINT_USAGE.markAvailable();
+            this.triggers.FIRE_SPREADING.markAvailable();
+            this.triggers.PLAYERS_BONE_MEAL_USAGE.markAvailable();
+            this.triggers.LEAVES_DECAY.markAvailable();
         }
-        if (this.data.hasVersion(1, 9, 0)) {
-            this.rulesBlockGrowEventTo.reg(this.triggers.BEETROOTS_GROWING,
-                this.tags.BEETROOT_BLOCK);
-            this.rulesBlockGrowEventTo.reg(this.triggers.CHORUSES_GROWING,
-                set ->
-                    set.addPrimitive(Material.CHORUS_FLOWER));
-        }
-        if (this.data.hasVersion(1, 13, 0)) {
-            this.rulesBlockGrowEventTo.reg(this.triggers.TURTLES_LAYING_EGGS,
-                set ->
-                    set.addPrimitive(Material.TURTLE_EGG));
-        }
-        if (this.data.hasVersion(1, 14, 0)) {
-            this.rulesBlockGrowEventTo.reg(this.triggers.SWEET_BERRIES_GROWING,
-                set ->
-                    set.addPrimitive(Material.SWEET_BERRY_BUSH));
-        }
-
-        if (this.data.hasVersion(1, 17, 0)) {
-            this.rulesBlockGrowEventTo.reg(this.triggers.AMETHYST_CLUSTERS_GROWING, // from = AIR, CAVE_AIR, WATER, etc
-                set ->
-                    set.addPrimitive(Material.SMALL_AMETHYST_BUD));
-            this.rulesBlockGrowEventFromTo.reg(this.triggers.AMETHYST_CLUSTERS_GROWING,
-                from ->
-                    from.addPrimitive(Material.SMALL_AMETHYST_BUD),
-                to ->
-                    to.addPrimitive(Material.MEDIUM_AMETHYST_BUD));
-            this.rulesBlockGrowEventFromTo.reg(this.triggers.AMETHYST_CLUSTERS_GROWING,
-                from ->
-                    from.addPrimitive(Material.MEDIUM_AMETHYST_BUD),
-                to ->
-                    to.addPrimitive(Material.LARGE_AMETHYST_BUD));
-            this.rulesBlockGrowEventFromTo.reg(this.triggers.AMETHYST_CLUSTERS_GROWING,
-                from ->
-                    from.addPrimitive(Material.LARGE_AMETHYST_BUD),
-                to ->
-                    to.addPrimitive(Material.AMETHYST_CLUSTER));
+        if (this.data.hasVersion(1, 11, 0)) { // ProjectileHitEvent.getHitBlock() since 1.11
+            this.triggers.BLOCK_HIT_PROJECTILES_REMOVING.markAvailable();
         }
     }
+
+    private final MaterialMaterialRules rulesBlockGrowEventFromTo = new MaterialMaterialRules(
+        this.data, BlockGrowEvent.class, "from", "to");
+    private final MaterialRules rulesBlockGrowEventTo = new MaterialRules(
+        this.data, BlockGrowEvent.class, "to");
 
     @EventHandler(ignoreCancelled = true)
     private void on(BlockGrowEvent event) {
@@ -135,144 +127,21 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         }
     }
 
-    private final MaterialMaterialRules rulesEntityChangeBlockEventFromTo = new MaterialMaterialRules(this.data);
-    private final MaterialRules rulesEntityChangeBlockEventTo = new MaterialRules(this.data);
+    private final MaterialMaterialRules rulesEntityChangeBlockEventFromTo = new MaterialMaterialRules(
+        this.data, EntityChangeBlockEvent.class, "from", "to");
+    private final MaterialRules rulesEntityChangeBlockEventTo = new MaterialRules(
+        this.data, EntityChangeBlockEvent.class, "to");
+    private final MaterialRules rulesFallingEntityChangeBlockEventBy = new MaterialRules(
+        this.data, EntityChangeBlockEvent.class, "falling-by");
+    private final MaterialRules rulesFallingEntityChangeBlockEventFrom = new MaterialRules(
+        this.data, EntityChangeBlockEvent.class, "falling-from");
+    private final EntityMaterialRules rulesNonFallingEntityChangeBlockEventByFrom = new EntityMaterialRules(
+        this.data, EntityChangeBlockEvent.class, "non-falling-by", "non-falling-from");
+    private final EntityRules rulesNonFallingEntityChangeBlockEventBy = new EntityRules(
+        this.data, EntityChangeBlockEvent.class, "non-falling-by");
 
-    private final MaterialRules rulesFallingEntityChangeBlockEventBy = new MaterialRules(this.data);
-    private final MaterialRules rulesFallingEntityChangeBlockEventFrom = new MaterialRules(this.data);
-
-    private final EntityMaterialRules rulesNonFallingEntityChangeBlockEventByFrom = new EntityMaterialRules(this.data);
-    private final EntityRules rulesNonFallingEntityChangeBlockEventBy = new EntityRules(this.data);
-
-    {
-        if (this.data.hasVersion(1, 0, 0)) {
-            this.rulesEntityChangeBlockEventFromTo.reg(this.triggers.FARMLANDS_TRAMPLING,
-                this.tags.FARMLAND_BLOCK,
-                to ->
-                    to.addPrimitive(Material.DIRT));
-            this.rulesEntityChangeBlockEventFromTo.reg(this.triggers.END_PORTAL_FRAMES_FILLING,
-                from -> {
-                    if (!this.data.hasVersion(1, 13, 0)) {
-                        from.add("ENDER_PORTAL_FRAME");
-                    } else {
-                        from.addPrimitive(Material.END_PORTAL_FRAME);
-                    }
-                },
-                to -> {
-                    if (!this.data.hasVersion(1, 13, 0)) {
-                        to.add("ENDER_PORTAL_FRAME");
-                    } else {
-                        to.addPrimitive(Material.END_PORTAL_FRAME);
-                    }
-                });
-            this.rulesEntityChangeBlockEventTo.reg(this.triggers.IGNORED_STATE, // Redstone ore activation
-                this.tags.REDSTONE_ORE_BLOCKS);
-            this.rulesFallingEntityChangeBlockEventBy.reg(this.triggers.SAND_FALLING,
-                this.tags.SAND);
-            this.rulesFallingEntityChangeBlockEventBy.reg(this.triggers.GRAVEL_FALLING,
-                this.tags.GRAVEL);
-            this.rulesFallingEntityChangeBlockEventBy.reg(this.triggers.ANVILS_FALLING,
-                this.tags.ANVIL);
-            this.rulesFallingEntityChangeBlockEventBy.reg(this.triggers.DRAGON_EGGS_FALLING,
-                set ->
-                    set.addPrimitive(Material.DRAGON_EGG));
-            this.rulesFallingEntityChangeBlockEventFrom.reg(this.triggers.SAND_FALLING,
-                this.tags.SAND);
-            this.rulesFallingEntityChangeBlockEventFrom.reg(this.triggers.GRAVEL_FALLING,
-                this.tags.GRAVEL);
-            this.rulesFallingEntityChangeBlockEventFrom.reg(this.triggers.ANVILS_FALLING,
-                this.tags.ANVIL);
-            this.rulesFallingEntityChangeBlockEventFrom.reg(this.triggers.DRAGON_EGGS_FALLING,
-                set ->
-                    set.addPrimitive(Material.DRAGON_EGG));
-            this.rulesFallingEntityChangeBlockEventFrom.reg(this.triggers.IGNORED_STATE, // On custom falling blocks fall (created by third-party plugins like WoodCutter)
-                this.tags.WORLD_AIR);
-            this.rulesNonFallingEntityChangeBlockEventByFrom.reg(this.triggers.BURNING_ARROWS_ACTIVATE_TNT,
-                Collections.singleton(EntityType.ARROW),
-                set ->
-                    set.addPrimitive(Material.TNT));
-            this.rulesNonFallingEntityChangeBlockEventByFrom.reg(this.triggers.ZOMBIES_BREAK_DOORS,
-                Collections.singleton(EntityType.ZOMBIE),
-                this.tags.WOODEN_DOORS);
-            this.rulesNonFallingEntityChangeBlockEventBy.reg(this.triggers.IGNORED_STATE, // Boats destroys lilies. TODO It is necessary to implement a smart system of destruction and restoration of water lilies so that there are no problems with movement
-                Collections.singleton(EntityType.BOAT));
-            this.rulesNonFallingEntityChangeBlockEventBy.reg(this.triggers.SHEEPS_EATING_GRASS,
-                Collections.singleton(EntityType.SHEEP));
-            this.rulesNonFallingEntityChangeBlockEventBy.reg(this.triggers.ENDERMANS_GRIEFING,
-                Collections.singleton(EntityType.ENDERMAN));
-            this.rulesNonFallingEntityChangeBlockEventBy.reg(this.triggers.WITHERS_GRIEFING,
-                Collections.singleton(EntityType.WITHER));
-            this.rulesNonFallingEntityChangeBlockEventBy.reg(this.triggers.SILVERFISHES_HIDING_IN_BLOCKS,
-                Collections.singleton(EntityType.SILVERFISH));
-            this.rulesNonFallingEntityChangeBlockEventBy.reg(this.triggers.VILLAGERS_FARMING,
-                Collections.singleton(EntityType.VILLAGER));
-        }
-        if (this.data.hasVersion(1, 8, 0)) {
-            this.rulesNonFallingEntityChangeBlockEventBy.reg(this.triggers.RABBITS_EATING_CARROTS,
-                Collections.singleton(EntityType.RABBIT));
-        }
-        if (this.data.hasVersion(1, 11, 0)) {
-            this.rulesNonFallingEntityChangeBlockEventByFrom.reg(this.triggers.ZOMBIES_BREAK_DOORS,
-                Collections.singleton(EntityType.ZOMBIE_VILLAGER),
-                this.tags.WOODEN_DOORS);
-        }
-        if (this.data.hasVersion(1, 12, 0)) {
-            this.rulesFallingEntityChangeBlockEventBy.reg(this.triggers.CONCRETE_POWDERS_FALLING,
-                this.tags.CONCRETE_POWDERS);
-            this.rulesFallingEntityChangeBlockEventFrom.reg(this.triggers.CONCRETE_POWDERS_FALLING,
-                this.tags.CONCRETE_POWDERS);
-        }
-        if (this.data.hasVersion(1, 13, 0)) {
-            this.rulesNonFallingEntityChangeBlockEventBy.reg(this.triggers.TURTLES_LAYING_EGGS,
-                Collections.singleton(EntityType.TURTLE));
-        }
-        if (this.data.hasVersion(1, 14, 0)) {
-            this.rulesFallingEntityChangeBlockEventBy.reg(this.triggers.SCAFFOLDING_FALLING,
-                set ->
-                    set.addPrimitive(Material.SCAFFOLDING));
-            this.rulesFallingEntityChangeBlockEventFrom.reg(this.triggers.SCAFFOLDING_FALLING,
-                set ->
-                    set.addPrimitive(Material.SCAFFOLDING));
-            this.rulesNonFallingEntityChangeBlockEventBy.reg(this.triggers.RAVAGERS_DESTROY_BLOCKS,
-                Collections.singleton(EntityType.RAVAGER));
-            this.rulesNonFallingEntityChangeBlockEventBy.reg(this.triggers.FOXES_EATS_FROM_SWEET_BERRY_BUSHES,
-                Collections.singleton(EntityType.FOX));
-        }
-        if (this.data.hasVersion(1, 17, 0)) {
-            this.rulesEntityChangeBlockEventFromTo.reg(this.triggers.DRIPLEAFS_LOWERING,
-                from ->
-                    from.addPrimitive(Material.BIG_DRIPLEAF),
-                to ->
-                    to.addPrimitive(Material.BIG_DRIPLEAF));
-            this.rulesEntityChangeBlockEventFromTo.reg(this.triggers.POWDER_SNOW_MELTS_FROM_BURNING_ENTITIES,
-                from ->
-                    from.addPrimitive(Material.POWDER_SNOW),
-                this.tags.WORLD_AIR);
-            this.rulesEntityChangeBlockEventFromTo.reg(this.triggers.GLOW_BERRIES_PICKING,
-                from ->
-                    from.addPrimitive(Material.CAVE_VINES),
-                to ->
-                    to.addPrimitive(Material.CAVE_VINES));
-            this.rulesEntityChangeBlockEventFromTo.reg(this.triggers.GLOW_BERRIES_PICKING,
-                from ->
-                    from.addPrimitive(Material.CAVE_VINES_PLANT),
-                to ->
-                    to.addPrimitive(Material.CAVE_VINES_PLANT));
-            this.rulesFallingEntityChangeBlockEventBy.reg(this.triggers.POINTED_DRIPSTONES_FALLING,
-                set ->
-                    set.addPrimitive(Material.POINTED_DRIPSTONE));
-            this.rulesFallingEntityChangeBlockEventFrom.reg(this.triggers.POINTED_DRIPSTONES_FALLING,
-                set ->
-                    set.addPrimitive(Material.POINTED_DRIPSTONE));
-        }
-        if (this.data.hasVersion(1, 19, 0)) {
-            this.rulesEntityChangeBlockEventFromTo.reg(this.triggers.FROGSPAWN_LAYING_AND_SPAWNING,
-                from ->
-                    from.addPrimitive(this.tags.WORLD_AIR),
-                to ->
-                    to.addPrimitive(Material.FROGSPAWN));
-        }
-    }
+    // Prevent client bug with disappearing blocks on start falling (fixed on paper 1.16.5, spigot 1.19.4 and client 1.18.2)
+    private final boolean fixBlocksGravity = !this.data.hasVersion(1, 19, 4);
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     private void on(EntityChangeBlockEvent event) {
@@ -295,12 +164,16 @@ public final class PhysicsListenerCommon extends PhysicsListener {
                     this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to + " (by falling " + by + ")");
                     return;
                 }
-                updateBlockOnCancel = true;
+                if (this.fixBlocksGravity) {
+                    updateBlockOnCancel = true;
+                }
             } else {
                 EntityType by = event.getEntity().getType();
 
                 trigger = this.rulesNonFallingEntityChangeBlockEventByFrom.findTrigger(by, from);
                 if (trigger == null) trigger = this.rulesNonFallingEntityChangeBlockEventBy.findTrigger(by);
+                // TODO It is necessary to implement a smart system of destruction and restoration
+                //  of water lilies so that there are no problems with movement
 
                 if (trigger == null) {
                     this.unrecognizedAction(event, event.getBlock().getLocation(), from + " > " + to + " (by " + by + ")");
@@ -312,37 +185,15 @@ public final class PhysicsListenerCommon extends PhysicsListener {
             this.data.cancelIfDisabled(event, trigger);
         }
 
-        // Prevent client bug with disappearing blocks on start falling (fixed on paper 1.16.5, spigot 1.19.4 and client 1.18.2)
-        if (event.isCancelled() && updateBlockOnCancel && !this.data.hasVersion(1, 19, 4)) {
+        if (event.isCancelled() && updateBlockOnCancel) {
             event.getBlock().getState().update(false, false);
         }
     }
 
-    private final MaterialMaterialRules rulesBlockFromToEventFromTo = new MaterialMaterialRules(this.data);
-    private final MaterialRules rulesBlockFromToEventFrom = new MaterialRules(this.data);
-
-    {
-        if (this.data.hasVersion(1, 0, 0)) {
-            this.rulesBlockFromToEventFromTo.reg(this.triggers.IGNORED_STATE, // Strange thing from FluidTypeFlowing
-                this.tags.WORLD_AIR,
-                this.tags.WORLD_AIR);
-            this.rulesBlockFromToEventFrom.reg(this.triggers.LAVA_FLOWING,
-                this.tags.LAVA);
-            this.rulesBlockFromToEventFrom.reg(this.triggers.WATER_FLOWING,
-                this.tags.BLOCKS_UNDER_WATER_ONLY);
-            this.rulesBlockFromToEventFrom.reg(this.triggers.IGNORED_STATE, // Seems bug while chunks generation (water near gravity blocks?): "Action BlockFromTo (GRAVEL > GRAVEL) was detected"
-                this.tags.NATURAL_GRAVITY_BLOCKS);
-            this.rulesBlockFromToEventFrom.reg(this.triggers.DRAGON_EGGS_TELEPORTING,
-                set ->
-                    set.addPrimitive(Material.DRAGON_EGG));
-        }
-        if (this.data.hasVersion(1, 13, 0)) {
-            this.rulesBlockFromToEventFromTo.reg(this.triggers.IGNORED_STATE, // Seems bug while chunks generation (kelp near caves?): "Action BlockFromTo (KELP > AIR) was detected"
-                from ->
-                    from.addPrimitive(Material.KELP),
-                this.tags.WORLD_AIR);
-        }
-    }
+    private final MaterialMaterialRules rulesBlockFromToEventFromTo = new MaterialMaterialRules(
+        this.data, BlockFromToEvent.class, "from", "to");
+    private final MaterialRules rulesBlockFromToEventFrom = new MaterialRules(
+        this.data, BlockFromToEvent.class, "from");
 
     @EventHandler(ignoreCancelled = true)
     private void on(BlockFromToEvent event) {
@@ -361,85 +212,10 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         }
     }
 
-    private final MaterialMaterialRules rulesBlockFadeEventFromTo = new MaterialMaterialRules(this.data);
-    private final MaterialRules rulesBlockFadeEventTo = new MaterialRules(this.data);
-
-    {
-        if (this.data.hasVersion(1, 0, 0)) {
-            this.rulesBlockFadeEventFromTo.reg(this.triggers.GRASS_BLOCKS_FADING,
-                from -> {
-                    from.addPrimitive(this.tags.GRASS_BLOCK);
-                    from.addPrimitive(this.tags.DIRT_PATH_BLOCK);
-                },
-                to ->
-                    to.addPrimitive(Material.DIRT));
-            this.rulesBlockFadeEventFromTo.reg(this.triggers.MYCELIUM_SPREADING,
-                this.tags.MYCELIUM_BLOCK,
-                to ->
-                    to.addPrimitive(Material.DIRT));
-            this.rulesBlockFadeEventFromTo.reg(this.triggers.FARMLANDS_DRYING,
-                this.tags.FARMLAND_BLOCK,
-                to ->
-                    to.addPrimitive(Material.DIRT));
-            this.rulesBlockFadeEventFromTo.reg(this.triggers.SNOW_MELTING,
-                from ->
-                    from.addPrimitive(Material.SNOW),
-                this.tags.WORLD_AIR);
-            this.rulesBlockFadeEventFromTo.reg(this.triggers.ICE_MELTING,
-                from ->
-                    from.addPrimitive(Material.ICE),
-                to -> {
-                    to.addPrimitive(this.tags.WATER);
-                    to.addPrimitive(this.tags.WORLD_AIR);
-                });
-            this.rulesBlockFadeEventFromTo.reg(this.triggers.FIRE_SPREADING,
-                from ->
-                    from.addPrimitive(Material.FIRE),
-                this.tags.WORLD_AIR);
-            this.rulesBlockFadeEventFromTo.reg(this.triggers.IGNORED_STATE, // Redstone ore deactivation
-                this.tags.REDSTONE_ORE_BLOCKS,
-                this.tags.REDSTONE_ORE_BLOCKS);
-            this.rulesBlockFadeEventFromTo.reg(this.triggers.IGNORED_STATE, // Strange server action. Perhaps this is due to the fall of blocks without a base (torches for example) during generation (only in mineshafts?)
-                this.tags.WORLD_AIR,
-                this.tags.WORLD_AIR);
-        }
-        if (this.data.hasVersion(1, 9, 0)) {
-            this.rulesBlockFadeEventFromTo.reg(this.triggers.FROSTED_ICE_PHYSICS,
-                from ->
-                    from.addPrimitive(Material.FROSTED_ICE),
-                this.tags.WATER);
-        }
-        if (this.data.hasVersion(1, 13, 0)) {
-            this.rulesBlockFadeEventFromTo.reg(this.triggers.CORALS_DRYING,
-                this.tags.ALL_ALIVE_CORALS,
-                this.tags.ALL_DEAD_CORALS);
-        }
-        if (this.data.hasVersion(1, 14, 0)) {
-            this.rulesBlockFadeEventFromTo.reg(this.triggers.SCAFFOLDING_FALLING,
-                from ->
-                    from.addPrimitive(Material.SCAFFOLDING),
-                this.tags.WORLD_AIR);
-        }
-        if (this.data.hasVersion(1, 16, 0)) {
-            this.rulesBlockFadeEventFromTo.reg(this.triggers.CRIMSON_NYLIUM_FADING,
-                from ->
-                    from.addPrimitive(Material.CRIMSON_NYLIUM),
-                to ->
-                    to.addPrimitive(Material.NETHERRACK));
-            this.rulesBlockFadeEventFromTo.reg(this.triggers.WARPED_NYLIUM_FADING,
-                from ->
-                    from.addPrimitive(Material.WARPED_NYLIUM),
-                to ->
-                    to.addPrimitive(Material.NETHERRACK));
-        }
-        if (this.data.hasVersion(1, 19, 0)) {
-            this.rulesBlockFadeEventFromTo.reg(this.triggers.FROGSPAWN_LAYING_AND_SPAWNING,
-                from ->
-                    from.addPrimitive(Material.FROGSPAWN),
-                to ->
-                    to.addPrimitive(this.tags.WORLD_AIR));
-        }
-    }
+    private final MaterialMaterialRules rulesBlockFadeEventFromTo = new MaterialMaterialRules(
+        this.data, BlockFadeEvent.class, "from", "to");
+    private final MaterialRules rulesBlockFadeEventTo = new MaterialRules(
+        this.data, BlockFadeEvent.class, "to");
 
     @EventHandler(ignoreCancelled = true)
     private void on(BlockFadeEvent event) {
@@ -456,111 +232,10 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         }
     }
 
-    private final MaterialMaterialRules rulesBlockSpreadEventFromTo = new MaterialMaterialRules(this.data);
-    private final MaterialRules rulesBlockSpreadEventTo = new MaterialRules(this.data);
-
-    {
-        if (this.data.hasVersion(1, 0, 0)) {
-            this.rulesBlockSpreadEventFromTo.reg(this.triggers.GRASS_SPREADING,
-                from ->
-                    from.addPrimitive(Material.DIRT),
-                this.tags.GRASS_BLOCK);
-            this.rulesBlockSpreadEventFromTo.reg(this.triggers.MYCELIUM_SPREADING,
-                from ->
-                    from.addPrimitive(Material.DIRT),
-                this.tags.MYCELIUM_BLOCK);
-            this.rulesBlockSpreadEventFromTo.reg(this.triggers.VINES_GROWING,
-                from -> {
-                    from.addPrimitive(Material.VINE);
-                    from.addPrimitive(this.tags.WORLD_AIR);
-                },
-                to ->
-                    to.addPrimitive(Material.VINE));
-            this.rulesBlockSpreadEventFromTo.reg(this.triggers.LITTLE_MUSHROOMS_SPREADING,
-                this.tags.WORLD_AIR,
-                this.tags.LITTLE_MUSHROOMS);
-            this.rulesBlockSpreadEventFromTo.reg(this.triggers.FIRE_SPREADING,
-                this.tags.WORLD_AIR,
-                to ->
-                    to.addPrimitive(Material.FIRE));
-        }
-        if (this.data.hasVersion(1, 9, 0)) {
-            this.rulesBlockSpreadEventTo.reg(this.triggers.CHORUSES_GROWING,
-                set ->
-                    set.addPrimitive(Material.CHORUS_FLOWER));
-        }
-        if (this.data.hasVersion(1, 13, 0)) {
-            this.rulesBlockSpreadEventFromTo.reg(this.triggers.KELPS_GROWING,
-                this.tags.WATER,
-                to ->
-                    to.addPrimitive(Material.KELP));
-        }
-        if (this.data.hasVersion(1, 14, 0)) {
-            this.rulesBlockSpreadEventFromTo.reg(this.triggers.BAMBOO_GROWING,
-                this.tags.WORLD_AIR,
-                to ->
-                    to.addPrimitive(Material.BAMBOO));
-        }
-        if (this.data.hasVersion(1, 16, 0)) {
-            this.rulesBlockSpreadEventFromTo.reg(this.triggers.WEEPING_VINES_GROWING,
-                this.tags.WORLD_AIR,
-                to ->
-                    to.addPrimitive(Material.WEEPING_VINES));
-            this.rulesBlockSpreadEventFromTo.reg(this.triggers.TWISTING_VINES_GROWING,
-                this.tags.WORLD_AIR,
-                to ->
-                    to.addPrimitive(Material.TWISTING_VINES));
-        }
-        if (this.data.hasVersion(1, 17, 0)) {
-            this.rulesBlockSpreadEventFromTo.reg(this.triggers.GLOW_BERRIES_GROWING,
-                from -> {
-                    from.addPrimitive(Material.CAVE_VINES);
-                    from.addPrimitive(this.tags.WORLD_AIR);
-                },
-                to ->
-                    to.addPrimitive(Material.CAVE_VINES));
-            this.rulesBlockSpreadEventFromTo.reg(this.triggers.POINTED_DRIPSTONES_GROWING,
-                from -> {
-                    from.addPrimitive(Material.POINTED_DRIPSTONE);
-                    from.addPrimitive(this.tags.WORLD_AIR);
-                },
-                to ->
-                    to.addPrimitive(Material.POINTED_DRIPSTONE));
-            this.rulesBlockSpreadEventFromTo.reg(this.triggers.IGNORED_STATE, // BONE_MEAL_USAGE
-                this.tags.WORLD_AIR,
-                to ->
-                    to.addPrimitive(Material.HANGING_ROOTS));
-            this.rulesBlockSpreadEventFromTo.reg(this.triggers.IGNORED_STATE, // BONE_MEAL_USAGE
-                from -> {
-                    from.addPrimitive(Material.GLOW_LICHEN);
-                    from.addPrimitive(this.tags.WORLD_AIR);
-                },
-                to ->
-                    to.addPrimitive(Material.GLOW_LICHEN));
-            this.rulesBlockSpreadEventTo.reg(this.triggers.AMETHYST_CLUSTERS_GROWING, // from = AIR, CAVE_AIR, WATER, etc
-                set ->
-                    set.addPrimitive(Material.SMALL_AMETHYST_BUD));
-            this.rulesBlockSpreadEventFromTo.reg(this.triggers.AMETHYST_CLUSTERS_GROWING,
-                from ->
-                    from.addPrimitive(Material.SMALL_AMETHYST_BUD),
-                to ->
-                    to.addPrimitive(Material.MEDIUM_AMETHYST_BUD));
-            this.rulesBlockSpreadEventFromTo.reg(this.triggers.AMETHYST_CLUSTERS_GROWING,
-                from ->
-                    from.addPrimitive(Material.MEDIUM_AMETHYST_BUD),
-                to ->
-                    to.addPrimitive(Material.LARGE_AMETHYST_BUD));
-            this.rulesBlockSpreadEventFromTo.reg(this.triggers.AMETHYST_CLUSTERS_GROWING,
-                from ->
-                    from.addPrimitive(Material.LARGE_AMETHYST_BUD),
-                to ->
-                    to.addPrimitive(Material.AMETHYST_CLUSTER));
-        }
-        if (this.data.hasVersion(1, 19, 0)) {
-            this.rulesBlockSpreadEventTo.reg(this.triggers.SCULKS_SPREADING,
-                Arrays.asList(Material.SCULK, Material.SCULK_VEIN));
-        }
-    }
+    private final MaterialMaterialRules rulesBlockSpreadEventFromTo = new MaterialMaterialRules(
+        this.data, BlockSpreadEvent.class, "from", "to");
+    private final MaterialRules rulesBlockSpreadEventTo = new MaterialRules(
+        this.data, BlockSpreadEvent.class, "to");
 
     @EventHandler(ignoreCancelled = true)
     private void on(BlockSpreadEvent event) {
@@ -577,43 +252,10 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         }
     }
 
-    private final MaterialRules rulesEntityInteractEventMaterial = new MaterialRules(this.data);
 
-    {
-        if (this.data.hasVersion(1, 0, 0)) {
-            this.rulesEntityInteractEventMaterial.reg(this.triggers.FARMLANDS_TRAMPLING,
-                this.tags.FARMLAND_BLOCK);
-            this.rulesEntityInteractEventMaterial.reg(this.triggers.IGNORED_STATE, // Redstone activators
-                this.tags.REDSTONE_PASSIVE_INPUTS);
-            this.rulesEntityInteractEventMaterial.reg(this.triggers.IGNORED_STATE, // Redstone ore activation
-                this.tags.REDSTONE_ORE_BLOCKS);
-            this.rulesEntityInteractEventMaterial.reg(this.triggers.END_PORTAL_FRAMES_FILLING,
-                this.tags.END_PORTAL_FRAMES);
-        }
-        if (this.data.hasVersion(1, 13, 0)) {
-            this.rulesEntityInteractEventMaterial.reg(this.triggers.TURTLE_EGGS_TRAMPLING,
-                set ->
-                    set.addPrimitive(Material.TURTLE_EGG));
-        }
-        if (this.data.hasVersion(1, 17, 0)) {
-            this.rulesEntityInteractEventMaterial.reg(this.triggers.IGNORED_STATE, // Control by DRIPLEAFS_LOWERING
-                set ->
-                    set.addPrimitive(Material.BIG_DRIPLEAF));
-            this.rulesEntityInteractEventMaterial.reg(this.triggers.IGNORED_STATE, // Any entities stay on block
-                set ->
-                    set.addPrimitive(Material.SCULK_SENSOR));
-        }
-        if (this.data.hasVersion(1, 19, 0)) {
-            this.rulesEntityInteractEventMaterial.reg(this.triggers.IGNORED_STATE, // Players stay on block
-                set ->
-                    set.addPrimitive(Material.SCULK_SHRIEKER));
-        }
-        if (this.data.hasVersion(1, 20, 0)) {
-            this.rulesEntityInteractEventMaterial.reg(this.triggers.IGNORED_STATE, // Any entities stay on block
-                set ->
-                    set.addPrimitive(Material.CALIBRATED_SCULK_SENSOR));
-        }
-    }
+    private final MaterialRules rulesPlayerInteractEventMaterial = new MaterialRules(
+        this.data, PlayerInteractEvent.class, "material");
+    private final Set<Material> tagEndPortalFrames = this.data.getCustomTags().getTag("end_portal_frames", Material.class);
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     private void on(PlayerInteractEvent event) {
@@ -621,27 +263,31 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         if (clickedBlock == null) return;
         if (event.getAction() == Action.PHYSICAL) {
             if (event.getBlockFace() != BlockFace.SELF) return;
-            this.handleInteraction(event, clickedBlock, event.getPlayer());
+            this.handleInteraction(this.rulesPlayerInteractEventMaterial, event, clickedBlock, event.getPlayer());
         } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (this.tags.END_PORTAL_FRAMES.contains(clickedBlock.getType())) {
+            if (this.tagEndPortalFrames.contains(clickedBlock.getType())) {
                 this.data.cancelIfDisabled(event, clickedBlock.getWorld(), this.triggers.END_PORTAL_FRAMES_FILLING);
             }
         }
     }
 
+    private final MaterialRules rulesEntityInteractEventMaterial = new MaterialRules(
+        this.data, EntityInteractEvent.class, "material");
+    private final Set<Material> tagWoodenDoors = this.data.getCustomTags().getTag("wooden_doors", Material.class);
+
     @EventHandler(ignoreCancelled = true)
     private void on(EntityInteractEvent event) {
-        if (event.getEntityType() == EntityType.VILLAGER && this.tags.WOODEN_DOORS.contains(event.getBlock().getType())) {
+        if (event.getEntityType() == EntityType.VILLAGER && this.tagWoodenDoors.contains(event.getBlock().getType())) {
             return;
         }
-        this.handleInteraction(event, event.getBlock(), event.getEntity());
+        this.handleInteraction(this.rulesEntityInteractEventMaterial, event, event.getBlock(), event.getEntity());
     }
 
-    private void handleInteraction(@Nonnull Cancellable event, @Nonnull Block source, @Nonnull Entity entity) {
+    private void handleInteraction(@Nonnull MaterialRules rules, @Nonnull Cancellable event, @Nonnull Block source, @Nonnull Entity entity) {
         World world = source.getWorld();
         Material material = source.getType();
 
-        PControlTrigger trigger = this.rulesEntityInteractEventMaterial.findTrigger(material);
+        PControlTrigger trigger = rules.findTrigger(material);
 
         if (trigger != null) {
             this.data.cancelIfDisabled(event, world, trigger);
@@ -650,29 +296,10 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         }
     }
 
-    private final MaterialMaterialRules rulesEntityBlockFormEventFromTo = new MaterialMaterialRules(this.data);
-    private final MaterialRules rulesEntityBlockFormEventTo = new MaterialRules(this.data);
-
-    {
-        if (this.data.hasVersion(1, 0, 0)) {
-            this.rulesEntityBlockFormEventFromTo.reg(this.triggers.SNOW_GOLEMS_CREATE_SNOW,
-                this.tags.WORLD_AIR,
-                to ->
-                    to.addPrimitive(Material.SNOW));
-        }
-        if (this.data.hasVersion(1, 9, 0)) {
-            this.rulesEntityBlockFormEventFromTo.reg(this.triggers.FROSTED_ICE_PHYSICS,
-                this.tags.WATER,
-                to ->
-                    to.addPrimitive(Material.FROSTED_ICE));
-        }
-        if (this.data.hasVersion(1, 14, 0)) {
-            this.rulesEntityBlockFormEventFromTo.reg(this.triggers.WITHER_CREATE_WITHER_ROSE_BLOCKS,
-                this.tags.WORLD_AIR,
-                to ->
-                    to.addPrimitive(Material.WITHER_ROSE));
-        }
-    }
+    private final MaterialMaterialRules rulesEntityBlockFormEventFromTo = new MaterialMaterialRules(
+        this.data, EntityBlockFormEvent.class, "from", "to");
+    private final MaterialRules rulesEntityBlockFormEventTo = new MaterialRules(
+        this.data, EntityBlockFormEvent.class, "to");
 
     @EventHandler(ignoreCancelled = true)
     private void on(EntityBlockFormEvent event) {
@@ -689,39 +316,8 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         }
     }
 
-    private final TreeRules rulesStructureGrowEventTo = new TreeRules(this.data);
-
-    {
-        this.triggers.PLAYERS_BONE_MEAL_USAGE.markAvailable();
-        this.rulesStructureGrowEventTo.reg(this.triggers.TREES_GROWING,
-            set -> {
-                set.addPrimitive(TreeType.TREE);
-                set.addPrimitive(TreeType.TREE);
-                set.addPrimitive(TreeType.BIG_TREE);
-                set.addPrimitive(TreeType.REDWOOD);
-                set.addPrimitive(TreeType.TALL_REDWOOD);
-                set.addPrimitive(TreeType.BIRCH);
-                set.addPrimitive(TreeType.JUNGLE);
-                set.addPrimitive(TreeType.SMALL_JUNGLE);
-                set.addPrimitive(TreeType.COCOA_TREE);
-                set.addPrimitive(TreeType.JUNGLE_BUSH);
-                set.addPrimitive(TreeType.SWAMP);
-                set.addPrimitive(TreeType.ACACIA);
-                set.addPrimitive(TreeType.DARK_OAK);
-                set.addPrimitive(TreeType.MEGA_REDWOOD);
-                set.addPrimitive(TreeType.TALL_BIRCH);
-            });
-        this.rulesStructureGrowEventTo.reg(this.triggers.GIANT_MUSHROOMS_GROWING,
-            set -> {
-                set.addPrimitive(TreeType.RED_MUSHROOM);
-                set.addPrimitive(TreeType.BROWN_MUSHROOM);
-            });
-        if (this.data.hasVersion(1, 9, 0)) {
-            this.rulesStructureGrowEventTo.reg(this.triggers.CHORUSES_GROWING,
-                set ->
-                    set.addPrimitive(TreeType.CHORUS_PLANT));
-        }
-    }
+    private final TreeRules rulesStructureGrowEventTo = new TreeRules(
+        this.data, StructureGrowEvent.class, "to");
 
     @EventHandler(ignoreCancelled = true)
     private void on(StructureGrowEvent event) {
@@ -741,12 +337,6 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         }
     }
 
-
-    {
-        this.triggers.PLAYERS_FLINT_USAGE.markAvailable();
-        this.triggers.FIRE_SPREADING.markAvailable();
-    }
-
     @EventHandler(ignoreCancelled = true)
     private void on(BlockIgniteEvent event) {
         if (event.getCause() == BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL) {
@@ -756,15 +346,11 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         }
     }
 
-    {
-        if (this.data.hasVersion(1, 11, 0)) { // ProjectileHitEvent.getHitBlock() since 1.11
-            this.triggers.BLOCK_HIT_PROJECTILES_REMOVING.markAvailable();
-        }
-    }
+    private final boolean supportProjectileHitEvent = this.data.hasVersion(1, 11, 0);
 
     @EventHandler(ignoreCancelled = true)
     private void on(ProjectileHitEvent event) {
-        if (!this.data.hasVersion(1, 11, 0)) return;
+        if (!this.supportProjectileHitEvent) return;
         if (event.getHitBlock() == null) return; // Since 1.11
         Entity entity = event.getEntity();
         if (!this.data.getRemovableProjectileTypes().contains(entity.getType())) return;
@@ -772,26 +358,14 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         entity.remove();
     }
 
-    {
-        this.triggers.FIRE_SPREADING.markAvailable();
-    }
-
     @EventHandler(ignoreCancelled = true)
     private void on(BlockBurnEvent event) {
         this.data.cancelIfDisabled(event, this.triggers.FIRE_SPREADING);
     }
 
-    {
-        this.triggers.LEAVES_DECAY.markAvailable();
-    }
-
     @EventHandler(ignoreCancelled = true)
     private void on(LeavesDecayEvent event) {
         this.data.cancelIfDisabled(event, this.triggers.LEAVES_DECAY);
-    }
-
-    {
-        this.triggers.PLAYERS_BONE_MEAL_USAGE.markAvailable();
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
@@ -813,41 +387,18 @@ public final class PhysicsListenerCommon extends PhysicsListener {
         this.fertilizedBlocks.add(targetBlock.getLocation().toVector());
     }
 
-    private final MaterialRules rulesBlockPhysicsEventFrom = new MaterialRules(this.data);
+    private final MaterialRules rulesBlockPhysicsEventFrom = new MaterialRules(
+        this.data, BlockPhysicsEvent.class, "from");
 
-    {
-        if (BLOCK_PHYSICS_EVENT_GET_SOURCE_BLOCK_SUPPORT || !this.data.hasVersion(1, 13, 0)) {
-            this.rulesBlockPhysicsEventFrom.reg(this.triggers.SAPLINGS_DESTROYING,
-                set ->
-                    set.addPrimitive(this.tags.SAPLINGS));
-            this.rulesBlockPhysicsEventFrom.reg(this.triggers.LADDERS_DESTROYING,
-                set ->
-                    set.addPrimitive(this.tags.LADDERS));
-            this.rulesBlockPhysicsEventFrom.reg(this.triggers.SIGNS_DESTROYING,
-                set ->
-                    set.addPrimitive(this.tags.SIGNS));
-            this.rulesBlockPhysicsEventFrom.reg(this.triggers.RAILS_DESTROYING,
-                set ->
-                    set.addPrimitive(this.tags.RAILS));
-            this.rulesBlockPhysicsEventFrom.reg(this.triggers.TORCHES_DESTROYING,
-                set ->
-                    set.addPrimitive(this.tags.TORCHES));
-            this.rulesBlockPhysicsEventFrom.reg(this.triggers.REDSTONE_TORCHES_DESTROYING,
-                set ->
-                    set.addPrimitive(this.tags.REDSTONE_TORCHES));
-        }
-        if (this.data.hasVersion(1, 16, 0)) {
-            this.rulesBlockPhysicsEventFrom.reg(this.triggers.SOUL_TORCHES_DESTROYING,
-                set ->
-                    set.addPrimitive(this.tags.SOUL_TORCHES));
-        }
-    }
+    private final boolean legacyBlockPhysicsEvent = !this.data.hasVersion(1, 13, 0);
+    private final boolean modernBlockPhysicsEvent = ReflectionUtils.isMethodPresent(BlockPhysicsEvent.class, "getSourceBlock");
 
+    @SuppressWarnings("ConcatenationWithEmptyString")
     @EventHandler(ignoreCancelled = true)
     private void modernListener(BlockPhysicsEvent event) {
         Block block = event.getBlock();
 
-        if (!this.data.hasVersion(1, 13, 0)) {
+        if (this.legacyBlockPhysicsEvent) {
             if (PhysicsListener.DEBUG_BLOCK_PHYSICS_EVENT) {
                 this.debugAction(event, block.getLocation(), ""
                     + "block=" + block.getType() + ";"
@@ -861,7 +412,7 @@ public final class PhysicsListenerCommon extends PhysicsListener {
             return;
         }
 
-        if (!BLOCK_PHYSICS_EVENT_GET_SOURCE_BLOCK_SUPPORT) {
+        if (!this.modernBlockPhysicsEvent) {
             return;
         }
 
