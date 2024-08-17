@@ -17,11 +17,11 @@ import ru.dymeth.pcontrol.data.PControlData;
 import javax.annotation.Nonnull;
 import java.util.Set;
 
-public class VersionsAdapter_1_8 implements VersionsAdapter {
+public class VersionsAdapter_1_8_to_1_12_2 implements VersionsAdapter {
 
     private final Set<Material> blocksUnderWaterOnly;
 
-    public VersionsAdapter_1_8(@Nonnull PControlData data) {
+    public VersionsAdapter_1_8_to_1_12_2(@Nonnull PControlData data) {
         this.blocksUnderWaterOnly = data.getCustomTags().getTag("blocks_under_water_only", Material.class);
     }
 

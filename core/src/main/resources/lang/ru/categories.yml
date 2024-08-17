@@ -1,10 +1,10 @@
-MOBS_INTERACTIONS: "Мобы"
-PLAYERS_INTERACTIONS: "Игроки"
-ENTITIES_INTERACTIONS: "Сущности"
-BUILDING: "Строительство"
-GRAVITY_AND_LIQUIDS: "Гравитация и жидкости"
-WORLD_DESTRUCTION: "Разрушения"
-GROWING_BLOCKS_AND_SMALL_PLANTS: "Растущие блоки и небольшие растения"
-VINES_AND_TALL_STRUCTURES: "Лозы и крупные структуры"
-SETTINGS: "Настройки"
-TEST: "Тестовые триггеры"
+MOBS_INTERACTIONS: Мобы
+PLAYERS_INTERACTIONS: Игроки
+ENTITIES_INTERACTIONS: Сущности
+BUILDING: Строительство
+GRAVITY_AND_LIQUIDS: Гравитация и жидкости
+WORLD_DESTRUCTION: Разрушения
+GROWING_BLOCKS_AND_SMALL_PLANTS: Растущие блоки и небольшие растения
+VINES_AND_TALL_STRUCTURES: Лозы и крупные структуры
+SETTINGS: Настройки
+TEST: Тестовые триггеры

@@ -13,7 +13,8 @@ import java.util.logging.Logger;
 
 public class LocaleUtils {
 
-    public static String prepareLangKey(@Nonnull Class<?> clazz, @Nonnull Logger logger, @Nullable String rawLangKey) {
+    @Nonnull
+    public static String prepareLangKey(@Nonnull Class<?> clazz, @Nullable Logger logger, @Nullable String rawLangKey) {
         if (rawLangKey == null) {
             rawLangKey = "auto";
         } else {
@@ -26,9 +27,11 @@ public class LocaleUtils {
             return getSystemUserLanguage(supportedLanguageKeys);
         } else if (!supportedLanguageKeys.contains(rawLangKey)) {
             String autoLangKey = getSystemUserLanguage(supportedLanguageKeys);
-            logger.warning("Language \"" + rawLangKey + "\" isn't supported," +
-                " switching to " + autoLangKey + " (auto)...");
-            logger.warning("Supported languages: " + supportedLanguageKeys);
+            if (logger != null) {
+                logger.warning("Language \"" + rawLangKey + "\" isn't supported," +
+                    " switching to " + autoLangKey + " (auto)...");
+                logger.warning("Supported languages: " + supportedLanguageKeys);
+            }
             return autoLangKey;
         }
         return rawLangKey;

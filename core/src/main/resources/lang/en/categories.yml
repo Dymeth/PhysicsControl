@@ -1,10 +1,10 @@
-MOBS_INTERACTIONS: "Mobs"
-PLAYERS_INTERACTIONS: "Players"
-ENTITIES_INTERACTIONS: "Entities"
-BUILDING: "Building"
-GRAVITY_AND_LIQUIDS: "Gravity and liquids"
-WORLD_DESTRUCTION: "Destruction"
-GROWING_BLOCKS_AND_SMALL_PLANTS: "Growing blocks and small plants"
-VINES_AND_TALL_STRUCTURES: "Vines and tall structures"
-SETTINGS: "Settings"
-TEST: "Test triggers"
+MOBS_INTERACTIONS: Mobs
+PLAYERS_INTERACTIONS: Players
+ENTITIES_INTERACTIONS: Entities
+BUILDING: Building
+GRAVITY_AND_LIQUIDS: Gravity and liquids
+WORLD_DESTRUCTION: Destruction
+GROWING_BLOCKS_AND_SMALL_PLANTS: Growing blocks and small plants
+VINES_AND_TALL_STRUCTURES: Vines and tall structures
+SETTINGS: Settings
+TEST: Test triggers

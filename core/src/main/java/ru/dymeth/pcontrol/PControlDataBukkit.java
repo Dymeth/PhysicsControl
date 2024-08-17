@@ -31,9 +31,9 @@ import ru.dymeth.pcontrol.util.update.data.PluginDataUpdater;
 import ru.dymeth.pcontrol.util.update.jar.PaperPluginUpdater;
 import ru.dymeth.pcontrol.util.update.jar.PluginUpdater;
 import ru.dymeth.pcontrol.util.update.jar.SpigotPluginUpdater;
-import ru.dymeth.pcontrol.versionsadapter.VersionsAdapter_1_13;
-import ru.dymeth.pcontrol.versionsadapter.VersionsAdapter_1_8;
-import ru.dymeth.pcontrol.versionsadapter.VersionsAdapter_1_20_5;
+import ru.dymeth.pcontrol.versionsadapter.VersionsAdapter_1_13_to_1_20_4;
+import ru.dymeth.pcontrol.versionsadapter.VersionsAdapter_1_8_to_1_12_2;
+import ru.dymeth.pcontrol.versionsadapter.VersionsAdapter_1_20_5_and_more;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -105,11 +105,11 @@ public final class PControlDataBukkit implements PControlData {
     @Nonnull
     private VersionsAdapter createVersionsAdapter() {
         if (!this.hasVersion(1, 13, 0)) {
-            return new VersionsAdapter_1_8(this);
+            return new VersionsAdapter_1_8_to_1_12_2(this);
         } else if (!this.hasVersion(1, 20, 5)) {
-            return new VersionsAdapter_1_13(this);
+            return new VersionsAdapter_1_13_to_1_20_4(this);
         } else {
-            return new VersionsAdapter_1_20_5(this);
+            return new VersionsAdapter_1_20_5_and_more(this);
         }
     }
 

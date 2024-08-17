@@ -5,11 +5,13 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import ru.dymeth.pcontrol.util.FileUtils;
+import ru.dymeth.pcontrol.util.LocaleUtils;
 import ru.dymeth.pcontrol.util.SneakyThrowsSupplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.File;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -139,15 +141,30 @@ public class PluginDataUpdater {
             try {
                 YamlConfiguration categoriesConfig = YamlConfiguration.loadConfiguration(categoriesFile);
 
-                String oldMsg1 = categoriesConfig.getString("LIQUIDS", "").trim();
-                categoriesConfig.set("LIQUIDS", null);
+                {
+                    String oldValue1 = categoriesConfig.getString("GRAVITY_BLOCKS", "").trim();
+                    categoriesConfig.set("GRAVITY_BLOCKS", null);
 
-                String oldMsg2 = categoriesConfig.getString("GRAVITY_BLOCKS", "").trim();
-                categoriesConfig.set("GRAVITY_BLOCKS", null);
+                    String oldValue2 = categoriesConfig.getString("LIQUIDS", "").trim();
+                    categoriesConfig.set("LIQUIDS", null);
 
-                if (!oldMsg1.isEmpty() && !oldMsg2.isEmpty()) {
-                    String newMessage = oldMsg1 + " & " + oldMsg2;
-                    categoriesConfig.set("GRAVITY_AND_LIQUIDS", newMessage);
+                    if (!oldValue1.isEmpty() && !oldValue2.isEmpty()) {
+                        String newValue = oldValue1 + " & " + oldValue2;
+                        categoriesConfig.set("GRAVITY_AND_LIQUIDS", newValue);
+                    }
+                }
+
+                if (categoriesConfig.getString("PLAYERS_INTERACTIONS", null) == null) {
+                    File configFile = this.getLangFile("config.yml");
+                    YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+
+                    String langKey = LocaleUtils.prepareLangKey(this.getClass(), null, config.getString("language"));
+
+                    YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(
+                        new InputStreamReader(Objects.requireNonNull(this.plugin.getResource(
+                            "lang/" + langKey + "/" + "categories.yml"))));
+
+                    categoriesConfig.set("PLAYERS_INTERACTIONS", defaultConfig.getString("PLAYERS_INTERACTIONS"));
                 }
 
                 categoriesConfig.save(categoriesFile);
