@@ -163,7 +163,7 @@ public abstract class TriggerRules<T> {
     protected PControlTrigger parseTrigger(@Nonnull ConfigurationSection section) {
         String triggerName = section.getString("trigger");
         if (triggerName == null) throw new IllegalArgumentException("Trigger name not found");
-        return this.data.getTriggersRegisty().valueOf(triggerName);
+        return this.data.getTriggersRegisty().valueOf(triggerName, false);
     }
 
     public abstract void unregisterAll();

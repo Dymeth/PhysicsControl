@@ -1,4 +1,4 @@
-package ru.dymeth.pcontrol.listener;
+package ru.dymeth.pcontrol.listener.block;
 
 import org.bukkit.Material;
 import org.bukkit.block.data.BlockData;
@@ -7,17 +7,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.MoistureChangeEvent;
 import ru.dymeth.pcontrol.PhysicsListener;
 import ru.dymeth.pcontrol.data.PControlData;
+import ru.dymeth.pcontrol.data.trigger.EventsListenerParser;
+import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
 
 import javax.annotation.Nonnull;
 
-public final class MoistureChangeEventListener extends PhysicsListener {
+public class MoistureChangeEventListener extends PhysicsListener {
 
-    public MoistureChangeEventListener(@Nonnull PControlData data) {
+    private final PControlTrigger triggerFarmlandsDrying
+        = this.data.getTriggersRegisty().valueOf("FARMLANDS_DRYING");
+
+    public MoistureChangeEventListener(@Nonnull PControlData data, @Nonnull EventsListenerParser parser) {
         super(data);
-    }
-
-    {
-        this.triggers.FARMLANDS_DRYING.markAvailable();
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -28,7 +29,7 @@ public final class MoistureChangeEventListener extends PhysicsListener {
             int oldMoisture = ((Farmland) oldData).getMoisture();
             int newMoisture = ((Farmland) newData).getMoisture();
             if (newMoisture < oldMoisture) {
-                this.data.cancelIfDisabled(event, this.triggers.FARMLANDS_DRYING);
+                this.data.cancelIfDisabled(event, this.triggerFarmlandsDrying);
             }
             return;
         }

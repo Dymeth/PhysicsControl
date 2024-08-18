@@ -16,11 +16,16 @@ import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import ru.dymeth.pcontrol.data.trigger.EventsListenerParser;
 import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
 import ru.dymeth.pcontrol.inventory.PControlCategoryInventory;
 import ru.dymeth.pcontrol.inventory.PControlInventory;
-import ru.dymeth.pcontrol.listener.MoistureChangeEventListener;
-import ru.dymeth.pcontrol.listener.PhysicsListenerCommon;
+import ru.dymeth.pcontrol.listener.block.*;
+import ru.dymeth.pcontrol.listener.entity.EntityChangeBlockEventListener;
+import ru.dymeth.pcontrol.listener.entity.EntityInteractEventListener;
+import ru.dymeth.pcontrol.listener.entity.ProjectileHitEventListener;
+import ru.dymeth.pcontrol.listener.player.PlayerInteractEventListener;
+import ru.dymeth.pcontrol.listener.world.StructureGrowEventListener;
 import ru.dymeth.pcontrol.rules.TriggerRules;
 import ru.dymeth.pcontrol.util.ReflectionUtils;
 
@@ -39,6 +44,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
             15320
         );
 
+        this.data.getTriggersRegisty().IGNORED_STATE.markAvailable();
         for (PControlTrigger trigger : this.data.getCategoriesRegistry().SETTINGS.getTriggers()) {
             trigger.markAvailable();
         }
@@ -48,17 +54,53 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         }
 
         this.getServer().getPluginManager().registerEvents(this, this);
-        this.getServer().getPluginManager().registerEvents(new PhysicsListenerCommon(this.data), this);
 
-        this.reg("org.bukkit.event.block.MoistureChangeEvent", () -> new MoistureChangeEventListener(this.data));
+        EventsListenerParser parser = new EventsListenerParser(this.data);
+        this.registerListeners(parser);
+        parser.parseAllEvents();
 
         this.data.reloadConfigs();
     }
 
+    private void registerListeners(@Nonnull EventsListenerParser parser) {
+        this.reg("org.bukkit.event.block.BlockBurnEvent",
+            () -> new BlockBurnEventListener(this.data, parser));
+        this.reg("org.bukkit.event.block.BlockFadeEvent",
+            () -> new BlockFadeEventListener(this.data, parser));
+        this.reg("org.bukkit.event.block.BlockFromToEvent",
+            () -> new BlockFromToEventListener(this.data, parser));
+        this.reg("org.bukkit.event.block.BlockGrowEvent",
+            () -> new BlockGrowEventListener(this.data, parser));
+        this.reg("org.bukkit.event.block.BlockIgniteEvent",
+            () -> new BlockIgniteEventListener(this.data, parser));
+        this.reg("org.bukkit.event.block.BlockPhysicsEvent",
+            () -> new BlockPhysicsEventListener(this.data, parser));
+        this.reg("org.bukkit.event.block.BlockSpreadEvent",
+            () -> new BlockSpreadEventListener(this.data, parser));
+        this.reg("org.bukkit.event.block.EntityBlockFormEvent",
+            () -> new EntityBlockFormEventListener(this.data, parser));
+        this.reg("org.bukkit.event.block.LeavesDecayEvent",
+            () -> new LeavesDecayEventListener(this.data, parser));
+        this.reg("org.bukkit.event.block.MoistureChangeEvent",
+            () -> new MoistureChangeEventListener(this.data, parser));
+        this.reg("org.bukkit.event.entity.EntityChangeBlockEvent",
+            () -> new EntityChangeBlockEventListener(this.data, parser));
+        this.reg("org.bukkit.event.entity.EntityInteractEvent",
+            () -> new EntityInteractEventListener(this.data, parser));
+        this.reg("org.bukkit.event.entity.ProjectileHitEvent",
+            () -> new ProjectileHitEventListener(this.data, parser));
+        this.reg("org.bukkit.event.player.PlayerInteractEvent",
+            () -> new PlayerInteractEventListener(this.data, parser));
+        this.reg("org.bukkit.event.world.StructureGrowEvent",
+            () -> new StructureGrowEventListener(this.data, parser));
+    }
+
     @SuppressWarnings("SameParameterValue")
-    private void reg(@Nonnull String eventClassName, @Nonnull Supplier<Listener> listenerCreator) {
+    private void reg(@Nonnull String eventClassName, @Nonnull Supplier<PhysicsListener> listenerCreator) {
         if (ReflectionUtils.isClassPresent(eventClassName)) {
-            this.getServer().getPluginManager().registerEvents(listenerCreator.get(), this);
+            PhysicsListener listener = listenerCreator.get();
+            listener.unregisterUnavailableTriggers();
+            this.getServer().getPluginManager().registerEvents(listener, this);
         }
     }
 
@@ -168,7 +210,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         }
         String key = join("_", 1, args).toUpperCase();
         try {
-            PControlTrigger trigger = this.data.getTriggersRegisty().valueOf(key);
+            PControlTrigger trigger = this.data.getTriggersRegisty().valueOf(key, false);
             if (trigger == this.data.getTriggersRegisty().IGNORED_STATE) throw new IllegalArgumentException();
             this.data.getInventory(trigger.getCategory(), world).switchTrigger(sender, trigger);
         } catch (IllegalArgumentException e) {

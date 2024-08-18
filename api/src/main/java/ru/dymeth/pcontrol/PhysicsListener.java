@@ -41,6 +41,9 @@ public abstract class PhysicsListener implements Listener {
         data.server().getScheduler().runTaskTimer(data.getPlugin(), this.fertilizedBlocks::clear, 1L, 1L);
     }
 
+    protected void unregisterUnavailableTriggers() {
+    }
+
     protected void unrecognizedAction(@Nonnull Cancellable event, @Nonnull Location l, @Nonnull Object content) {
         if (l.getWorld() == null) throw new IllegalArgumentException("World cannot be null");
         if (!this.data.isActionAllowed(l.getWorld(), this.triggers.ALLOW_UNRECOGNIZED_ACTIONS)) {

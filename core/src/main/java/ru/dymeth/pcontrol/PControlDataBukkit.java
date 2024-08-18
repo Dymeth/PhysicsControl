@@ -32,8 +32,8 @@ import ru.dymeth.pcontrol.util.update.jar.PaperPluginUpdater;
 import ru.dymeth.pcontrol.util.update.jar.PluginUpdater;
 import ru.dymeth.pcontrol.util.update.jar.SpigotPluginUpdater;
 import ru.dymeth.pcontrol.versionsadapter.VersionsAdapter_1_13_to_1_20_4;
-import ru.dymeth.pcontrol.versionsadapter.VersionsAdapter_1_8_to_1_12_2;
 import ru.dymeth.pcontrol.versionsadapter.VersionsAdapter_1_20_5_and_more;
+import ru.dymeth.pcontrol.versionsadapter.VersionsAdapter_1_8_to_1_12_2;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -213,7 +213,7 @@ public final class PControlDataBukkit implements PControlData {
             "messages.yml", this.messages);
 
         LocaleUtils.reloadLocale(this.plugin, this.langKey,
-            this.triggers::valueOf, messageProcessor,
+            key -> this.triggers.valueOf(key, false), messageProcessor,
             "triggers.yml", this.triggersNames);
 
         for (PControlCategory category : this.categories.values()) {
@@ -295,7 +295,7 @@ public final class PControlDataBukkit implements PControlData {
             try {
                 PControlTrigger trigger;
                 try {
-                    trigger = this.triggers.valueOf(key.toUpperCase().replace(" ", "_"));
+                    trigger = this.triggers.valueOf(key.toUpperCase().replace(" ", "_"), false);
                     if (trigger == this.triggers.IGNORED_STATE) throw new IllegalArgumentException();
                 } catch (IllegalArgumentException e) {
                     throw new IllegalArgumentException("Unknown trigger type");
