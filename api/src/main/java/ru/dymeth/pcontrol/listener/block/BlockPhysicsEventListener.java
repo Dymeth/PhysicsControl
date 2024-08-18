@@ -9,11 +9,13 @@ import ru.dymeth.pcontrol.data.PControlData;
 import ru.dymeth.pcontrol.data.trigger.EventsListenerParser;
 import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
 import ru.dymeth.pcontrol.rules.single.MaterialRules;
+import ru.dymeth.pcontrol.util.LocationUtils;
 import ru.dymeth.pcontrol.util.ReflectionUtils;
 
 import javax.annotation.Nonnull;
 
 public class BlockPhysicsEventListener extends PhysicsListener {
+    private static final boolean DEBUG = false;
 
     private final MaterialRules rulesBlockPhysicsEventFrom = new MaterialRules(
         this.data, BlockPhysicsEvent.class, "from");
@@ -35,11 +37,11 @@ public class BlockPhysicsEventListener extends PhysicsListener {
 
     @SuppressWarnings("ConcatenationWithEmptyString")
     @EventHandler(ignoreCancelled = true)
-    private void modernListener(BlockPhysicsEvent event) {
+    private void on(BlockPhysicsEvent event) {
         Block block = event.getBlock();
 
         if (this.legacyBlockPhysicsEvent) {
-            if (PhysicsListener.DEBUG_BLOCK_PHYSICS_EVENT) {
+            if (DEBUG) {
                 this.debugAction(event, block.getLocation(), ""
                     + "block=" + block.getType() + ";"
                     + "changed=" + event.getChangedType() + ";"
@@ -58,7 +60,7 @@ public class BlockPhysicsEventListener extends PhysicsListener {
 
         Block source = event.getSourceBlock(); // Not supported on Spigot 1.13 and 1.13.1
 
-        if (PhysicsListener.DEBUG_BLOCK_PHYSICS_EVENT) {
+        if (DEBUG) {
             this.debugAction(event, block.getLocation(), ""
                 + "block=" + block.getType() + ";"
                 + "source=" + source.getType() + ";"
@@ -71,7 +73,7 @@ public class BlockPhysicsEventListener extends PhysicsListener {
 
         BlockFace faceUp = BlockFace.UP;
         sourceRelative = source.getRelative(faceUp);
-        if (PhysicsListener.DEBUG_BLOCK_PHYSICS_EVENT) {
+        if (DEBUG) {
             this.debugAction(event, sourceRelative.getLocation(), ""
                 + "face=" + faceUp + ";"
                 + "sourceRelative=" + sourceRelative.getType() + ";"
@@ -83,15 +85,15 @@ public class BlockPhysicsEventListener extends PhysicsListener {
             return;
         }
 
-        for (BlockFace faceNSWE : PhysicsListener.NSWE_FACES) {
-            sourceRelative = source.getRelative(faceNSWE);
-            if (PhysicsListener.DEBUG_BLOCK_PHYSICS_EVENT) {
+        for (BlockFace face : LocationUtils.NSWE_FACES) {
+            sourceRelative = source.getRelative(face);
+            if (DEBUG) {
                 this.debugAction(event, sourceRelative.getLocation(), ""
-                    + "face=" + faceNSWE + ";"
+                    + "face=" + face + ";"
                     + "sourceRelative=" + sourceRelative.getType() + ";"
                 );
             }
-            if (!this.versionsAdapter.isFacingAt(sourceRelative, faceNSWE)) continue;
+            if (!this.versionsAdapter.isFacingAt(sourceRelative, face)) continue;
             trigger = this.rulesBlockPhysicsEventFrom.findTrigger(sourceRelative.getType());
             if (trigger != null) {
                 this.data.cancelIfDisabled(event, trigger);

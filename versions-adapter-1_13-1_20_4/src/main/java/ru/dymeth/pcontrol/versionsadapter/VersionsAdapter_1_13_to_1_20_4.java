@@ -6,22 +6,21 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Waterlogged;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import ru.dymeth.pcontrol.VersionsAdapter;
 import ru.dymeth.pcontrol.data.PControlData;
 
 import javax.annotation.Nonnull;
-import java.util.Set;
 
-public class VersionsAdapter_1_13_to_1_20_4 implements VersionsAdapter {
-
-    private final Set<Material> blocksUnderWaterOnly;
-
+public class VersionsAdapter_1_13_to_1_20_4 extends VersionsAdapter_1_8_to_1_12_2 {
     public VersionsAdapter_1_13_to_1_20_4(@Nonnull PControlData data) {
-        this.blocksUnderWaterOnly = data.getCustomTags().getTag("blocks_under_water_only", Material.class);
+        super(data);
+
+        for (Material material : Material.values()) {
+            if (!material.isBlock()) continue;
+            if (!(material.createBlockData() instanceof Waterlogged)) continue;
+            this.underwaterMaterials.put(material, true);
+        }
     }
 
     @Nonnull
@@ -37,8 +36,9 @@ public class VersionsAdapter_1_13_to_1_20_4 implements VersionsAdapter {
 
     @Override
     public boolean isBlockContainsWater(@Nonnull Block block) {
-        return (block.getBlockData() instanceof Waterlogged && ((Waterlogged) block.getBlockData()).isWaterlogged())
-            || this.blocksUnderWaterOnly.contains(block.getType());
+        Boolean waterlogged = this.underwaterMaterials.get(block.getType());
+        if (waterlogged == null) return false;
+        return !waterlogged || ((Waterlogged) block.getBlockData()).isWaterlogged();
     }
 
     @Override
@@ -46,10 +46,4 @@ public class VersionsAdapter_1_13_to_1_20_4 implements VersionsAdapter {
         BlockData data = block.getBlockData();
         return !(data instanceof Directional) || ((Directional) data).getFacing() == face;
     }
-
-    @Override
-    public void setItemMetaGlowing(@Nonnull ItemMeta meta) {
-        meta.addEnchant(Enchantment.DURABILITY, 1, true);
-    }
-
 }

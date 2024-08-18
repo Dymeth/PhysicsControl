@@ -15,14 +15,18 @@ import ru.dymeth.pcontrol.VersionsAdapter;
 import ru.dymeth.pcontrol.data.PControlData;
 
 import javax.annotation.Nonnull;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 public class VersionsAdapter_1_8_to_1_12_2 implements VersionsAdapter {
 
-    private final Set<Material> blocksUnderWaterOnly;
+    final Map<Material, Boolean> underwaterMaterials; // isWaterlogged
 
     public VersionsAdapter_1_8_to_1_12_2(@Nonnull PControlData data) {
-        this.blocksUnderWaterOnly = data.getCustomTags().getTag("blocks_under_water_only", Material.class);
+        this.underwaterMaterials = new HashMap<>();
+        for (Material material : data.getCustomTags().getTag("blocks_under_water_only", Material.class)) {
+            this.underwaterMaterials.put(material, false);
+        }
     }
 
     @Nonnull
@@ -38,7 +42,7 @@ public class VersionsAdapter_1_8_to_1_12_2 implements VersionsAdapter {
 
     @Override
     public boolean isBlockContainsWater(@Nonnull Block block) {
-        return this.blocksUnderWaterOnly.contains(block.getType());
+        return this.underwaterMaterials.containsKey(block.getType());
     }
 
     @Override
@@ -51,5 +55,4 @@ public class VersionsAdapter_1_8_to_1_12_2 implements VersionsAdapter {
     public void setItemMetaGlowing(@Nonnull ItemMeta meta) {
         meta.addEnchant(Enchantment.DURABILITY, 1, true);
     }
-
 }

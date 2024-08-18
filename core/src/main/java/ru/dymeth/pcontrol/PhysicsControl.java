@@ -21,6 +21,7 @@ import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
 import ru.dymeth.pcontrol.inventory.PControlCategoryInventory;
 import ru.dymeth.pcontrol.inventory.PControlInventory;
 import ru.dymeth.pcontrol.listener.block.*;
+import ru.dymeth.pcontrol.listener.custom.BoneMealUsageListener;
 import ru.dymeth.pcontrol.listener.entity.EntityChangeBlockEventListener;
 import ru.dymeth.pcontrol.listener.entity.EntityInteractEventListener;
 import ru.dymeth.pcontrol.listener.entity.ProjectileHitEventListener;
@@ -83,6 +84,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
             () -> new LeavesDecayEventListener(this.data, parser));
         this.reg("org.bukkit.event.block.MoistureChangeEvent",
             () -> new MoistureChangeEventListener(this.data, parser));
+        this.reg(new BoneMealUsageListener(this.data, parser));
         this.reg("org.bukkit.event.entity.EntityChangeBlockEvent",
             () -> new EntityChangeBlockEventListener(this.data, parser));
         this.reg("org.bukkit.event.entity.EntityInteractEvent",
@@ -98,10 +100,14 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
     @SuppressWarnings("SameParameterValue")
     private void reg(@Nonnull String eventClassName, @Nonnull Supplier<PhysicsListener> listenerCreator) {
         if (ReflectionUtils.isClassPresent(eventClassName)) {
-            PhysicsListener listener = listenerCreator.get();
-            listener.unregisterUnavailableTriggers();
-            this.getServer().getPluginManager().registerEvents(listener, this);
+            this.reg(listenerCreator.get());
         }
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    private void reg(@Nonnull PhysicsListener listener) {
+        listener.unregisterUnavailableTriggers();
+        this.getServer().getPluginManager().registerEvents(listener, this);
     }
 
     @Override

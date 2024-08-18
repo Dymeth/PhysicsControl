@@ -15,5 +15,4 @@ public class VersionsAdapter_1_20_5_and_more extends VersionsAdapter_1_13_to_1_2
     public void setItemMetaGlowing(@Nonnull ItemMeta meta) {
         meta.setEnchantmentGlintOverride(true);
     }
-
 }

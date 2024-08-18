@@ -5,12 +5,10 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import ru.dymeth.pcontrol.PhysicsListener;
 import ru.dymeth.pcontrol.data.PControlData;
 import ru.dymeth.pcontrol.data.trigger.EventsListenerParser;
@@ -20,9 +18,6 @@ import ru.dymeth.pcontrol.rules.single.MaterialRules;
 import javax.annotation.Nonnull;
 
 public class PlayerInteractEventListener extends PhysicsListener {
-
-    private final PControlTrigger triggerPlayersBoneMealUsage
-        = this.data.getTriggersRegisty().valueOf("PLAYERS_BONE_MEAL_USAGE");
     private final MaterialRules rulesPlayerInteractEventPhysicalMaterial = new MaterialRules(
         this.data, PlayerInteractEvent.class, "physical-material");
     private final MaterialRules rulesPlayerInteractEventClickedMaterial = new MaterialRules(
@@ -59,25 +54,5 @@ public class PlayerInteractEventListener extends PhysicsListener {
                 this.data.cancelIfDisabled(event, world, trigger);
             }
         }
-    }
-
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
-    private void onBoneMeal(PlayerInteractEvent event) {
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
-        Block targetBlock = event.getClickedBlock();
-        if (targetBlock == null) {
-            throw new IllegalArgumentException("Block absent on " + PlayerInteractEvent.class.getSimpleName()
-                + " with " + event.getAction().getClass().getSimpleName() + "." + event.getAction().name());
-        }
-
-        ItemStack usedItem = event.getItem();
-        if (usedItem == null) return;
-        if (!this.versionsAdapter.isBoneMealItem(usedItem)) return;
-
-        if (!this.data.isActionAllowed(targetBlock.getWorld(), this.triggerPlayersBoneMealUsage)) {
-            event.setUseItemInHand(Event.Result.DENY);
-        }
-        if (event.useItemInHand() == Event.Result.DENY) return;
-        this.fertilizedBlocks.add(targetBlock.getLocation().toVector());
     }
 }

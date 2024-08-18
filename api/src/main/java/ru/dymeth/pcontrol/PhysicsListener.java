@@ -2,43 +2,29 @@ package ru.dymeth.pcontrol;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
-import org.bukkit.util.Vector;
-import ru.dymeth.pcontrol.data.CustomTags;
 import ru.dymeth.pcontrol.data.PControlData;
-import ru.dymeth.pcontrol.data.trigger.TriggersRegistry;
+import ru.dymeth.pcontrol.data.trigger.PControlTrigger;
 import ru.dymeth.pcontrol.text.CommonColor;
 import ru.dymeth.pcontrol.text.Text;
 
 import javax.annotation.Nonnull;
-import java.util.HashSet;
-import java.util.Set;
 
 public abstract class PhysicsListener implements Listener {
-    protected static final BlockFace[] NSWE_FACES = new BlockFace[]{
-        BlockFace.NORTH,
-        BlockFace.SOUTH,
-        BlockFace.WEST,
-        BlockFace.EAST
-    };
-    protected static final boolean DEBUG_BLOCK_PHYSICS_EVENT = false;
-
     protected final PControlData data;
-    protected final CustomTags tags;
-    protected final TriggersRegistry triggers;
     protected final VersionsAdapter versionsAdapter;
-    protected final Set<Vector> fertilizedBlocks;
+
+    private final PControlTrigger triggerAllowUnrecognizedActions;
+    private final PControlTrigger triggerDebugMessages;
 
     protected PhysicsListener(@Nonnull PControlData data) {
         this.data = data;
-        this.tags = data.getCustomTags();
-        this.triggers = data.getTriggersRegisty();
         this.versionsAdapter = data.getVersionsAdapter();
-        this.fertilizedBlocks = new HashSet<>();
-        data.server().getScheduler().runTaskTimer(data.getPlugin(), this.fertilizedBlocks::clear, 1L, 1L);
+
+        this.triggerAllowUnrecognizedActions = data.getTriggersRegisty().valueOf("ALLOW_UNRECOGNIZED_ACTIONS");
+        this.triggerDebugMessages = data.getTriggersRegisty().valueOf("DEBUG_MESSAGES");
     }
 
     protected void unregisterUnavailableTriggers() {
@@ -46,10 +32,10 @@ public abstract class PhysicsListener implements Listener {
 
     protected void unrecognizedAction(@Nonnull Cancellable event, @Nonnull Location l, @Nonnull Object content) {
         if (l.getWorld() == null) throw new IllegalArgumentException("World cannot be null");
-        if (!this.data.isActionAllowed(l.getWorld(), this.triggers.ALLOW_UNRECOGNIZED_ACTIONS)) {
+        if (!this.data.isActionAllowed(l.getWorld(), this.triggerAllowUnrecognizedActions)) {
             event.setCancelled(true);
         }
-        if (this.data.isActionAllowed(l.getWorld(), this.triggers.DEBUG_MESSAGES)) {
+        if (this.data.isActionAllowed(l.getWorld(), this.triggerDebugMessages)) {
             this.debugAction((Event) event, l, content);
         }
     }

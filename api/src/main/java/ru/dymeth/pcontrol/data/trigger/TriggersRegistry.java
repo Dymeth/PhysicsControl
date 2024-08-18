@@ -18,28 +18,13 @@ public class TriggersRegistry {
     private final PControlTrigger[] allValues;
 
     public final PControlTrigger IGNORED_STATE;
-    public final PControlTrigger DEBUG_MESSAGES;
-    public final PControlTrigger ALLOW_UNRECOGNIZED_ACTIONS;
 
     public TriggersRegistry(@Nonnull PControlData data) {
         this.data = data;
 
-        CategoriesRegistry categories = data.getCategoriesRegistry();
+        this.registerTriggers(data.getCategoriesRegistry());
 
-        IGNORED_STATE = reg("IGNORED_STATE",
-            categories.TEST, true, true, set -> {
-                set.addPrimitive(Material.BARRIER);
-            });
-        DEBUG_MESSAGES = reg("DEBUG_MESSAGES",
-            categories.SETTINGS, true, true, set -> {
-                set.addPrimitive(Material.PAPER);
-            });
-        ALLOW_UNRECOGNIZED_ACTIONS = reg("ALLOW_UNRECOGNIZED_ACTIONS",
-            categories.SETTINGS, true, true, set -> {
-                set.addPrimitive(Material.BARRIER);
-            });
-
-        this.registerTriggers(categories);
+        this.IGNORED_STATE = this.valueOf("IGNORED_STATE");
 
         this.allValues = new PControlTrigger[this.valuesByName.values().size()];
         int i = 0;
@@ -511,6 +496,20 @@ public class TriggersRegistry {
                 if (this.data.hasVersion(1, 17, 0)) {
                     set.addPrimitive(Material.GLOW_BERRIES);
                 }
+            });
+
+        reg("DEBUG_MESSAGES",
+            categories.SETTINGS, true, true, set -> {
+                set.addPrimitive(Material.PAPER);
+            });
+        reg("ALLOW_UNRECOGNIZED_ACTIONS",
+            categories.SETTINGS, true, true, set -> {
+                set.addPrimitive(Material.BARRIER);
+            });
+
+        reg("IGNORED_STATE",
+            categories.TEST, true, true, set -> {
+                set.addPrimitive(Material.BARRIER);
             });
     }
 

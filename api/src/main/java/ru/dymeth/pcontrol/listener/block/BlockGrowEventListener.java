@@ -14,8 +14,6 @@ import javax.annotation.Nonnull;
 
 public class BlockGrowEventListener extends PhysicsListener {
 
-    private final PControlTrigger triggerPlayersBoneMealUsage
-        = this.data.getTriggersRegisty().valueOf("PLAYERS_BONE_MEAL_USAGE");
     private final MaterialMaterialRules rulesBlockGrowEventFromTo = new MaterialMaterialRules(
         this.data, BlockGrowEvent.class, "from", "to");
     private final MaterialRules rulesBlockGrowEventTo = new MaterialRules(
@@ -29,10 +27,6 @@ public class BlockGrowEventListener extends PhysicsListener {
 
     @EventHandler(ignoreCancelled = true)
     private void on(BlockGrowEvent event) {
-        if (this.fertilizedBlocks.remove(event.getBlock().getLocation().toVector())) {
-            this.data.cancelIfDisabled(event, this.triggerPlayersBoneMealUsage);
-            return;
-        }
         Material from = event.getBlock().getType();
         Material to = event.getNewState().getType();
 

@@ -14,8 +14,6 @@ import javax.annotation.Nonnull;
 
 public class StructureGrowEventListener extends PhysicsListener {
 
-    private final PControlTrigger triggerPlayersBoneMealUsage
-        = this.data.getTriggersRegisty().valueOf("PLAYERS_BONE_MEAL_USAGE");
     private final TreeRules rulesStructureGrowEventTo = new TreeRules(
         this.data, StructureGrowEvent.class, "to");
 
@@ -26,10 +24,6 @@ public class StructureGrowEventListener extends PhysicsListener {
 
     @EventHandler(ignoreCancelled = true)
     private void on(StructureGrowEvent event) {
-        if (event.getPlayer() != null) {
-            this.data.cancelIfDisabled(event, this.triggerPlayersBoneMealUsage);
-            return;
-        }
         Material from = event.getLocation().getBlock().getType();
         TreeType to = event.getSpecies();
 
