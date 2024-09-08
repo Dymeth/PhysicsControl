@@ -1,20 +1,20 @@
 package ru.dymeth.pcontrol.data.trigger;
 
-import com.google.common.base.Charsets;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import ru.dymeth.pcontrol.data.PControlData;
 import ru.dymeth.pcontrol.data.category.CategoriesRegistry;
 import ru.dymeth.pcontrol.data.category.PControlCategory;
 import ru.dymeth.pcontrol.set.material.ItemTypesSet;
+import ru.dymeth.pcontrol.util.FileUtils;
 
 import javax.annotation.Nonnull;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.File;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 public class TriggersRegistry {
 
@@ -47,37 +47,46 @@ public class TriggersRegistry {
     }
 
     private void parseTriggers(@Nonnull CategoriesRegistry categories) {
-        InputStream configStream = this.data.getPlugin().getResource("logics/triggers.yml");
-        if (configStream == null) {
-            throw new IllegalArgumentException("Unable to find " + "logics/triggers.yml" + " in plugin JAR");
-        }
-        ConfigurationSection rootSection = YamlConfiguration.loadConfiguration(new InputStreamReader(configStream, Charsets.UTF_8));
+        File configFile = FileUtils.createConfigFileIfNotExist(this.data.getPlugin(),
+            "logics/triggers.yml", "logics/triggers.yml");
+        YamlConfiguration rootSection = YamlConfiguration.loadConfiguration(configFile);
+
         for (String categoryName : rootSection.getKeys(false)) {
             ConfigurationSection categorySection = rootSection.getConfigurationSection(categoryName);
             if (categorySection == null) {
                 throw new IllegalArgumentException("Not a section: " + categoryName);
             }
-            PControlCategory category = categories.valueOf(categoryName);
+            PControlCategory category;
+            try {
+                category = categories.valueOf(categoryName);
+            } catch (Throwable t) {
+                this.data.log().log(Level.SEVERE, "Unable to load triggers category \"" + categoryName + "\"", t);
+                continue;
+            }
             for (String triggerName : categorySection.getKeys(false)) {
-                ConfigurationSection triggerSection = categorySection.getConfigurationSection(triggerName);
-                if (triggerSection == null) {
-                    throw new IllegalArgumentException("Not a section: " + categoryName);
+                try {
+                    ConfigurationSection triggerSection = categorySection.getConfigurationSection(triggerName);
+                    if (triggerSection == null) {
+                        throw new IllegalArgumentException("Not a section: " + triggerName);
+                    }
+
+                    boolean realtime = triggerSection.getBoolean("realtime", true);
+                    boolean defaults = triggerSection.getBoolean("defaults", false);
+                    List<String> iconNames = triggerSection.isString("icon")
+                        ? Collections.singletonList(triggerSection.getString("icon"))
+                        : triggerSection.getStringList("icon");
+
+                    PControlTrigger result = new PControlTrigger(
+                        triggerName,
+                        category, realtime, defaults,
+                        ItemTypesSet.create(false, triggerName + " trigger icon", this.data.log(),
+                            this.data.getTypesSetsParser().createItemTypesParser(iconNames, true))
+                    );
+                    category.addTrigger(result);
+                    this.valuesByName.put(triggerName, result);
+                } catch (Throwable t) {
+                    this.data.log().log(Level.SEVERE, "Unable to load trigger \"" + triggerName + "\"", t);
                 }
-
-                boolean realtime = triggerSection.getBoolean("realtime", true);
-                boolean defaults = triggerSection.getBoolean("defaults", false);
-                List<String> iconNames = triggerSection.isString("icon")
-                    ? Collections.singletonList(triggerSection.getString("icon"))
-                    : triggerSection.getStringList("icon");
-
-                PControlTrigger result = new PControlTrigger(
-                    triggerName,
-                    category, realtime, defaults,
-                    ItemTypesSet.create(false, triggerName + " trigger icon", this.data.log(),
-                        this.data.getTypesSetsParser().createItemTypesParser(iconNames, true))
-                );
-                category.addTrigger(result);
-                this.valuesByName.put(triggerName, result);
             }
         }
     }

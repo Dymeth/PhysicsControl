@@ -1,15 +1,13 @@
 package ru.dymeth.pcontrol.data;
 
-import com.google.common.base.Charsets;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import ru.dymeth.pcontrol.set.material.BlockTypesSet;
+import ru.dymeth.pcontrol.util.FileUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -29,18 +27,16 @@ public final class CustomTags {
 
         this.initSpecificTags();
 
-        InputStream configStream = this.data.getPlugin().getResource("logics/tags.yml");
-        if (configStream == null) {
-            throw new IllegalArgumentException("Unable to find " + "logics/tags.yml" + " in plugin JAR");
-        }
-        ConfigurationSection config = YamlConfiguration.loadConfiguration(new InputStreamReader(configStream, Charsets.UTF_8));
+        File configFile = FileUtils.createConfigFileIfNotExist(this.data.getPlugin(),
+            "logics/tags.yml", "logics/tags.yml");
+        YamlConfiguration rootSection = YamlConfiguration.loadConfiguration(configFile);
 
-        for (String tagName : config.getKeys(false)) {
+        for (String tagName : rootSection.getKeys(false)) {
             this.registerMaterialTag(tagName, BlockTypesSet.createPrimitive(
                 false,
                 tagName,
                 this.data.log(),
-                this.data.getTypesSetsParser().createBlockTypesParser(config.getStringList(tagName), true)
+                this.data.getTypesSetsParser().createBlockTypesParser(rootSection.getStringList(tagName), true)
             ));
         }
     }

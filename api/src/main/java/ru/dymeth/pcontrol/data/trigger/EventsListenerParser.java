@@ -1,16 +1,15 @@
 package ru.dymeth.pcontrol.data.trigger;
 
-import com.google.common.base.Charsets;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Event;
 import ru.dymeth.pcontrol.data.PControlData;
 import ru.dymeth.pcontrol.rules.TriggerRules;
+import ru.dymeth.pcontrol.util.FileUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.File;
 import java.util.*;
 
 public class EventsListenerParser {
@@ -36,11 +35,10 @@ public class EventsListenerParser {
     }
 
     public void parseAllEvents() {
-        InputStream configStream = this.data.getPlugin().getResource("logics/events.yml");
-        if (configStream == null) {
-            throw new IllegalArgumentException("Unable to find " + "logics/events.yml" + " in plugin JAR");
-        }
-        ConfigurationSection rootSection = YamlConfiguration.loadConfiguration(new InputStreamReader(configStream, Charsets.UTF_8));
+        File configFile = FileUtils.createConfigFileIfNotExist(this.data.getPlugin(),
+            "logics/events.yml", "logics/events.yml");
+        YamlConfiguration rootSection = YamlConfiguration.loadConfiguration(configFile);
+
         for (String eventName : rootSection.getKeys(false)) {
             ConfigurationSection eventSection = rootSection.getConfigurationSection(eventName);
             if (eventSection == null) {

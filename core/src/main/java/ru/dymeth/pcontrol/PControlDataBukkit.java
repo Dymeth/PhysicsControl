@@ -86,7 +86,11 @@ public final class PControlDataBukkit implements PControlData {
             "ARROW",
             "SPECTRAL_ARROW",
             "TIPPED_ARROW",
-            "TRIDENT");
+            "TRIDENT"
+        );
+
+        FileUtils.createConfigFileIfNotExist(plugin,
+            "logics/_READ_ME_.txt", "logics/_READ_ME_.txt");
 
         this.customTags = new CustomTags(this);
         this.typesSetsParser = new TypesSetsParser(this);

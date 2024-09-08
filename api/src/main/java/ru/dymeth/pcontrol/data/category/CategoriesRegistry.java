@@ -1,14 +1,13 @@
 package ru.dymeth.pcontrol.data.category;
 
-import com.google.common.base.Charsets;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import ru.dymeth.pcontrol.data.PControlData;
 import ru.dymeth.pcontrol.set.material.ItemTypesSet;
+import ru.dymeth.pcontrol.util.FileUtils;
 
 import javax.annotation.Nonnull;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.File;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -45,11 +44,10 @@ public class CategoriesRegistry {
     }
 
     private void parseCategories() {
-        InputStream configStream = this.data.getPlugin().getResource("logics/categories.yml");
-        if (configStream == null) {
-            throw new IllegalArgumentException("Unable to find " + "logics/categories.yml" + " in plugin JAR");
-        }
-        ConfigurationSection rootSection = YamlConfiguration.loadConfiguration(new InputStreamReader(configStream, Charsets.UTF_8));
+        File configFile = FileUtils.createConfigFileIfNotExist(this.data.getPlugin(),
+            "logics/categories.yml", "logics/categories.yml");
+        YamlConfiguration rootSection = YamlConfiguration.loadConfiguration(configFile);
+
         for (String categoryName : rootSection.getKeys(false)) {
             ConfigurationSection categorySection = rootSection.getConfigurationSection(categoryName);
             if (categorySection == null) {
