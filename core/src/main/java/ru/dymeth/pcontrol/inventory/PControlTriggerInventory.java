@@ -120,7 +120,7 @@ public final class PControlTriggerInventory extends PControlInventory {
         }
         helper.setStackLore(meta, lore);
 
-        if (available && enabled) {
+        if (available && enabled != trigger.getDefaultValue()) {
             this.data.getVersionsAdapter().setItemMetaGlowing(meta);
         }
         meta.addItemFlags(ItemFlag.values());
