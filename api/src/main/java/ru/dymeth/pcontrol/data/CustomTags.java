@@ -27,13 +27,13 @@ public final class CustomTags {
     public void parseTags() {
         this.materialTagsByName.clear();
 
+        this.initSpecificTags();
+
         InputStream configStream = this.data.getPlugin().getResource("logics/tags.yml");
         if (configStream == null) {
             throw new IllegalArgumentException("Unable to find " + "logics/tags.yml" + " in plugin JAR");
         }
         ConfigurationSection config = YamlConfiguration.loadConfiguration(new InputStreamReader(configStream, Charsets.UTF_8));
-
-        this.initSpecificTags();
 
         for (String tagName : config.getKeys(false)) {
             this.registerMaterialTag(tagName, BlockTypesSet.createPrimitive(
@@ -63,9 +63,8 @@ public final class CustomTags {
         });
     }
 
-    @Nonnull
-    private Set<Material> initBlocksSet(@Nonnull String tagName, @Nonnull Consumer<BlockTypesSet> consumer) {
-        return this.registerMaterialTag(tagName, BlockTypesSet.createPrimitive(
+    private void initBlocksSet(@Nonnull String tagName, @Nonnull Consumer<BlockTypesSet> consumer) {
+        this.registerMaterialTag(tagName, BlockTypesSet.createPrimitive(
             true,
             tagName,
             this.data.log(),
@@ -73,13 +72,11 @@ public final class CustomTags {
         ));
     }
 
-    @Nonnull
-    private Set<Material> registerMaterialTag(@Nonnull String tagName, @Nonnull Set<Material> materials) {
+    private void registerMaterialTag(@Nonnull String tagName, @Nonnull Set<Material> materials) {
         tagName = tagName.toLowerCase();
         if (this.materialTagsByName.put(tagName, materials) != null) {
             throw new IllegalArgumentException("Duplicate tag: " + tagName);
         }
-        return materials;
     }
 
     @Nonnull

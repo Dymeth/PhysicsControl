@@ -45,7 +45,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
             15320
         );
 
-        this.data.getTriggersRegisty().IGNORED_STATE.markAvailable();
+        this.data.getTriggersRegisty().getIgnoredState().markAvailable();
         for (PControlTrigger trigger : this.data.getCategoriesRegistry().SETTINGS.getTriggers()) {
             trigger.markAvailable();
         }
@@ -217,7 +217,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         String key = join("_", 1, args).toUpperCase();
         try {
             PControlTrigger trigger = this.data.getTriggersRegisty().valueOf(key, false);
-            if (trigger == this.data.getTriggersRegisty().IGNORED_STATE) throw new IllegalArgumentException();
+            if (trigger == this.data.getTriggersRegisty().getIgnoredState()) throw new IllegalArgumentException();
             this.data.getInventory(trigger.getCategory(), world).switchTrigger(sender, trigger);
         } catch (IllegalArgumentException e) {
             this.data.getMessage("key-not-found", "%key%", key).send(sender);

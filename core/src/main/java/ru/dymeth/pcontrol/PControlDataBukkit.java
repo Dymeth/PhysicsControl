@@ -224,7 +224,7 @@ public final class PControlDataBukkit implements PControlData {
         }
         for (PControlTrigger trigger : this.triggers.values()) {
             if (this.triggersNames.containsKey(trigger)) continue;
-            if (trigger == this.triggers.IGNORED_STATE) continue;
+            if (trigger == this.triggers.getIgnoredState()) continue;
             this.triggersNames.put(trigger, trigger.name());
             this.plugin.getLogger().warning("Unable to load name of trigger " + trigger);
         }
@@ -296,7 +296,7 @@ public final class PControlDataBukkit implements PControlData {
                 PControlTrigger trigger;
                 try {
                     trigger = this.triggers.valueOf(key.toUpperCase().replace(" ", "_"), false);
-                    if (trigger == this.triggers.IGNORED_STATE) throw new IllegalArgumentException();
+                    if (trigger == this.triggers.getIgnoredState()) throw new IllegalArgumentException();
                 } catch (IllegalArgumentException e) {
                     throw new IllegalArgumentException("Unknown trigger type");
                 }
@@ -335,7 +335,7 @@ public final class PControlDataBukkit implements PControlData {
             } else {
                 currentValue = memoryValue == null ? trigger.getDefaultValue() : memoryValue;
             }
-            if ((configValue == null || configValue != currentValue) && trigger != this.triggers.IGNORED_STATE) {
+            if ((configValue == null || configValue != currentValue) && trigger != this.triggers.getIgnoredState()) {
                 worldConfig.set(trigger.name(), currentValue);
                 changed = true;
                 if (!firstInit) {
@@ -373,7 +373,7 @@ public final class PControlDataBukkit implements PControlData {
 
     @Override
     public void cancelIfDisabled(@Nonnull Cancellable event, @Nonnull World world, @Nonnull PControlTrigger trigger) {
-        if (trigger == this.triggers.IGNORED_STATE) return;
+        if (trigger == this.triggers.getIgnoredState()) return;
         if (!this.isActionAllowed(world, trigger)) {
             event.setCancelled(true);
         }
@@ -381,12 +381,12 @@ public final class PControlDataBukkit implements PControlData {
 
     @Override
     public boolean isActionAllowed(@Nonnull World world, @Nonnull PControlTrigger trigger) {
-        if (trigger == this.triggers.IGNORED_STATE) throw new IllegalArgumentException();
+        if (trigger == this.triggers.getIgnoredState()) throw new IllegalArgumentException();
         return this.getWorldTriggers(world).getOrDefault(trigger, false);
     }
 
     public void switchTrigger(@Nonnull World world, @Nonnull PControlTrigger trigger) {
-        if (trigger == this.triggers.IGNORED_STATE) return;
+        if (trigger == this.triggers.getIgnoredState()) return;
         Map<PControlTrigger, Boolean> worldTriggers = this.getWorldTriggers(world);
         worldTriggers.put(trigger, !worldTriggers.get(trigger));
         this.updateWorldData(world, false);
