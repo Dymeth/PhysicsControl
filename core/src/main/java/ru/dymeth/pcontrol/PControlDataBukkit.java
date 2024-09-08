@@ -216,10 +216,11 @@ public final class PControlDataBukkit implements PControlData {
             key -> this.triggers.valueOf(key, false), messageProcessor,
             "triggers.yml", this.triggersNames);
 
+        PControlCategory testCategory = this.categories.getTestCategory();
         for (PControlCategory category : this.categories.values()) {
             if (this.categoriesNames.containsKey(category)) continue;
             this.categoriesNames.put(category, category.name());
-            if (category == this.categories.TEST) continue;
+            if (category == testCategory) continue;
             this.plugin.getLogger().warning("Unable to load name of category " + category);
         }
         for (PControlTrigger trigger : this.triggers.values()) {

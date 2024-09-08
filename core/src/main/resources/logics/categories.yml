@@ -1,0 +1,56 @@
+MOBS_INTERACTIONS:
+  row: 1
+  column: 4
+  icon:
+    - '*-1.12.2 skull_item:2'
+    - '1.13+ zombie_head'
+PLAYERS_INTERACTIONS:
+  row: 1
+  column: 5
+  icon:
+    - '*-1.12.2 skull_item:3'
+    - '1.13+ player_head'
+ENTITIES_INTERACTIONS:
+  row: 1
+  column: 6
+  icon:
+    - 'arrow'
+BUILDING:
+  row: 2
+  column: 3
+  icon:
+    - 'ladder'
+GRAVITY_AND_LIQUIDS:
+  row: 2
+  column: 4
+  icon:
+    - 'sand'
+WORLD_DESTRUCTION:
+  row: 2
+  column: 5
+  icon:
+    - '*-1.12.2 leaves'
+    - '1.13+ oak_leaves'
+GROWING_BLOCKS_AND_SMALL_PLANTS:
+  row: 2
+  column: 6
+  icon:
+    - 'melon'
+VINES_AND_TALL_STRUCTURES:
+  row: 2
+  column: 7
+  icon:
+    - '*-1.12.2 sapling:2'
+    - '1.13+ birch_sapling'
+SETTINGS:
+  row: 3
+  column: 5
+  icon:
+    - '*-1.12.2 command'
+    - '1.13+ command_block'
+TEST:
+  row: 3
+  column: 9
+  icon:
+    - '*-1.13.2 sign'
+    - '1.14+ oak_sign'

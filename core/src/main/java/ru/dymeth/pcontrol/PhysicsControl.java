@@ -46,7 +46,7 @@ public final class PhysicsControl extends JavaPlugin implements Listener {
         );
 
         this.data.getTriggersRegisty().getIgnoredState().markAvailable();
-        for (PControlTrigger trigger : this.data.getCategoriesRegistry().SETTINGS.getTriggers()) {
+        for (PControlTrigger trigger : this.data.getCategoriesRegistry().getSettingsCategory().getTriggers()) {
             trigger.markAvailable();
         }
 

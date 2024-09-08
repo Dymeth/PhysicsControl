@@ -1,108 +1,74 @@
 package ru.dymeth.pcontrol.data.category;
 
-import org.bukkit.Material;
+import com.google.common.base.Charsets;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 import ru.dymeth.pcontrol.data.PControlData;
 import ru.dymeth.pcontrol.set.material.ItemTypesSet;
 
 import javax.annotation.Nonnull;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class CategoriesRegistry {
-
-    public final PControlCategory
-        MOBS_INTERACTIONS,
-        PLAYERS_INTERACTIONS,
-        ENTITIES_INTERACTIONS,
-        BUILDING,
-        GRAVITY_AND_LIQUIDS,
-        WORLD_DESTRUCTION,
-        GROWING_BLOCKS_AND_SMALL_PLANTS,
-        VINES_AND_TALL_STRUCTURES,
-        SETTINGS,
-        TEST;
-
     private final PControlData data;
     private final Map<String, PControlCategory> valuesByName = new LinkedHashMap<>();
     private final PControlCategory[] allValues;
+    private final PControlCategory settingsCategory;
+    private final PControlCategory testCategory;
 
     public CategoriesRegistry(@Nonnull PControlData data) {
         this.data = data;
 
-        MOBS_INTERACTIONS = reg("MOBS_INTERACTIONS", 1, 4, set -> {
-            if (!data.hasVersion(1, 13, 0)) {
-                set.add("SKULL_ITEM:2");
-            } else {
-                set.addPrimitive(Material.ZOMBIE_HEAD);
-            }
-        });
-        PLAYERS_INTERACTIONS = reg("PLAYERS_INTERACTIONS", 1, 5, set -> {
-            if (!data.hasVersion(1, 13, 0)) {
-                set.add("SKULL_ITEM:3");
-            } else {
-                set.addPrimitive(Material.PLAYER_HEAD);
-            }
-        });
-        ENTITIES_INTERACTIONS = reg("ENTITIES_INTERACTIONS", 1, 6, set -> {
-            set.addPrimitive(Material.ARROW);
-        });
-        BUILDING = reg("BUILDING", 2, 3, set -> {
-            set.addPrimitive(Material.LADDER);
-        });
-        GRAVITY_AND_LIQUIDS = reg("GRAVITY_AND_LIQUIDS", 2, 4, set -> {
-            set.addPrimitive(Material.SAND);
-        });
-        WORLD_DESTRUCTION = reg("WORLD_DESTRUCTION", 2, 5, set -> {
-            if (!data.hasVersion(1, 13, 0)) {
-                set.add("LEAVES");
-            } else {
-                set.addPrimitive(Material.OAK_LEAVES);
-            }
-        });
-        GROWING_BLOCKS_AND_SMALL_PLANTS = reg("GROWING_BLOCKS_AND_SMALL_PLANTS", 2, 6, set -> {
-            set.addPrimitive(Material.MELON);
-        });
-        VINES_AND_TALL_STRUCTURES = reg("VINES_AND_TALL_STRUCTURES", 2, 7, set -> {
-            if (!data.hasVersion(1, 13, 0)) {
-                set.add("SAPLING:2");
-            } else {
-                set.addPrimitive(Material.BIRCH_SAPLING);
-            }
-        });
-        SETTINGS = reg("SETTINGS", 3, 5, set -> {
-            if (!data.hasVersion(1, 13, 0)) {
-                set.add("COMMAND");
-            } else {
-                set.addPrimitive(Material.COMMAND_BLOCK);
-            }
-        });
-        TEST = reg("TEST", 3, 9, set -> {
-            if (!data.hasVersion(1, 14, 0)) {
-                set.add("SIGN");
-            } else {
-                set.addPrimitive(Material.OAK_SIGN);
-            }
-        });
+        this.parseCategories();
 
         this.allValues = new PControlCategory[this.valuesByName.values().size()];
         int i = 0;
         for (PControlCategory element : this.valuesByName.values()) {
             this.allValues[i++] = element;
         }
+
+        this.settingsCategory = valueOf("SETTINGS");
+        this.testCategory = valueOf("TEST");
+
+        for (PControlCategory category : this.values()) {
+            try {
+                category.getIcon();
+            } catch (Throwable t) {
+                this.data.log().severe("Unable to find icon of category " + category.name());
+            }
+        }
     }
 
-    @Nonnull
-    private PControlCategory reg(@Nonnull String categoryName,
-                                 int row, int column,
-                                 @Nonnull Consumer<ItemTypesSet> iconConsumer
-    ) {
-        PControlCategory result = new PControlCategory(categoryName,
-            row, column,
-            ItemTypesSet.create(false, categoryName + " category icon", this.data.log(), iconConsumer)
-        );
-        this.valuesByName.put(categoryName, result);
-        return result;
+    private void parseCategories() {
+        InputStream configStream = this.data.getPlugin().getResource("logics/categories.yml");
+        if (configStream == null) {
+            throw new IllegalArgumentException("Unable to find " + "logics/categories.yml" + " in plugin JAR");
+        }
+        ConfigurationSection rootSection = YamlConfiguration.loadConfiguration(new InputStreamReader(configStream, Charsets.UTF_8));
+        for (String categoryName : rootSection.getKeys(false)) {
+            ConfigurationSection categorySection = rootSection.getConfigurationSection(categoryName);
+            if (categorySection == null) {
+                throw new IllegalArgumentException("Not a section: " + categoryName);
+            }
+
+            int row = categorySection.getInt("row");
+            int column = categorySection.getInt("column");
+            List<String> iconNames = categorySection.isString("icon")
+                ? Collections.singletonList(categorySection.getString("icon"))
+                : categorySection.getStringList("icon");
+
+            PControlCategory result = new PControlCategory(categoryName,
+                row, column,
+                ItemTypesSet.create(false, categoryName + " category icon", this.data.log(),
+                    this.data.getTypesSetsParser().createItemTypesParser(iconNames, true))
+            );
+            this.valuesByName.put(categoryName, result);
+        }
     }
 
     @Nonnull
@@ -117,4 +83,13 @@ public class CategoriesRegistry {
         return result;
     }
 
+    @Nonnull
+    public PControlCategory getSettingsCategory() {
+        return this.settingsCategory;
+    }
+
+    @Nonnull
+    public PControlCategory getTestCategory() {
+        return this.testCategory;
+    }
 }

@@ -16,9 +16,9 @@ public class PControlCategoryInventory extends PControlInventory {
             3,
             data.getMessage("category-inventory-title", "%world%", world.getName())
         );
-        PControlCategory TEST_CATEGORY = data.getCategoriesRegistry().TEST;
+        PControlCategory testCategory = data.getCategoriesRegistry().getTestCategory();
         for (PControlCategory category : data.getCategoriesRegistry().values()) {
-            if (category == TEST_CATEGORY && !DISPLAY_TEST_CATEGORY) {
+            if (category == testCategory && !DISPLAY_TEST_CATEGORY) {
                 continue;
             }
             this.setItem(category.getSlot(), category.getIcon(), player ->

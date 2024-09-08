@@ -35,6 +35,15 @@ public class TriggersRegistry {
         }
 
         this.ignoredState = this.valueOf("IGNORED_STATE");
+
+        for (PControlTrigger trigger : this.values()) {
+            try {
+                //noinspection ResultOfMethodCallIgnored
+                trigger.getIcon();
+            } catch (Throwable t) {
+                this.data.log().severe("Unable to find icon of trigger " + trigger.name());
+            }
+        }
     }
 
     private void parseTriggers(@Nonnull CategoriesRegistry categories) {
